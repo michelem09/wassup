@@ -1492,7 +1492,7 @@ function wassupAppend($req_code=0) {
 		//# Some spiders, such as Yahoo and MSN, don't always give a unique useragent, so test against known hostnames/IP to identify these spiders
 		$spider_hosts='/^((65\.55|207\.46)\.\d{3}.\d{1,3}|.*\.(crawl|yse)\.yahoo\.net|ycar\d+\.mobile\.[a-z0-9]{3}\.yahoo\.com|msnbot.*\.search\.msn\.com|crawl[0-9\-]+\.googlebot\.com|baiduspider[0-9\-]+\.crawl\.baidu\.com|(crawl(?:er)?|spider|robot)\-?\d*\..*)$/';
 		//#Identify spiders from known spider domains
-		if(empty($agent) || preg_match($spider_hosts,$hostname)>0|| stristr($agent,'unknown')!==false){
+		if(empty($agent) || preg_match($spider_hosts,$hostname)>0 || stristr($agent,'unknown')!==false){
 			list($spider,$spidertype,$feed) = wGetSpider($userAgent,$hostname,$browser);
 			if($wdebug_mode){
 				if(headers_sent()) echo "\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
@@ -1509,12 +1509,12 @@ function wassupAppend($req_code=0) {
 			}
 		}
 		//#Identify spiders and feeds with wGetSpider...
-		if(empty($spider) && empty($logged_user) && empty($cookieUser)){
+		if(empty($spider) && empty($logged_user)){
 			if(empty($userAgent) && empty($agent)){
 				//no userAgent == spider
 				$spider=$unknown_spider;
 			}else{
-				if(strlen($agent)<5 || empty($os) || preg_match("#\s?([a-z]+(?:bot|crawler|spider|reader|agent))[^a-z]#i",$userAgent)>0 || strstr($urlRequested,"robots.txt")!==FALSE || is_feed()){
+				if(strlen($agent)<5 || empty($os) || preg_match("#\s?([a-z]+(?:bot|crawler|google|spider|reader|agent))[^a-z]#i",$userAgent)>0 || strstr($urlRequested,"robots.txt")!==FALSE || is_feed()){
 					list($spider,$spidertype,$feed) = wGetSpider($userAgent,$hostname,$browser);
 					if($wdebug_mode){
 						if(headers_sent()) echo "\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
@@ -3429,6 +3429,7 @@ function wassup_badhost_lookup($referrer_host,$hostname="") {
 			'estetik\.net\.tr',
 			'exactinsurance\.info',
 			'find1friend\.com',
+			'footballleagueworld\.co\.uk',
 			'freefarmvillesecrets\.info',
 			'frenchforbeginnerssite\.com',
 			'gameskillinggames\.net',
@@ -3457,6 +3458,7 @@ function wassup_badhost_lookup($referrer_host,$hostname="") {
 			'laminedis\.gen\.tr',
 			'leadingleaders\.net',
 			'lhzyy\.net',
+			'lifehacklane\.com',
 			'linkwheelseo\.net',
 			'liquiddiet[a-z\-]*\.com',
 			'locksmith[a-z\-]+\.org',

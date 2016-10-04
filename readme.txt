@@ -233,6 +233,7 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * patched security loopholes (xss vulnerability) in the 'Top stats' widget and in `wassupURI::add_siteurl` method
 * revised plugin code to improve prevention of XSS attacks via it's interface and widgets
 * revised plugin code to comply with the latest requirements for inclusion in Wordpress.org plugin repository
+* revised 'readme.txt' to comply with Wordpress.org plugin repository guidelines.
 * new module, 'wassupadmin.php' for WassUp admin panels and dashboard widget
 * new module, 'compatibility.php' to check for Wordpress and PHP compatibility and to load compatibility modules from `/lib/compat-lib/` subfolder when available
 * removed backward compatibility folder, modules, and javascripts from Wordpress's copy of Wassup package to comply with Wordpress plugin repository requirements.  
@@ -244,7 +245,6 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * updated `wassup_Akismet` class to abort remote requests with timeout error after 5 seconds to avoid plugin slowdown due to slow server response.
 * updated 'UADetector' and 'wDetector' classes to improve browser and os detection (Microsoft Edge, Win10).
 * updated translation template, 'wassup.pot'.
-* updated 'readme.txt' to comply with Wordpress.org plugin repository guidelines.
 * fixed problem with login page hits not being recorded.
 * fixed errors caused by disabled 'set_time_limit' function in some configurations.
 * fixed a 'preg_match' error that affected 404 and spam detection.

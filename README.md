@@ -129,7 +129,7 @@ B. If you prefer to manually upgrade OR you are running an older version of Word
    1. Deactivate WassUp plugin under Wordpress admin panel >>Plugins page
    2. Manually delete the "wassup" folder from your plugins directory (`/wp-content/plugins/`) on your Wordpress host using their CPanel File manager or with an ftp client software. Do NOT click the `delete` link in Wordpress.
    3. Download the latest full release of Wassup Real-Time Analytics directly from [gitHub.com/michelem09/wassup/releases/](https://github.com/michelem09/wassup/releases/) and save onto your local computer.
-   4. Then follow the manual install instructions in section B:1-4 above.
+   4. Then follow the manual install instructions in section B:i-iv above.
 
 
 ### **IMPORTANT Safe Upgrade Instructions
@@ -144,7 +144,7 @@ To safely upgrade WassUp when your site is busy, you must manually stop visitor 
 When you activate this plugin (as described in "Installation"), it works "as is". You don't have anything to do. Wait for visitors to hit your site and start seeing details (click the dashboard and go to WassUp page)
 
 ### Compatibility Notice 
-* WassUp is incompatible with the following static page caching plugins: [WP Super Cache], [WP Cache] and [WP Hyper Cache]. 
+* WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, and WP Hyper Cache. 
 
 
 ## Upgrade Notice 
@@ -155,10 +155,11 @@ When you activate this plugin (as described in "Installation"), it works "as is"
   DO NOT UPGRADE when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.  
 
 ## Changelog
-### 1.9.1: Critical security, compatibility, and bugfix upgrade 
+### v1.9.1: Critical security, compatibility, and bugfix upgrade 
 * patched security loopholes (xss vulnerability) in the 'Top stats' widget and in `wassupURI::add_siteurl` method
 * revised plugin code to improve prevention of XSS attacks via it's interface and widgets
 * revised plugin code to comply with the latest requirements for inclusion in Wordpress.org plugin repository
+* revised 'readme.txt' to comply with Wordpress.org plugin repository guidelines.
 * new module, 'wassupadmin.php' for WassUp admin panels and dashboard widget
 * new module, 'compatibility.php' to check for Wordpress and PHP compatibility and to load compatibility modules from `/lib/compat-lib/` subfolder when available
 * removed backward compatibility folder, modules, and javascripts from Wordpress's copy of Wassup package to comply with Wordpress plugin repository requirements.  
@@ -170,7 +171,6 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * updated `wassup_Akismet` class to abort remote requests with timeout error after 5 seconds to avoid plugin slowdown due to slow server response.
 * updated 'UADetector' and 'wDetector' classes to improve browser and os detection (Microsoft Edge, Win10).
 * updated translation template, 'wassup.pot'.
-* updated 'readme.txt' to comply with Wordpress.org plugin repository guidelines.
 * fixed problem with login page hits not being recorded.
 * fixed errors caused by disabled 'set_time_limit' function in some configurations.
 * fixed a 'preg_match' error that affected 404 and spam detection.
