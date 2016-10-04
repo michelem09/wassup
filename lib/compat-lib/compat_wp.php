@@ -29,7 +29,7 @@ if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0?37;|&amp;#0?37;|&#0?38;#0?37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 unset($wfile);	//to free memory
 //nothing to do here
@@ -40,7 +40,7 @@ if(version_compare($GLOBALS['wp_version'],'3.1','>')){
 //define Wordpress 2.3 - 2.6 functions used in Wassup
 if(version_compare($GLOBALS['wp_version'],'2.6','<')){
 if(!function_exists('wp_safe_redirect')){ //added in Wordpress 2.3
-	//just redirect in old Wordpress versions
+	//just use wp_redirect in old Wordpress versions
 	function wp_safe_redirect($location,$status="302"){
 		wp_redirect($location,$status);
 		exit;
@@ -103,9 +103,9 @@ if(!function_exists('has_action')){	//added in Wordpress 2.5
 	}
 }
 if(!function_exists('wp_enqueue_style')){	//added in Wordpress 2.6
-	function wp_enqueue_style($css_file=""){
-		//do nothing - handled by compat_functions.php
-		$nothing=0;
+	function wp_enqueue_style($name,$file="",$dep=array(),$vers=0){
+		//do nothing...handled in 'compat_functions.php' module
+		$do_nothing=1;
 	}
 }
 if(!function_exists('site_url')){	//added in Wordpress 2.6
@@ -207,16 +207,16 @@ if(!function_exists('is_multisite')){	//added in Wordpress 3.0
 //-------------------------------------------------
 //define Wordpress 3.1 functions used in Wassup
 if(!function_exists('is_network_admin')){	//added in Wordpress 3.1
-	function is_network_admin() {
+	function is_network_admin(){
 		if(isset($GLOBALS['current_screen'])) return $GLOBALS['current_screen']->in_admin('network');
 		elseif(defined('WP_NETWORK_ADMIN')) return WP_NETWORK_ADMIN;
 		return false;
 	}
 }
 if(!function_exists('wp_dequeue_style')){	//added in Wordpress 3.1
-	function wp_dequeue_style($css_file=""){
-		//do nothing - handled by compat_functions.php
-		$nothing=0;
+	function wp_dequeue_style($name){
+		//do nothing...handled in 'compat_functions.php' module
+		$do_nothing=1;
 	}
 }
 ?>

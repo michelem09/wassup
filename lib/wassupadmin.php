@@ -26,7 +26,7 @@ if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0?37;|&amp;#0?37;|&#0?38;#0?37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 unset($wfile);	//to free memory
 //-------------------------------------------------
@@ -42,7 +42,9 @@ unset($wfile);	//to free memory
  */
 function wassup_admin_load(){
 	global $current_user, $wassup_options;
-	if(!defined('WASSUPVERSION')) wassup_init();
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()) return;	//nothing to do
+	}
 	//get/set user-specific wassup_settings
 	if(!is_object($current_user) || empty($current_user->ID)) wp_get_current_user();
 	$wassup_user_settings=get_user_option('_wassup_settings',$current_user->ID);
@@ -427,7 +429,9 @@ function wassup_add_body_class($classes) {
  */
 function wassup_add_pages() {
 	global $wp_version, $wassup_options;
-	if(!defined("WASSUPVERSION")) wassup_init();
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()) return;	//nothing to do
+	}
 	$menu_access=$wassup_options->get_access_capability();
 	$wassupfolder=basename(WASSUPDIR);
 	//only administrators can see wassup's top-level admin menu...other users see "Wassup-stats" dashboard submenu (and dash widget) @since v1.9
@@ -468,7 +472,9 @@ function wassup_add_pages() {
  */
 function wassup_plugin_links($links, $file){
 	global $wassup_options;
-	if(!defined('WASSUPVERSION')) wassup_init();
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()) return;	//nothing to do
+	}
 	if($file == plugin_basename(WASSUPDIR."/wassup.php")){
 		if(is_multisite() && is_network_admin() && $wassup_options->network_activated_plugin()){
 			$links[] = '<a href="'.network_admin_url('admin.php?page=wassup-options').'">'.__("Settings").'</a>';
@@ -1378,18 +1384,18 @@ function wassup_page_contents($args=array()){
 			$remove_it[]='dip';
 		}
 		//sticky filters for query string
-		if(!empty($wip)) $stickyFilters.='&wip='.$wip;
-		if(isset($wlast)) $stickyFilters.='&last='.$wlast;
-		if(!empty($wtype)) $stickyFilters.='&type='.$wtype;
+		if(!empty($wip)) $stickyFilters .='&wip='.$wip;
+		if(isset($wlast)) $stickyFilters .='&last='.$wlast;
+		if(!empty($wtype)) $stickyFilters .='&type='.$wtype;
 		if(!empty($wsearch)) $stickyFilters .='&search='.$wsearch;
 		//set wwhereis clause as parameter for 'wassupItems' and all calculations @since v1.9
 		$wwhereis=$multisite_whereis;
-		if (!empty($wtype) && $wtype != 'everything') {
-			$wwhereis.=$wassup_options->getFieldOptions("wassup_default_type","sql",$wtype);
+		if(!empty($wtype) && $wtype != 'everything'){
+			$wwhereis .=$wassup_options->getFieldOptions("wassup_default_type","sql",$wtype);
 		}
 		//add ip to wwhereis clause when user selects "filter by IP" option
 		if(!empty($wip) && $wip == $wsearch && empty($_GET['deleteMARKED'])){
-			$wwhereis.=" AND `ip`='$wip'";
+			$wwhereis .=" AND `ip`='$wip'";
 		}
 		update_user_option($current_user->ID,'_wassup_settings',$wassup_user_settings);
 		//to prevent browser timeouts, send <!--heartbeat--> output
@@ -1491,7 +1497,10 @@ function wassup_page_contents($args=array()){
 		echo "\n";?>
 	<div class='centered'>
 		<div id='usage'>
-			<ul><li><span style="border-bottom:2px solid #0077CC;"><?php echo (int)$witemstot;?></span> <?php _e('Visits','wassup');?></li><li><span style="border-bottom:2px dashed #FF6D06;"><?php echo (int)$wpagestot;?></span> <?php _e('Pageviews','wassup');?></li><li><span><?php echo @number_format(($wpagestot/$witemstot),2);?></span> <?php _e('Pages/Visits','wassup');?></li><li><span class="spamtoggle"><?php
+			<ul><li><span style="border-bottom:2px solid #0077CC;"><?php echo (int)$witemstot;?></span> <?php _e('Visits','wassup');?></li>
+			<li><span style="border-bottom:2px dashed #FF6D06;"><?php echo (int)$wpagestot;?></span> <?php _e('Pageviews','wassup');?></li>
+			<li><span><?php echo @number_format(($wpagestot/$witemstot),2);?></span> <?php _e('Pages/Visits','wassup');?></li>
+			<li><span class="spamtoggle"><?php
 		//add spam form overlay when spamcheck is enabled and user is admin or can 'manage_options'
 		$hidden_spam_form=false;
 		if($wassup_options->wassup_spamcheck == 1 && ($wassup_options->is_admin_login() || current_user_can('manage_options'))){
@@ -1499,10 +1508,15 @@ function wassup_page_contents($args=array()){
 		}
 		if($hidden_spam_form) echo '<a href="#TB_inline?width=400&inlineId=hiddenspam" class="thickbox">';
 		echo $wspamtot.'<span class="plaintext">(';
-		if(!empty($wspamtot)) echo @number_format(($wspamtot*100/$wpagestot),1);else echo "0";
+		if(!empty($wspamtot)){
+			echo @number_format(($wspamtot*100/$wpagestot),1);
+		}else{
+			echo "0";
+		}
 		echo '%)</span>';
 		if($hidden_spam_form) echo '</a>';
-		echo '</span> '.__('Spams','wassup');?></li></ul><br/>
+		echo '</span> '.__('Spams','wassup');?></li>
+			</ul><br/>
 			<div id="chart_placeholder" class="placeholder" align="center"></div>
 		</div>
 	</div><?php
@@ -1803,20 +1817,20 @@ function wassup_page_contents($args=array()){
 <?php				}
 			}
 			// Visitor is a Spammer
-			if ($rk->malware_type > 0 && $rk->malware_type < 3){ ?>
+			if($rk->malware_type > 0 && $rk->malware_type < 3){ ?>
 			<ul class="spam">
 			<li class="spam"><span class="indent-li-agent"><?php
 				echo '<strong>'.__("Probably SPAM!","wassup").'</strong>'; 
-				if ($rk->malware_type==2) {
+				if($rk->malware_type==2){
 					echo ' ('.__("Referer Spam","wassup").')';
-				}elseif (!empty($wassup_options->spam)) { 
+				}elseif(!empty($wassup_options->spam)){
 					echo ' (Akismet '.__("Spam","wassup").')';
-				} else {
+				}else{
 					echo ' ('.__("Comment Spam","wassup").')';
-				} ?> </span></li>
+				}?> </span></li>
 			</ul><?php
 			// Visitor is MALWARE/HACK attempt
-			} elseif ($rk->malware_type == 3) {
+			}elseif($rk->malware_type == 3){
 				echo "\n";?>
 			<ul class="spam">
 			<li class="spam"><span class="indent-li-agent">

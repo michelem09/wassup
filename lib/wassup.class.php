@@ -29,7 +29,7 @@ if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0?37;|&amp;#0?37;|&#0?38;#0?37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 unset($wfile);
 //-------------------------------------------------
@@ -407,7 +407,9 @@ class wassupOptions {
 	 */
 	public function resetUserSettings($user_login="",$user=false){
 		global $current_user;
-		if(!defined('WASSUPVERSION')) wassup_init();
+		if(!defined('WASSUPURL')){
+			if(!wassup_init()) return;	//nothing to do
+		}
 		if(empty($user)) $user=$current_user;
 		if(empty($user->ID)) $user=wp_get_current_user();
 		$wassup_user_settings=get_user_option('_wassup_settings',$user->ID);
@@ -1794,7 +1796,9 @@ class wassupDb{
 	 */
 	static function temp_cleanup(){
 		global $wpdb,$wassup_options;
-		if(!defined('WASSUPVERSION')) wassup_init();
+		if(!defined('WASSUPURL')){
+			if(!wassup_init()) return;	//nothing to do
+		}
 		$wassup_table=$wassup_options->wassup_table;
 		$wassup_tmp_table=$wassup_table . "_tmp";
 		$wassup_meta_table=$wassup_table . "_meta";
@@ -1811,7 +1815,9 @@ class wassupDb{
 	 */
 	static function auto_cleanup(){
 		global $wpdb,$wassup_options;
-		if(!defined('WASSUPVERSION')) wassup_init();
+		if(!defined('WASSUPURL')){
+			if(!wassup_init()) return;	//nothing to do
+		}
 		$deleted=0;
 		//do purge of old records
 		if(!empty($wassup_options->delete_auto) && $wassup_options->delete_auto!="never"){
@@ -2344,7 +2350,7 @@ class wassupURI {
 	/** Remove all ascii codes and replace with '---' in url. Can be used before saving to database. @since v1.9 */
 	static function neutralize($urlstring){
 		if(!empty($urlstring) && !is_numeric($urlstring)){
-			$cleaned=wp_kses(preg_replace('/(&#0?37;|&amp;#0?37;|&#0?38;#0?37;|%)([01][0-9A-F]|7F)/i','---',$urlstring),array());
+			$cleaned=wp_kses(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)([01][0-9A-F]|7F)/i','---',$urlstring),array());
 		}else{
 			$cleaned=$urlstring;
 		}

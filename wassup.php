@@ -2,10 +2,10 @@
 /*
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
-Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+.
+Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
 Version: 1.9.1
-Author : Michele Marcucci, Helene Duncker
-Author URI : http://www.michelem.org/
+Author: Michele Marcucci, Helene Duncker
+Author URI: http://www.michelem.org/
 Text Domain: wassup
 Domain Path: /language
 License: GPL2
@@ -65,37 +65,49 @@ function wassup_init($init_settings=false){
 		if(@is_readable($moFile)) load_textdomain('wassup',$moFile);
 	}
 	//load required modules
-	//load compatibility module to check Wordpress and PHP compatibility before using 'plugins_url' function
-	if(version_compare($wp_version,'4.5','<') || version_compare(PHP_VERSION,'5.2','<')){
+	//check Wordpress and PHP compatibility and load compatibility modules before using 'plugins_url' function
+	$php_vers=phpversion();
+	$is_compatible=true;
+	if(version_compare($wp_version,'4.5','<') || version_compare($php_vers,'5.2','<')){
 		include_once(WASSUPDIR.'/lib/compatibility.php');
+		$is_compatible=wassup_load_compat_modules();
 	}
-	if(!class_exists('wassupOptions')) require_once(WASSUPDIR.'/lib/wassup.class.php');
-	define('WASSUPURL',plugins_url(basename(WASSUPDIR)));
-	//additional modules are loaded as needed
-	//require_once(WASSUPDIR.'/lib/main.php');
-	//include_once(WASSUPDIR.'/lib/uadetector.class.php');
-	//require_once(WASSUPDIR.'/lib/wassupadmin.php');
-	//
-	//initialize wassup settings for new multisite subsites
-	if($init_settings){
-		$wassup_options=new wassupOptions(true);
-		//save settings only if this is a network subsite
-		if(is_multisite() && !is_network_admin() && !is_main_site() && $wassup_options->network_activated_plugin()){
-			if(empty($wassup_options->wassup_version) || $wassup_options->wassup_version !=WASSUPVERSION){
-				$wassup_options->wassup_version=WASSUPVERSION;
-				$wassup_options->saveSettings();
+	if($is_compatible){
+		if(!class_exists('wassupOptions')) require_once(WASSUPDIR.'/lib/wassup.class.php');
+		define('WASSUPURL',plugins_url(basename(WASSUPDIR)));
+		//additional modules are loaded as needed
+		//require_once(WASSUPDIR.'/lib/wassupadmin.php');
+		//require_once(WASSUPDIR.'/lib/main.php');
+		//include_once(WASSUPDIR.'/lib/uadetector.class.php');
+
+		//initialize wassup settings for new multisite subsites
+		if($init_settings){
+			$wassup_options=new wassupOptions(true);
+			//save settings only if this is a network subsite
+			if(is_multisite() && !is_network_admin() && !is_main_site() && $wassup_options->network_activated_plugin()){
+				if(empty($wassup_options->wassup_version) || $wassup_options->wassup_version !=WASSUPVERSION){
+					$wassup_options->wassup_version=WASSUPVERSION;
+					$wassup_options->saveSettings();
+				}
 			}
+		}else{
+			//Load existing wassup wp_option settings, if any
+			$wassup_settings=get_option('wassup_settings');
+			if(count($wassup_settings)>1 && !empty($wassup_settings['wassup_version'])) $wassup_options=new wassupOptions;
 		}
 	}else{
-		//Load existing wassup wp_option settings, if any
-		$wassup_settings=get_option('wassup_settings');
-		if(count($wassup_settings)>1 && !empty($wassup_settings['wassup_version'])) $wassup_options=new wassupOptions;
+		if(function_exists('is_network_admin') && is_network_admin()){
+			add_action('network_admin_notices','wassup_show_compat_message');
+		}else{
+			add_action('admin_notices','wassup_show_compat_message');
+		}
 	}
+	return $is_compatible;
 } //end wassup_init
 
 /**
  * Install or upgrade Wassup plugin.
- *  - check Wordpress version and configuration for compatibility
+ *  - check wordpress compatibility
  *  - set initial plugin settings 
  *  - check for multisite and set initial wassup network settings
  *  - create/upgrade Wassup tables.
@@ -106,11 +118,12 @@ function wassup_init($init_settings=false){
  */
 function wassup_install($network_wide=false) {
 	global $wpdb,$wp_version,$wassup_options;
-	if(!defined('WASSUPVERSION')) wassup_init();
-	//WassUp works only in WP2.2 or higher
-	if(version_compare($wp_version,'2.2','<')){
-		echo __("Sorry, WassUp requires WordPress 2.2 or higher to work","wassup");
-		exit(1);
+	//first check Wordpress compatibility
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()){
+			wassup_show_compat_message();
+			exit(1);
+		}
 	}
 	//additional install/upgrade functions in "upgrade.php" module
 	if (file_exists(WASSUPDIR.'/lib/upgrade.php')) {
@@ -134,8 +147,14 @@ function wassup_install($network_wide=false) {
 			$network_wide=true;
 			//For multisite..no network activation in subdomain networks, subdomain sites must activate Wassup separately @TODO
 			if(is_subdomain_install()){
-				echo __("Sorry! Network activation is DISABLED in subdomain networks. WassUp plugin must be activated on each subdomain site separately.","wassup")." ".__("Activate Wassup on your main site/parent domain to set default options for network.","wassup");
-				exit(1);
+				//New in v1.9.1: echoed long message is NOT showing in network activation error message since Wordpress 4.6.1
+				//echo $err;
+				//exit(1);
+				$err = __("Sorry! \"Network Activation\" is DISABLED for subdomain networks.","wassup");
+				$err .= ' '.sprintf(__("%s must be activated on each subdomain site separately.","wassup"),'<strong>Wassup Plugin</strong>');
+				$err .=' <br/>'.__("Activate plugin on your parent domain (main site) to set default options for your network.","wassup");
+				$err .= '<br/><br/><a href="'.network_admin_url("plugins.php").'">'.__("Back to Plugins","wassup").'</a>';
+				wp_die($err);
 			}
 			$wassup_network_settings=wassup_network_install($network_wide);
 		}else{
@@ -399,6 +418,7 @@ function wassup_deactivate(){
  * @since v1.9
  */
 function wassup_start(){
+	//startup wassup
 	add_action('init','wassup_preload',11);
 	add_action('login_init','wassup_preload',11); //separate action needed
 	add_action('admin_init','wassup_admin_preload',11);
@@ -442,10 +462,13 @@ function wassup_preload(){
 		}
 	}
 	//load Wassup settings and includes
-	if(!defined('WASSUPVERSION')){
+	if(!defined('WASSUPURL')){
 		//load Wassup settings for new network subsites
-		if(is_multisite() && !is_network_admin() && !is_main_site()) wassup_init(true);
-		else wassup_init();
+		if(function_exists('is_network_admin') && !is_network_admin() && !is_main_site()) $is_compatible=wassup_init(true);
+		else $is_compatible=wassup_init();
+		if(!$is_compatible){	//do nothing
+			return;
+		}
 	}
 	//reset wassup user settings at login @since v1.9
 	add_action('wp_login',array($wassup_options,'resetUserSettings'),9,2);
@@ -482,7 +505,9 @@ function wassup_preload(){
  */
 function wassup_load() {
 	global $wassup_options;
-	if(!defined('WASSUPVERSION')) wassup_init();
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()) return;	//nothing to do
+	}
 	//load widgets and visitor tracking footer scripts
 	if ($wassup_options->is_recording_active()) {
 		add_action("widgets_init",'wassup_widget_init',9);
@@ -510,19 +535,20 @@ function wassup_load() {
 function wassup_admin_preload() {
 	global $wpdb, $wp_version, $wassup_options, $wdebug_mode;
 
-	//initializes new network subsites settings, if needed
-	if(!defined('WASSUPVERSION')){
-		if(is_multisite() && !is_network_admin() && !is_main_site() && !is_subdomain_install()) wassup_init(true);
-		else wassup_init();
+	if(!defined('WASSUPURL')){
+		//initializes new network subsites settings, if needed
+		if(function_exists('is_network_admin') && !is_network_admin() && !is_main_site()) $is_compatible=wassup_init(true);
+		else $is_compatible=wassup_init();
+		if(!$is_compatible) return;	//nothing to do
 	}
-	//uninstall on deactivation when 'wassup_uninstall' option is set - applies to Wordpress multisite subdomains and Wordpress 2.X installations only 
+	//uninstall on deactivation when 'wassup_uninstall' option is set...applies to multisite subdomains and Wordpress 2.x setups only 
 	if(!empty($wassup_options->wassup_uninstall)){
 		register_deactivation_hook(__FILE__,'wassup_uninstall');
 	}else{
 		register_deactivation_hook(__FILE__,'wassup_deactivate');
 	}
 	if(!empty($_GET['page']) && stristr($_GET['page'],"wassup")!==false){
-		//manually run ajax action handler for topstats and older Wordpress setups
+		//manually run ajax action handler for Wassup ajax only
 		if(!empty($_REQUEST['action']) && isset($_REQUEST['wajax'])){
 			if(!defined('DOING_AJAX') || !DOING_AJAX){	//superfluous test..applies to 'admin-ajax.php' requests only
 				do_action('wp_ajax_wassup_action_handler',$_REQUEST['action']);
@@ -558,7 +584,7 @@ function wassup_add_scripts(){
 			wp_enqueue_script('spia', WASSUPURL.'/js/spia.js', array('jquery','wassup'), $vers);
 		}elseif($wassuppage == "wassup-options"){
 			//use Wordpress' jquery-ui.js only when current
-			if(version_compare($wp_version,'4.5','>=')){
+			if(version_compare($wp_version,'4.5','>=') || !function_exists('wassup_compat_add_scripts')){
 				wp_enqueue_script('jquery-ui-widget');
 				wp_enqueue_script('jquery-ui-tabs');
 				wp_enqueue_script('jquery-ui-dialog');
@@ -838,9 +864,11 @@ function wassupPrepend() {
  */
 function wassupAppend($req_code=0) {
 	global $wpdb,$wp_version,$current_user,$wassup_options,$wscreen_res,$wdebug_mode;
-	if(!defined('WASSUPVERSION')) wassup_init();
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()) return;	//nothing to do
+	}
 	//wassup must be active for recording to begin
-	if(!$wassup_options->is_recording_active()){	//do nothing
+	if(!$wassup_options->is_recording_active()){	//nothing to do
 		return;
 	}
 	//load additional wassup modules as needed
@@ -3772,7 +3800,7 @@ function wassup_foot() {
 <script language=javascript>
 //<![CDATA[
 	var screen_res = screen.width + " x " + screen.height;
-	document.cookie = "wassup_screen_res<?php echo $sessionhash;?>=" + encodeURIComponent(screen_res)+ "; path=/; domain=" + document.domain;
+	if (screen_res!=" x "){document.cookie = "wassup_screen_res<?php echo $sessionhash;?>=" + encodeURIComponent(screen_res)+ "; path=/; domain=" + document.domain;}
 //]]>
 </script>
 <?php
@@ -3841,7 +3869,9 @@ function wassup_cron_terminate(){
 /** For cleanup of temp records via wp-cron. @since v1.9 */
 function wassup_temp_cleanup($dbtasks=array()){
 	global $wassup_options;
-	if(!defined('WASSUPVERSION')) wassup_init();
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()) return;	//nothing to do
+	}
 	if($wassup_options->is_recording_active()){ //v1.9.1 bugfix
 		//do scheduled cleanup
 		if(empty($dbtasks)){
@@ -3855,7 +3885,9 @@ function wassup_temp_cleanup($dbtasks=array()){
 /** For automatic delete of old records via wp-cron. @since v1.9 */
 function wassup_auto_cleanup(){
 	global $wassup_options;
-	if(!defined('WASSUPVERSION')) wassup_init();
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()) return;	//nothing to do
+	}
 	//check that user can do auto delete
 	if($wassup_options->is_recording_active()){ //v1.9.1 bugfix
 		if(!empty($wassup_options->delete_auto) && $wassup_options->delete_auto!="never"){
@@ -3919,7 +3951,9 @@ function wIsAttack($http_target="") {
 //### Website content functions
 // START initializing Widget
 function wassup_widget_init(){
-	if(!defined('WASSUPVERSION')) wassup_init();
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()) return;	//nothing to do
+	}
 	$wassup_widget_classes=array(
 		'wassup_onlineWidget',
 		'wassup_topstatsWidget',
@@ -3940,7 +3974,9 @@ function wassup_widget_init(){
  */
 function wassup_sidebar($before_widget='',$after_widget='',$before_title='',$after_title='',$wtitle='',$wulclass='',$wchars=0,$wsearchlimit=0,$wreflimit=0,$wtopbrlimit=0,$wtoposlimit=0){
 	global $wpdb,$wassup_options,$wdebug_mode;
-	if(!defined('WASSUPVERSION')) wassup_init();
+	if(!defined('WASSUPURL')){
+		if(!wassup_init()) return;	//nothing to do
+	}
 	if(!function_exists('wassup_widget_get_cache')){
 		include_once(WASSUPDIR.'/widgets/widget_functions.php');
 	}

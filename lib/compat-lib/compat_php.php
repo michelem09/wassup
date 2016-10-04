@@ -420,7 +420,9 @@ class wassupOptions {
 	 */
 	function resetUserSettings($user_login="",$user=false){
 		global $current_user;
-		if(!defined('WASSUPVERSION')) wassup_init();
+		if(!defined('WASSUPURL')){
+			if(!wassup_init()) return; //nothing to do
+		}
 		if(empty($user)) $user=$current_user;
 		if(empty($user->ID)) $user=wp_get_current_user();
 		$wassup_user_settings=get_user_option('_wassup_settings',$user->ID);
@@ -1804,7 +1806,9 @@ class wassupDb{
 	 */
 	function temp_cleanup(){
 		global $wpdb,$wassup_options;
-		if(!defined('WASSUPVERSION')) wassup_init();
+		if(!defined('WASSUPURL')){
+			if(!wassup_init()) return; //nothing to do
+		}
 		$wassup_table=$wassup_options->wassup_table;
 		$wassup_tmp_table=$wassup_table . "_tmp";
 		$wassup_meta_table=$wassup_table . "_meta";
@@ -1821,7 +1825,9 @@ class wassupDb{
 	 */
 	function auto_cleanup(){
 		global $wpdb,$wassup_options;
-		if(!defined('WASSUPVERSION')) wassup_init();
+		if(!defined('WASSUPURL')){
+			if(!wassup_init()) return; //nothing to do
+		}
 		$deleted=0;
 		//do purge of old records
 		if(!empty($wassup_options->delete_auto) && $wassup_options->delete_auto!="never"){

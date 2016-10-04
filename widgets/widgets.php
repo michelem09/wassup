@@ -26,12 +26,14 @@ if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0?37;|&amp;#0?37;|&#0?38;#0?37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 unset($wfile);	//to free memory
 
 //-------------------------------------------------
-if(!defined('WASSUPVERSION')) wassup_init();
+if(!defined('WASSUPURL')){
+	if(!wassup_init()) exit;	//nothing to do
+}
 //load widget-functions.php module
 if(!function_exists('wassup_widget_clear_cache')) require_once(WASSUPDIR.'/widgets/widget_functions.php');
 

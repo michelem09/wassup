@@ -5,7 +5,6 @@
  * @package WassUp Real-time Analytics
  * @subpackage settings.php
  * @author helened (http://helenesit.com)
- *
  */
 //-------------------------------------------------
 //# No direct requests for this plugin module
@@ -26,7 +25,7 @@ if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0?37;|&amp;#0?37;|&#0?38;#0?37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 unset($wfile);	//to free memory
 //-------------------------------------------------
@@ -181,7 +180,7 @@ function wassup_optionsView($tab=0) {
 		}?><br/>
 		<hr/>
 		<h2><?php _e('Site Settings','wassup');?></h2>
-		<p class="noindent-opt"><?php echo __("Main site settings/default settings for network subsites.","wassup");?></p><?php
+		<p class="noindent-opt"><?php echo __("Main site settings / Default settings for new network subsites.","wassup");?></p><?php
 	} //end if multisite
 ?>
 		<h3><?php _e('Statistics Recording','wassup');?></h3>
@@ -520,8 +519,7 @@ function wassup_optionsView($tab=0) {
 			}
 		}?></p>
 		<p class="indent-opt"><label for="delayed_insert">&nbsp; <input type="checkbox" name="delayed_insert" value="1" <?php if(!empty($wassup_options->delayed_insert))echo $checked;?><?php echo $delayed_style;?>/> <strong><?php _e("Store new visitor records with \"delayed insert\"","wassup");?></strong></label>
-		</p><?php
-		echo "\n";?>
+		</p>
 		<br/>
 		<p class="submit"><input type="submit" name="submit-options3" id="submit-options3" class="submit-opt button button-left button-primary wassup-button" value="<?php _e('Save Settings','wassup');?>" onclick="jQuery('#submit-options3').val('Saving...');" />&nbsp;<input type="reset" name="reset" class="reset-opt button" value="<?php _e('Reset','wassup');?>" /> - <input type="submit" name="reset-to-default" class="default-opt button button-caution" value="<?php _e("Reset to Default", "wassup");?>" /></p>
 		<br/>
@@ -714,7 +712,7 @@ function wassup_optionsView($tab=0) {
 				echo $memory_use."M";
 			else _e("unknown","wassup");
 		?></li>
-	   	<li><strong>PHP <?php _e("Script Timeout Limit","wassup"); ?></strong>: <?php
+		<li><strong>PHP <?php _e("Script Timeout Limit","wassup"); ?></strong>: <?php
 			$max_execute = ini_get("max_execution_time");
 			if(is_numeric($max_execute)){
 				if($max_execute>0){

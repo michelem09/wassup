@@ -29,30 +29,70 @@ if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//'wp_die' is undefined here
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0?37;|&amp;#0?37;|&#0?38;#0?37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
-}
-$wassup_compatlib=dirname($wfile).'/compat-lib';
-//-------------------------------------------------
-//Check WordPress version and load Wordpress-compatibility modules
-if(version_compare($GLOBALS['wp_version'],'3.1','<')){
-	if(file_exists($wassup_compatlib.'/compat_wp.php')){
-		require_once($wassup_compatlib.'/compat_wp.php');
-	}else{
-		wp_die(__("Sorry, WassUp compatibility library is required for Wassup to run in your Wordpress setup.","wassup"));
-	}
-}
-if(version_compare($GLOBALS['wp_version'],'4.5','<')){
-	if(file_exists($wassup_compatlib.'/compat_functions.php')){
-		include_once($wassup_compatlib.'/compat_functions.php');
-	}
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 //-------------------------------------------------
-//Check PHP version and load PHP-compatibility module if needed
-if(version_compare(PHP_VERSION,'5.2','<')){
-	if(file_exists($wassup_compatlib.'/compat_php.php')){
-		require_once($wassup_compatlib.'/compat_php.php');
+/**
+ * Load Wassup compatibility modules if needed and return true if this Wordpress version is compatible with this copy of Wassup
+ * @since v1.9.1
+ */
+function wassup_load_compat_modules(){
+	global $wp_version;
+	$is_compatible=true;
+	if(version_compare($wp_version,'2.2','<')){
+		$is_compatible=false;
 	}else{
-		wp_die(__("Sorry, WassUp compatibility library is required for Wassup to run on your server.","wassup"));
+		$wassup_compatlib=WASSUPDIR.'/lib/compat-lib';
+		if(version_compare($wp_version,'3.1','<')){
+			if(file_exists($wassup_compatlib.'/compat_wp.php')){
+				require_once($wassup_compatlib.'/compat_wp.php');
+				include_once($wassup_compatlib.'/compat_functions.php');
+			}else{
+				$is_compatible=false;
+				//wp_die("Missing file $wassup_compatlib/compat_wp.php");	//debug
+			}
+		}elseif(version_compare($wp_version,'4.5','<')){
+			if(file_exists($wassup_compatlib.'/compat_functions.php')){
+				include_once($wassup_compatlib.'/compat_functions.php');
+			}
+		}
+		$php_vers=phpversion();
+		if(version_compare($php_vers,'5.2','<')){
+			if(file_exists($wassup_compatlib.'/compat_php.php')){
+				require_once($wassup_compatlib.'/compat_php.php');
+			}else{
+				$is_compatible=false;
+				//wp_die("Missing file $wassup_compatlib/compat_php.php");	//debug
+			}
+		}
+	}
+	return $is_compatible;
+}
+/**
+ * Show a message if this Wordpress version is incompatible with this copy of Wassup
+ * @since v1.9.1
+ */
+function wassup_show_compat_message(){
+	global $wp_version;
+	$msg="";
+	if(version_compare($wp_version,'2.2','<')){
+		$msg= __("Sorry, WassUp requires WordPress 2.2 or higher to work","wassup");
+	}else{
+		$php_vers=phpversion();
+		$wassup_compatlib=WASSUPDIR.'/lib/compat-lib';
+		$download_link='<a href="https://github.com/michelem09/wassup/releases/tag/v'.WASSUPVERSION.'">GitHub</a>';
+		if(version_compare($wp_version,'3.1','<') && !file_exists($wassup_compatlib.'/compat_wp.php')){
+			$msg= __("WARNING! WassUp's backward compatibility modules are missing.","wassup");
+			$msg .= ' '.sprintf(__('Download and install the full version of Wassup with compatibility library included directly from %s.','wassup'),$download_link);
+		}elseif(version_compare($php_vers,'5.2','<') && !file_exists($wassup_compatlib.'/compat_php.php')){
+			$msg= __("WARNING! WassUp's PHP compatibility module is missing.","wassup");
+			$msg .= ' '.sprintf(__('Download and install the full version of Wassup with compatibility library included directly from %s.','wassup'),$download_link);
+		}
+	}
+	if(!empty($msg)){
+		if(version_compare($wp_version,'4.1','>=')) $mstyle='class="notice notice-warning is-dismissible"';
+		else $mstyle='class="fade error" style="padding:1em;"';
+		echo '<div '.$mstyle.'>'.$msg.'</div>';
 	}
 }
-unset($wfile,$wassup_compatlib); //to free memory
+unset($wfile); //to free memory
