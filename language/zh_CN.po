@@ -1,0 +1,1468 @@
+# Simplified Chinese translation for wassup
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the wassup package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wassup\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-05-18 12:28+0100\n"
+"PO-Revision-Date: 2011-06-23 10:39+0000\n"
+"Last-Translator: tmpplus <Unknown>\n"
+"Language-Team: Simplified Chinese <zh_CN@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-01-12 09:52+0000\n"
+"X-Generator: Launchpad (build 16890)\n"
+
+#: wassup.php:45
+msgid "Sorry, Wassup requires WordPress 2.2 or higher to work"
+msgstr "抱歉，Wassup 需要在 WordPress 2.2 或更高版本上运行"
+
+#: wassup.php:406
+msgid "Hide Search"
+msgstr "隐藏搜索框"
+
+#: wassup.php:409
+#: wassup.php:1209
+#: wassup.php:1290
+#: lib/action.php:183
+msgid "Search"
+msgstr "搜索"
+
+#: wassup.php:414
+msgid "Hide TopTen"
+msgstr "隐藏排名前十的记录"
+
+#: wassup.php:417
+msgid "Show TopTen"
+msgstr "显示排名前十的记录"
+
+#: wassup.php:423
+msgid "Collapse All"
+msgstr "全部收起"
+
+#: wassup.php:426
+#: wassup.php:761
+#: wassup.php:857
+#: wassup.php:1165
+msgid "Expand All"
+msgstr "全部展开"
+
+#: wassup.php:431
+msgid "Expand Cronology"
+msgstr "按时间展开"
+
+#: wassup.php:434
+msgid "Collapse Cronology"
+msgstr "收起时间表"
+
+#: wassup.php:526
+msgid "Visitor Details"
+msgstr "游客详情"
+
+#: wassup.php:529
+msgid "Spy Visitors"
+msgstr "监视游客"
+
+#: wassup.php:529
+#: wassup.php:861
+msgid "SPY Visitors"
+msgstr "监视游客"
+
+#: wassup.php:530
+#: wassup.php:759
+msgid "Current Visitors Online"
+msgstr "当前在线游客"
+
+#: wassup.php:531
+#: wassup.php:917
+msgid "Options"
+msgstr "选项"
+
+#: wassup.php:629
+#: wassup.php:654
+msgid "Wassup options updated successfully"
+msgstr "Wassup 选项已成功更新"
+
+#: wassup.php:641
+msgid "Wassup uninstall option updated successfully"
+msgstr "Wassup 卸载选项已成功更新"
+
+#: wassup.php:649
+msgid "Wassup spam options updated successfully"
+msgstr "Wassup 垃圾邮件选项已成功更新"
+
+#: wassup.php:750
+msgid "Warning"
+msgstr "警告"
+
+#: wassup.php:750
+msgid "is NOT recording new statistics"
+msgstr "当前没有记录新数据"
+
+#: wassup.php:750
+msgid ""
+"To collect data you must check \"Enable/Disable recording\" in \"Options: "
+"Statistics Recording\" tab"
+msgstr "要收集数据你不许勾选\"选项:数据记录\"选项页中的\"启用/停用记录\""
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Legend"
+msgstr "图例"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Logged-in Users"
+msgstr "登录用户"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Comments Authors"
+msgstr "评论作者"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Spiders/bots"
+msgstr "搜索引擎"
+
+#: wassup.php:767
+msgid "Visitors online"
+msgstr "在线游客"
+
+#: wassup.php:791
+#: wassup.php:1319
+#: lib/main.php:641
+msgid "From your blog"
+msgstr "从你的博客"
+
+#: wassup.php:794
+#: wassup.php:1322
+#: lib/main.php:644
+msgid "Direct hit"
+msgstr "直接点击"
+
+#: wassup.php:814
+#: wassup.php:1389
+msgid "LOGGED IN USER"
+msgstr "登录用户"
+
+#: wassup.php:815
+#: wassup.php:818
+#: wassup.php:1405
+msgid "COMMENT AUTHOR"
+msgstr "已评论游客"
+
+#: wassup.php:864
+msgid "Pause"
+msgstr "暂停"
+
+#: wassup.php:865
+msgid "Play"
+msgstr "播放"
+
+#: wassup.php:866
+msgid "Spy items by"
+msgstr "监视项目按"
+
+#: wassup.php:918
+msgid ""
+"You can add a sidebar Widget with some useful statistics information by "
+"activating the"
+msgstr "若想在侧边栏显示实用的统计数据,你可以小工具菜单中激活"
+
+#: wassup.php:919
+msgid "Wassup Widget in the Widgets menu option"
+msgstr "Wassup 小工具"
+
+#: wassup.php:927
+msgid "Latest hits"
+msgstr "最近点击"
+
+#: wassup.php:929
+msgid "WassUp recording is disabled"
+msgstr "WassUp 记录被禁用"
+
+#: wassup.php:1041
+msgid "records deleted"
+msgstr "记录已删除"
+
+#: wassup.php:1102
+msgid "hide chart"
+msgstr "隐藏示意图"
+
+#: wassup.php:1102
+msgid "Hide the chart"
+msgstr "隐藏图表"
+
+#: wassup.php:1105
+msgid "show chart"
+msgstr "显示示意图"
+
+#: wassup.php:1105
+msgid "Show the chart"
+msgstr "显示图表"
+
+#: wassup.php:1115
+msgid "Summary for the last"
+msgstr "统计最近"
+
+#: wassup.php:1122
+msgid "Items per page"
+msgstr "每页显示项目数"
+
+#: wassup.php:1132
+msgid "Show items by"
+msgstr "显示种类"
+
+#: wassup.php:1151
+msgid "Visits"
+msgstr "访问数"
+
+#: wassup.php:1152
+msgid "Pageviews"
+msgstr "综合浏览量"
+
+#: wassup.php:1153
+msgid "Pages/Visits"
+msgstr "每次访问页数"
+
+#: wassup.php:1156
+msgid "Spams"
+msgstr "垃圾邮件数"
+
+#: wassup.php:1166
+msgid "Collapse Chronology"
+msgstr "收起时间表"
+
+#: wassup.php:1185
+msgid "Spam Options"
+msgstr "广告选项"
+
+#: wassup.php:1187
+#: lib/settings.php:182
+msgid "Enable/Disable Spam Check on Records"
+msgstr "启用/禁用 广告记录"
+
+#: wassup.php:1188
+#: lib/settings.php:185
+msgid "Record Akismet comment spam attempts"
+msgstr "记录 Akismet 广告记录"
+
+#: wassup.php:1189
+#: lib/settings.php:186
+msgid "Record referrer spam attempts"
+msgstr "记录广告来源"
+
+#: wassup.php:1190
+#: lib/settings.php:187
+msgid "Record admin break-in/hacker attempts"
+msgstr "记录管理员登陆或黑客攻击尝试"
+
+#: wassup.php:1191
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Save Settings"
+msgstr "保存设置"
+
+#: wassup.php:1200
+msgid "Filter by marked IP"
+msgstr "过滤标记的IP"
+
+#: wassup.php:1200
+msgid "show marked items"
+msgstr "显示标记的项目"
+
+#: wassup.php:1203
+msgid "Searched for"
+msgstr "搜索"
+
+#: wassup.php:1205
+msgid "Auto refresh in"
+msgstr "自动刷新间隔"
+
+#: wassup.php:1205
+#: lib/settings.php:334
+#: lib/settings.php:423
+msgid "seconds"
+msgstr "秒"
+
+#: wassup.php:1209
+msgid "Top Ten"
+msgstr "前十名"
+
+#: wassup.php:1209
+msgid "Show Top Ten"
+msgstr "显示前十"
+
+#: wassup.php:1263
+#: lib/action.php:175
+msgid "Raw data"
+msgstr "原始数据"
+
+#: wassup.php:1266
+msgid "Visit type"
+msgstr "浏览类型"
+
+#: wassup.php:1268
+msgid "Logged-in user"
+msgstr "已登录用户"
+
+#: wassup.php:1270
+msgid "Spammer/Hacker"
+msgstr "广告发布者/黑客"
+
+#: wassup.php:1272
+msgid "Spammer"
+msgstr "广告发布者"
+
+#: wassup.php:1274
+msgid "Comment author"
+msgstr "评论作者"
+
+#: wassup.php:1276
+msgid "Feed"
+msgstr "源"
+
+#: wassup.php:1278
+#: lib/wassup.class.php:232
+msgid "Spider"
+msgstr "搜索引擎抓取"
+
+#: wassup.php:1280
+msgid "Regular visitor"
+msgstr "普通游客"
+
+#: wassup.php:1283
+#: lib/action.php:178
+msgid "IP"
+msgstr "IP地址"
+
+#: wassup.php:1284
+#: wassup.php:1356
+#: lib/action.php:179
+msgid "Hostname"
+msgstr "主机名"
+
+#: wassup.php:1285
+msgid "Url Requested"
+msgstr "Url 请求"
+
+#: wassup.php:1286
+#: wassup.php:1361
+#: lib/action.php:180
+msgid "User Agent"
+msgstr "用户代理"
+
+#: wassup.php:1287
+#: wassup.php:1356
+#: lib/action.php:181
+msgid "Referrer"
+msgstr "来源"
+
+#: wassup.php:1289
+msgid "Search Engine"
+msgstr "搜索引擎"
+
+#: wassup.php:1291
+msgid "Page"
+msgstr "页"
+
+#: wassup.php:1294
+#: wassup.php:1450
+#: lib/action.php:186
+msgid "OS"
+msgstr "操作系统"
+
+#: wassup.php:1297
+#: lib/action.php:189
+msgid "Browser"
+msgstr "浏览器"
+
+#: wassup.php:1300
+msgid "Locale/Language"
+msgstr "本地/语言"
+
+#: wassup.php:1303
+msgid "Screen Resolution"
+msgstr "屏幕分辨率"
+
+#: wassup.php:1306
+msgid "End timestamp"
+msgstr "结束时间戳"
+
+#: wassup.php:1332
+#: wassup.php:1337
+msgid "delete"
+msgstr "刪除"
+
+#: wassup.php:1332
+msgid "Delete ALL marked records with this IP"
+msgstr "删除此 IP 的所有记录"
+
+#: wassup.php:1334
+msgid "unmark"
+msgstr "未标记"
+
+#: wassup.php:1334
+msgid "UnMark IP"
+msgstr "未标记的 IP"
+
+#: wassup.php:1337
+msgid "Delete this record"
+msgstr "删除此记录"
+
+#: wassup.php:1339
+msgid "mark"
+msgstr "标记"
+
+#: wassup.php:1339
+msgid "Mark IP"
+msgstr "标记该 IP"
+
+#: wassup.php:1342
+msgid "show raw table"
+msgstr "显示原始数据表"
+
+#: wassup.php:1342
+msgid "Show the items as raw table"
+msgstr "将这些项目显示为原始数据表"
+
+#: wassup.php:1380
+msgid "SEARCH ENGINE"
+msgstr "搜索引擎"
+
+#: wassup.php:1380
+msgid "page"
+msgstr "页"
+
+#: wassup.php:1381
+msgid "KEYWORDS"
+msgstr "关键词"
+
+#: wassup.php:1399
+msgid "ADMINISTRATOR"
+msgstr "系统管理员"
+
+#: wassup.php:1417
+msgid "FEEDREADER"
+msgstr "feed阅读器"
+
+#: wassup.php:1419
+msgid "SUBSCRIBER(S)"
+msgstr "订阅数"
+
+#: wassup.php:1424
+msgid "SPIDER"
+msgstr "搜索引擎抓取"
+
+#: wassup.php:1432
+msgid "Probably SPAM!"
+msgstr "可能为广告"
+
+#: wassup.php:1433
+msgid "Referer Spam"
+msgstr "广告来源"
+
+#: wassup.php:1434
+#: lib/wassup.class.php:234
+msgid "Spam"
+msgstr "广告"
+
+#: wassup.php:1440
+msgid "Probably hack attempt!"
+msgstr "可能的黑客攻击尝试!"
+
+#: wassup.php:1448
+#: lib/action.php:192
+msgid "Language"
+msgstr "语言"
+
+#: wassup.php:1451
+msgid "BROWSER"
+msgstr "浏览器"
+
+#: wassup.php:1453
+msgid "RESOLUTION"
+msgstr "分辨率"
+
+#: wassup.php:1509
+msgid "Graph of visitor hits"
+msgstr "游客点击图表"
+
+#: wassup.php:1511
+msgid "Too few records to print chart"
+msgstr "没有足够的记录以显示图表"
+
+#: wassup.php:1527
+msgid "Check the official"
+msgstr "检查官方网站"
+
+#: wassup.php:1527
+msgid "page for updates, bug reports and your hints to improve it"
+msgstr "以获取更新,bug 报告或提供建议"
+
+#: wassup.php:1527
+msgid "User Guide documentation"
+msgstr "用户指导文档"
+
+#: wassup.php:1528
+msgid "Exec time"
+msgstr "执行时间"
+
+#: wassup.php:2349
+msgid "WassUp Plugin table has reached maximum size!"
+msgstr "WassUp 记录达到了最大值!"
+
+#: wassup.php:2350
+msgid "Hi"
+msgstr "你好!"
+
+#: wassup.php:2350
+msgid ""
+"you have received this email because your WassUp Database table at your "
+"Wordpress blog"
+msgstr "你收到这封emai是因为你的Wordpress博客"
+
+#: wassup.php:2350
+msgid "has reached the maximum value you set in the options menu"
+msgstr "的 WassUp 数据表达到了你设定的最大值"
+
+#: wassup.php:2351
+msgid ""
+"This is only a reminder, please take the actions you want in the WassUp "
+"options menu"
+msgstr "这仅是一个提醒,请自行在 WassUp 的选项菜单中进行操作"
+
+#: wassup.php:2351
+msgid "This alert now will be removed and you will be able to set a new one"
+msgstr "这个警告将被移除,并且你将可以设定一个新的数据表"
+
+#: wassup.php:2352
+msgid ""
+"Thank you for using WassUp plugin. Check if there is a new version available "
+"here:"
+msgstr "感谢您使用 WassUp 插件,若要获得新版本请检查这里:"
+
+#: wassup.php:2352
+msgid "Have a nice day!"
+msgstr "祝您过得愉快!"
+
+#: wassup.php:2480
+msgid "Stats"
+msgstr "状态"
+
+#: wassup.php:2480
+msgid "More"
+msgstr "更多"
+
+#: wassup.php:2482
+#: wassup.php:3838
+msgid "visitor stats chart"
+msgstr "游客统计图表"
+
+#: wassup.php:2672
+msgid "encrypted search"
+msgstr "加密搜索"
+
+#: wassup.php:3340
+msgid "Error getting table details"
+msgstr "获取数据表信息时出现错误"
+
+#: wassup.php:3348
+#, php-format
+msgid "Delete any existing table %s"
+msgstr "删除一个存在的数据表 %s"
+
+#: wassup.php:3359
+#, php-format
+msgid "Table structure of table %s"
+msgstr "表格结构 %s"
+
+#: wassup.php:3367
+#, php-format
+msgid "Error with SHOW CREATE TABLE for %s."
+msgstr "显示创建表格 %s 时发生错误."
+
+#: wassup.php:3374
+#, php-format
+msgid "Error getting table structure of %s"
+msgstr "获取数据表 %s 信息时发生错误"
+
+#: wassup.php:3382
+#, php-format
+msgid "Data contents of table %s"
+msgstr "数据表 %s 中的内容"
+
+#: wassup.php:3443
+#, php-format
+msgid "End of data contents of table %s"
+msgstr "数据表 %s 的末尾"
+
+#: wassup.php:3455
+msgid "If above timestamp is not current time, this page is cached"
+msgstr "如果上面的时间戳不是当前时间,该页将被缓存"
+
+#: wassup.php:3486
+#: wassup.php:3740
+msgid "No Data"
+msgstr "无数据"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+#: wassup.php:3814
+msgid "powered by"
+msgstr "强力驱动由"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+msgid "Real Time Visitors Tracking"
+msgstr "实时游客跟踪"
+
+#: wassup.php:3497
+msgid "Last searched terms"
+msgstr "最近搜索条目"
+
+#: wassup.php:3510
+msgid "Last referers"
+msgstr "最近来源"
+
+#: wassup.php:3525
+#: lib/settings.php:149
+msgid "Top Browsers"
+msgstr "最热门浏览器"
+
+#: wassup.php:3540
+#: lib/settings.php:150
+msgid "Top OS"
+msgstr "最热门操作系统"
+
+#: wassup.php:3559
+msgid "visitor(s) online"
+msgstr "在线游客数"
+
+#: wassup.php:3562
+msgid "logged-in user(s)"
+msgstr "登陆用户数"
+
+#: wassup.php:3566
+msgid "comment author(s)"
+msgstr "已评论游客数"
+
+#: wassup.php:3632
+msgid "Title"
+msgstr "标题"
+
+#: wassup.php:3634
+msgid "default \"Visitors Online\""
+msgstr "默认\"在线用户\""
+
+#: wassup.php:3637
+msgid "Stylesheet class for &lt;ul&gt; attribute"
+msgstr ""
+
+#: wassup.php:3639
+msgid "default \"links\""
+msgstr ""
+
+#: wassup.php:3642
+msgid "Number of characters to display from left"
+msgstr ""
+
+#: wassup.php:3644
+msgid "For template compatibility - default 18"
+msgstr ""
+
+#: wassup.php:3649
+msgid "Show number of logged-in users online"
+msgstr ""
+
+#: wassup.php:3650
+msgid "Stats recording must be enabled in WassUp options"
+msgstr ""
+
+#: wassup.php:3651
+#: wassup.php:3657
+#: wassup.php:3663
+#: wassup.php:3675
+msgid "default Yes"
+msgstr ""
+
+#: wassup.php:3656
+msgid "Show number of comment authors online"
+msgstr ""
+
+#: wassup.php:3662
+msgid "Show latest searches"
+msgstr ""
+
+#: wassup.php:3666
+msgid "How many searches?"
+msgstr ""
+
+#: wassup.php:3668
+#: wassup.php:3680
+#: wassup.php:3692
+#: wassup.php:3704
+msgid "default 5"
+msgstr ""
+
+#: wassup.php:3674
+msgid "Show latest external referrers"
+msgstr ""
+
+#: wassup.php:3678
+msgid "How many referrers?"
+msgstr ""
+
+#: wassup.php:3686
+msgid "Show top browsers"
+msgstr ""
+
+#: wassup.php:3686
+#: wassup.php:3698
+msgid "default No"
+msgstr ""
+
+#: wassup.php:3687
+#: wassup.php:3699
+msgid "Enabling it could slow down blog)"
+msgstr ""
+
+#: wassup.php:3690
+msgid "How many browsers?"
+msgstr ""
+
+#: wassup.php:3698
+msgid "Show top operating systems"
+msgstr ""
+
+#: wassup.php:3702
+msgid "How many operating systems?"
+msgstr ""
+
+#: wassup.php:3713
+msgid "Wassup Widget"
+msgstr "Wassup 小工具"
+
+#: wassup.php:3839
+msgid "More Stats"
+msgstr ""
+
+#: lib/action.php:125
+msgid "ERROR: file not found"
+msgstr "错误: 找不到文件"
+
+#: lib/action.php:143
+msgid "ERROR: bad date"
+msgstr "错误: 损坏的数据"
+
+#: lib/action.php:257
+msgid "TOP QUERY"
+msgstr "最热门搜索关键字"
+
+#: lib/action.php:276
+msgid "TOP REFERRER"
+msgstr ""
+
+#: lib/action.php:302
+msgid "TOP REQUEST"
+msgstr "最热门搜索关键字"
+
+#: lib/action.php:323
+msgid "TOP BROWSER"
+msgstr "最热门浏览器"
+
+#: lib/action.php:343
+msgid "TOP OS"
+msgstr "最热门操作系统"
+
+#: lib/action.php:364
+msgid "TOP LOCALE"
+msgstr ""
+
+#: lib/action.php:391
+msgid "TOP VISITOR"
+msgstr ""
+
+#: lib/action.php:409
+msgid "This top ten doesn't include Spam records"
+msgstr "该前十列表不包括广告记录"
+
+#: lib/action.php:414
+msgid "ERROR: Missing or unknown parameters"
+msgstr "错误: 参数缺少或错误"
+
+#: lib/action.php:423
+msgid "ERROR: Nothing to do here"
+msgstr "错误: 没有任何可执行操作"
+
+#: lib/main.php:85
+msgid "Next"
+msgstr "下一页"
+
+#: lib/main.php:87
+msgid "Previous"
+msgstr "上一页"
+
+#: lib/main.php:120
+#: lib/main.php:124
+msgid "It is necessary to specify the"
+msgstr "需要明确"
+
+#: lib/main.php:120
+msgid "number of pages"
+msgstr "页数"
+
+#: lib/main.php:124
+msgid "limit of items"
+msgstr "项目数限制"
+
+#: lib/main.php:124
+msgid "to show per page"
+msgstr "每页显示"
+
+#: lib/main.php:209
+msgid "Pages"
+msgstr "页数"
+
+#: lib/main.php:777
+msgid "No visitor activity"
+msgstr "无游客活动"
+
+#: lib/main.php:1179
+msgid "Last 6 Hours"
+msgstr "最近 6 小时"
+
+#: lib/main.php:1185
+msgid "Last 7 Days"
+msgstr "最近 7 天"
+
+#: lib/main.php:1192
+msgid "Last Month"
+msgstr "最近 1 个月"
+
+#: lib/main.php:1199
+msgid "Last 3 Months"
+msgstr ""
+
+#: lib/main.php:1205
+msgid "Last 6 Months"
+msgstr ""
+
+#: lib/main.php:1211
+msgid "Last Year"
+msgstr "最近 1 年"
+
+#: lib/main.php:1217
+msgid "All Time"
+msgstr ""
+
+#: lib/main.php:1224
+msgid "Last 24 Hours"
+msgstr "最近 24 小时"
+
+#: lib/settings.php:31
+msgid ""
+"ATTENTION! Your WassUp table have reached the maximum value you set, I "
+"disabled the alert, you can re-enable it here."
+msgstr "注意! 你的 WassUp 数据表达到了你所设定的最大值, 现已关闭了该警报, 但你可以在这里重新开启警报."
+
+#: lib/settings.php:55
+msgid "Select the options you want for the WassUp plugin"
+msgstr "选择你想要的 WassUp 选项"
+
+#: lib/settings.php:62
+msgid "General Setup"
+msgstr "常规设置"
+
+#: lib/settings.php:63
+msgid "Statistics Recording"
+msgstr "统计记录"
+
+#: lib/settings.php:64
+msgid "Manage Files & Database"
+msgstr "管理文件和数据"
+
+#: lib/settings.php:65
+msgid "Uninstall"
+msgstr "卸载"
+
+#: lib/settings.php:69
+msgid "Your default screen resolution (browser width)"
+msgstr "你默认的显示分辨率(浏览器宽度)"
+
+#: lib/settings.php:70
+msgid "Default screen resolution (in pixels)"
+msgstr "默认显示分辨率 (按像素)"
+
+#: lib/settings.php:75
+msgid ""
+"Set minimum users level which can view and manage WassUp plugin (default "
+"Administrators)"
+msgstr "设置可以查看和管理 WassUp 插件的用户最低等级 (默认为 Administrators)"
+
+#: lib/settings.php:80
+msgid "Dashboard Settings"
+msgstr ""
+
+#: lib/settings.php:81
+msgid "Display small chart in the dashboard"
+msgstr ""
+
+#: lib/settings.php:84
+msgid "GEO IP Map (Spy view)"
+msgstr ""
+
+#: lib/settings.php:89
+msgid "Display a GEO IP Map in the spy visitors view"
+msgstr ""
+
+#: lib/settings.php:97
+#: lib/settings.php:456
+msgid "WARNING"
+msgstr "警告"
+
+#: lib/settings.php:97
+msgid "Activation problem >> Error code"
+msgstr ""
+
+#: lib/settings.php:105
+msgid "key"
+msgstr ""
+
+#: lib/settings.php:105
+msgid "signup for your key"
+msgstr ""
+
+#: lib/settings.php:108
+msgid "Geo IP Map requires"
+msgstr ""
+
+#: lib/settings.php:108
+msgid "Please install it to be able to activate this feature"
+msgstr ""
+
+#: lib/settings.php:112
+msgid "Time format"
+msgstr "时间格式"
+
+#: lib/settings.php:113
+msgid "Time format 12/24 hour"
+msgstr ""
+
+#: lib/settings.php:116
+msgid "Visitor Detail Settings"
+msgstr ""
+
+#: lib/settings.php:117
+msgid "Show chart type - How many axes"
+msgstr ""
+
+#: lib/settings.php:123
+msgid "Set how many minutes wait for automatic page refresh"
+msgstr "设置自动刷新数据的时间"
+
+#: lib/settings.php:123
+msgid "Current Visitors Online and Visitors Details"
+msgstr "更新当前在线游客和游客详细资料"
+
+#: lib/settings.php:124
+msgid "refresh minutes (default 3)"
+msgstr "刷新时间 (默认为 3)"
+
+#: lib/settings.php:126
+msgid "Show visitor details for"
+msgstr "显示游客详细资料的种类"
+
+#: lib/settings.php:131
+msgid "Number of items per page"
+msgstr "每页显示的项目数"
+
+#: lib/settings.php:140
+msgid "Customize Top Ten List"
+msgstr "自定义前十列表"
+
+#: lib/settings.php:141
+msgid "Choose one or more items for your Top Ten list"
+msgstr "为你的前十列表选择至少一个项目"
+
+#: lib/settings.php:141
+msgid "over 5 selections may cause horizontal scrolling"
+msgstr "超过五个选择将需要水平滚动"
+
+#: lib/settings.php:144
+msgid "Top Searches"
+msgstr "最热门搜索引擎"
+
+#: lib/settings.php:145
+msgid "Top Referrers"
+msgstr "最多的来源"
+
+#: lib/settings.php:146
+msgid "Top Requests"
+msgstr "最多的请求"
+
+#: lib/settings.php:151
+msgid "Top Locales"
+msgstr "最多的来访位置"
+
+#: lib/settings.php:154
+msgid "Top Visitors"
+msgstr "最忠诚的游客"
+
+#: lib/settings.php:156
+msgid "Top Feeds"
+msgstr "最热门的Feed"
+
+#: lib/settings.php:157
+msgid "Top Crawlers"
+msgstr "最多的搜索引擎抓取"
+
+#: lib/settings.php:161
+msgid "Websites/domains to exclude from top referrers"
+msgstr ""
+
+#: lib/settings.php:164
+msgid "Comma separated value"
+msgstr ""
+
+#: lib/settings.php:165
+msgid "Don't list your website domain defined in WordPress"
+msgstr ""
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset"
+msgstr "重置"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset to Default Settings"
+msgstr "恢复默认设置"
+
+#: lib/settings.php:172
+msgid "Statistics Recording Settings"
+msgstr "统计记录设置"
+
+#: lib/settings.php:173
+msgid "Enable/Disable Recording"
+msgstr "启用/禁用 记录"
+
+#: lib/settings.php:174
+msgid "Checkbox to record statistics for each type of \"visitor\""
+msgstr "选择需要统计的游客种类"
+
+#: lib/settings.php:176
+msgid "Record logged in users"
+msgstr "记录已登陆用户"
+
+#: lib/settings.php:177
+msgid "Record logged in administrators"
+msgstr ""
+
+#: lib/settings.php:178
+msgid "Record spiders and bots"
+msgstr "记录搜索引擎抓取"
+
+#: lib/settings.php:179
+msgid "Record attack/exploit attempts (libwww-perl agent)"
+msgstr "记录攻击尝试"
+
+#: lib/settings.php:183
+msgid "Checkbox to record statistics for each type of \"spam\""
+msgstr "选择需要统计的广告种类"
+
+#: lib/settings.php:185
+msgid "check if an IP has previous comments as spam"
+msgstr ""
+
+#: lib/settings.php:191
+msgid "Statistics Recording Exceptions"
+msgstr ""
+
+#: lib/settings.php:193
+msgid "Sites"
+msgstr "站点"
+
+#: lib/settings.php:193
+msgid "Enter source IPs to exclude from recording"
+msgstr "禁止统计的 IP 列表"
+
+#: lib/settings.php:195
+msgid "comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...)"
+msgstr "用半角逗号分隔"
+
+#: lib/settings.php:197
+msgid "Users"
+msgstr ""
+
+#: lib/settings.php:197
+msgid "Enter usernames to exclude from recording"
+msgstr ""
+
+#: lib/settings.php:199
+msgid ""
+"comma separated value, enter a registered user's login name (ex: bobmarley, "
+"enyabrennan, etc.)"
+msgstr ""
+
+#: lib/settings.php:200
+msgid "Posts/pages"
+msgstr ""
+
+#: lib/settings.php:200
+msgid "enter requested URLs to exclude from recording"
+msgstr ""
+
+#: lib/settings.php:202
+msgid ""
+"comma separated value, don't enter entire url, only the last path or some "
+"word to exclude (ex: /category/wordpress, 2007, etc...)"
+msgstr ""
+
+#: lib/settings.php:231
+#: lib/settings.php:233
+msgid "Rescan Old Records"
+msgstr "重新扫描旧记录"
+
+#: lib/settings.php:232
+msgid ""
+"Statistical records collected by earlier versions of WassUp may not have the "
+"latest spider, search engine, and spam data properly identified.  Click the "
+"\"Rescan\" button to retroactively scan and update old records"
+msgstr "早期版本的 WassUp 所搜集的统计记录中的部分数据可能无法兼容新版本.  点击 \"重新扫描\" 按钮以重新扫描并更新旧的记录"
+
+#: lib/settings.php:236
+msgid "Select actions for table growth"
+msgstr "选择应对数据表增长的操作"
+
+#: lib/settings.php:237
+msgid ""
+"WassUp table grows very fast (especially if your blog is frequently "
+"visited), I recommend you to delete old records sometimes. You can select "
+"any option below to reset it, delete old records automatically or manually. "
+"(If you haven't database space problems you can leave the table as is)"
+msgstr ""
+"WassUp 的数据表增长地非常快 (特别是当你的博客频繁地被访问时), 我推荐你定期删除旧的记录. 你可以选择以下任何选项以重置数据表, "
+"以及自动或手动删除旧记录. (如果你没有数据库空间问题,你可以不管下面的选项)"
+
+#: lib/settings.php:238
+msgid "Current WassUp table usage is"
+msgstr "当前 WassUp 数据表的大小为"
+
+#: lib/settings.php:244
+msgid "records"
+msgstr "记录数"
+
+#: lib/settings.php:247
+msgid "Alert me"
+msgstr "警告我"
+
+#: lib/settings.php:247
+msgid "email to"
+msgstr "发送电子邮件至"
+
+#: lib/settings.php:247
+msgid "when table reaches"
+msgstr "当数据表大小到达"
+
+#: lib/settings.php:249
+msgid "Empty table"
+msgstr "空数据表"
+
+#: lib/settings.php:250
+msgid "export table in SQL format"
+msgstr "以 SQL 格式导出数据表"
+
+#: lib/settings.php:252
+msgid "backup table to server file"
+msgstr ""
+
+#: lib/settings.php:254
+msgid "Automatically delete records older than:"
+msgstr "自动删除超过天数的记录:"
+
+#: lib/settings.php:258
+msgid "Delete NOW records older than:"
+msgstr "删除超过天数的\"现在\"记录:"
+
+#: lib/settings.php:260
+msgid "Action is NOT undoable"
+msgstr "该操作可行"
+
+#: lib/settings.php:261
+#: lib/wassup.class.php:259
+#: lib/wassup.class.php:269
+msgid "24 hours"
+msgstr "24小时"
+
+#: lib/settings.php:262
+#: lib/wassup.class.php:260
+msgid "1 week"
+msgstr "1周"
+
+#: lib/settings.php:263
+#: lib/wassup.class.php:261
+#: lib/wassup.class.php:271
+msgid "1 month"
+msgstr "1个月"
+
+#: lib/settings.php:264
+#: lib/wassup.class.php:262
+#: lib/wassup.class.php:272
+msgid "3 months"
+msgstr "3个月"
+
+#: lib/settings.php:265
+#: lib/wassup.class.php:263
+#: lib/wassup.class.php:273
+msgid "6 months"
+msgstr "6个月"
+
+#: lib/settings.php:266
+#: lib/wassup.class.php:264
+#: lib/wassup.class.php:274
+msgid "1 year"
+msgstr "1年"
+
+#: lib/settings.php:270
+msgid "Server Settings and Memory Resources"
+msgstr ""
+
+#: lib/settings.php:271
+msgid "For information only. Some values may be adjustable in startup files"
+msgstr ""
+
+#: lib/settings.php:271
+msgid "and"
+msgstr ""
+
+#: lib/settings.php:271
+msgid "or"
+msgstr ""
+
+#: lib/settings.php:272
+#: lib/settings.php:287
+#: lib/settings.php:350
+msgid "Version"
+msgstr "版本"
+
+#: lib/settings.php:273
+msgid "Host Server"
+msgstr ""
+
+#: lib/settings.php:283
+#: lib/settings.php:319
+#: lib/settings.php:329
+#: lib/settings.php:335
+#: lib/settings.php:350
+#: lib/settings.php:353
+#: lib/settings.php:397
+#: lib/settings.php:407
+#: lib/settings.php:418
+#: lib/settings.php:425
+#: lib/settings.php:434
+#: lib/settings.php:445
+msgid "unknown"
+msgstr ""
+
+#: lib/settings.php:285
+msgid "Time Offset"
+msgstr ""
+
+#: lib/settings.php:286
+msgid "hours"
+msgstr ""
+
+#: lib/settings.php:288
+msgid "Safe Mode"
+msgstr "安全模式"
+
+#: lib/settings.php:291
+#: lib/settings.php:300
+msgid "on"
+msgstr ""
+
+#: lib/settings.php:293
+#: lib/settings.php:298
+msgid "off"
+msgstr ""
+
+#: lib/settings.php:294
+msgid "File Open Restrictions"
+msgstr ""
+
+#: lib/settings.php:304
+msgid "Memory Allocation"
+msgstr ""
+
+#: lib/settings.php:322
+msgid "Memory Usage"
+msgstr "内存使用"
+
+#: lib/settings.php:332
+msgid "Script Timeout Limit"
+msgstr ""
+
+#: lib/settings.php:337
+msgid "Browser Capabilities File"
+msgstr ""
+
+#: lib/settings.php:339
+msgid "not set"
+msgstr "未设置"
+
+#: lib/settings.php:343
+msgid "not installed"
+msgstr ""
+
+#: lib/settings.php:344
+msgid "installed"
+msgstr "已安装"
+
+#: lib/settings.php:351
+msgid "Engine"
+msgstr ""
+
+#: lib/settings.php:389
+msgid "Query Cache"
+msgstr ""
+
+#: lib/settings.php:394
+#: lib/settings.php:404
+#: lib/settings.php:415
+msgid "disabled"
+msgstr "已禁用"
+
+#: lib/settings.php:399
+msgid "Index (Key) Buffer"
+msgstr ""
+
+#: lib/settings.php:410
+msgid "Read Buffer"
+msgstr ""
+
+#: lib/settings.php:421
+msgid "Wait Timeout"
+msgstr ""
+
+#: lib/settings.php:428
+msgid "Char Set/Collation"
+msgstr ""
+
+#: lib/settings.php:437
+msgid "Timezone"
+msgstr "时区"
+
+#: lib/settings.php:452
+msgid "Want to uninstall WassUp?"
+msgstr "想要卸载 WassUp"
+
+#: lib/settings.php:453
+msgid ""
+"No problem. Before you deactivate this plugin, check the box below to "
+"cleanup any data that was collected by WassUp that could be left behind."
+msgstr "没问题. 在你停用这个插件前, 选择下面的选项以清理所有 WassUp 留下的数据."
+
+#: lib/settings.php:454
+msgid "Permanently remove WassUp data and settings from Wordpress"
+msgstr "从Wordpress永久移除 WassUp 的数据和设置"
+
+#: lib/settings.php:456
+msgid ""
+"All WassUp data and settings will be DELETED upon deactivation of this plugin"
+msgstr ""
+
+#: lib/settings.php:458
+msgid ""
+"This action cannot be undone. Before uninstalling WassUp, you should backup "
+"your Wordpress database first. WassUp data is stored in the table"
+msgstr "该操作不能被恢复. 在卸载 WassUp 前, 请确保已经备份了你的 Wordpress 数据库. WassUp 数据储存在以下数据表中"
+
+#: lib/settings.php:460
+msgid "To help improve this plugin, we would appreciate your feedback at"
+msgstr "如果你愿意帮助改进这个插件,我们将非常感谢你提供反馈在"
+
+#: lib/wassup.class.php:208
+msgid "Administrator"
+msgstr "管理员"
+
+#: lib/wassup.class.php:209
+msgid "Editor"
+msgstr ""
+
+#: lib/wassup.class.php:210
+msgid "Author"
+msgstr "作者"
+
+#: lib/wassup.class.php:215
+msgid "None - don't show chart"
+msgstr ""
+
+#: lib/wassup.class.php:216
+msgid "One - 2 lines chart 1 axis"
+msgstr ""
+
+#: lib/wassup.class.php:217
+msgid "Two - 2 lines chart 2 axes"
+msgstr ""
+
+#: lib/wassup.class.php:231
+msgid "Everything"
+msgstr "所有内容"
+
+#: lib/wassup.class.php:233
+msgid "No spider"
+msgstr "除去搜索引起抓取"
+
+#: lib/wassup.class.php:235
+msgid "No Spam"
+msgstr "除去广告"
+
+#: lib/wassup.class.php:236
+msgid "No Spam, No Spider"
+msgstr "除去广告,搜索引擎抓取"
+
+#: lib/wassup.class.php:237
+msgid "Users logged in"
+msgstr "已登录用户"
+
+#: lib/wassup.class.php:238
+msgid "Comment authors"
+msgstr "已评论游客"
+
+#: lib/wassup.class.php:239
+msgid "Referrer from search engine"
+msgstr ""
+
+#: lib/wassup.class.php:240
+msgid "Referrer from ext link"
+msgstr ""
+
+#: lib/wassup.class.php:258
+msgid "Don't delete anything"
+msgstr "不要删除任何东西"
+
+#: lib/wassup.class.php:268
+msgid "6 hours"
+msgstr ""
+
+#: lib/wassup.class.php:270
+msgid "7 days"
+msgstr "7天"
+
+#: lib/wassup.class.php:275
+msgid "all time"
+msgstr ""

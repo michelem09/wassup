@@ -1,0 +1,1507 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WassUp 1.4.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-18 12:28+0100\n"
+"PO-Revision-Date: 2012-09-26 10:30+0000\n"
+"Last-Translator: Biffaboy <Unknown>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-01-12 09:52+0000\n"
+"X-Generator: Launchpad (build 16890)\n"
+"X-Poedit-SearchPath-0: /home/m1k/Desktop/wassup_translation/trunk\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: __;_e\n"
+
+#: wassup.php:45
+msgid "Sorry, Wassup requires WordPress 2.2 or higher to work"
+msgstr ""
+"Üzgünüm, ancak WassUp'un çalışabilmesi için en düşük WordPress 2.2'ye sahip "
+"olmalısınız."
+
+#: wassup.php:406
+msgid "Hide Search"
+msgstr "Aramayı Gizle"
+
+#: wassup.php:409
+#: wassup.php:1209
+#: wassup.php:1290
+#: lib/action.php:183
+msgid "Search"
+msgstr "Arama"
+
+#: wassup.php:414
+msgid "Hide TopTen"
+msgstr "En Çok Kullanılan 10'u Gizle"
+
+#: wassup.php:417
+msgid "Show TopTen"
+msgstr "Show TopTen"
+
+#: wassup.php:423
+msgid "Collapse All"
+msgstr "Tümünü Topla"
+
+#: wassup.php:426
+#: wassup.php:761
+#: wassup.php:857
+#: wassup.php:1165
+msgid "Expand All"
+msgstr "Tümünü Aç"
+
+#: wassup.php:431
+msgid "Expand Cronology"
+msgstr "Kronolojiyi Aç"
+
+#: wassup.php:434
+msgid "Collapse Cronology"
+msgstr "Kronolojiyi Kapat"
+
+#: wassup.php:526
+msgid "Visitor Details"
+msgstr "Ziyaretçi Detayları"
+
+#: wassup.php:529
+msgid "Spy Visitors"
+msgstr "Ziyaretçileri Gözetle"
+
+#: wassup.php:529
+#: wassup.php:861
+msgid "SPY Visitors"
+msgstr "Ziyaretçileri GÖZETLE"
+
+#: wassup.php:530
+#: wassup.php:759
+msgid "Current Visitors Online"
+msgstr "Çevrimiçi Ziyaretçiler"
+
+#: wassup.php:531
+#: wassup.php:917
+msgid "Options"
+msgstr "Ayarlar"
+
+#: wassup.php:629
+#: wassup.php:654
+msgid "Wassup options updated successfully"
+msgstr "Wassup seçenekleri  başarıyla  güncelleştirildi"
+
+#: wassup.php:641
+msgid "Wassup uninstall option updated successfully"
+msgstr "Wassup kaldırma seçeneği başarıyla güncelleştirildi"
+
+#: wassup.php:649
+msgid "Wassup spam options updated successfully"
+msgstr "Wassup spam seçenekleri başarıyla  güncelleştirildi"
+
+#: wassup.php:750
+msgid "Warning"
+msgstr "Uyarı"
+
+#: wassup.php:750
+msgid "is NOT recording new statistics"
+msgstr "yeni istatistikler kaydedilmiyor"
+
+#: wassup.php:750
+msgid ""
+"To collect data you must check \"Enable/Disable recording\" in \"Options: "
+"Statistics Recording\" tab"
+msgstr ""
+"\"Etkinleştir onay gerekir / kayıt tutmayı devre dışı bırak\" \"Ayarlar: "
+"Kayıt İstatistiği\" sekmesinden veri topla"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Legend"
+msgstr "Açıklama"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Logged-in Users"
+msgstr "Giriş Yapmış Kullanıcılar"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Comments Authors"
+msgstr "Yorum Sahipleri"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Spiders/bots"
+msgstr "Örümcekler/botlar"
+
+#: wassup.php:767
+msgid "Visitors online"
+msgstr "Çevrimiçi ziyaretçiler"
+
+#: wassup.php:791
+#: wassup.php:1319
+#: lib/main.php:641
+msgid "From your blog"
+msgstr "Blogunuzdan"
+
+#: wassup.php:794
+#: wassup.php:1322
+#: lib/main.php:644
+msgid "Direct hit"
+msgstr "Doğrudan hit"
+
+#: wassup.php:814
+#: wassup.php:1389
+msgid "LOGGED IN USER"
+msgstr "GİRİŞ YAPMIŞ KULLANICI"
+
+#: wassup.php:815
+#: wassup.php:818
+#: wassup.php:1405
+msgid "COMMENT AUTHOR"
+msgstr "YORUM SAHİBİ"
+
+#: wassup.php:864
+msgid "Pause"
+msgstr "Duraklat"
+
+#: wassup.php:865
+msgid "Play"
+msgstr "Yürüt"
+
+#: wassup.php:866
+msgid "Spy items by"
+msgstr "Öğeleri bunlarla incele,"
+
+#: wassup.php:918
+msgid ""
+"You can add a sidebar Widget with some useful statistics information by "
+"activating the"
+msgstr ""
+"Bazı kullanışlı istatistik bilgilerini görüntüleyebileceğiniz yan menü "
+"eklentisini"
+
+#: wassup.php:919
+msgid "Wassup Widget in the Widgets menu option"
+msgstr ""
+"Eklentiler menüsü üzerinden WassUp Eklentisi üzerinden aktive edebilirsiniz"
+
+#: wassup.php:927
+msgid "Latest hits"
+msgstr "Son girişler"
+
+#: wassup.php:929
+msgid "WassUp recording is disabled"
+msgstr "WassUp kaydı etinkeştirilmemiş"
+
+#: wassup.php:1041
+msgid "records deleted"
+msgstr "kayıtlar silindi"
+
+#: wassup.php:1102
+msgid "hide chart"
+msgstr "grafiği gizle"
+
+#: wassup.php:1102
+msgid "Hide the chart"
+msgstr "Tabloyu gizle"
+
+#: wassup.php:1105
+msgid "show chart"
+msgstr "grafiği göster"
+
+#: wassup.php:1105
+msgid "Show the chart"
+msgstr "Tabloyu göster"
+
+#: wassup.php:1115
+msgid "Summary for the last"
+msgstr "İstatistikleri göster:"
+
+#: wassup.php:1122
+msgid "Items per page"
+msgstr "adet öğe/sayfa"
+
+#: wassup.php:1132
+msgid "Show items by"
+msgstr "Öğeleri diz"
+
+#: wassup.php:1151
+msgid "Visits"
+msgstr "Ziyaretçiler"
+
+#: wassup.php:1152
+msgid "Pageviews"
+msgstr "Sayfa Görünümü"
+
+#: wassup.php:1153
+msgid "Pages/Visits"
+msgstr "Sayfalar/Ziyaretçiler"
+
+#: wassup.php:1156
+msgid "Spams"
+msgstr "Spamlar"
+
+#: wassup.php:1166
+msgid "Collapse Chronology"
+msgstr "Kronolojiyi Kapat"
+
+#: wassup.php:1185
+msgid "Spam Options"
+msgstr "Spam Ayarları"
+
+#: wassup.php:1187
+#: lib/settings.php:182
+msgid "Enable/Disable Spam Check on Records"
+msgstr "Kayıtlarda Spam Kontrolü Yap/Yapma"
+
+#: wassup.php:1188
+#: lib/settings.php:185
+msgid "Record Akismet comment spam attempts"
+msgstr "Akismet yorum spam girişlerini kaydet"
+
+#: wassup.php:1189
+#: lib/settings.php:186
+msgid "Record referrer spam attempts"
+msgstr "Yönlendirilen spam girişlerini kaydet"
+
+#: wassup.php:1190
+#: lib/settings.php:187
+msgid "Record admin break-in/hacker attempts"
+msgstr "Admin kayıtlarına ara ver/hack girişimleri"
+
+#: wassup.php:1191
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Save Settings"
+msgstr "Ayarları Kaydet"
+
+#: wassup.php:1200
+msgid "Filter by marked IP"
+msgstr "İşaretli IP'ye göre süz"
+
+#: wassup.php:1200
+msgid "show marked items"
+msgstr "işaretli öğeleri göster"
+
+#: wassup.php:1203
+msgid "Searched for"
+msgstr "Aranan veri"
+
+#: wassup.php:1205
+msgid "Auto refresh in"
+msgstr "Otomatik Yenile"
+
+#: wassup.php:1205
+#: lib/settings.php:334
+#: lib/settings.php:423
+msgid "seconds"
+msgstr "saniye"
+
+#: wassup.php:1209
+msgid "Top Ten"
+msgstr "En İyi On"
+
+#: wassup.php:1209
+msgid "Show Top Ten"
+msgstr "En İyi Onu Göster"
+
+#: wassup.php:1263
+#: lib/action.php:175
+msgid "Raw data"
+msgstr "Ham Veri"
+
+#: wassup.php:1266
+msgid "Visit type"
+msgstr "Ziyaret türü"
+
+#: wassup.php:1268
+msgid "Logged-in user"
+msgstr "Oturum açmış kullanıcılar"
+
+#: wassup.php:1270
+msgid "Spammer/Hacker"
+msgstr "Spammer/Hacker"
+
+#: wassup.php:1272
+msgid "Spammer"
+msgstr "Spammer"
+
+#: wassup.php:1274
+msgid "Comment author"
+msgstr "Yorum yazarı"
+
+#: wassup.php:1276
+msgid "Feed"
+msgstr "Besleme"
+
+#: wassup.php:1278
+#: lib/wassup.class.php:232
+msgid "Spider"
+msgstr "Örümcek"
+
+#: wassup.php:1280
+msgid "Regular visitor"
+msgstr "Düzenli ziyaretçi"
+
+#: wassup.php:1283
+#: lib/action.php:178
+msgid "IP"
+msgstr "IP"
+
+#: wassup.php:1284
+#: wassup.php:1356
+#: lib/action.php:179
+msgid "Hostname"
+msgstr "Makine adı"
+
+#: wassup.php:1285
+msgid "Url Requested"
+msgstr "Talep Edilmiş URL"
+
+#: wassup.php:1286
+#: wassup.php:1361
+#: lib/action.php:180
+msgid "User Agent"
+msgstr "Kullanıcı Ajanı"
+
+#: wassup.php:1287
+#: wassup.php:1356
+#: lib/action.php:181
+msgid "Referrer"
+msgstr "Referans"
+
+#: wassup.php:1289
+msgid "Search Engine"
+msgstr "Arama Motoru"
+
+#: wassup.php:1291
+msgid "Page"
+msgstr "Sayfa"
+
+#: wassup.php:1294
+#: wassup.php:1450
+#: lib/action.php:186
+msgid "OS"
+msgstr "İşletim Sistemi"
+
+#: wassup.php:1297
+#: lib/action.php:189
+msgid "Browser"
+msgstr "Tarayıcı"
+
+#: wassup.php:1300
+msgid "Locale/Language"
+msgstr "Yerel/Dil"
+
+#: wassup.php:1303
+msgid "Screen Resolution"
+msgstr "Ekran Çözünürlüğü"
+
+#: wassup.php:1306
+msgid "End timestamp"
+msgstr "Sonu damgası"
+
+#: wassup.php:1332
+#: wassup.php:1337
+msgid "delete"
+msgstr "sil"
+
+#: wassup.php:1332
+msgid "Delete ALL marked records with this IP"
+msgstr "Bu IP'ye sahip tüm işaretli kayıtları sil"
+
+#: wassup.php:1334
+msgid "unmark"
+msgstr "seçimi kaldır"
+
+#: wassup.php:1334
+msgid "UnMark IP"
+msgstr "IP seçimini kaldır"
+
+#: wassup.php:1337
+msgid "Delete this record"
+msgstr "Bu kaydı sil"
+
+#: wassup.php:1339
+msgid "mark"
+msgstr "işaretle"
+
+#: wassup.php:1339
+msgid "Mark IP"
+msgstr "IP'yi işaretle"
+
+#: wassup.php:1342
+msgid "show raw table"
+msgstr "salt tabloyu göster"
+
+#: wassup.php:1342
+msgid "Show the items as raw table"
+msgstr "Öğeleri salt tabloda göster"
+
+#: wassup.php:1380
+msgid "SEARCH ENGINE"
+msgstr "ARAMA MOTORU"
+
+#: wassup.php:1380
+msgid "page"
+msgstr "sayfa"
+
+#: wassup.php:1381
+msgid "KEYWORDS"
+msgstr "ANAHTAR KELİMELER"
+
+#: wassup.php:1399
+msgid "ADMINISTRATOR"
+msgstr "YÖNETİCİ"
+
+#: wassup.php:1417
+msgid "FEEDREADER"
+msgstr "İZLEYİCİ OKUYUCULARI"
+
+#: wassup.php:1419
+msgid "SUBSCRIBER(S)"
+msgstr "ABONE(LER)"
+
+#: wassup.php:1424
+msgid "SPIDER"
+msgstr "ÖRÜMCEK"
+
+#: wassup.php:1432
+msgid "Probably SPAM!"
+msgstr "Muhtemelen SPAM!"
+
+#: wassup.php:1433
+msgid "Referer Spam"
+msgstr "Referer Spam"
+
+#: wassup.php:1434
+#: lib/wassup.class.php:234
+msgid "Spam"
+msgstr "Çöp Posta"
+
+#: wassup.php:1440
+msgid "Probably hack attempt!"
+msgstr "Muhtemel hack teşebbüsü"
+
+#: wassup.php:1448
+#: lib/action.php:192
+msgid "Language"
+msgstr "Lisan"
+
+#: wassup.php:1451
+msgid "BROWSER"
+msgstr "TARAYICI"
+
+#: wassup.php:1453
+msgid "RESOLUTION"
+msgstr "ÇÖZÜNÜRLÜK"
+
+#: wassup.php:1509
+msgid "Graph of visitor hits"
+msgstr "Ziyaretçi grafiği"
+
+#: wassup.php:1511
+msgid "Too few records to print chart"
+msgstr "Grafik oluşturmak için yetersiz veri"
+
+#: wassup.php:1527
+msgid "Check the official"
+msgstr "Resmi kontrol"
+
+#: wassup.php:1527
+msgid "page for updates, bug reports and your hints to improve it"
+msgstr ""
+"güncellerştirmeler için sayfa, hata raporları ve geliştirmek için ipuçları"
+
+#: wassup.php:1527
+msgid "User Guide documentation"
+msgstr "Kullanım Kılavuzu"
+
+#: wassup.php:1528
+msgid "Exec time"
+msgstr "Çalıştırma Zamanı"
+
+#: wassup.php:2349
+msgid "WassUp Plugin table has reached maximum size!"
+msgstr "WassUp Eklentisi tablosu en büyük boyutuna ulaştı!"
+
+#: wassup.php:2350
+msgid "Hi"
+msgstr "Selam"
+
+#: wassup.php:2350
+msgid ""
+"you have received this email because your WassUp Database table at your "
+"Wordpress blog"
+msgstr ""
+"Bu elektronik postayı aldınız çünkü WordPress blogunuzdaki WassUP veritabanı"
+
+#: wassup.php:2350
+msgid "has reached the maximum value you set in the options menu"
+msgstr "sizin ayarlar penceresinde belirttiğiniz en yüksek boyuta ulaştı"
+
+#: wassup.php:2351
+msgid ""
+"This is only a reminder, please take the actions you want in the WassUp "
+"options menu"
+msgstr ""
+"Bu posta size hatırlatmak amacı ile gönderilmiştir, lütfen WassUP "
+"seçenekleri menüsünü ziyaret ediniz"
+
+#: wassup.php:2351
+msgid "This alert now will be removed and you will be able to set a new one"
+msgstr ""
+"Bu uyarı kaldırılacak. Eğer isterseniz yeni bir veritabanı uyarısı "
+"tanımlayabilirsiniz."
+
+#: wassup.php:2352
+msgid ""
+"Thank you for using WassUp plugin. Check if there is a new version available "
+"here:"
+msgstr ""
+"WassUP eklentisini kullandığınız için teşekkür ediniz. Lütfen buradan "
+"eklentinin yeni sürümü olup olmadığını kontrol ediniz."
+
+#: wassup.php:2352
+msgid "Have a nice day!"
+msgstr "İyi günler!"
+
+#: wassup.php:2480
+msgid "Stats"
+msgstr "İstatistikler"
+
+#: wassup.php:2480
+msgid "More"
+msgstr "Daha Fazla"
+
+#: wassup.php:2482
+#: wassup.php:3838
+msgid "visitor stats chart"
+msgstr "Ziyaretçi İstatistik tablosu"
+
+#: wassup.php:2672
+msgid "encrypted search"
+msgstr "şifreli arama"
+
+#: wassup.php:3340
+msgid "Error getting table details"
+msgstr "Tablo verilerini alırken hata oluştu"
+
+#: wassup.php:3348
+#, php-format
+msgid "Delete any existing table %s"
+msgstr "%s tablosundaki tüm veriyi sil."
+
+#: wassup.php:3359
+#, php-format
+msgid "Table structure of table %s"
+msgstr "%s tablosunun tablo yapısı"
+
+#: wassup.php:3367
+#, php-format
+msgid "Error with SHOW CREATE TABLE for %s."
+msgstr "%s için TABLO OLUŞUMUNU GÖSTER sırasında hata."
+
+#: wassup.php:3374
+#, php-format
+msgid "Error getting table structure of %s"
+msgstr "%s tablo mimarisi alınırken hata oluştu."
+
+#: wassup.php:3382
+#, php-format
+msgid "Data contents of table %s"
+msgstr "%s tablosunun verileri."
+
+#: wassup.php:3443
+#, php-format
+msgid "End of data contents of table %s"
+msgstr "%s tablosundaki içeriğin sonu."
+
+#: wassup.php:3455
+msgid "If above timestamp is not current time, this page is cached"
+msgstr ""
+"Yukarıdaki zaman damgası şimdiki zaman değilse, bu sayfa önbelleğe alınır"
+
+#: wassup.php:3486
+#: wassup.php:3740
+msgid "No Data"
+msgstr "Veri Yok"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+#: wassup.php:3814
+msgid "powered by"
+msgstr "destekleyen"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+msgid "Real Time Visitors Tracking"
+msgstr "Gerçek Zamanlı Ziyaretçi Takibi"
+
+#: wassup.php:3497
+msgid "Last searched terms"
+msgstr "Son aranan terimler"
+
+#: wassup.php:3510
+msgid "Last referers"
+msgstr "Son yönlendirenler"
+
+#: wassup.php:3525
+#: lib/settings.php:149
+msgid "Top Browsers"
+msgstr "En Çok Kullanılan Tarayıcılar"
+
+#: wassup.php:3540
+#: lib/settings.php:150
+msgid "Top OS"
+msgstr "En Çok kullanılan İşletim Sistemleri"
+
+#: wassup.php:3559
+msgid "visitor(s) online"
+msgstr "ziyaretçi(ler) çevrimiçi"
+
+#: wassup.php:3562
+msgid "logged-in user(s)"
+msgstr "giriş yapmış kullanıcı"
+
+#: wassup.php:3566
+msgid "comment author(s)"
+msgstr "yorum sahipleri"
+
+#: wassup.php:3632
+msgid "Title"
+msgstr "Başlık"
+
+#: wassup.php:3634
+msgid "default \"Visitors Online\""
+msgstr "varsayılan \"Online Ziyaretçiler\""
+
+#: wassup.php:3637
+msgid "Stylesheet class for &lt;ul&gt; attribute"
+msgstr "Tür sitili için &lt;ul&gt; özniteliği"
+
+#: wassup.php:3639
+msgid "default \"links\""
+msgstr "varsayılan \"linkler\""
+
+#: wassup.php:3642
+msgid "Number of characters to display from left"
+msgstr "Sayı karakterlerini solda görüntülemek için"
+
+#: wassup.php:3644
+msgid "For template compatibility - default 18"
+msgstr "Uyumluluk şablonu - varsayılan 18"
+
+#: wassup.php:3649
+msgid "Show number of logged-in users online"
+msgstr "Oturum açan online kullanıcıların sayısını göster"
+
+#: wassup.php:3650
+msgid "Stats recording must be enabled in WassUp options"
+msgstr "İstatistik kaydı tutulması için WassUp seçenekleri etkin olmalıdır"
+
+#: wassup.php:3651
+#: wassup.php:3657
+#: wassup.php:3663
+#: wassup.php:3675
+msgid "default Yes"
+msgstr "varsayılan \"Evet\""
+
+#: wassup.php:3656
+msgid "Show number of comment authors online"
+msgstr "Yazar yorumlarının online sayısını göster"
+
+#: wassup.php:3662
+msgid "Show latest searches"
+msgstr "En son arananları göster"
+
+#: wassup.php:3666
+msgid "How many searches?"
+msgstr "Kaç arama?"
+
+#: wassup.php:3668
+#: wassup.php:3680
+#: wassup.php:3692
+#: wassup.php:3704
+msgid "default 5"
+msgstr "varsayılan 5"
+
+#: wassup.php:3674
+msgid "Show latest external referrers"
+msgstr "Son dış yönlendirmeleri göster"
+
+#: wassup.php:3678
+msgid "How many referrers?"
+msgstr "Kaç yönlendirme?"
+
+#: wassup.php:3686
+msgid "Show top browsers"
+msgstr "Kullanılan tarayıcıları göster"
+
+#: wassup.php:3686
+#: wassup.php:3698
+msgid "default No"
+msgstr "varsayılan Hayır"
+
+#: wassup.php:3687
+#: wassup.php:3699
+msgid "Enabling it could slow down blog)"
+msgstr "Aktifleştirmek blogu yavaşlatabilir"
+
+#: wassup.php:3690
+msgid "How many browsers?"
+msgstr "Kaç tarayıcı mevcut?"
+
+#: wassup.php:3698
+msgid "Show top operating systems"
+msgstr "İşletim sistemlerini göster"
+
+#: wassup.php:3702
+msgid "How many operating systems?"
+msgstr "Kaç adet işletim sistemi mevcut?"
+
+#: wassup.php:3713
+msgid "Wassup Widget"
+msgstr "Wassup Eklentisi"
+
+#: wassup.php:3839
+msgid "More Stats"
+msgstr "Daha Fazla İstatistik"
+
+#: lib/action.php:125
+msgid "ERROR: file not found"
+msgstr "HATA: dosya bulunamadı"
+
+#: lib/action.php:143
+msgid "ERROR: bad date"
+msgstr "HATA: Kötü Tarih"
+
+#: lib/action.php:257
+msgid "TOP QUERY"
+msgstr "EN ÇOK KULLANILAN ANAHTAR KELİME"
+
+#: lib/action.php:276
+msgid "TOP REFERRER"
+msgstr "yönlendirici"
+
+#: lib/action.php:302
+msgid "TOP REQUEST"
+msgstr "EN ÇOK İSTEK"
+
+#: lib/action.php:323
+msgid "TOP BROWSER"
+msgstr "EN SIK KULLANILAN TARAYICI"
+
+#: lib/action.php:343
+msgid "TOP OS"
+msgstr "EN ÇOK KULLANILAN İŞLETİM SİSTEMİ"
+
+#: lib/action.php:364
+msgid "TOP LOCALE"
+msgstr "EN ÇOK KULLANILAN YEREL"
+
+#: lib/action.php:391
+msgid "TOP VISITOR"
+msgstr "YÜKSEK ZİYARETÇİ"
+
+#: lib/action.php:409
+msgid "This top ten doesn't include Spam records"
+msgstr "En çok kullanılan 10 içeriği Spam kayıtlarını içermez."
+
+#: lib/action.php:414
+msgid "ERROR: Missing or unknown parameters"
+msgstr "HATA: Kayıp ya da bilinmeyen parametreler"
+
+#: lib/action.php:423
+msgid "ERROR: Nothing to do here"
+msgstr "HATA: Burada hiçbirşey yok"
+
+#: lib/main.php:85
+msgid "Next"
+msgstr "İleri"
+
+#: lib/main.php:87
+msgid "Previous"
+msgstr "Geri"
+
+#: lib/main.php:120
+#: lib/main.php:124
+msgid "It is necessary to specify the"
+msgstr "Şunları tanımlamak gereklidir"
+
+#: lib/main.php:120
+msgid "number of pages"
+msgstr "sayfa sayısı"
+
+#: lib/main.php:124
+msgid "limit of items"
+msgstr "nesne limiti"
+
+#: lib/main.php:124
+msgid "to show per page"
+msgstr "sayfa başına gösterilecek"
+
+#: lib/main.php:209
+msgid "Pages"
+msgstr "Sayfalar"
+
+#: lib/main.php:777
+msgid "No visitor activity"
+msgstr "Ziyaretçi aktivitesi yok"
+
+#: lib/main.php:1179
+msgid "Last 6 Hours"
+msgstr "Son 6 Saat"
+
+#: lib/main.php:1185
+msgid "Last 7 Days"
+msgstr "Son 7 Gün"
+
+#: lib/main.php:1192
+msgid "Last Month"
+msgstr "Son Ay"
+
+#: lib/main.php:1199
+msgid "Last 3 Months"
+msgstr "Son 3 Ay"
+
+#: lib/main.php:1205
+msgid "Last 6 Months"
+msgstr "Son 6 Ay"
+
+#: lib/main.php:1211
+msgid "Last Year"
+msgstr "Son Yıl"
+
+#: lib/main.php:1217
+msgid "All Time"
+msgstr "Tüm Zamanlar"
+
+#: lib/main.php:1224
+msgid "Last 24 Hours"
+msgstr "Son 24 Saat"
+
+#: lib/settings.php:31
+msgid ""
+"ATTENTION! Your WassUp table have reached the maximum value you set, I "
+"disabled the alert, you can re-enable it here."
+msgstr ""
+"UYARI! WassUp tablonuz belirttiğiniz en yüksek dosya boyutuna ulaştı. "
+"Uyarıyı iptal ettim, isterseniz buradan yeniden aktif edebilirsiniz."
+
+#: lib/settings.php:55
+msgid "Select the options you want for the WassUp plugin"
+msgstr "WassUp eklentisi için istediğiniz seçenekleri seçin"
+
+#: lib/settings.php:62
+msgid "General Setup"
+msgstr "Genel Kurulum"
+
+#: lib/settings.php:63
+msgid "Statistics Recording"
+msgstr "İstatistik Kaydı"
+
+#: lib/settings.php:64
+msgid "Manage Files & Database"
+msgstr "Dosya ve Veritabanlarını Yönet"
+
+#: lib/settings.php:65
+msgid "Uninstall"
+msgstr "Kaldır"
+
+#: lib/settings.php:69
+msgid "Your default screen resolution (browser width)"
+msgstr "Varsayılan ekran çözünürlüğünüz (tarayıcı genişliği)"
+
+#: lib/settings.php:70
+msgid "Default screen resolution (in pixels)"
+msgstr "Varsayılan ekran çözünürlüğü (piksel formatında)"
+
+#: lib/settings.php:75
+msgid ""
+"Set minimum users level which can view and manage WassUp plugin (default "
+"Administrators)"
+msgstr ""
+"WassUp eklentisini yönetebilecek en düşük kullanıcı seviyesini giriniz "
+"(varsayılan Yöneticiler)"
+
+#: lib/settings.php:80
+msgid "Dashboard Settings"
+msgstr "Kontrol Paneli Ayarları"
+
+#: lib/settings.php:81
+msgid "Display small chart in the dashboard"
+msgstr "Panoyu küçük grafikte görüntüle"
+
+#: lib/settings.php:84
+msgid "GEO IP Map (Spy view)"
+msgstr "GEO IP Haritası (Casus görünümü)"
+
+#: lib/settings.php:89
+msgid "Display a GEO IP Map in the spy visitors view"
+msgstr "GEO IP Haritasında casus ziyaretçileri göster"
+
+#: lib/settings.php:97
+#: lib/settings.php:456
+msgid "WARNING"
+msgstr "UYARI"
+
+#: lib/settings.php:97
+msgid "Activation problem >> Error code"
+msgstr "Aktivasyon problemi >> Hata kodu"
+
+#: lib/settings.php:105
+msgid "key"
+msgstr "anahtar"
+
+#: lib/settings.php:105
+msgid "signup for your key"
+msgstr "seri numarası için kayıt"
+
+#: lib/settings.php:108
+msgid "Geo IP Map requires"
+msgstr "GEO IP haritası gerekmektedir"
+
+#: lib/settings.php:108
+msgid "Please install it to be able to activate this feature"
+msgstr "Lütfen bu özelliği etkinleştirmek için yükleyiniz"
+
+#: lib/settings.php:112
+msgid "Time format"
+msgstr "Zaman formatı"
+
+#: lib/settings.php:113
+msgid "Time format 12/24 hour"
+msgstr "Zaman formatı 12/24 saat"
+
+#: lib/settings.php:116
+msgid "Visitor Detail Settings"
+msgstr "Ziyaretçilerin detay ayarları"
+
+#: lib/settings.php:117
+msgid "Show chart type - How many axes"
+msgstr "Grafik türünü göster - Kaç eksen"
+
+#: lib/settings.php:123
+msgid "Set how many minutes wait for automatic page refresh"
+msgstr "Otomatik sayfa tazelemesi için kaç dakika bekleyeceğinizi belirtin"
+
+#: lib/settings.php:123
+msgid "Current Visitors Online and Visitors Details"
+msgstr "Şimdiki Çevrimiçi Ziyaretçiler ve Ziyaretçi Detayları"
+
+#: lib/settings.php:124
+msgid "refresh minutes (default 3)"
+msgstr "yenilenecek dakika (varsayılan 3)"
+
+#: lib/settings.php:126
+msgid "Show visitor details for"
+msgstr "Ziyaretçi detaylarını göster"
+
+#: lib/settings.php:131
+msgid "Number of items per page"
+msgstr "Sayfa başına öğe"
+
+#: lib/settings.php:140
+msgid "Customize Top Ten List"
+msgstr "En İyi On Listesini Özelleştir"
+
+#: lib/settings.php:141
+msgid "Choose one or more items for your Top Ten list"
+msgstr "En İyi On listesi için bir veya daha fazla öğe seçin"
+
+#: lib/settings.php:141
+msgid "over 5 selections may cause horizontal scrolling"
+msgstr "5 den fazla seçim yatay kaymaya neden olabilir"
+
+#: lib/settings.php:144
+msgid "Top Searches"
+msgstr "Çok Arananlar"
+
+#: lib/settings.php:145
+msgid "Top Referrers"
+msgstr "En çok yönlendirenler"
+
+#: lib/settings.php:146
+msgid "Top Requests"
+msgstr "En Çok İstenenler"
+
+#: lib/settings.php:151
+msgid "Top Locales"
+msgstr "En Çok Yerel Ağlar"
+
+#: lib/settings.php:154
+msgid "Top Visitors"
+msgstr "En Çok Ziyaretçiler"
+
+#: lib/settings.php:156
+msgid "Top Feeds"
+msgstr "En Çok Beslemeler"
+
+#: lib/settings.php:157
+msgid "Top Crawlers"
+msgstr "En Çok Tarayıcılar"
+
+#: lib/settings.php:161
+msgid "Websites/domains to exclude from top referrers"
+msgstr "Dominleri/Websitelerini üst yönlendirmeleri hariç tut"
+
+#: lib/settings.php:164
+msgid "Comma separated value"
+msgstr "Virgülle ayrılmış değer"
+
+#: lib/settings.php:165
+msgid "Don't list your website domain defined in WordPress"
+msgstr "Web siteniz etki tanımlı bir WordPress listesinde değil"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset"
+msgstr "Sıfırla"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset to Default Settings"
+msgstr "Varsayılan Ayarlara Sıfırla"
+
+#: lib/settings.php:172
+msgid "Statistics Recording Settings"
+msgstr "İstatistik Kayıt Seçenekleri"
+
+#: lib/settings.php:173
+msgid "Enable/Disable Recording"
+msgstr "Kayıt Et / Etme"
+
+#: lib/settings.php:174
+msgid "Checkbox to record statistics for each type of \"visitor\""
+msgstr "Her bir \"ziyaretçi\" tipi için kayıt istatistikleri seçim kutusu"
+
+#: lib/settings.php:176
+msgid "Record logged in users"
+msgstr "Giriş yapmış kullanıcıları kayıt et"
+
+#: lib/settings.php:177
+msgid "Record logged in administrators"
+msgstr "Yönetici girişlerini kayıt et"
+
+#: lib/settings.php:178
+msgid "Record spiders and bots"
+msgstr "Örümcekleri ve botları kaydet"
+
+#: lib/settings.php:179
+msgid "Record attack/exploit attempts (libwww-perl agent)"
+msgstr "Atak/saldırı girişlerini kaydet (libwww-perl agent)"
+
+#: lib/settings.php:183
+msgid "Checkbox to record statistics for each type of \"spam\""
+msgstr "Her bir \"spam\" tipi için kayıt istatistikleri seçim kutusu"
+
+#: lib/settings.php:185
+msgid "check if an IP has previous comments as spam"
+msgstr ""
+"IP' nin daha önce spam olarak bir yorumunun olup olmadığını kontrol et"
+
+#: lib/settings.php:191
+msgid "Statistics Recording Exceptions"
+msgstr "İstatistiklerin Kaydı için Harici Tutulacaklar"
+
+#: lib/settings.php:193
+msgid "Sites"
+msgstr "Siteler"
+
+#: lib/settings.php:193
+msgid "Enter source IPs to exclude from recording"
+msgstr "Kayıt edilmeyecek kaynak IP adreslerini girin"
+
+#: lib/settings.php:195
+msgid "comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...)"
+msgstr "verileri virgülle ayırın (ör: 127.0.0.1, 10.0.0.1, vb.)"
+
+#: lib/settings.php:197
+msgid "Users"
+msgstr "Kullanıcılar"
+
+#: lib/settings.php:197
+msgid "Enter usernames to exclude from recording"
+msgstr "Girilen kullanıcı adı kayıtlarını hariç tut"
+
+#: lib/settings.php:199
+msgid ""
+"comma separated value, enter a registered user's login name (ex: bobmarley, "
+"enyabrennan, etc.)"
+msgstr ""
+"virgülle ayrılmış değer, kayıtlı bir kullanıcının oturum açma adını girin "
+"(örn: bobmarley, enyabrennan, vb.)"
+
+#: lib/settings.php:200
+msgid "Posts/pages"
+msgstr "Yazılar/sayfalar"
+
+#: lib/settings.php:200
+msgid "enter requested URLs to exclude from recording"
+msgstr "kayıt için hariç tutulacak URL'leri girin"
+
+#: lib/settings.php:202
+msgid ""
+"comma separated value, don't enter entire url, only the last path or some "
+"word to exclude (ex: /category/wordpress, 2007, etc...)"
+msgstr ""
+"virgülle ayrılmış değer, sadece son bir yol veya bazı kelime (örn: hariç "
+"tutmak için: / kategori / WordPress, 2007, vb ..) tüm URL girmezseniz"
+
+#: lib/settings.php:231
+#: lib/settings.php:233
+msgid "Rescan Old Records"
+msgstr "Eski Kayıtları Tekrar Tara"
+
+#: lib/settings.php:232
+msgid ""
+"Statistical records collected by earlier versions of WassUp may not have the "
+"latest spider, search engine, and spam data properly identified.  Click the "
+"\"Rescan\" button to retroactively scan and update old records"
+msgstr ""
+"İstatistiksel Wassup' ın önceki sürümleri tarafından son kaydedilenler "
+"örümcek olarak tanımlanmamış olabilirler. Toplanan kayıtlar, arama motoru, "
+"ve spam verilerinin doğru şekilde belirlenmiş halidir. \"Rescan\" düğmesine "
+"tıklayıp, geriye dönük olarak taratıp eski kayıtlarla birlikte "
+"güncelleştiriniz."
+
+#: lib/settings.php:236
+msgid "Select actions for table growth"
+msgstr "Tablo büyüklüğü için yapılacakları seçin"
+
+#: lib/settings.php:237
+msgid ""
+"WassUp table grows very fast (especially if your blog is frequently "
+"visited), I recommend you to delete old records sometimes. You can select "
+"any option below to reset it, delete old records automatically or manually. "
+"(If you haven't database space problems you can leave the table as is)"
+msgstr ""
+"WassUp tablosu çok hızlı büyür (özellikle blogunuz sık ziyaret ediliyorsa), "
+"size tavsiyem eski istatistikleri belirli aralıklarla silmeniz. Aşağıdan, "
+"sıfırlamak ya da eski kayıtların otomatik ya da el ile silinmesi için "
+"gerekli ayarları seçebilirsiniz. (Veritabanı büyüklüğü probleminiz yoksa "
+"tabloyu olduğu gibi bırakabilirsiniz)"
+
+#: lib/settings.php:238
+msgid "Current WassUp table usage is"
+msgstr "Geçerli WassUp veritabanı kullanımı"
+
+#: lib/settings.php:244
+msgid "records"
+msgstr "kayıt"
+
+#: lib/settings.php:247
+msgid "Alert me"
+msgstr "Beni uyar"
+
+#: lib/settings.php:247
+msgid "email to"
+msgstr "email gönder"
+
+#: lib/settings.php:247
+msgid "when table reaches"
+msgstr "tablo boyutu şuna yaklaştığında"
+
+#: lib/settings.php:249
+msgid "Empty table"
+msgstr "Tabloyu boşalt"
+
+#: lib/settings.php:250
+msgid "export table in SQL format"
+msgstr "Tabloyu SQL formatında aktar"
+
+#: lib/settings.php:252
+msgid "backup table to server file"
+msgstr "tablo sunucusuna yedekleme dosyası"
+
+#: lib/settings.php:254
+msgid "Automatically delete records older than:"
+msgstr "Şundan daha eski kayıtları otomatik olarak sil:"
+
+#: lib/settings.php:258
+msgid "Delete NOW records older than:"
+msgstr "Şundan daha eski kayıtları ŞİMDİ sil:"
+
+#: lib/settings.php:260
+msgid "Action is NOT undoable"
+msgstr "Bu uygulama geri alınamaz"
+
+#: lib/settings.php:261
+#: lib/wassup.class.php:259
+#: lib/wassup.class.php:269
+msgid "24 hours"
+msgstr "24 saat"
+
+#: lib/settings.php:262
+#: lib/wassup.class.php:260
+msgid "1 week"
+msgstr "1 hafta"
+
+#: lib/settings.php:263
+#: lib/wassup.class.php:261
+#: lib/wassup.class.php:271
+msgid "1 month"
+msgstr "1 ay"
+
+#: lib/settings.php:264
+#: lib/wassup.class.php:262
+#: lib/wassup.class.php:272
+msgid "3 months"
+msgstr "3 ay"
+
+#: lib/settings.php:265
+#: lib/wassup.class.php:263
+#: lib/wassup.class.php:273
+msgid "6 months"
+msgstr "6 ay"
+
+#: lib/settings.php:266
+#: lib/wassup.class.php:264
+#: lib/wassup.class.php:274
+msgid "1 year"
+msgstr "1 yıl"
+
+#: lib/settings.php:270
+msgid "Server Settings and Memory Resources"
+msgstr "Sunucu Özellikleri ve Hafıza Kaynakları"
+
+#: lib/settings.php:271
+msgid "For information only. Some values may be adjustable in startup files"
+msgstr ""
+"Yanlızca bilgi için. Bazı değerler başlangıç dosyalarında ayarlanabilir "
+"olabilir"
+
+#: lib/settings.php:271
+msgid "and"
+msgstr "ve"
+
+#: lib/settings.php:271
+msgid "or"
+msgstr "veya"
+
+#: lib/settings.php:272
+#: lib/settings.php:287
+#: lib/settings.php:350
+msgid "Version"
+msgstr "Sürüm"
+
+#: lib/settings.php:273
+msgid "Host Server"
+msgstr "Host Server"
+
+#: lib/settings.php:283
+#: lib/settings.php:319
+#: lib/settings.php:329
+#: lib/settings.php:335
+#: lib/settings.php:350
+#: lib/settings.php:353
+#: lib/settings.php:397
+#: lib/settings.php:407
+#: lib/settings.php:418
+#: lib/settings.php:425
+#: lib/settings.php:434
+#: lib/settings.php:445
+msgid "unknown"
+msgstr "bilinmiyor"
+
+#: lib/settings.php:285
+msgid "Time Offset"
+msgstr "Zaman Seçeneği"
+
+#: lib/settings.php:286
+msgid "hours"
+msgstr "saatler"
+
+#: lib/settings.php:288
+msgid "Safe Mode"
+msgstr "Güvenli Mod"
+
+#: lib/settings.php:291
+#: lib/settings.php:300
+msgid "on"
+msgstr "açık"
+
+#: lib/settings.php:293
+#: lib/settings.php:298
+msgid "off"
+msgstr "kapalı"
+
+#: lib/settings.php:294
+msgid "File Open Restrictions"
+msgstr "Dosya Açma Kısıtlamaları"
+
+#: lib/settings.php:304
+msgid "Memory Allocation"
+msgstr "Bellek Tahsisi"
+
+#: lib/settings.php:322
+msgid "Memory Usage"
+msgstr "Bellek Kullanımı"
+
+#: lib/settings.php:332
+msgid "Script Timeout Limit"
+msgstr "Script Zaman Aşımı Sınırı"
+
+#: lib/settings.php:337
+msgid "Browser Capabilities File"
+msgstr "Tarayıcı Özellikleri Dosyası"
+
+#: lib/settings.php:339
+msgid "not set"
+msgstr "ayarlanmamış"
+
+#: lib/settings.php:343
+msgid "not installed"
+msgstr "kurulu değil"
+
+#: lib/settings.php:344
+msgid "installed"
+msgstr "yüklendi"
+
+#: lib/settings.php:351
+msgid "Engine"
+msgstr "Makine"
+
+#: lib/settings.php:389
+msgid "Query Cache"
+msgstr "Sorgu Önbelleği"
+
+#: lib/settings.php:394
+#: lib/settings.php:404
+#: lib/settings.php:415
+msgid "disabled"
+msgstr "etkisizleştirildi"
+
+#: lib/settings.php:399
+msgid "Index (Key) Buffer"
+msgstr "Index (Anahtar) Koruması"
+
+#: lib/settings.php:410
+msgid "Read Buffer"
+msgstr "Korumayı Oku"
+
+#: lib/settings.php:421
+msgid "Wait Timeout"
+msgstr "Zaman Aşımını Bekle"
+
+#: lib/settings.php:428
+msgid "Char Set/Collation"
+msgstr "Görev Ayarla/Karşılaştır"
+
+#: lib/settings.php:437
+msgid "Timezone"
+msgstr "Saat Dilimi"
+
+#: lib/settings.php:452
+msgid "Want to uninstall WassUp?"
+msgstr "WassUp 'ı kaldırmak mı istiyorsun?"
+
+#: lib/settings.php:453
+msgid ""
+"No problem. Before you deactivate this plugin, check the box below to "
+"cleanup any data that was collected by WassUp that could be left behind."
+msgstr ""
+"Sorun yok. Öncelikle; bu eklentiyi ektisizleştirmeden önce, aşşağıdaki "
+"kutudan Wassup' ın topladığı verileri devre dışı bırakmalısınız."
+
+#: lib/settings.php:454
+msgid "Permanently remove WassUp data and settings from Wordpress"
+msgstr "WassUp veri ve özelliklerini Wordpress'ten kalıcı olarak kaldır"
+
+#: lib/settings.php:456
+msgid ""
+"All WassUp data and settings will be DELETED upon deactivation of this plugin"
+msgstr ""
+"Wassup; tüm verileri ve ayarları, bu eklentiyi devre dışı bırakılması için "
+"SİLECEKTİR"
+
+#: lib/settings.php:458
+msgid ""
+"This action cannot be undone. Before uninstalling WassUp, you should backup "
+"your Wordpress database first. WassUp data is stored in the table"
+msgstr ""
+"Bu eylem geri alınamaz. Wassup kaldırılmadan önce, Wordpress veritabanının "
+"ilk yedeklerinden biri gerekir. Wassup veri tablosunda saklanır"
+
+#: lib/settings.php:460
+msgid "To help improve this plugin, we would appreciate your feedback at"
+msgstr "Bu eklentiyi geliştirmek için, geri bildirimlerinizi beklemekteyiz"
+
+#: lib/wassup.class.php:208
+msgid "Administrator"
+msgstr "Yönetici"
+
+#: lib/wassup.class.php:209
+msgid "Editor"
+msgstr "Editör"
+
+#: lib/wassup.class.php:210
+msgid "Author"
+msgstr "Yazar"
+
+#: lib/wassup.class.php:215
+msgid "None - don't show chart"
+msgstr "Yok - grafik görünmüyor"
+
+#: lib/wassup.class.php:216
+msgid "One - 2 lines chart 1 axis"
+msgstr "Bir - 2 satır 1 eksen tablosu"
+
+#: lib/wassup.class.php:217
+msgid "Two - 2 lines chart 2 axes"
+msgstr "İki - 2 satır 2 eksen tablosu"
+
+#: lib/wassup.class.php:231
+msgid "Everything"
+msgstr "Herşey"
+
+#: lib/wassup.class.php:233
+msgid "No spider"
+msgstr "Örümcek Değil"
+
+#: lib/wassup.class.php:235
+msgid "No Spam"
+msgstr "Spam Değil"
+
+#: lib/wassup.class.php:236
+msgid "No Spam, No Spider"
+msgstr "Spam Değil, Örümcek Değil"
+
+#: lib/wassup.class.php:237
+msgid "Users logged in"
+msgstr "Giriş yapmış kullanıcılar"
+
+#: lib/wassup.class.php:238
+msgid "Comment authors"
+msgstr "Yorum sahipleri"
+
+#: lib/wassup.class.php:239
+msgid "Referrer from search engine"
+msgstr "Yönlendiren arama motoru"
+
+#: lib/wassup.class.php:240
+msgid "Referrer from ext link"
+msgstr "Yönlendiren ext bağlantısı"
+
+#: lib/wassup.class.php:258
+msgid "Don't delete anything"
+msgstr "Hiçbir şeyi silme"
+
+#: lib/wassup.class.php:268
+msgid "6 hours"
+msgstr "6 saat"
+
+#: lib/wassup.class.php:270
+msgid "7 days"
+msgstr "7 gün"
+
+#: lib/wassup.class.php:275
+msgid "all time"
+msgstr "tüm zamanlar"

@@ -1,0 +1,1515 @@
+# Bulgarian translation for wassup
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the wassup package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wassup\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-05-18 12:28+0100\n"
+"PO-Revision-Date: 2009-11-30 00:33+0000\n"
+"Last-Translator: Petar Toushkov <Unknown>\n"
+"Language-Team: Bulgarian <bg@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-01-12 09:52+0000\n"
+"X-Generator: Launchpad (build 16890)\n"
+
+#: wassup.php:45
+msgid "Sorry, Wassup requires WordPress 2.2 or higher to work"
+msgstr ""
+"За съжаление, за да работи коректно, Wassup изисква Wordpress 2.2 или по-"
+"висока версия"
+
+#: wassup.php:406
+msgid "Hide Search"
+msgstr "Скриване на търсенето"
+
+#: wassup.php:409
+#: wassup.php:1209
+#: wassup.php:1290
+#: lib/action.php:183
+msgid "Search"
+msgstr "Търсене"
+
+#: wassup.php:414
+msgid "Hide TopTen"
+msgstr "Скриване на ТопДесет"
+
+#: wassup.php:417
+msgid "Show TopTen"
+msgstr "Показване на ТопДесет"
+
+#: wassup.php:423
+msgid "Collapse All"
+msgstr "Сгъване на всички"
+
+#: wassup.php:426
+#: wassup.php:761
+#: wassup.php:857
+#: wassup.php:1165
+msgid "Expand All"
+msgstr "Разгъване на всички"
+
+#: wassup.php:431
+msgid "Expand Cronology"
+msgstr "Разгъване на хронологията"
+
+#: wassup.php:434
+msgid "Collapse Cronology"
+msgstr "Сгъване на хронологията"
+
+#: wassup.php:526
+msgid "Visitor Details"
+msgstr "Подробности за посетителите"
+
+#: wassup.php:529
+msgid "Spy Visitors"
+msgstr "Наблюдение на посетителите"
+
+#: wassup.php:529
+#: wassup.php:861
+msgid "SPY Visitors"
+msgstr "НАБЛЮДЕНИЕ на посетителите"
+
+#: wassup.php:530
+#: wassup.php:759
+msgid "Current Visitors Online"
+msgstr "Текущи посетители онлайн"
+
+#: wassup.php:531
+#: wassup.php:917
+msgid "Options"
+msgstr "Настройки"
+
+#: wassup.php:629
+#: wassup.php:654
+msgid "Wassup options updated successfully"
+msgstr "Настройките на Wassup бяха обновени успешно"
+
+#: wassup.php:641
+msgid "Wassup uninstall option updated successfully"
+msgstr "Настройката за деинсталация на Wassup беше обновена успешно"
+
+#: wassup.php:649
+msgid "Wassup spam options updated successfully"
+msgstr "Настройките за спам на Wassup бяха обновени успешно"
+
+#: wassup.php:750
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: wassup.php:750
+msgid "is NOT recording new statistics"
+msgstr "НЕ записва нови статистики"
+
+#: wassup.php:750
+msgid ""
+"To collect data you must check \"Enable/Disable recording\" in \"Options: "
+"Statistics Recording\" tab"
+msgstr ""
+"За да започнете събирането на данни, трябва да отметнете "
+"\"Включване/Изключване на записи\" в подпрозореца \"Настройки: Статистически "
+"записи\""
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Legend"
+msgstr "Легенда"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Logged-in Users"
+msgstr "Регистрирани потребители"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Comments Authors"
+msgstr "Автори на коментари"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Spiders/bots"
+msgstr "Паяци/ботове"
+
+#: wassup.php:767
+msgid "Visitors online"
+msgstr "Посетители онлайн"
+
+#: wassup.php:791
+#: wassup.php:1319
+#: lib/main.php:641
+msgid "From your blog"
+msgstr "От вашия блог"
+
+#: wassup.php:794
+#: wassup.php:1322
+#: lib/main.php:644
+msgid "Direct hit"
+msgstr "Директно посещение"
+
+#: wassup.php:814
+#: wassup.php:1389
+msgid "LOGGED IN USER"
+msgstr "РЕГИСТРИРАН ПОТРЕБИТЕЛ"
+
+#: wassup.php:815
+#: wassup.php:818
+#: wassup.php:1405
+msgid "COMMENT AUTHOR"
+msgstr "АВТОР НА КОМЕНТАР"
+
+#: wassup.php:864
+msgid "Pause"
+msgstr "Пауза"
+
+#: wassup.php:865
+msgid "Play"
+msgstr "Изпълнение"
+
+#: wassup.php:866
+msgid "Spy items by"
+msgstr "Наблюдение на подточките от списъка по"
+
+#: wassup.php:918
+msgid ""
+"You can add a sidebar Widget with some useful statistics information by "
+"activating the"
+msgstr ""
+"Можете да добавите към страничната си лента джаджа с полезна статистическа "
+"информация, като активирате"
+
+#: wassup.php:919
+msgid "Wassup Widget in the Widgets menu option"
+msgstr "Wassup от менюто с джаджите"
+
+#: wassup.php:927
+msgid "Latest hits"
+msgstr "Последни посещения"
+
+#: wassup.php:929
+msgid "WassUp recording is disabled"
+msgstr "Записващата функция на WassUp е изключена"
+
+#: wassup.php:1041
+msgid "records deleted"
+msgstr "изтрити записи"
+
+#: wassup.php:1102
+msgid "hide chart"
+msgstr "скриване на графиката"
+
+#: wassup.php:1102
+msgid "Hide the chart"
+msgstr "Скриване на графиката"
+
+#: wassup.php:1105
+msgid "show chart"
+msgstr "показване на графиката"
+
+#: wassup.php:1105
+msgid "Show the chart"
+msgstr "Показване на графиката"
+
+#: wassup.php:1115
+msgid "Summary for the last"
+msgstr "Резюме за последните"
+
+#: wassup.php:1122
+msgid "Items per page"
+msgstr "Записи на страница"
+
+#: wassup.php:1132
+msgid "Show items by"
+msgstr "Показване на записи по"
+
+#: wassup.php:1151
+msgid "Visits"
+msgstr "посетители"
+
+#: wassup.php:1152
+msgid "Pageviews"
+msgstr "импресии на страници"
+
+#: wassup.php:1153
+msgid "Pages/Visits"
+msgstr "страници / посетители"
+
+#: wassup.php:1156
+msgid "Spams"
+msgstr "спам"
+
+#: wassup.php:1166
+msgid "Collapse Chronology"
+msgstr "Сгъване на хронологията"
+
+#: wassup.php:1185
+msgid "Spam Options"
+msgstr "Настройки за спам"
+
+#: wassup.php:1187
+#: lib/settings.php:182
+msgid "Enable/Disable Spam Check on Records"
+msgstr "Включване/Изключване на проверка за спам в записите"
+
+#: wassup.php:1188
+#: lib/settings.php:185
+msgid "Record Akismet comment spam attempts"
+msgstr "Запис на опитите за спам пробиви в Akismet"
+
+#: wassup.php:1189
+#: lib/settings.php:186
+msgid "Record referrer spam attempts"
+msgstr "Запис на опитите за спам чрез отпратки"
+
+#: wassup.php:1190
+#: lib/settings.php:187
+msgid "Record admin break-in/hacker attempts"
+msgstr ""
+"Запис на опити за влизане/разбиване защитата в административната част"
+
+#: wassup.php:1191
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Save Settings"
+msgstr "Запазване на настройките"
+
+#: wassup.php:1200
+msgid "Filter by marked IP"
+msgstr "Филтриране по маркиран IP адрес"
+
+#: wassup.php:1200
+msgid "show marked items"
+msgstr "показване на маркирани записи"
+
+#: wassup.php:1203
+msgid "Searched for"
+msgstr "Търсене за"
+
+#: wassup.php:1205
+msgid "Auto refresh in"
+msgstr "Автоматично обновяване след"
+
+#: wassup.php:1205
+#: lib/settings.php:334
+#: lib/settings.php:423
+msgid "seconds"
+msgstr "секунди"
+
+#: wassup.php:1209
+msgid "Top Ten"
+msgstr "Топ десет"
+
+#: wassup.php:1209
+msgid "Show Top Ten"
+msgstr "Показване на Топ десет"
+
+#: wassup.php:1263
+#: lib/action.php:175
+msgid "Raw data"
+msgstr "Необработени данни"
+
+#: wassup.php:1266
+msgid "Visit type"
+msgstr "Тип посещение"
+
+#: wassup.php:1268
+msgid "Logged-in user"
+msgstr "Регистриран потребител"
+
+#: wassup.php:1270
+msgid "Spammer/Hacker"
+msgstr "Спамер/Хакер"
+
+#: wassup.php:1272
+msgid "Spammer"
+msgstr "Спамер"
+
+#: wassup.php:1274
+msgid "Comment author"
+msgstr "Автор на коментар"
+
+#: wassup.php:1276
+msgid "Feed"
+msgstr "Хранилка"
+
+#: wassup.php:1278
+#: lib/wassup.class.php:232
+msgid "Spider"
+msgstr "Паяк"
+
+#: wassup.php:1280
+msgid "Regular visitor"
+msgstr "Редовен посетител"
+
+#: wassup.php:1283
+#: lib/action.php:178
+msgid "IP"
+msgstr "IP"
+
+#: wassup.php:1284
+#: wassup.php:1356
+#: lib/action.php:179
+msgid "Hostname"
+msgstr "Име на хоста"
+
+#: wassup.php:1285
+msgid "Url Requested"
+msgstr "Изискан URL"
+
+#: wassup.php:1286
+#: wassup.php:1361
+#: lib/action.php:180
+msgid "User Agent"
+msgstr "Потребителски агент"
+
+#: wassup.php:1287
+#: wassup.php:1356
+#: lib/action.php:181
+msgid "Referrer"
+msgstr "Отпратка"
+
+#: wassup.php:1289
+msgid "Search Engine"
+msgstr "Търсачка"
+
+#: wassup.php:1291
+msgid "Page"
+msgstr "Страница"
+
+#: wassup.php:1294
+#: wassup.php:1450
+#: lib/action.php:186
+msgid "OS"
+msgstr "ОС"
+
+#: wassup.php:1297
+#: lib/action.php:189
+msgid "Browser"
+msgstr "Браузър"
+
+#: wassup.php:1300
+msgid "Locale/Language"
+msgstr "Езикови настройки/Език"
+
+#: wassup.php:1303
+msgid "Screen Resolution"
+msgstr "Разделителна способност"
+
+#: wassup.php:1306
+msgid "End timestamp"
+msgstr "Краен времеви маркер"
+
+#: wassup.php:1332
+#: wassup.php:1337
+msgid "delete"
+msgstr "изтриване"
+
+#: wassup.php:1332
+msgid "Delete ALL marked records with this IP"
+msgstr "Изтриване на ВСИЧКИ маркирани записи с този IP адрес"
+
+#: wassup.php:1334
+msgid "unmark"
+msgstr "размаркиране"
+
+#: wassup.php:1334
+msgid "UnMark IP"
+msgstr "Размаркиране на IP адрес"
+
+#: wassup.php:1337
+msgid "Delete this record"
+msgstr "Изтриване на този запис"
+
+#: wassup.php:1339
+msgid "mark"
+msgstr "маркиране"
+
+#: wassup.php:1339
+msgid "Mark IP"
+msgstr "Маркиране на IP адрес"
+
+#: wassup.php:1342
+msgid "show raw table"
+msgstr "показване на необработена таблица"
+
+#: wassup.php:1342
+msgid "Show the items as raw table"
+msgstr "Показване на записите като необработена таблица"
+
+#: wassup.php:1380
+msgid "SEARCH ENGINE"
+msgstr "ТЪРСАЧКА"
+
+#: wassup.php:1380
+msgid "page"
+msgstr "страница"
+
+#: wassup.php:1381
+msgid "KEYWORDS"
+msgstr "КЛЮЧОВИ ДУМИ"
+
+#: wassup.php:1399
+msgid "ADMINISTRATOR"
+msgstr "АДМИНИСТРАТОР"
+
+#: wassup.php:1417
+msgid "FEEDREADER"
+msgstr "АГРЕГАТОР ЗА НОВИНИ"
+
+#: wassup.php:1419
+msgid "SUBSCRIBER(S)"
+msgstr "АБОНАТ(И)"
+
+#: wassup.php:1424
+msgid "SPIDER"
+msgstr "ПАЯК"
+
+#: wassup.php:1432
+msgid "Probably SPAM!"
+msgstr "Вероятно СПАМ!"
+
+#: wassup.php:1433
+msgid "Referer Spam"
+msgstr "Спам отпратка"
+
+#: wassup.php:1434
+#: lib/wassup.class.php:234
+msgid "Spam"
+msgstr "Спам"
+
+#: wassup.php:1440
+msgid "Probably hack attempt!"
+msgstr "Вероятен опит за пробив в сигурността!"
+
+#: wassup.php:1448
+#: lib/action.php:192
+msgid "Language"
+msgstr "Език"
+
+#: wassup.php:1451
+msgid "BROWSER"
+msgstr "БРАУЗЪР"
+
+#: wassup.php:1453
+msgid "RESOLUTION"
+msgstr "РАЗДЕЛИТЕЛНА СПОСОБНОСТ"
+
+#: wassup.php:1509
+msgid "Graph of visitor hits"
+msgstr "Графика на попаденията от посетители"
+
+#: wassup.php:1511
+msgid "Too few records to print chart"
+msgstr "Броят на записите е недостатъчен за изобразяване на графика"
+
+#: wassup.php:1527
+msgid "Check the official"
+msgstr "Посетете официалната"
+
+#: wassup.php:1527
+msgid "page for updates, bug reports and your hints to improve it"
+msgstr "страница за нови версии, доклади за грешки и идеи за подобрения"
+
+#: wassup.php:1527
+msgid "User Guide documentation"
+msgstr "Ръководство за потребителя"
+
+#: wassup.php:1528
+msgid "Exec time"
+msgstr "Време на изпълнение"
+
+#: wassup.php:2349
+msgid "WassUp Plugin table has reached maximum size!"
+msgstr "Таблицата на разширението WassUp е достигнала максималния си размер!"
+
+#: wassup.php:2350
+msgid "Hi"
+msgstr "Здравейте"
+
+#: wassup.php:2350
+msgid ""
+"you have received this email because your WassUp Database table at your "
+"Wordpress blog"
+msgstr ""
+"получавате това е-известие, защото таблицата на вашата WassUp база от данни "
+"в Wordpress блога ви"
+
+#: wassup.php:2350
+msgid "has reached the maximum value you set in the options menu"
+msgstr ""
+"е достигнала максималната зададена от вас стойност в настройките на "
+"разширението"
+
+#: wassup.php:2351
+msgid ""
+"This is only a reminder, please take the actions you want in the WassUp "
+"options menu"
+msgstr ""
+"Това е само напомняне. Използвайте менюто за настройки на WassUp за "
+"допълнителни действия по ваш избор"
+
+#: wassup.php:2351
+msgid "This alert now will be removed and you will be able to set a new one"
+msgstr "Това предупреждение ще бъде премахнато и ще можете да зададете ново"
+
+#: wassup.php:2352
+msgid ""
+"Thank you for using WassUp plugin. Check if there is a new version available "
+"here:"
+msgstr ""
+"Благодарим ви, че използвате разширението WassUp. Проверете за нови налични "
+"версии тук:"
+
+#: wassup.php:2352
+msgid "Have a nice day!"
+msgstr "Приятен ден!"
+
+#: wassup.php:2480
+msgid "Stats"
+msgstr "Статистика"
+
+#: wassup.php:2480
+msgid "More"
+msgstr "Още"
+
+#: wassup.php:2482
+#: wassup.php:3838
+msgid "visitor stats chart"
+msgstr "графика на статистиката за посещения"
+
+#: wassup.php:2672
+msgid "encrypted search"
+msgstr "кодирано търсене"
+
+#: wassup.php:3340
+msgid "Error getting table details"
+msgstr "Грешка при получаването подробности по таблицата"
+
+#: wassup.php:3348
+#, php-format
+msgid "Delete any existing table %s"
+msgstr "Изтриване на всяка съществуваща таблица %s"
+
+#: wassup.php:3359
+#, php-format
+msgid "Table structure of table %s"
+msgstr "Таблична структура на таблица %s"
+
+#: wassup.php:3367
+#, php-format
+msgid "Error with SHOW CREATE TABLE for %s."
+msgstr "Грешка при SHOW CREATE TABLE за %s"
+
+#: wassup.php:3374
+#, php-format
+msgid "Error getting table structure of %s"
+msgstr "Грешка при получаването на табличната структура на %s"
+
+#: wassup.php:3382
+#, php-format
+msgid "Data contents of table %s"
+msgstr "Съдържащи се данни в таблица %s"
+
+#: wassup.php:3443
+#, php-format
+msgid "End of data contents of table %s"
+msgstr "Край на съдържащите се данни в таблица %s"
+
+#: wassup.php:3455
+msgid "If above timestamp is not current time, this page is cached"
+msgstr ""
+"Ако горният маркер не съвпада с текущото време, страницата е заредена от кеша"
+
+#: wassup.php:3486
+#: wassup.php:3740
+msgid "No Data"
+msgstr "Няма данни"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+#: wassup.php:3814
+msgid "powered by"
+msgstr "задвижено от"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+msgid "Real Time Visitors Tracking"
+msgstr "Проследяване на посетителите в реално време"
+
+#: wassup.php:3497
+msgid "Last searched terms"
+msgstr "Последно търсени термини"
+
+#: wassup.php:3510
+msgid "Last referers"
+msgstr "Последни отпратки"
+
+#: wassup.php:3525
+#: lib/settings.php:149
+msgid "Top Browsers"
+msgstr "Топ браузъри"
+
+#: wassup.php:3540
+#: lib/settings.php:150
+msgid "Top OS"
+msgstr "Топ ОС"
+
+#: wassup.php:3559
+msgid "visitor(s) online"
+msgstr "посетител(и) онлайн"
+
+#: wassup.php:3562
+msgid "logged-in user(s)"
+msgstr "регистриран(и) потребител(и)"
+
+#: wassup.php:3566
+msgid "comment author(s)"
+msgstr "автор(и) на коментари"
+
+#: wassup.php:3632
+msgid "Title"
+msgstr "Заглавие"
+
+#: wassup.php:3634
+msgid "default \"Visitors Online\""
+msgstr "по подразбиране \"Visitors Online\""
+
+#: wassup.php:3637
+msgid "Stylesheet class for &lt;ul&gt; attribute"
+msgstr "Клас за стила на атрибута &lt;ul&gt;"
+
+#: wassup.php:3639
+msgid "default \"links\""
+msgstr "по подразбиране \"links\""
+
+#: wassup.php:3642
+msgid "Number of characters to display from left"
+msgstr "Брой знаци, които да бъдат показвани отляво"
+
+#: wassup.php:3644
+msgid "For template compatibility - default 18"
+msgstr "За съвместимост с шаблони - по подразбиране 18"
+
+#: wassup.php:3649
+msgid "Show number of logged-in users online"
+msgstr "Показване на броя регистрирани потребители онлайн"
+
+#: wassup.php:3650
+msgid "Stats recording must be enabled in WassUp options"
+msgstr "Записът на статистики трябва да бъде включен в настройките на Wassup"
+
+#: wassup.php:3651
+#: wassup.php:3657
+#: wassup.php:3663
+#: wassup.php:3675
+msgid "default Yes"
+msgstr "по подразбиране Да"
+
+#: wassup.php:3656
+msgid "Show number of comment authors online"
+msgstr "Показване броя на автори на коментари онлайн"
+
+#: wassup.php:3662
+msgid "Show latest searches"
+msgstr "Показване на последните търсения"
+
+#: wassup.php:3666
+msgid "How many searches?"
+msgstr "Колко търсения?"
+
+#: wassup.php:3668
+#: wassup.php:3680
+#: wassup.php:3692
+#: wassup.php:3704
+msgid "default 5"
+msgstr "по подразбиране 5"
+
+#: wassup.php:3674
+msgid "Show latest external referrers"
+msgstr "Показване на последните външни отпратки"
+
+#: wassup.php:3678
+msgid "How many referrers?"
+msgstr "Колко отпратки?"
+
+#: wassup.php:3686
+msgid "Show top browsers"
+msgstr "Показване на топ браузърите"
+
+#: wassup.php:3686
+#: wassup.php:3698
+msgid "default No"
+msgstr "по подразбиране Не"
+
+#: wassup.php:3687
+#: wassup.php:3699
+msgid "Enabling it could slow down blog)"
+msgstr "Включването на тази опция може да забави блога)"
+
+#: wassup.php:3690
+msgid "How many browsers?"
+msgstr "Колко браузъри?"
+
+#: wassup.php:3698
+msgid "Show top operating systems"
+msgstr "Показване на топ операционните системи"
+
+#: wassup.php:3702
+msgid "How many operating systems?"
+msgstr "Колко операционни системи?"
+
+#: wassup.php:3713
+msgid "Wassup Widget"
+msgstr "Wassup джаджа"
+
+#: wassup.php:3839
+msgid "More Stats"
+msgstr "Още статистики"
+
+#: lib/action.php:125
+msgid "ERROR: file not found"
+msgstr "ГРЕШКА: файлът не е открит"
+
+#: lib/action.php:143
+msgid "ERROR: bad date"
+msgstr "ГРЕШКА: неправилна дата"
+
+#: lib/action.php:257
+msgid "TOP QUERY"
+msgstr "ТОП ТЪРСЕНЕ"
+
+#: lib/action.php:276
+msgid "TOP REFERRER"
+msgstr "ТОП РЕФЕРЕНТ"
+
+#: lib/action.php:302
+msgid "TOP REQUEST"
+msgstr "ТОП ЗАЯВКА"
+
+#: lib/action.php:323
+msgid "TOP BROWSER"
+msgstr "ТОП БРАУЗЪР"
+
+#: lib/action.php:343
+msgid "TOP OS"
+msgstr "ТОП ОС"
+
+#: lib/action.php:364
+msgid "TOP LOCALE"
+msgstr "ТОП ЕЗИКОВА НАСТРОЙКА"
+
+#: lib/action.php:391
+msgid "TOP VISITOR"
+msgstr "ТОП ПОСЕТИТЕЛ"
+
+#: lib/action.php:409
+msgid "This top ten doesn't include Spam records"
+msgstr "Този топ десет не включва спам записите"
+
+#: lib/action.php:414
+msgid "ERROR: Missing or unknown parameters"
+msgstr "ГРЕШКА: липсващи или неразпознати параметри"
+
+#: lib/action.php:423
+msgid "ERROR: Nothing to do here"
+msgstr "ГРЕШКА: тук няма нищо за вършене"
+
+#: lib/main.php:85
+msgid "Next"
+msgstr "Следваща"
+
+#: lib/main.php:87
+msgid "Previous"
+msgstr "Предишна"
+
+#: lib/main.php:120
+#: lib/main.php:124
+msgid "It is necessary to specify the"
+msgstr "Трябва да уточните"
+
+#: lib/main.php:120
+msgid "number of pages"
+msgstr "брой страници"
+
+#: lib/main.php:124
+msgid "limit of items"
+msgstr "краен брой записи"
+
+#: lib/main.php:124
+msgid "to show per page"
+msgstr "на страница"
+
+#: lib/main.php:209
+msgid "Pages"
+msgstr "Страници"
+
+#: lib/main.php:777
+msgid "No visitor activity"
+msgstr "Няма потребителска активност"
+
+#: lib/main.php:1179
+msgid "Last 6 Hours"
+msgstr "Последните 6 часа"
+
+#: lib/main.php:1185
+msgid "Last 7 Days"
+msgstr "Последните 7 дни"
+
+#: lib/main.php:1192
+msgid "Last Month"
+msgstr "Последния месец"
+
+#: lib/main.php:1199
+msgid "Last 3 Months"
+msgstr "Последните 3 месеца"
+
+#: lib/main.php:1205
+msgid "Last 6 Months"
+msgstr "Последните 6 месеца"
+
+#: lib/main.php:1211
+msgid "Last Year"
+msgstr "Последната година"
+
+#: lib/main.php:1217
+msgid "All Time"
+msgstr "За цялото време"
+
+#: lib/main.php:1224
+msgid "Last 24 Hours"
+msgstr "Последните 24 часа"
+
+#: lib/settings.php:31
+msgid ""
+"ATTENTION! Your WassUp table have reached the maximum value you set, I "
+"disabled the alert, you can re-enable it here."
+msgstr ""
+"ВНИМАНИЕ! Вашата WassUp таблица е достигнала зададената максимално допустима "
+"стойност. Сега предупреждението е изключено, но можете да го включите тук."
+
+#: lib/settings.php:55
+msgid "Select the options you want for the WassUp plugin"
+msgstr "Изберете желаните настройки за разширението Wassup"
+
+#: lib/settings.php:62
+msgid "General Setup"
+msgstr "Основни настройки"
+
+#: lib/settings.php:63
+msgid "Statistics Recording"
+msgstr "Запис на статистиките"
+
+#: lib/settings.php:64
+msgid "Manage Files & Database"
+msgstr "Управление на файлове & база от данни"
+
+#: lib/settings.php:65
+msgid "Uninstall"
+msgstr "Деинсталиране"
+
+#: lib/settings.php:69
+msgid "Your default screen resolution (browser width)"
+msgstr ""
+"Вашата разделителна способност на екрана по подразбиране (ширина на браузъра)"
+
+#: lib/settings.php:70
+msgid "Default screen resolution (in pixels)"
+msgstr "Разделителна способност на екрана по подразбиране (в пиксели)"
+
+#: lib/settings.php:75
+msgid ""
+"Set minimum users level which can view and manage WassUp plugin (default "
+"Administrators)"
+msgstr ""
+"Задаване на минимум потребителски клас, който може да управлява разширението "
+"WassUp (по подразбиране Администратори)"
+
+#: lib/settings.php:80
+msgid "Dashboard Settings"
+msgstr "Настройки на таблото"
+
+#: lib/settings.php:81
+msgid "Display small chart in the dashboard"
+msgstr "Показване на малка графика в таблото"
+
+#: lib/settings.php:84
+msgid "GEO IP Map (Spy view)"
+msgstr "Географска IP карта (раздел наблюдение)"
+
+#: lib/settings.php:89
+msgid "Display a GEO IP Map in the spy visitors view"
+msgstr ""
+"Показване на географска IP карта в раздела за наблюдение на посетителите"
+
+#: lib/settings.php:97
+#: lib/settings.php:456
+msgid "WARNING"
+msgstr "ПРЕДУПРЕЖДЕНИЕ"
+
+#: lib/settings.php:97
+msgid "Activation problem >> Error code"
+msgstr "Проблем при активацията >> Код за грешка"
+
+#: lib/settings.php:105
+msgid "key"
+msgstr "ключ"
+
+#: lib/settings.php:105
+msgid "signup for your key"
+msgstr "регистрирайте се, за да получите ключа си"
+
+#: lib/settings.php:108
+msgid "Geo IP Map requires"
+msgstr "Географската IP карта изисква"
+
+#: lib/settings.php:108
+msgid "Please install it to be able to activate this feature"
+msgstr "Моля, инсталирайте, за да можете да използвате тази функция"
+
+#: lib/settings.php:112
+msgid "Time format"
+msgstr "Времеви формат"
+
+#: lib/settings.php:113
+msgid "Time format 12/24 hour"
+msgstr "Времеви формат 12/24"
+
+#: lib/settings.php:116
+msgid "Visitor Detail Settings"
+msgstr "Настройки на подробностите за посетителите"
+
+#: lib/settings.php:117
+msgid "Show chart type - How many axes"
+msgstr "Показване на вида графика - Колко оси"
+
+#: lib/settings.php:123
+msgid "Set how many minutes wait for automatic page refresh"
+msgstr ""
+"Колко минути да бъде изчакването, преди страницата да се обнови автоматично"
+
+#: lib/settings.php:123
+msgid "Current Visitors Online and Visitors Details"
+msgstr "Текущи посетители онлайн и Подробности за посетителите"
+
+#: lib/settings.php:124
+msgid "refresh minutes (default 3)"
+msgstr "минути за обновяване (по подразбиране 3)"
+
+#: lib/settings.php:126
+msgid "Show visitor details for"
+msgstr "Показване на подробности за посетителите по"
+
+#: lib/settings.php:131
+msgid "Number of items per page"
+msgstr "Брой записи на страница"
+
+#: lib/settings.php:140
+msgid "Customize Top Ten List"
+msgstr "Редактиране на списъка с Топ десет"
+
+#: lib/settings.php:141
+msgid "Choose one or more items for your Top Ten list"
+msgstr "Изберете една или няколко категории за вашия Топ десет списък"
+
+#: lib/settings.php:141
+msgid "over 5 selections may cause horizontal scrolling"
+msgstr "повече от пет категории могат да предизвикат хоризонтално изместване"
+
+#: lib/settings.php:144
+msgid "Top Searches"
+msgstr "Топ търсения"
+
+#: lib/settings.php:145
+msgid "Top Referrers"
+msgstr "Топ отпратки"
+
+#: lib/settings.php:146
+msgid "Top Requests"
+msgstr "Топ заявки"
+
+#: lib/settings.php:151
+msgid "Top Locales"
+msgstr "Топ езици"
+
+#: lib/settings.php:154
+msgid "Top Visitors"
+msgstr "Топ посетители"
+
+#: lib/settings.php:156
+msgid "Top Feeds"
+msgstr "Топ новинарски източници"
+
+#: lib/settings.php:157
+msgid "Top Crawlers"
+msgstr "Топ паяци"
+
+#: lib/settings.php:161
+msgid "Websites/domains to exclude from top referrers"
+msgstr "Уеб сайтове/домейни, които да бъдат изключени от топ отпратките"
+
+#: lib/settings.php:164
+msgid "Comma separated value"
+msgstr "Стойностите се разделят със запетайка"
+
+#: lib/settings.php:165
+msgid "Don't list your website domain defined in WordPress"
+msgstr "Не включвайте дефинирания в WordPress домейн на уеб сайта ви"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset"
+msgstr "Възстановяване"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset to Default Settings"
+msgstr "Възстановяване до настройките по подразбиране"
+
+#: lib/settings.php:172
+msgid "Statistics Recording Settings"
+msgstr "Настройване записа на статистиките"
+
+#: lib/settings.php:173
+msgid "Enable/Disable Recording"
+msgstr "Включване/Изключване на записа"
+
+#: lib/settings.php:174
+msgid "Checkbox to record statistics for each type of \"visitor\""
+msgstr "Избор на запис на статистиките за всеки тип \"посетител\""
+
+#: lib/settings.php:176
+msgid "Record logged in users"
+msgstr "Запис на регистрирани посетители"
+
+#: lib/settings.php:177
+msgid "Record logged in administrators"
+msgstr "Запис на регистрираните администратори"
+
+#: lib/settings.php:178
+msgid "Record spiders and bots"
+msgstr "Запис на паяци и ботове"
+
+#: lib/settings.php:179
+msgid "Record attack/exploit attempts (libwww-perl agent)"
+msgstr "Запис на опити за атака/експлойт (libwww-perl agent)"
+
+#: lib/settings.php:183
+msgid "Checkbox to record statistics for each type of \"spam\""
+msgstr "Избор на запис на статистиките за всеки тип \"спам\""
+
+#: lib/settings.php:185
+msgid "check if an IP has previous comments as spam"
+msgstr "проверяване дали дадено IP има предишни спам коментари"
+
+#: lib/settings.php:191
+msgid "Statistics Recording Exceptions"
+msgstr "Изключения при статистическите записи"
+
+#: lib/settings.php:193
+msgid "Sites"
+msgstr "Сайтове"
+
+#: lib/settings.php:193
+msgid "Enter source IPs to exclude from recording"
+msgstr "Въведете IP адресите, които да бъдат изключени от записите"
+
+#: lib/settings.php:195
+msgid "comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...)"
+msgstr ""
+"стойностите се обособяват със запетая (напр.: 127.0.0.1, 10.0.0.1, и т.н.)"
+
+#: lib/settings.php:197
+msgid "Users"
+msgstr "Потребители"
+
+#: lib/settings.php:197
+msgid "Enter usernames to exclude from recording"
+msgstr "Въведете потребителските имена, които да бъдат изключени от записите"
+
+#: lib/settings.php:199
+msgid ""
+"comma separated value, enter a registered user's login name (ex: bobmarley, "
+"enyabrennan, etc.)"
+msgstr ""
+"стойностите се обособяват със запетая; въведете името, с което потребителят "
+"се регистрира (напр.: ivanvazov, liliivanova и т.н.)"
+
+#: lib/settings.php:200
+msgid "Posts/pages"
+msgstr "Постове/страници"
+
+#: lib/settings.php:200
+msgid "enter requested URLs to exclude from recording"
+msgstr "Въведете URL-и, които да бъдат изключени от записите"
+
+#: lib/settings.php:202
+msgid ""
+"comma separated value, don't enter entire url, only the last path or some "
+"word to exclude (ex: /category/wordpress, 2007, etc...)"
+msgstr ""
+"стойностите се обособяват със запетая; не въвеждайте целия адрес, само "
+"крайната пътека или дума, по които искате да създадете изключение (напр.: "
+"/category/wordpress, 2007 и т.н.)\""
+
+#: lib/settings.php:231
+#: lib/settings.php:233
+msgid "Rescan Old Records"
+msgstr "Сканиране наново на стари записи"
+
+#: lib/settings.php:232
+msgid ""
+"Statistical records collected by earlier versions of WassUp may not have the "
+"latest spider, search engine, and spam data properly identified.  Click the "
+"\"Rescan\" button to retroactively scan and update old records"
+msgstr ""
+"Статистическите записи, събирани от по-ранни версии на WassUp, може да не "
+"разполагат с правилните идентификатори за последните паяци, търсачки или "
+"спам данни. Щракнете върху \"Сканиране наново\" и обновете старите записи"
+
+#: lib/settings.php:236
+msgid "Select actions for table growth"
+msgstr "Изберете действия за нарастване на таблица"
+
+#: lib/settings.php:237
+msgid ""
+"WassUp table grows very fast (especially if your blog is frequently "
+"visited), I recommend you to delete old records sometimes. You can select "
+"any option below to reset it, delete old records automatically or manually. "
+"(If you haven't database space problems you can leave the table as is)"
+msgstr ""
+"Таблицата на WassUp нараства много бързо (особено ако имате много "
+"посещения). Препоръчително е от време на време да изтривате остарелите "
+"записи. По-долу можете да изберете опции за възстановяване до първоначални "
+"настройки и изтриване на остарели записи - автоматично или ръчно. (Ако "
+"големината на базата от данни не е проблем за вас, можете да оставите "
+"таблицата както е."
+
+#: lib/settings.php:238
+msgid "Current WassUp table usage is"
+msgstr "Текуща големина на таблицата на WassUp"
+
+#: lib/settings.php:244
+msgid "records"
+msgstr "записа"
+
+#: lib/settings.php:247
+msgid "Alert me"
+msgstr "Предупреди ме"
+
+#: lib/settings.php:247
+msgid "email to"
+msgstr "е-мейл до"
+
+#: lib/settings.php:247
+msgid "when table reaches"
+msgstr "когато таблицата достигне"
+
+#: lib/settings.php:249
+msgid "Empty table"
+msgstr "Изпразване на таблицата"
+
+#: lib/settings.php:250
+msgid "export table in SQL format"
+msgstr "експортиране на таблицата в SQL формат"
+
+#: lib/settings.php:252
+msgid "backup table to server file"
+msgstr "резервно копие на таблицата в сървърен файл"
+
+#: lib/settings.php:254
+msgid "Automatically delete records older than:"
+msgstr "Автоматично изтриване на записи, по-стари от:"
+
+#: lib/settings.php:258
+msgid "Delete NOW records older than:"
+msgstr "Изтриване СЕГА на записи, по-стари от:"
+
+#: lib/settings.php:260
+msgid "Action is NOT undoable"
+msgstr "Действието НЕ е необратимо"
+
+#: lib/settings.php:261
+#: lib/wassup.class.php:259
+#: lib/wassup.class.php:269
+msgid "24 hours"
+msgstr "24 часа"
+
+#: lib/settings.php:262
+#: lib/wassup.class.php:260
+msgid "1 week"
+msgstr "1 седмица"
+
+#: lib/settings.php:263
+#: lib/wassup.class.php:261
+#: lib/wassup.class.php:271
+msgid "1 month"
+msgstr "1 месец"
+
+#: lib/settings.php:264
+#: lib/wassup.class.php:262
+#: lib/wassup.class.php:272
+msgid "3 months"
+msgstr "3 месеца"
+
+#: lib/settings.php:265
+#: lib/wassup.class.php:263
+#: lib/wassup.class.php:273
+msgid "6 months"
+msgstr "6 месеца"
+
+#: lib/settings.php:266
+#: lib/wassup.class.php:264
+#: lib/wassup.class.php:274
+msgid "1 year"
+msgstr "1 година"
+
+#: lib/settings.php:270
+msgid "Server Settings and Memory Resources"
+msgstr "Сървърни настройки и заделяне на памет"
+
+#: lib/settings.php:271
+msgid "For information only. Some values may be adjustable in startup files"
+msgstr ""
+"Само за информация. Някои от стойностите вероятно могат да бъдат променяни "
+"от стартовите файлове"
+
+#: lib/settings.php:271
+msgid "and"
+msgstr "и"
+
+#: lib/settings.php:271
+msgid "or"
+msgstr "или"
+
+#: lib/settings.php:272
+#: lib/settings.php:287
+#: lib/settings.php:350
+msgid "Version"
+msgstr "Версия"
+
+#: lib/settings.php:273
+msgid "Host Server"
+msgstr "Хост сървър"
+
+#: lib/settings.php:283
+#: lib/settings.php:319
+#: lib/settings.php:329
+#: lib/settings.php:335
+#: lib/settings.php:350
+#: lib/settings.php:353
+#: lib/settings.php:397
+#: lib/settings.php:407
+#: lib/settings.php:418
+#: lib/settings.php:425
+#: lib/settings.php:434
+#: lib/settings.php:445
+msgid "unknown"
+msgstr "неизвестно"
+
+#: lib/settings.php:285
+msgid "Time Offset"
+msgstr "Времева разлика"
+
+#: lib/settings.php:286
+msgid "hours"
+msgstr "часа"
+
+#: lib/settings.php:288
+msgid "Safe Mode"
+msgstr "Безопасен режим"
+
+#: lib/settings.php:291
+#: lib/settings.php:300
+msgid "on"
+msgstr "включено"
+
+#: lib/settings.php:293
+#: lib/settings.php:298
+msgid "off"
+msgstr "изключено"
+
+#: lib/settings.php:294
+msgid "File Open Restrictions"
+msgstr "Ограничения за достъп до файлове"
+
+#: lib/settings.php:304
+msgid "Memory Allocation"
+msgstr "Заделена памет"
+
+#: lib/settings.php:322
+msgid "Memory Usage"
+msgstr "Използвана памет"
+
+#: lib/settings.php:332
+msgid "Script Timeout Limit"
+msgstr "Лимит за изтичане времето за изпълнение на скриптове"
+
+#: lib/settings.php:337
+msgid "Browser Capabilities File"
+msgstr "Файл с възможностите на браузърите"
+
+#: lib/settings.php:339
+msgid "not set"
+msgstr "не е зададено"
+
+#: lib/settings.php:343
+msgid "not installed"
+msgstr "не е инсталирано"
+
+#: lib/settings.php:344
+msgid "installed"
+msgstr "инсталирано"
+
+#: lib/settings.php:351
+msgid "Engine"
+msgstr "Енджин"
+
+#: lib/settings.php:389
+msgid "Query Cache"
+msgstr "Кеш за заявки"
+
+#: lib/settings.php:394
+#: lib/settings.php:404
+#: lib/settings.php:415
+msgid "disabled"
+msgstr "деактивирано"
+
+#: lib/settings.php:399
+msgid "Index (Key) Buffer"
+msgstr "Индексен (ключов) буфер"
+
+#: lib/settings.php:410
+msgid "Read Buffer"
+msgstr "Буфер за четене"
+
+#: lib/settings.php:421
+msgid "Wait Timeout"
+msgstr "Време за изчакване"
+
+#: lib/settings.php:428
+msgid "Char Set/Collation"
+msgstr "Кодова таблица/Колация"
+
+#: lib/settings.php:437
+msgid "Timezone"
+msgstr "Времева зона"
+
+#: lib/settings.php:452
+msgid "Want to uninstall WassUp?"
+msgstr "Искате да деинсталирате WassUp?"
+
+#: lib/settings.php:453
+msgid ""
+"No problem. Before you deactivate this plugin, check the box below to "
+"cleanup any data that was collected by WassUp that could be left behind."
+msgstr ""
+"Няма проблем. Преди да изключите това разширение, отметнете опцията по-долу, "
+"за да изчистите всички събрани от WassUp данни, които могат да останат след "
+"деинсталацията."
+
+#: lib/settings.php:454
+msgid "Permanently remove WassUp data and settings from Wordpress"
+msgstr ""
+"Премахване за постоянно на данните и настройките на WassUp от Wordpress"
+
+#: lib/settings.php:456
+msgid ""
+"All WassUp data and settings will be DELETED upon deactivation of this plugin"
+msgstr ""
+"При деактивацията на това разширение всички данни и настройки на WassUp ще "
+"бъдат ИЗТРИТИ."
+
+#: lib/settings.php:458
+msgid ""
+"This action cannot be undone. Before uninstalling WassUp, you should backup "
+"your Wordpress database first. WassUp data is stored in the table"
+msgstr ""
+"Това действие не може да бъде върнато назад. Преди да деинсталирате WassUp, "
+"първо направете резервно копие на базата от данни на Wordpress"
+
+#: lib/settings.php:460
+msgid "To help improve this plugin, we would appreciate your feedback at"
+msgstr "Помогнете ни да подобрим това разширение, като изпращате отзиви на"
+
+#: lib/wassup.class.php:208
+msgid "Administrator"
+msgstr "Администратор"
+
+#: lib/wassup.class.php:209
+msgid "Editor"
+msgstr "Редактор"
+
+#: lib/wassup.class.php:210
+msgid "Author"
+msgstr "Автор"
+
+#: lib/wassup.class.php:215
+msgid "None - don't show chart"
+msgstr "Без - не се покзва графика"
+
+#: lib/wassup.class.php:216
+msgid "One - 2 lines chart 1 axis"
+msgstr "Една - графика с 2 линии, 1 ос"
+
+#: lib/wassup.class.php:217
+msgid "Two - 2 lines chart 2 axes"
+msgstr "Две - графика с 2 линии, 2 оси"
+
+#: lib/wassup.class.php:231
+msgid "Everything"
+msgstr "Всичко"
+
+#: lib/wassup.class.php:233
+msgid "No spider"
+msgstr "Без паяци"
+
+#: lib/wassup.class.php:235
+msgid "No Spam"
+msgstr "Без спам"
+
+#: lib/wassup.class.php:236
+msgid "No Spam, No Spider"
+msgstr "Без спам, без паяци"
+
+#: lib/wassup.class.php:237
+msgid "Users logged in"
+msgstr "Регистрирани потребители"
+
+#: lib/wassup.class.php:238
+msgid "Comment authors"
+msgstr "Автори на коментари"
+
+#: lib/wassup.class.php:239
+msgid "Referrer from search engine"
+msgstr "Отпратка от търсачка"
+
+#: lib/wassup.class.php:240
+msgid "Referrer from ext link"
+msgstr "Отпратка от външна връзка"
+
+#: lib/wassup.class.php:258
+msgid "Don't delete anything"
+msgstr "Без изтриване на каквото и да е"
+
+#: lib/wassup.class.php:268
+msgid "6 hours"
+msgstr "6 часа"
+
+#: lib/wassup.class.php:270
+msgid "7 days"
+msgstr "7 дни"
+
+#: lib/wassup.class.php:275
+msgid "all time"
+msgstr "за цялото време"

@@ -1,0 +1,1508 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WassUp\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-18 12:28+0100\n"
+"PO-Revision-Date: 2012-09-06 14:55+0000\n"
+"Last-Translator: Alfredo Hernández <Unknown>\n"
+"Language-Team: <michele@befree.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-01-12 09:52+0000\n"
+"X-Generator: Launchpad (build 16890)\n"
+"X-Poedit-SearchPath-0: /home/m1k/Desktop/wassup_translation/wassup\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: __;_e\n"
+
+#: wassup.php:45
+msgid "Sorry, Wassup requires WordPress 2.2 or higher to work"
+msgstr "Lo siento, Wassup requiere Wordpress 2.2. o superior"
+
+#: wassup.php:406
+msgid "Hide Search"
+msgstr "Ocultar búsqueda"
+
+#: wassup.php:409
+#: wassup.php:1209
+#: wassup.php:1290
+#: lib/action.php:183
+msgid "Search"
+msgstr "Buscar"
+
+#: wassup.php:414
+msgid "Hide TopTen"
+msgstr "Ocultar Top 10"
+
+#: wassup.php:417
+msgid "Show TopTen"
+msgstr "Mostrar Top 10"
+
+#: wassup.php:423
+msgid "Collapse All"
+msgstr "Contraer"
+
+#: wassup.php:426
+#: wassup.php:761
+#: wassup.php:857
+#: wassup.php:1165
+msgid "Expand All"
+msgstr "Expandir"
+
+#: wassup.php:431
+msgid "Expand Cronology"
+msgstr "Expandir cronología"
+
+#: wassup.php:434
+msgid "Collapse Cronology"
+msgstr "Contraer Cronología"
+
+#: wassup.php:526
+msgid "Visitor Details"
+msgstr "Detalles del visitante"
+
+#: wassup.php:529
+msgid "Spy Visitors"
+msgstr "Espiar visitantes"
+
+#: wassup.php:529
+#: wassup.php:861
+msgid "SPY Visitors"
+msgstr "Espiar visitantes"
+
+#: wassup.php:530
+#: wassup.php:759
+msgid "Current Visitors Online"
+msgstr "Visitantes en línea ahora mismo"
+
+#: wassup.php:531
+#: wassup.php:917
+msgid "Options"
+msgstr "Opciones"
+
+#: wassup.php:629
+#: wassup.php:654
+msgid "Wassup options updated successfully"
+msgstr "Opciones de Wassup actualizadas"
+
+#: wassup.php:641
+msgid "Wassup uninstall option updated successfully"
+msgstr "Opción de desinstalación de Wassup actualizada"
+
+#: wassup.php:649
+msgid "Wassup spam options updated successfully"
+msgstr "Opción de spam de Wassup actualizada"
+
+#: wassup.php:750
+msgid "Warning"
+msgstr "Cuidado"
+
+#: wassup.php:750
+msgid "is NOT recording new statistics"
+msgstr "NO se están guardando nuevas estadísticas"
+
+#: wassup.php:750
+msgid ""
+"To collect data you must check \"Enable/Disable recording\" in \"Options: "
+"Statistics Recording\" tab"
+msgstr ""
+"Para recoger información debes marcar \"Activar/Desactivar guardado\" en la "
+"pestaña \"Opciones:Guardado de estadísticas\""
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Legend"
+msgstr "Leyenda"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Logged-in Users"
+msgstr "Usuarios conectados"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Comments Authors"
+msgstr "Autores de comentarios"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Spiders/bots"
+msgstr "Arañas/ robots"
+
+#: wassup.php:767
+msgid "Visitors online"
+msgstr "Visitantes en línea"
+
+#: wassup.php:791
+#: wassup.php:1319
+#: lib/main.php:641
+msgid "From your blog"
+msgstr "Desde tu blog"
+
+#: wassup.php:794
+#: wassup.php:1322
+#: lib/main.php:644
+msgid "Direct hit"
+msgstr "Clic directo"
+
+#: wassup.php:814
+#: wassup.php:1389
+msgid "LOGGED IN USER"
+msgstr "Usuario conectado"
+
+#: wassup.php:815
+#: wassup.php:818
+#: wassup.php:1405
+msgid "COMMENT AUTHOR"
+msgstr "Autor del comentario"
+
+#: wassup.php:864
+msgid "Pause"
+msgstr "Pausar"
+
+#: wassup.php:865
+msgid "Play"
+msgstr "Reproducir"
+
+#: wassup.php:866
+msgid "Spy items by"
+msgstr "Espiar elementos por"
+
+#: wassup.php:918
+msgid ""
+"You can add a sidebar Widget with some useful statistics information by "
+"activating the"
+msgstr ""
+"Puedes añadir un widget a barra lateral con algunas estadísticas "
+"interesantes activando"
+
+#: wassup.php:919
+msgid "Wassup Widget in the Widgets menu option"
+msgstr "el widget Wassup en las opciones del menú"
+
+#: wassup.php:927
+msgid "Latest hits"
+msgstr "Últimos clics"
+
+#: wassup.php:929
+msgid "WassUp recording is disabled"
+msgstr "Grabación de Wassup desactivada"
+
+#: wassup.php:1041
+msgid "records deleted"
+msgstr "grabaciones eliminadas"
+
+#: wassup.php:1102
+msgid "hide chart"
+msgstr "esconder lista"
+
+#: wassup.php:1102
+msgid "Hide the chart"
+msgstr "Esconder la gráfica"
+
+#: wassup.php:1105
+msgid "show chart"
+msgstr "mostrar lista"
+
+#: wassup.php:1105
+msgid "Show the chart"
+msgstr "Mostrar la gráfica"
+
+#: wassup.php:1115
+msgid "Summary for the last"
+msgstr "Sumario de"
+
+#: wassup.php:1122
+msgid "Items per page"
+msgstr "Ítems por página"
+
+#: wassup.php:1132
+msgid "Show items by"
+msgstr "Mostrar ítems por"
+
+#: wassup.php:1151
+msgid "Visits"
+msgstr "Visitas"
+
+#: wassup.php:1152
+msgid "Pageviews"
+msgstr "Vistas de página"
+
+#: wassup.php:1153
+msgid "Pages/Visits"
+msgstr "Páginas/ Visitas"
+
+#: wassup.php:1156
+msgid "Spams"
+msgstr "Spams"
+
+#: wassup.php:1166
+msgid "Collapse Chronology"
+msgstr "Contraer cronología"
+
+#: wassup.php:1185
+msgid "Spam Options"
+msgstr "Opciones de spam"
+
+#: wassup.php:1187
+#: lib/settings.php:182
+msgid "Enable/Disable Spam Check on Records"
+msgstr "Activar/ desactivar el revisor de spam en las grabaciones"
+
+#: wassup.php:1188
+#: lib/settings.php:185
+msgid "Record Akismet comment spam attempts"
+msgstr "Grabar intentos de comentarios spam de Akismet"
+
+#: wassup.php:1189
+#: lib/settings.php:186
+msgid "Record referrer spam attempts"
+msgstr "Grabar intentos de acceso de spam"
+
+#: wassup.php:1190
+#: lib/settings.php:187
+msgid "Record admin break-in/hacker attempts"
+msgstr "Registro de intentos para robar cuenta de admin"
+
+#: wassup.php:1191
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Save Settings"
+msgstr "Guardar preferencias"
+
+#: wassup.php:1200
+msgid "Filter by marked IP"
+msgstr "Filtrar por IP marcada"
+
+#: wassup.php:1200
+msgid "show marked items"
+msgstr "mostrar elementos marcados"
+
+#: wassup.php:1203
+msgid "Searched for"
+msgstr "Buscado por"
+
+#: wassup.php:1205
+msgid "Auto refresh in"
+msgstr "Auto refrescarse cada"
+
+#: wassup.php:1205
+#: lib/settings.php:334
+#: lib/settings.php:423
+msgid "seconds"
+msgstr "segundos"
+
+#: wassup.php:1209
+msgid "Top Ten"
+msgstr "Top 10"
+
+#: wassup.php:1209
+msgid "Show Top Ten"
+msgstr "Mostrar Top Ten"
+
+#: wassup.php:1263
+#: lib/action.php:175
+msgid "Raw data"
+msgstr "Datos completos"
+
+#: wassup.php:1266
+msgid "Visit type"
+msgstr "Tipo de visita"
+
+#: wassup.php:1268
+msgid "Logged-in user"
+msgstr "Usuario conectado"
+
+#: wassup.php:1270
+msgid "Spammer/Hacker"
+msgstr "Spammer/Hacker"
+
+#: wassup.php:1272
+msgid "Spammer"
+msgstr "Spammer"
+
+#: wassup.php:1274
+msgid "Comment author"
+msgstr "Autor del comentario"
+
+#: wassup.php:1276
+msgid "Feed"
+msgstr "Feed"
+
+#: wassup.php:1278
+#: lib/wassup.class.php:232
+msgid "Spider"
+msgstr "Spider"
+
+#: wassup.php:1280
+msgid "Regular visitor"
+msgstr "Visitantes frecuentes"
+
+#: wassup.php:1283
+#: lib/action.php:178
+msgid "IP"
+msgstr "IP"
+
+#: wassup.php:1284
+#: wassup.php:1356
+#: lib/action.php:179
+msgid "Hostname"
+msgstr "Servidor"
+
+#: wassup.php:1285
+msgid "Url Requested"
+msgstr "URL solicitada"
+
+#: wassup.php:1286
+#: wassup.php:1361
+#: lib/action.php:180
+msgid "User Agent"
+msgstr "Agente de usuario"
+
+#: wassup.php:1287
+#: wassup.php:1356
+#: lib/action.php:181
+msgid "Referrer"
+msgstr "Acceso"
+
+#: wassup.php:1289
+msgid "Search Engine"
+msgstr "Motor de búsqueda"
+
+#: wassup.php:1291
+msgid "Page"
+msgstr "Página"
+
+#: wassup.php:1294
+#: wassup.php:1450
+#: lib/action.php:186
+msgid "OS"
+msgstr "Sistema operativo"
+
+#: wassup.php:1297
+#: lib/action.php:189
+msgid "Browser"
+msgstr "Navegador"
+
+#: wassup.php:1300
+msgid "Locale/Language"
+msgstr "Localización/Lenguaje"
+
+#: wassup.php:1303
+msgid "Screen Resolution"
+msgstr "Resolución de pantalla"
+
+#: wassup.php:1306
+msgid "End timestamp"
+msgstr "Fin de la marca de tiempo"
+
+#: wassup.php:1332
+#: wassup.php:1337
+msgid "delete"
+msgstr "eliminar"
+
+#: wassup.php:1332
+msgid "Delete ALL marked records with this IP"
+msgstr "Eliminar TODAS las grabaciones marcadas con esta IP"
+
+#: wassup.php:1334
+msgid "unmark"
+msgstr "desmarcar"
+
+#: wassup.php:1334
+msgid "UnMark IP"
+msgstr "Desmarcar IP"
+
+#: wassup.php:1337
+msgid "Delete this record"
+msgstr "Eliminar grabación"
+
+#: wassup.php:1339
+msgid "mark"
+msgstr "marcar"
+
+#: wassup.php:1339
+msgid "Mark IP"
+msgstr "Marcar IP"
+
+#: wassup.php:1342
+msgid "show raw table"
+msgstr "mostrar tabla completa"
+
+#: wassup.php:1342
+msgid "Show the items as raw table"
+msgstr "Mostrar los elementos en una tabla completa"
+
+#: wassup.php:1380
+msgid "SEARCH ENGINE"
+msgstr "Motor de búsqueda"
+
+#: wassup.php:1380
+msgid "page"
+msgstr "página"
+
+#: wassup.php:1381
+msgid "KEYWORDS"
+msgstr "palabras de búsqueda"
+
+#: wassup.php:1399
+msgid "ADMINISTRATOR"
+msgstr "ADMINISTRADOR"
+
+#: wassup.php:1417
+msgid "FEEDREADER"
+msgstr "lector de RSS"
+
+#: wassup.php:1419
+msgid "SUBSCRIBER(S)"
+msgstr "suscriptor/es"
+
+#: wassup.php:1424
+msgid "SPIDER"
+msgstr "araña"
+
+#: wassup.php:1432
+msgid "Probably SPAM!"
+msgstr "¡probablemente sea spam!"
+
+#: wassup.php:1433
+msgid "Referer Spam"
+msgstr "Acceso de spam"
+
+#: wassup.php:1434
+#: lib/wassup.class.php:234
+msgid "Spam"
+msgstr "Spam"
+
+#: wassup.php:1440
+msgid "Probably hack attempt!"
+msgstr "¡Probable intento de intromisión!"
+
+#: wassup.php:1448
+#: lib/action.php:192
+msgid "Language"
+msgstr "Idioma"
+
+#: wassup.php:1451
+msgid "BROWSER"
+msgstr "Navegador"
+
+#: wassup.php:1453
+msgid "RESOLUTION"
+msgstr "Resolución"
+
+#: wassup.php:1509
+msgid "Graph of visitor hits"
+msgstr "Gráfico de visitas"
+
+#: wassup.php:1511
+msgid "Too few records to print chart"
+msgstr "Hay muy pocas estadísticas para mostrar esta lista"
+
+#: wassup.php:1527
+msgid "Check the official"
+msgstr "Comprobar"
+
+#: wassup.php:1527
+msgid "page for updates, bug reports and your hints to improve it"
+msgstr ""
+"la página oficial para actualizaciones, envío de errores y tus sugerencias"
+
+#: wassup.php:1527
+msgid "User Guide documentation"
+msgstr "Documentación de la guía de usuario"
+
+#: wassup.php:1528
+msgid "Exec time"
+msgstr "Tiempo de ejecución"
+
+#: wassup.php:2349
+msgid "WassUp Plugin table has reached maximum size!"
+msgstr "¡La tabla de Wassup ha alcanzado su tamaño máximo!"
+
+#: wassup.php:2350
+msgid "Hi"
+msgstr "Hola"
+
+#: wassup.php:2350
+msgid ""
+"you have received this email because your WassUp Database table at your "
+"Wordpress blog"
+msgstr ""
+"has recibido este correo porque tu base de datos de Wassup en tu blog"
+
+#: wassup.php:2350
+msgid "has reached the maximum value you set in the options menu"
+msgstr "ha alcanzado el máximo valor que elegiste en las opciones del menú"
+
+#: wassup.php:2351
+msgid ""
+"This is only a reminder, please take the actions you want in the WassUp "
+"options menu"
+msgstr ""
+"Esto sólo es un recordatorio, por favor, toma las medidas que consideres en "
+"las opciones de Wassup"
+
+#: wassup.php:2351
+msgid "This alert now will be removed and you will be able to set a new one"
+msgstr "Esta alerta desaparecerá y deberás establecer una nueva"
+
+#: wassup.php:2352
+msgid ""
+"Thank you for using WassUp plugin. Check if there is a new version available "
+"here:"
+msgstr ""
+"Gracias por usar el plugin Wassup. Comprueba si hay una nueva versión "
+"disponible aquí:"
+
+#: wassup.php:2352
+msgid "Have a nice day!"
+msgstr "¡Que tengas un buen día!"
+
+#: wassup.php:2480
+msgid "Stats"
+msgstr "Estadísticas"
+
+#: wassup.php:2480
+msgid "More"
+msgstr "Más"
+
+#: wassup.php:2482
+#: wassup.php:3838
+msgid "visitor stats chart"
+msgstr "gráfica estadística de visitantes"
+
+#: wassup.php:2672
+msgid "encrypted search"
+msgstr "búsqueda encriptada"
+
+#: wassup.php:3340
+msgid "Error getting table details"
+msgstr "Error obteniendo detalles de tabla"
+
+#: wassup.php:3348
+#, php-format
+msgid "Delete any existing table %s"
+msgstr "Eliminar cualquier tabla %s existente"
+
+#: wassup.php:3359
+#, php-format
+msgid "Table structure of table %s"
+msgstr "Estructura de tabla de la tabla %s"
+
+#: wassup.php:3367
+#, php-format
+msgid "Error with SHOW CREATE TABLE for %s."
+msgstr "Error con MOSTRAR CREAR TABLA para %s."
+
+#: wassup.php:3374
+#, php-format
+msgid "Error getting table structure of %s"
+msgstr "Error obteniendo estructura de la tabla %s"
+
+#: wassup.php:3382
+#, php-format
+msgid "Data contents of table %s"
+msgstr "Datos de contenidos de la tabla %s"
+
+#: wassup.php:3443
+#, php-format
+msgid "End of data contents of table %s"
+msgstr "Final de los datos del contenido de la tabla %s"
+
+#: wassup.php:3455
+msgid "If above timestamp is not current time, this page is cached"
+msgstr ""
+"Si el tiempo mostrado no coincide con el real, es que la página esta en caché"
+
+#: wassup.php:3486
+#: wassup.php:3740
+msgid "No Data"
+msgstr "Sin datos"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+#: wassup.php:3814
+msgid "powered by"
+msgstr "ofrecido por"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+msgid "Real Time Visitors Tracking"
+msgstr "Rastrear Visitantes en línea"
+
+#: wassup.php:3497
+msgid "Last searched terms"
+msgstr "Últimos términos de búsqueda"
+
+#: wassup.php:3510
+msgid "Last referers"
+msgstr "Últimos enlaces a tu página"
+
+#: wassup.php:3525
+#: lib/settings.php:149
+msgid "Top Browsers"
+msgstr "Navegadores más usados"
+
+#: wassup.php:3540
+#: lib/settings.php:150
+msgid "Top OS"
+msgstr "Sistemas operativos más usados"
+
+#: wassup.php:3559
+msgid "visitor(s) online"
+msgstr "visitante(s) en línea"
+
+#: wassup.php:3562
+msgid "logged-in user(s)"
+msgstr "usuario(s) conectado(s)"
+
+#: wassup.php:3566
+msgid "comment author(s)"
+msgstr "autor(es) de comentarios"
+
+#: wassup.php:3632
+msgid "Title"
+msgstr "Título"
+
+#: wassup.php:3634
+msgid "default \"Visitors Online\""
+msgstr "por defecto \"Visitors Online\""
+
+#: wassup.php:3637
+msgid "Stylesheet class for &lt;ul&gt; attribute"
+msgstr "Clase de hoja de estilo para &lt;ul&gt;  atributo"
+
+#: wassup.php:3639
+msgid "default \"links\""
+msgstr "por defecto \"links\""
+
+#: wassup.php:3642
+msgid "Number of characters to display from left"
+msgstr "Número de caracteres para mostrar desde la izquierda"
+
+#: wassup.php:3644
+msgid "For template compatibility - default 18"
+msgstr "Para compatibilidad - default 18"
+
+#: wassup.php:3649
+msgid "Show number of logged-in users online"
+msgstr "Mostrar el número de usuarios que tienen sesión iniciada"
+
+#: wassup.php:3650
+msgid "Stats recording must be enabled in WassUp options"
+msgstr ""
+"El registro de estadísticas debe ser habilitado en las opciones de WassUp"
+
+#: wassup.php:3651
+#: wassup.php:3657
+#: wassup.php:3663
+#: wassup.php:3675
+msgid "default Yes"
+msgstr "Por defecto Yes"
+
+#: wassup.php:3656
+msgid "Show number of comment authors online"
+msgstr "Mostrar el número de autores de comentarios online"
+
+#: wassup.php:3662
+msgid "Show latest searches"
+msgstr "Mostrar últimas búsquedas"
+
+#: wassup.php:3666
+msgid "How many searches?"
+msgstr "¿Cuántas búsquedas?"
+
+#: wassup.php:3668
+#: wassup.php:3680
+#: wassup.php:3692
+#: wassup.php:3704
+msgid "default 5"
+msgstr "Por defecto 5"
+
+#: wassup.php:3674
+msgid "Show latest external referrers"
+msgstr "Mostrar las últimas referencias externas"
+
+#: wassup.php:3678
+msgid "How many referrers?"
+msgstr "¿Cuántas referencias externas?"
+
+#: wassup.php:3686
+msgid "Show top browsers"
+msgstr "Mostrar navegadores más utlizados"
+
+#: wassup.php:3686
+#: wassup.php:3698
+msgid "default No"
+msgstr "Por defecto No"
+
+#: wassup.php:3687
+#: wassup.php:3699
+msgid "Enabling it could slow down blog)"
+msgstr "Hablitar esto podría ralentizar el funcionamiento del blog"
+
+#: wassup.php:3690
+msgid "How many browsers?"
+msgstr "¿Cuántos navegadores?"
+
+#: wassup.php:3698
+msgid "Show top operating systems"
+msgstr "Mostrar los Sistemas Operativos más utlizados"
+
+#: wassup.php:3702
+msgid "How many operating systems?"
+msgstr "¿Cuántos Sistemas Operativos?"
+
+#: wassup.php:3713
+msgid "Wassup Widget"
+msgstr "Widget Wassup"
+
+#: wassup.php:3839
+msgid "More Stats"
+msgstr "Más estadísticas"
+
+#: lib/action.php:125
+msgid "ERROR: file not found"
+msgstr "ERROR: archivo no encontrado"
+
+#: lib/action.php:143
+msgid "ERROR: bad date"
+msgstr "ERROR: fecha incorrecta"
+
+#: lib/action.php:257
+msgid "TOP QUERY"
+msgstr "Top Consultas"
+
+#: lib/action.php:276
+msgid "TOP REFERRER"
+msgstr "Top de Referidos"
+
+#: lib/action.php:302
+msgid "TOP REQUEST"
+msgstr "Top Solicitudes"
+
+#: lib/action.php:323
+msgid "TOP BROWSER"
+msgstr "TOP NAVEGADOR"
+
+#: lib/action.php:343
+msgid "TOP OS"
+msgstr "TOP SISTEMA OPERATIVO"
+
+#: lib/action.php:364
+msgid "TOP LOCALE"
+msgstr "TOP LOCALE"
+
+#: lib/action.php:391
+msgid "TOP VISITOR"
+msgstr "Visitantes Top"
+
+#: lib/action.php:409
+msgid "This top ten doesn't include Spam records"
+msgstr "Este Top 10 no incluye las grabaciones de spam"
+
+#: lib/action.php:414
+msgid "ERROR: Missing or unknown parameters"
+msgstr "ERROR: parámetros desconocidos o no encontrados"
+
+#: lib/action.php:423
+msgid "ERROR: Nothing to do here"
+msgstr "ERROR: nada que hacer aquí"
+
+#: lib/main.php:85
+msgid "Next"
+msgstr "Siguiente"
+
+#: lib/main.php:87
+msgid "Previous"
+msgstr "Anterior"
+
+#: lib/main.php:120
+#: lib/main.php:124
+msgid "It is necessary to specify the"
+msgstr "Es necesario especificar el"
+
+#: lib/main.php:120
+msgid "number of pages"
+msgstr "número de páginas"
+
+#: lib/main.php:124
+msgid "limit of items"
+msgstr "límite de elementos"
+
+#: lib/main.php:124
+msgid "to show per page"
+msgstr "para mostrar por página"
+
+#: lib/main.php:209
+msgid "Pages"
+msgstr "Páginas"
+
+#: lib/main.php:777
+msgid "No visitor activity"
+msgstr "No hay actividad de visitantes"
+
+#: lib/main.php:1179
+msgid "Last 6 Hours"
+msgstr "Últimas 6 horas"
+
+#: lib/main.php:1185
+msgid "Last 7 Days"
+msgstr "Últimos 7 días"
+
+#: lib/main.php:1192
+msgid "Last Month"
+msgstr "Último mes"
+
+#: lib/main.php:1199
+msgid "Last 3 Months"
+msgstr "Los últimos 3 meses"
+
+#: lib/main.php:1205
+msgid "Last 6 Months"
+msgstr "Los últimos 6 meses"
+
+#: lib/main.php:1211
+msgid "Last Year"
+msgstr "Último año"
+
+#: lib/main.php:1217
+msgid "All Time"
+msgstr "Todo"
+
+#: lib/main.php:1224
+msgid "Last 24 Hours"
+msgstr "Últimas 24 horas"
+
+#: lib/settings.php:31
+msgid ""
+"ATTENTION! Your WassUp table have reached the maximum value you set, I "
+"disabled the alert, you can re-enable it here."
+msgstr ""
+"¡ATENCIÓN! Tu tabla de Wassup ha alcanzado el valor máximo que estableciste, "
+"he desactivado la alerta, pero la puedes activar otra vez aquí"
+
+#: lib/settings.php:55
+msgid "Select the options you want for the WassUp plugin"
+msgstr "Selecciona las opciones que quieras para el plugin de Wassup"
+
+#: lib/settings.php:62
+msgid "General Setup"
+msgstr "Opciones generales"
+
+#: lib/settings.php:63
+msgid "Statistics Recording"
+msgstr "Grabación de estadísticas"
+
+#: lib/settings.php:64
+msgid "Manage Files & Database"
+msgstr "Administrar archivos y base de datos"
+
+#: lib/settings.php:65
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: lib/settings.php:69
+msgid "Your default screen resolution (browser width)"
+msgstr "Tu resolución por defecto (ancho del navegador)"
+
+#: lib/settings.php:70
+msgid "Default screen resolution (in pixels)"
+msgstr "Resolución de pantalla por defecto (en píxeles)"
+
+#: lib/settings.php:75
+msgid ""
+"Set minimum users level which can view and manage WassUp plugin (default "
+"Administrators)"
+msgstr ""
+"Establecer un nivel mínimo de usuarios que puedan ver y administrar el "
+"plugin Wassup (los administradores, por defecto)"
+
+#: lib/settings.php:80
+msgid "Dashboard Settings"
+msgstr "Opciones Escritorio"
+
+#: lib/settings.php:81
+msgid "Display small chart in the dashboard"
+msgstr "Mostrar una pequeña gráfica en la dashboard"
+
+#: lib/settings.php:84
+msgid "GEO IP Map (Spy view)"
+msgstr "Mapa GEO IP (vista espía)"
+
+#: lib/settings.php:89
+msgid "Display a GEO IP Map in the spy visitors view"
+msgstr "Mostrar un Mapa GEO IP en la pantalla para espiar a los visitantes"
+
+#: lib/settings.php:97
+#: lib/settings.php:456
+msgid "WARNING"
+msgstr "PELIGRO"
+
+#: lib/settings.php:97
+msgid "Activation problem >> Error code"
+msgstr "Problemas de activación >> Código de error"
+
+#: lib/settings.php:105
+msgid "key"
+msgstr "clave"
+
+#: lib/settings.php:105
+msgid "signup for your key"
+msgstr "obtén tu clave"
+
+#: lib/settings.php:108
+msgid "Geo IP Map requires"
+msgstr "Requisitos Mapa GEO IP"
+
+#: lib/settings.php:108
+msgid "Please install it to be able to activate this feature"
+msgstr "Instalar para poder activar esta funcionalidad"
+
+#: lib/settings.php:112
+msgid "Time format"
+msgstr "Formato de hora"
+
+#: lib/settings.php:113
+msgid "Time format 12/24 hour"
+msgstr "Formato de hora 12/24 horas"
+
+#: lib/settings.php:116
+msgid "Visitor Detail Settings"
+msgstr "Configuración de los detalles de visitantes"
+
+#: lib/settings.php:117
+msgid "Show chart type - How many axes"
+msgstr "Mostrar tipo de gráfica - Cuántos ejes"
+
+#: lib/settings.php:123
+msgid "Set how many minutes wait for automatic page refresh"
+msgstr "Establecer los minutos de actualización automática de la página"
+
+#: lib/settings.php:123
+msgid "Current Visitors Online and Visitors Details"
+msgstr "Visitantes en línea actualmente y detalles de los visitantes"
+
+#: lib/settings.php:124
+msgid "refresh minutes (default 3)"
+msgstr "minutos para actualizar (3 por defecto)"
+
+#: lib/settings.php:126
+msgid "Show visitor details for"
+msgstr "Mostra detalles del visitante para"
+
+#: lib/settings.php:131
+msgid "Number of items per page"
+msgstr "Número de elementos por página"
+
+#: lib/settings.php:140
+msgid "Customize Top Ten List"
+msgstr "Modificar lista del Top 10"
+
+#: lib/settings.php:141
+msgid "Choose one or more items for your Top Ten list"
+msgstr "Elegir uno o más elementos para tu lista del Top 10"
+
+#: lib/settings.php:141
+msgid "over 5 selections may cause horizontal scrolling"
+msgstr ""
+"alrededor de 5 objetos seleccionados pueden causar una barra de "
+"desplazamiento horizontal"
+
+#: lib/settings.php:144
+msgid "Top Searches"
+msgstr "Búsquedas frecuentes"
+
+#: lib/settings.php:145
+msgid "Top Referrers"
+msgstr "Enlaces frecuentes"
+
+#: lib/settings.php:146
+msgid "Top Requests"
+msgstr "Top Solicitudes"
+
+#: lib/settings.php:151
+msgid "Top Locales"
+msgstr "Top Locales"
+
+#: lib/settings.php:154
+msgid "Top Visitors"
+msgstr "Top de visitantes"
+
+#: lib/settings.php:156
+msgid "Top Feeds"
+msgstr "Lectores RSS frecuentes"
+
+#: lib/settings.php:157
+msgid "Top Crawlers"
+msgstr "Top Rastreadores"
+
+#: lib/settings.php:161
+msgid "Websites/domains to exclude from top referrers"
+msgstr "Webs/dominios que se desea excluir del top de referencias"
+
+#: lib/settings.php:164
+msgid "Comma separated value"
+msgstr "Separar valores por comas"
+
+#: lib/settings.php:165
+msgid "Don't list your website domain defined in WordPress"
+msgstr "No escriba el dominio de su sitio web definido en WordPress"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset to Default Settings"
+msgstr "Mostrar opciones por defecto"
+
+#: lib/settings.php:172
+msgid "Statistics Recording Settings"
+msgstr "Opciones de grabación de estadísticas"
+
+#: lib/settings.php:173
+msgid "Enable/Disable Recording"
+msgstr "Activar o desactivar grabación"
+
+#: lib/settings.php:174
+msgid "Checkbox to record statistics for each type of \"visitor\""
+msgstr "Marcar para grabar estadísticas para cada tipo de \"visitante\""
+
+#: lib/settings.php:176
+msgid "Record logged in users"
+msgstr "Grabar usuarios conectados"
+
+#: lib/settings.php:177
+msgid "Record logged in administrators"
+msgstr "Registro de conexión de administradores"
+
+#: lib/settings.php:178
+msgid "Record spiders and bots"
+msgstr "Grabar arañas y robots"
+
+#: lib/settings.php:179
+msgid "Record attack/exploit attempts (libwww-perl agent)"
+msgstr "Grabar intentos de ataque o exploit (agente libwww-perl)"
+
+#: lib/settings.php:183
+msgid "Checkbox to record statistics for each type of \"spam\""
+msgstr "Marcar para grabar estadísticas de cada tipo de \"spam\""
+
+#: lib/settings.php:185
+msgid "check if an IP has previous comments as spam"
+msgstr "Comprobar si una IP tiene comentarios previos marcados como spam"
+
+#: lib/settings.php:191
+msgid "Statistics Recording Exceptions"
+msgstr "Excepciones del registro de estadísticas"
+
+#: lib/settings.php:193
+msgid "Sites"
+msgstr "Sitios web"
+
+#: lib/settings.php:193
+msgid "Enter source IPs to exclude from recording"
+msgstr "Insertar las IP's para excluirlas de la grabación"
+
+#: lib/settings.php:195
+msgid "comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...)"
+msgstr "Separar los valores por comas (ejemplo: 127.0.0.1, 10.0.0.1, etc.)"
+
+#: lib/settings.php:197
+msgid "Users"
+msgstr "Usuarios"
+
+#: lib/settings.php:197
+msgid "Enter usernames to exclude from recording"
+msgstr "Inserta los usuarios que deseas excluir del registro"
+
+#: lib/settings.php:199
+msgid ""
+"comma separated value, enter a registered user's login name (ex: bobmarley, "
+"enyabrennan, etc.)"
+msgstr ""
+"Separar los valores por comas, introducir el nombre de un usuario registrado "
+"(ejemplo: bobmarley, enyabrennan, etc.)"
+
+#: lib/settings.php:200
+msgid "Posts/pages"
+msgstr "Entradas/páginas"
+
+#: lib/settings.php:200
+msgid "enter requested URLs to exclude from recording"
+msgstr "Inserta las URLs que deseas excluir del registro"
+
+#: lib/settings.php:202
+msgid ""
+"comma separated value, don't enter entire url, only the last path or some "
+"word to exclude (ex: /category/wordpress, 2007, etc...)"
+msgstr ""
+"Separar los valores por comas, no introducir la url entera, solamente la "
+"ruta o alguna palabra que se desee excluir (ejemplo: /category/wordpress, "
+"2007, etc.)"
+
+#: lib/settings.php:231
+#: lib/settings.php:233
+msgid "Rescan Old Records"
+msgstr "Escanear antiguas grabaciones"
+
+#: lib/settings.php:232
+msgid ""
+"Statistical records collected by earlier versions of WassUp may not have the "
+"latest spider, search engine, and spam data properly identified.  Click the "
+"\"Rescan\" button to retroactively scan and update old records"
+msgstr ""
+"Las grabaciones estadísticas recogidas por versiones anteriores de Wassup "
+"puede que no tengan las últimas arañas, motores de búsqueda y datos de spam "
+"identificados. Haz clic en el botón \"Rescan\" para retroactivar el análisis "
+"y actualizar las grabaciones antiguas"
+
+#: lib/settings.php:236
+msgid "Select actions for table growth"
+msgstr "Selecciona acciones para el crecimiento de la tabla"
+
+#: lib/settings.php:237
+msgid ""
+"WassUp table grows very fast (especially if your blog is frequently "
+"visited), I recommend you to delete old records sometimes. You can select "
+"any option below to reset it, delete old records automatically or manually. "
+"(If you haven't database space problems you can leave the table as is)"
+msgstr ""
+"La tabla de Wassup crece muy rápido (especialmente si tu blog es visitado "
+"frecuentemente). Te recomiendo que borres antiguas grabaciones de vez en "
+"cuando. Puedes seleccionar cualquier opciones posterior para reiniciar o "
+"eliminar viejas grabaciones automática o manualmente (si no tienes problemas "
+"de espacio en tu base de datos, deja las cosas como están)."
+
+#: lib/settings.php:238
+msgid "Current WassUp table usage is"
+msgstr "El actual uso de la tabla Wassup es"
+
+#: lib/settings.php:244
+msgid "records"
+msgstr "grabaciones"
+
+#: lib/settings.php:247
+msgid "Alert me"
+msgstr "Alertarme"
+
+#: lib/settings.php:247
+msgid "email to"
+msgstr "enviar correo a"
+
+#: lib/settings.php:247
+msgid "when table reaches"
+msgstr "cuando la tabla llegue"
+
+#: lib/settings.php:249
+msgid "Empty table"
+msgstr "Tabla vacía"
+
+#: lib/settings.php:250
+msgid "export table in SQL format"
+msgstr "eportar tabla en formato SQL"
+
+#: lib/settings.php:252
+msgid "backup table to server file"
+msgstr "Resguardar tabla en el servidor de archivos"
+
+#: lib/settings.php:254
+msgid "Automatically delete records older than:"
+msgstr "Eliminar automáticamente las grabaciones anteriores a:"
+
+#: lib/settings.php:258
+msgid "Delete NOW records older than:"
+msgstr "Eliminar ahora las grabaciones anteriores a:"
+
+#: lib/settings.php:260
+msgid "Action is NOT undoable"
+msgstr "La acción no se puede deshacer"
+
+#: lib/settings.php:261
+#: lib/wassup.class.php:259
+#: lib/wassup.class.php:269
+msgid "24 hours"
+msgstr "24 horas"
+
+#: lib/settings.php:262
+#: lib/wassup.class.php:260
+msgid "1 week"
+msgstr "1 semana"
+
+#: lib/settings.php:263
+#: lib/wassup.class.php:261
+#: lib/wassup.class.php:271
+msgid "1 month"
+msgstr "1 mes"
+
+#: lib/settings.php:264
+#: lib/wassup.class.php:262
+#: lib/wassup.class.php:272
+msgid "3 months"
+msgstr "3 meses"
+
+#: lib/settings.php:265
+#: lib/wassup.class.php:263
+#: lib/wassup.class.php:273
+msgid "6 months"
+msgstr "6 meses"
+
+#: lib/settings.php:266
+#: lib/wassup.class.php:264
+#: lib/wassup.class.php:274
+msgid "1 year"
+msgstr "1 año"
+
+#: lib/settings.php:270
+msgid "Server Settings and Memory Resources"
+msgstr "Opciones del servidor y recursos de memoria"
+
+#: lib/settings.php:271
+msgid "For information only. Some values may be adjustable in startup files"
+msgstr ""
+"Sólo para información. Algunos valores podrían ajustarse en los archivos de "
+"inicio"
+
+#: lib/settings.php:271
+msgid "and"
+msgstr "y"
+
+#: lib/settings.php:271
+msgid "or"
+msgstr "o"
+
+#: lib/settings.php:272
+#: lib/settings.php:287
+#: lib/settings.php:350
+msgid "Version"
+msgstr "Versión"
+
+#: lib/settings.php:273
+msgid "Host Server"
+msgstr "Servidor"
+
+#: lib/settings.php:283
+#: lib/settings.php:319
+#: lib/settings.php:329
+#: lib/settings.php:335
+#: lib/settings.php:350
+#: lib/settings.php:353
+#: lib/settings.php:397
+#: lib/settings.php:407
+#: lib/settings.php:418
+#: lib/settings.php:425
+#: lib/settings.php:434
+#: lib/settings.php:445
+msgid "unknown"
+msgstr "desconocido"
+
+#: lib/settings.php:285
+msgid "Time Offset"
+msgstr "Desplazamiento temporal"
+
+#: lib/settings.php:286
+msgid "hours"
+msgstr "horas"
+
+#: lib/settings.php:288
+msgid "Safe Mode"
+msgstr "Modo seguro"
+
+#: lib/settings.php:291
+#: lib/settings.php:300
+msgid "on"
+msgstr "on"
+
+#: lib/settings.php:293
+#: lib/settings.php:298
+msgid "off"
+msgstr "off"
+
+#: lib/settings.php:294
+msgid "File Open Restrictions"
+msgstr "Restricciones a la apertura de archivo"
+
+#: lib/settings.php:304
+msgid "Memory Allocation"
+msgstr "Asignación de Memoria"
+
+#: lib/settings.php:322
+msgid "Memory Usage"
+msgstr "Uso de memoria"
+
+#: lib/settings.php:332
+msgid "Script Timeout Limit"
+msgstr "Límite de ejecución del script"
+
+#: lib/settings.php:337
+msgid "Browser Capabilities File"
+msgstr "Opciones del Navegador de Archivos"
+
+#: lib/settings.php:339
+msgid "not set"
+msgstr "no establecido"
+
+#: lib/settings.php:343
+msgid "not installed"
+msgstr "no instalado"
+
+#: lib/settings.php:344
+msgid "installed"
+msgstr "instalado"
+
+#: lib/settings.php:351
+msgid "Engine"
+msgstr "Motor"
+
+#: lib/settings.php:389
+msgid "Query Cache"
+msgstr "Caché de consultas"
+
+#: lib/settings.php:394
+#: lib/settings.php:404
+#: lib/settings.php:415
+msgid "disabled"
+msgstr "desactivado"
+
+#: lib/settings.php:399
+msgid "Index (Key) Buffer"
+msgstr "Índice (clave) de buffer"
+
+#: lib/settings.php:410
+msgid "Read Buffer"
+msgstr "Leer Buffer"
+
+#: lib/settings.php:421
+msgid "Wait Timeout"
+msgstr "Tiempo de espera"
+
+#: lib/settings.php:428
+msgid "Char Set/Collation"
+msgstr "CharSet/Colección"
+
+#: lib/settings.php:437
+msgid "Timezone"
+msgstr "Zona horaria"
+
+#: lib/settings.php:452
+msgid "Want to uninstall WassUp?"
+msgstr "¿Quieres desinstalar Wassup?"
+
+#: lib/settings.php:453
+msgid ""
+"No problem. Before you deactivate this plugin, check the box below to "
+"cleanup any data that was collected by WassUp that could be left behind."
+msgstr ""
+"No hay problema. Antes de desactivar este plugin, comprueba la caja superior "
+"para eliminar cualquier dato que haya recogido Wassup que pueda quedarse en "
+"la base de datos."
+
+#: lib/settings.php:454
+msgid "Permanently remove WassUp data and settings from Wordpress"
+msgstr ""
+"Eliminar permanentemente los datos de Wassup y sus opciones de Wordpress"
+
+#: lib/settings.php:456
+msgid ""
+"All WassUp data and settings will be DELETED upon deactivation of this plugin"
+msgstr ""
+"Todos los datos y opciones de WassUp serán eliminadas una vez se desactive "
+"el plugin"
+
+#: lib/settings.php:458
+msgid ""
+"This action cannot be undone. Before uninstalling WassUp, you should backup "
+"your Wordpress database first. WassUp data is stored in the table"
+msgstr ""
+"La acción no se puede deshacer. Antes de desintalar Wassup, deberías hacer "
+"un resguardo de tu base de datos de Wordpress primero. Datos de Wassup "
+"almacenados en la tabla"
+
+#: lib/settings.php:460
+msgid "To help improve this plugin, we would appreciate your feedback at"
+msgstr ""
+"Para ayudar a mejorar este plugin, agradecemos cualqueir suguerencia a"
+
+#: lib/wassup.class.php:208
+msgid "Administrator"
+msgstr "Administrador"
+
+#: lib/wassup.class.php:209
+msgid "Editor"
+msgstr "Editor"
+
+#: lib/wassup.class.php:210
+msgid "Author"
+msgstr "Autor"
+
+#: lib/wassup.class.php:215
+msgid "None - don't show chart"
+msgstr "Ninguno - no mostrar gráficas"
+
+#: lib/wassup.class.php:216
+msgid "One - 2 lines chart 1 axis"
+msgstr "Uno - 2 líneas 1 eje"
+
+#: lib/wassup.class.php:217
+msgid "Two - 2 lines chart 2 axes"
+msgstr "Dos - 2 líneas 2 ejes"
+
+#: lib/wassup.class.php:231
+msgid "Everything"
+msgstr "Todo"
+
+#: lib/wassup.class.php:233
+msgid "No spider"
+msgstr "No arañas"
+
+#: lib/wassup.class.php:235
+msgid "No Spam"
+msgstr "No spam"
+
+#: lib/wassup.class.php:236
+msgid "No Spam, No Spider"
+msgstr "No spam, no arañas"
+
+#: lib/wassup.class.php:237
+msgid "Users logged in"
+msgstr "Usuarios conectados"
+
+#: lib/wassup.class.php:238
+msgid "Comment authors"
+msgstr "Autores de comentarios"
+
+#: lib/wassup.class.php:239
+msgid "Referrer from search engine"
+msgstr "Referente desde motores de búsqueda"
+
+#: lib/wassup.class.php:240
+msgid "Referrer from ext link"
+msgstr "Referente desde enlaces externos"
+
+#: lib/wassup.class.php:258
+msgid "Don't delete anything"
+msgstr "No elimines cualquier cosa"
+
+#: lib/wassup.class.php:268
+msgid "6 hours"
+msgstr "las últimas 6 horas"
+
+#: lib/wassup.class.php:270
+msgid "7 days"
+msgstr "los últimos 7 días"
+
+#: lib/wassup.class.php:275
+msgid "all time"
+msgstr "todos"

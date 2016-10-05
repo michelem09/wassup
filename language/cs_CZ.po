@@ -1,0 +1,1500 @@
+# Czech translation for wassup
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the wassup package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wassup\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-05-18 12:28+0100\n"
+"PO-Revision-Date: 2009-07-02 10:57+0000\n"
+"Last-Translator: bengo <dominikmatus@seznam.cz>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-07-13 00:44+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: wassup.php:45
+msgid "Sorry, Wassup requires WordPress 2.2 or higher to work"
+msgstr "Je mi to líto ale Wassup potřebuje WordPress 2.2 nebo novejší"
+
+#: wassup.php:406
+msgid "Hide Search"
+msgstr "Schovat Vyhledavání"
+
+#: wassup.php:409
+#: wassup.php:1209
+#: wassup.php:1290
+#: lib/action.php:183
+msgid "Search"
+msgstr "Hledat"
+
+#: wassup.php:414
+msgid "Hide TopTen"
+msgstr "Skrýt Top deset"
+
+#: wassup.php:417
+msgid "Show TopTen"
+msgstr "Zobrazit Top deset"
+
+#: wassup.php:423
+msgid "Collapse All"
+msgstr "Svinout vše"
+
+#: wassup.php:426
+#: wassup.php:761
+#: wassup.php:857
+#: wassup.php:1165
+msgid "Expand All"
+msgstr "Rozbalit vše"
+
+#: wassup.php:431
+msgid "Expand Cronology"
+msgstr "Rozbalit chronologicky"
+
+#: wassup.php:434
+msgid "Collapse Cronology"
+msgstr "Sbalit chronologicky"
+
+#: wassup.php:526
+msgid "Visitor Details"
+msgstr "Detaily Návštěvníků"
+
+#: wassup.php:529
+msgid "Spy Visitors"
+msgstr "Špehovat Návštěvníky"
+
+#: wassup.php:529
+#: wassup.php:861
+msgid "SPY Visitors"
+msgstr "Špehovat Návštěvníky"
+
+#: wassup.php:530
+#: wassup.php:759
+msgid "Current Visitors Online"
+msgstr "Online Návštěvníci"
+
+#: wassup.php:531
+#: wassup.php:917
+msgid "Options"
+msgstr "Nastavení"
+
+#: wassup.php:629
+#: wassup.php:654
+msgid "Wassup options updated successfully"
+msgstr "Nastavení WassUp byla uspěšně uložena"
+
+#: wassup.php:641
+msgid "Wassup uninstall option updated successfully"
+msgstr "WassUp nastavení odinstalování bylo aktualizováno úspěšně"
+
+#: wassup.php:649
+msgid "Wassup spam options updated successfully"
+msgstr "WassUp nastavení spamu bylo aktualizováno úspěšně"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Legend"
+msgstr "Popis"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Logged-in Users"
+msgstr "Přihlášení Uživatelé"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Comments Authors"
+msgstr "Autoří komentářů"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Spiders/bots"
+msgstr "Pavouci/boti"
+
+#: wassup.php:767
+msgid "Visitors online"
+msgstr "Online návštěvníci"
+
+#: wassup.php:791
+#: wassup.php:1319
+#: lib/main.php:641
+msgid "From your blog"
+msgstr "Z vašeho blogu"
+
+#: wassup.php:794
+#: wassup.php:1322
+#: lib/main.php:644
+msgid "Direct hit"
+msgstr "Přímé zadání adresy"
+
+#: wassup.php:814
+#: wassup.php:1389
+msgid "LOGGED IN USER"
+msgstr "PŘIHLÁŠENÝ UŽIVATEL"
+
+#: wassup.php:815
+#: wassup.php:818
+#: wassup.php:1405
+msgid "COMMENT AUTHOR"
+msgstr "AUTOR KOMENTÁŘE"
+
+#: wassup.php:864
+msgid "Pause"
+msgstr "Pozastavit"
+
+#: wassup.php:865
+msgid "Play"
+msgstr "Přehrát"
+
+#: wassup.php:918
+msgid ""
+"You can add a sidebar Widget with some useful statistics information by "
+"activating the"
+msgstr ""
+"Můžete aktivováním přidat sidebar Widget s užitečnými informacemi, "
+"statistikami:"
+
+#: wassup.php:919
+msgid "Wassup Widget in the Widgets menu option"
+msgstr "WassUp Widget v nastevení Widgetů"
+
+#: wassup.php:927
+msgid "Latest hits"
+msgstr "Poslední zadané adresy"
+
+#: wassup.php:929
+msgid "WassUp recording is disabled"
+msgstr "WassUp záznam je vypnut"
+
+#: wassup.php:1041
+msgid "records deleted"
+msgstr "záznamy smazány"
+
+#: wassup.php:1102
+msgid "hide chart"
+msgstr "schovat graf"
+
+#: wassup.php:1105
+msgid "show chart"
+msgstr "zobrazit graf"
+
+#: wassup.php:1115
+msgid "Summary for the last"
+msgstr "Zobrazit za poslední"
+
+#: wassup.php:1122
+msgid "Items per page"
+msgstr "Položek na stránku"
+
+#: wassup.php:1132
+msgid "Show items by"
+msgstr "Zobraz položky podle"
+
+#: wassup.php:1151
+msgid "Visits"
+msgstr "Návštěv"
+
+#: wassup.php:1152
+msgid "Pageviews"
+msgstr "Zobrazení stránek"
+
+#: wassup.php:1153
+msgid "Pages/Visits"
+msgstr "Stránky/Zobrazení"
+
+#: wassup.php:1156
+msgid "Spams"
+msgstr "Spamy"
+
+#: wassup.php:1166
+msgid "Collapse Chronology"
+msgstr "Sbalit chronologicky"
+
+#: wassup.php:1185
+msgid "Spam Options"
+msgstr "Nastavení Spamu"
+
+#: wassup.php:1187
+#: lib/settings.php:182
+msgid "Enable/Disable Spam Check on Records"
+msgstr "Povolit / Zakázat kontrolu Spamu v Záznamech"
+
+#: wassup.php:1188
+#: lib/settings.php:185
+msgid "Record Akismet comment spam attempts"
+msgstr "Zaznamenat Akismet  pokusy spam komentáře"
+
+#: wassup.php:1189
+#: lib/settings.php:186
+msgid "Record referrer spam attempts"
+msgstr "Zaznamenat odkazovač pokusu o spam"
+
+#: wassup.php:1191
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Save Settings"
+msgstr "Uložit nastavení"
+
+#: wassup.php:1200
+msgid "Filter by marked IP"
+msgstr "Filtrovat podle uvedené IP"
+
+#: wassup.php:1200
+msgid "show marked items"
+msgstr "zobrazit označené"
+
+#: wassup.php:1203
+msgid "Searched for"
+msgstr "Hledat pro"
+
+#: wassup.php:1205
+msgid "Auto refresh in"
+msgstr "Automatické obnovovení za"
+
+#: wassup.php:1205
+#: lib/settings.php:334
+#: lib/settings.php:423
+msgid "seconds"
+msgstr "vteřiny"
+
+#: wassup.php:1209
+msgid "Show Top Ten"
+msgstr "Zoprazit Top 10"
+
+#: wassup.php:1263
+#: lib/action.php:175
+msgid "Raw data"
+msgstr "Základní údaje"
+
+#: wassup.php:1283
+#: lib/action.php:178
+msgid "IP"
+msgstr "IP"
+
+#: wassup.php:1284
+#: wassup.php:1356
+#: lib/action.php:179
+msgid "Hostname"
+msgstr "Název počítače"
+
+#: wassup.php:1285
+msgid "Url Requested"
+msgstr "Vyžádané URL"
+
+#: wassup.php:1286
+#: wassup.php:1361
+#: lib/action.php:180
+msgid "User Agent"
+msgstr "Prohlížeč / Klientský SW"
+
+#: wassup.php:1287
+#: wassup.php:1356
+#: lib/action.php:181
+msgid "Referrer"
+msgstr "Odkazovač"
+
+#: wassup.php:1294
+#: wassup.php:1450
+#: lib/action.php:186
+msgid "OS"
+msgstr "OS"
+
+#: wassup.php:1297
+#: lib/action.php:189
+msgid "Browser"
+msgstr "Prohlížeč"
+
+#: wassup.php:1332
+#: wassup.php:1337
+msgid "delete"
+msgstr "smazat"
+
+#: wassup.php:1332
+msgid "Delete ALL marked records with this IP"
+msgstr "Vymazat všechny záznamy s touto IP"
+
+#: wassup.php:1334
+msgid "unmark"
+msgstr "odznačit"
+
+#: wassup.php:1334
+msgid "UnMark IP"
+msgstr "Odznačit IP"
+
+#: wassup.php:1337
+msgid "Delete this record"
+msgstr "Smazat tento záznam"
+
+#: wassup.php:1339
+msgid "mark"
+msgstr "označit"
+
+#: wassup.php:1339
+msgid "Mark IP"
+msgstr "Označit IP"
+
+#: wassup.php:1342
+msgid "show raw table"
+msgstr "zobrazit tabulku se základními údaji"
+
+#: wassup.php:1342
+msgid "Show the items as raw table"
+msgstr "Zobrazit položky jako tabulku se základními údaji"
+
+#: wassup.php:1380
+msgid "SEARCH ENGINE"
+msgstr "VYHLEDÁVAČ"
+
+#: wassup.php:1380
+msgid "page"
+msgstr "stránka"
+
+#: wassup.php:1381
+msgid "KEYWORDS"
+msgstr "KLÍČOVÁ SLOVA"
+
+#: wassup.php:1417
+msgid "FEEDREADER"
+msgstr "ODBĚRATEL KANÁLU"
+
+#: wassup.php:1419
+msgid "SUBSCRIBER(S)"
+msgstr "ODBĚRATEL(É)"
+
+#: wassup.php:1424
+msgid "SPIDER"
+msgstr "PAVOUK"
+
+#: wassup.php:1432
+msgid "Probably SPAM!"
+msgstr "Pravděpodobně SPAM!"
+
+#: wassup.php:1433
+msgid "Referer Spam"
+msgstr "Odkazovač spamu"
+
+#: wassup.php:1434
+#: lib/wassup.class.php:234
+msgid "Spam"
+msgstr "Spam"
+
+#: wassup.php:1448
+#: lib/action.php:192
+msgid "Language"
+msgstr "Jazyk"
+
+#: wassup.php:1451
+msgid "BROWSER"
+msgstr "PROHLÍŽEČ"
+
+#: wassup.php:1453
+msgid "RESOLUTION"
+msgstr "ROZLIŠENÍ"
+
+#: wassup.php:1511
+msgid "Too few records to print chart"
+msgstr "Příliš málo záznamů na vykreslení grafu"
+
+#: wassup.php:1527
+msgid "Check the official"
+msgstr "Podívejte se na oficiální"
+
+#: wassup.php:1527
+msgid "page for updates, bug reports and your hints to improve it"
+msgstr "stránku pro aktualizace, reportování chyb a vaše nápady na vylepšení"
+
+#: wassup.php:1527
+msgid "User Guide documentation"
+msgstr "Uživatelská Příručka-dokumentace"
+
+#: wassup.php:2349
+msgid "WassUp Plugin table has reached maximum size!"
+msgstr "Uživatelská Příručka-dokumentace"
+
+#: wassup.php:2350
+msgid "Hi"
+msgstr "Ahoj"
+
+#: wassup.php:2350
+msgid ""
+"you have received this email because your WassUp Database table at your "
+"Wordpress blog"
+msgstr ""
+"vy jste obdržel tento email, protože vaše WassUp Databázové tabulka na vašem "
+"Wordpress blogu"
+
+#: wassup.php:2350
+msgid "has reached the maximum value you set in the options menu"
+msgstr "dosáhla nejvyšší hodnoty nastavené v menu"
+
+#: wassup.php:2351
+msgid ""
+"This is only a reminder, please take the actions you want in the WassUp "
+"options menu"
+msgstr ""
+"Toto je jen připomenutí, prosím přijměte opatření, které chcete v WassUp menu"
+
+#: wassup.php:2351
+msgid "This alert now will be removed and you will be able to set a new one"
+msgstr "Tento záznam nyní bude odstraněn a budete moci nastavit nový"
+
+#: wassup.php:2352
+msgid ""
+"Thank you for using WassUp plugin. Check if there is a new version available "
+"here:"
+msgstr ""
+"Děkujeme Vám za použití WassUp pluginu. Zkontrolujte, jestli není nová verze "
+"k dispozici zde:"
+
+#: wassup.php:2352
+msgid "Have a nice day!"
+msgstr "Mějte se pěkně!"
+
+#: wassup.php:3340
+msgid "Error getting table details"
+msgstr "Chyba při získávání informací tabulky"
+
+#: wassup.php:3348
+#, php-format
+msgid "Delete any existing table %s"
+msgstr "Odstraňte všechny existující tabulky %s"
+
+#: wassup.php:3359
+#, php-format
+msgid "Table structure of table %s"
+msgstr "Tabulka struktury tabulky %s"
+
+#: wassup.php:3367
+#, php-format
+msgid "Error with SHOW CREATE TABLE for %s."
+msgstr "Chyba při ZOBRAZIT VYTVOŘENOU TABULKU pro %s."
+
+#: wassup.php:3374
+#, php-format
+msgid "Error getting table structure of %s"
+msgstr "Chyba při načítání struktury tabulky %s"
+
+#: wassup.php:3382
+#, php-format
+msgid "Data contents of table %s"
+msgstr "Datový obsah tabulky %s"
+
+#: wassup.php:3443
+#, php-format
+msgid "End of data contents of table %s"
+msgstr "Konec datového obsahu tabulky %s"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+#: wassup.php:3814
+msgid "powered by"
+msgstr "běží na"
+
+#: wassup.php:3497
+msgid "Last searched terms"
+msgstr "Poslední hledané termíny"
+
+#: wassup.php:3510
+msgid "Last referers"
+msgstr "Poslední odkazovače"
+
+#: wassup.php:3525
+#: lib/settings.php:149
+msgid "Top Browsers"
+msgstr "Top Prohlížeče"
+
+#: wassup.php:3540
+#: lib/settings.php:150
+msgid "Top OS"
+msgstr "Top OS"
+
+#: wassup.php:3559
+msgid "visitor(s) online"
+msgstr "návštěvník(ů) online"
+
+#: wassup.php:3562
+msgid "logged-in user(s)"
+msgstr "přihlášen pod uživatelem"
+
+#: wassup.php:3566
+msgid "comment author(s)"
+msgstr "autor komentáře"
+
+#: wassup.php:3713
+msgid "Wassup Widget"
+msgstr "Wassup Widget"
+
+#: lib/action.php:125
+msgid "ERROR: file not found"
+msgstr "CHYBA: soubor nenalezen"
+
+#: lib/action.php:143
+msgid "ERROR: bad date"
+msgstr "CHYBA: špatné datum"
+
+#: lib/action.php:257
+msgid "TOP QUERY"
+msgstr "TOP DOTAZ"
+
+#: lib/action.php:302
+msgid "TOP REQUEST"
+msgstr "TOP ŽÁDOST"
+
+#: lib/action.php:323
+msgid "TOP BROWSER"
+msgstr "TOP PROHLÍŽEČ"
+
+#: lib/action.php:343
+msgid "TOP OS"
+msgstr "TOP OS"
+
+#: lib/action.php:409
+msgid "This top ten doesn't include Spam records"
+msgstr "Toto Top deset nezahrnuje Spam záznamy"
+
+#: lib/action.php:414
+msgid "ERROR: Missing or unknown parameters"
+msgstr "CHYBA: Neznámé nebo neexistující parametry"
+
+#: lib/action.php:423
+msgid "ERROR: Nothing to do here"
+msgstr "CHYBA: Nic tu není"
+
+#: lib/main.php:85
+msgid "Next"
+msgstr "Další"
+
+#: lib/main.php:87
+msgid "Previous"
+msgstr "Předchozí"
+
+#: lib/main.php:120
+#: lib/main.php:124
+msgid "It is necessary to specify the"
+msgstr "Je nutné specifikovat"
+
+#: lib/main.php:120
+msgid "number of pages"
+msgstr "počet stran"
+
+#: lib/main.php:124
+msgid "limit of items"
+msgstr "limit položek"
+
+#: lib/main.php:124
+msgid "to show per page"
+msgstr "zobrazit na stránce"
+
+#: lib/main.php:209
+msgid "Pages"
+msgstr "Stránky"
+
+#: lib/main.php:777
+msgid "No visitor activity"
+msgstr "Žádná aktivita návštěvníků"
+
+#: lib/main.php:1179
+msgid "Last 6 Hours"
+msgstr "Posledních 6 hodin"
+
+#: lib/main.php:1185
+msgid "Last 7 Days"
+msgstr "Podledních 7 dní"
+
+#: lib/main.php:1192
+msgid "Last Month"
+msgstr "Minulý měsíc"
+
+#: lib/main.php:1211
+msgid "Last Year"
+msgstr "Minulý rok"
+
+#: lib/main.php:1224
+msgid "Last 24 Hours"
+msgstr "Posledních 24 hodin"
+
+#: lib/settings.php:31
+msgid ""
+"ATTENTION! Your WassUp table have reached the maximum value you set, I "
+"disabled the alert, you can re-enable it here."
+msgstr ""
+"POZOR! Vaše WassUp tabulky dosáhly nejvyšší nastavené hodnoty, záznam byl "
+"zastaven, můžete ho znovu zapnout zde."
+
+#: lib/settings.php:55
+msgid "Select the options you want for the WassUp plugin"
+msgstr "Vyberte možnosti, které chcete pro WassUp plugin"
+
+#: lib/settings.php:62
+msgid "General Setup"
+msgstr "Obecné nastavení"
+
+#: lib/settings.php:63
+msgid "Statistics Recording"
+msgstr "Statistiky záznamu"
+
+#: lib/settings.php:64
+msgid "Manage Files & Database"
+msgstr "Správa Souborů a Databáze"
+
+#: lib/settings.php:65
+msgid "Uninstall"
+msgstr "Odinstalovat"
+
+#: lib/settings.php:69
+msgid "Your default screen resolution (browser width)"
+msgstr "Vaše standardní rozlišení (šířka prohlížeče)"
+
+#: lib/settings.php:70
+msgid "Default screen resolution (in pixels)"
+msgstr "Standardní rozlišení (v pixelech)"
+
+#: lib/settings.php:75
+msgid ""
+"Set minimum users level which can view and manage WassUp plugin (default "
+"Administrators)"
+msgstr ""
+"Stanovte minimální úroveň, kterou mohou uživatelé zobrazit a spravovat "
+"WassUp plugin (výchozí Administrátoři)"
+
+#: lib/settings.php:97
+#: lib/settings.php:456
+msgid "WARNING"
+msgstr "VAROVÁNÍ"
+
+#: lib/settings.php:123
+msgid "Set how many minutes wait for automatic page refresh"
+msgstr "Nastavit, kolik minut čekat na automatickou aktualizaci stránky"
+
+#: lib/settings.php:123
+msgid "Current Visitors Online and Visitors Details"
+msgstr "Aktuální Návštěvníci Online a Detaily Návštěvníků"
+
+#: lib/settings.php:124
+msgid "refresh minutes (default 3)"
+msgstr "minuty interval obnovování (výchozí 3)"
+
+#: lib/settings.php:126
+msgid "Show visitor details for"
+msgstr "Zobrazit detaily návštěvníka pro"
+
+#: lib/settings.php:131
+msgid "Number of items per page"
+msgstr "Počet položek na stránku"
+
+#: lib/settings.php:140
+msgid "Customize Top Ten List"
+msgstr "Přizpůsobit Top deset list"
+
+#: lib/settings.php:141
+msgid "Choose one or more items for your Top Ten list"
+msgstr "Vyberte jednu nebo více položek pro váš Top deset list"
+
+#: lib/settings.php:141
+msgid "over 5 selections may cause horizontal scrolling"
+msgstr "nad 5 výběrů může vyvolat horizontální posun"
+
+#: lib/settings.php:144
+msgid "Top Searches"
+msgstr "Top Hledání"
+
+#: lib/settings.php:145
+msgid "Top Referrers"
+msgstr "Top odkazovače"
+
+#: lib/settings.php:146
+msgid "Top Requests"
+msgstr "Top Požadavky"
+
+#: lib/settings.php:151
+msgid "Top Locales"
+msgstr "Top Původ"
+
+#: lib/settings.php:154
+msgid "Top Visitors"
+msgstr "Top Návštěvníci"
+
+#: lib/settings.php:156
+msgid "Top Feeds"
+msgstr "Top kanály"
+
+#: lib/settings.php:157
+msgid "Top Crawlers"
+msgstr "Top Prohledávači"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset"
+msgstr "Obnovit"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset to Default Settings"
+msgstr "Obnovit na Výchozí nastavení"
+
+#: lib/settings.php:172
+msgid "Statistics Recording Settings"
+msgstr "Nastavení Statistiky Záznamu"
+
+#: lib/settings.php:173
+msgid "Enable/Disable Recording"
+msgstr "Zapnout / vypnout záznam"
+
+#: lib/settings.php:174
+msgid "Checkbox to record statistics for each type of \"visitor\""
+msgstr "Zaškrtněte pro statistiky záznamu pro každý typ \"návštěvníka\""
+
+#: lib/settings.php:176
+msgid "Record logged in users"
+msgstr "Rekord přihlášených uživatelů"
+
+#: lib/settings.php:178
+msgid "Record spiders and bots"
+msgstr "Rekord pavouků a botů"
+
+#: lib/settings.php:179
+msgid "Record attack/exploit attempts (libwww-perl agent)"
+msgstr "Rekord pokusů útoků / využití (libwww perl-agent)"
+
+#: lib/settings.php:183
+msgid "Checkbox to record statistics for each type of \"spam\""
+msgstr "Zaškrtněte pro statistiku záznamu pro každý typ \"spamu\""
+
+#: lib/settings.php:193
+msgid "Enter source IPs to exclude from recording"
+msgstr "Zadejte adresu IP,  které se vyloučí z nahrávání"
+
+#: lib/settings.php:195
+msgid "comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...)"
+msgstr "hodnoty oddělené čárkami (např.: 127.0.0.1, 10.0.0.1, atd. ..)"
+
+#: lib/settings.php:231
+#: lib/settings.php:233
+msgid "Rescan Old Records"
+msgstr "Otestovat Staré záznamy"
+
+#: lib/settings.php:232
+msgid ""
+"Statistical records collected by earlier versions of WassUp may not have the "
+"latest spider, search engine, and spam data properly identified.  Click the "
+"\"Rescan\" button to retroactively scan and update old records"
+msgstr ""
+"Statistiky záznamu shromážděné předchozími verzemi WassUp nemusí mít "
+"poslední spider, vyhledávače, a spam údaje řádně označeny. Klikněte na "
+"tlačítko \"Rescan\" pro zpětné otestování a aktualizaci starých záznamů"
+
+#: lib/settings.php:236
+msgid "Select actions for table growth"
+msgstr "Vyberte akce pro růst tabulky"
+
+#: lib/settings.php:237
+msgid ""
+"WassUp table grows very fast (especially if your blog is frequently "
+"visited), I recommend you to delete old records sometimes. You can select "
+"any option below to reset it, delete old records automatically or manually. "
+"(If you haven't database space problems you can leave the table as is)"
+msgstr ""
+"WassUp tabulky rostou velmi rychle (zvláště je-li váš blog často "
+"navštěvován), doporučuji vám občas odstranění starých záznamů. Můžete si "
+"vybrat jakoukoli možnost níže je reset, maže záznamy automaticky nebo "
+"manuálně. (Pokud nemáte problémy s databázovým prostorem, můžete nechat "
+"tabulku tak jak je)"
+
+#: lib/settings.php:238
+msgid "Current WassUp table usage is"
+msgstr "Aktuální využití WassUp tabulky"
+
+#: lib/settings.php:244
+msgid "records"
+msgstr "záznamy"
+
+#: lib/settings.php:247
+msgid "Alert me"
+msgstr "Upozornit mě"
+
+#: lib/settings.php:247
+msgid "email to"
+msgstr "email na"
+
+#: lib/settings.php:247
+msgid "when table reaches"
+msgstr "když tabulka dosáhne"
+
+#: lib/settings.php:249
+msgid "Empty table"
+msgstr "Vyprázdnit tabulku"
+
+#: lib/settings.php:250
+msgid "export table in SQL format"
+msgstr "exportovat tabulku v SQL formátu"
+
+#: lib/settings.php:254
+msgid "Automatically delete records older than:"
+msgstr "Automaticky mazat záznamy starší jak:"
+
+#: lib/settings.php:258
+msgid "Delete NOW records older than:"
+msgstr "Smazat TEĎ záznamy starší jak:"
+
+#: lib/settings.php:260
+msgid "Action is NOT undoable"
+msgstr "Akce je Nevratná"
+
+#: lib/settings.php:261
+#: lib/wassup.class.php:259
+#: lib/wassup.class.php:269
+msgid "24 hours"
+msgstr "24 hodin"
+
+#: lib/settings.php:262
+#: lib/wassup.class.php:260
+msgid "1 week"
+msgstr "1 týden"
+
+#: lib/settings.php:263
+#: lib/wassup.class.php:261
+#: lib/wassup.class.php:271
+msgid "1 month"
+msgstr "1 měsíc"
+
+#: lib/settings.php:264
+#: lib/wassup.class.php:262
+#: lib/wassup.class.php:272
+msgid "3 months"
+msgstr "3 měsíce"
+
+#: lib/settings.php:265
+#: lib/wassup.class.php:263
+#: lib/wassup.class.php:273
+msgid "6 months"
+msgstr "6 měsíců"
+
+#: lib/settings.php:266
+#: lib/wassup.class.php:264
+#: lib/wassup.class.php:274
+msgid "1 year"
+msgstr "Jeden rok"
+
+#: lib/settings.php:452
+msgid "Want to uninstall WassUp?"
+msgstr "Chcete odinstalovat WassUp?"
+
+#: lib/settings.php:453
+msgid ""
+"No problem. Before you deactivate this plugin, check the box below to "
+"cleanup any data that was collected by WassUp that could be left behind."
+msgstr ""
+"Žádný problém. Než začnete tento plugin deaktivovat, zaškrtněte políčko níže "
+"k vyčištění veškerých údajů, které byly shromážděny s WassUp."
+
+#: lib/settings.php:454
+msgid "Permanently remove WassUp data and settings from Wordpress"
+msgstr "Trvale odstranit WassUp data a nastavení z Wordpressu"
+
+#: lib/settings.php:458
+msgid ""
+"This action cannot be undone. Before uninstalling WassUp, you should backup "
+"your Wordpress database first. WassUp data is stored in the table"
+msgstr ""
+"Tuto akci nelze vrátit zpět. Před odinstalováním WassUp, musíte zálohovat "
+"vaší Wordpress databázi. WassUp data jsou uložena v tabulce"
+
+#: lib/settings.php:460
+msgid "To help improve this plugin, we would appreciate your feedback at"
+msgstr "Chcete pomoci zlepšit tento plugin, my bychom ocenili vaše náměty na"
+
+#: lib/wassup.class.php:231
+msgid "Everything"
+msgstr "Vše"
+
+#: lib/wassup.class.php:233
+msgid "No spider"
+msgstr "Kromě pavouků"
+
+#: lib/wassup.class.php:235
+msgid "No Spam"
+msgstr "Kromě spamu"
+
+#: lib/wassup.class.php:236
+msgid "No Spam, No Spider"
+msgstr "Kromě spamu a pavouků"
+
+#: lib/wassup.class.php:237
+msgid "Users logged in"
+msgstr "Přihlášení uživatelé"
+
+#: lib/wassup.class.php:238
+msgid "Comment authors"
+msgstr "Autoři komentáře"
+
+#: lib/wassup.class.php:258
+msgid "Don't delete anything"
+msgstr "Nemazat nic"
+
+#: lib/wassup.class.php:270
+msgid "7 days"
+msgstr "7 dní"
+
+#: wassup.php:750
+msgid "Warning"
+msgstr "Varování"
+
+#: wassup.php:750
+msgid "is NOT recording new statistics"
+msgstr "NENÍ nahrávání nové statistiky"
+
+#: wassup.php:750
+msgid ""
+"To collect data you must check \"Enable/Disable recording\" in \"Options: "
+"Statistics Recording\" tab"
+msgstr ""
+"Pro shromážďění údajů musíte zkontrolovat \"zapnoutí / vypnoutí záznamu\" v "
+"\"Nastavení: Statistika záznamu\""
+
+#: wassup.php:866
+msgid "Spy items by"
+msgstr "Špehované položky"
+
+#: wassup.php:1102
+msgid "Hide the chart"
+msgstr "Skrýt graf"
+
+#: wassup.php:1105
+msgid "Show the chart"
+msgstr "Zobrazit graf"
+
+#: wassup.php:1190
+#: lib/settings.php:187
+msgid "Record admin break-in/hacker attempts"
+msgstr "Zaznamenat vloupáni do admina a hackerské pokusy"
+
+#: wassup.php:1209
+msgid "Top Ten"
+msgstr "Top deset"
+
+#: wassup.php:1266
+msgid "Visit type"
+msgstr "Typ návštěvy"
+
+#: wassup.php:1268
+msgid "Logged-in user"
+msgstr "Přihlášen pod uživatelem"
+
+#: wassup.php:1270
+msgid "Spammer/Hacker"
+msgstr "Spammer/Hacker"
+
+#: wassup.php:1272
+msgid "Spammer"
+msgstr "Spammer"
+
+#: wassup.php:1274
+msgid "Comment author"
+msgstr "Autor komentáře"
+
+#: wassup.php:1276
+msgid "Feed"
+msgstr "Kanál"
+
+#: wassup.php:1278
+#: lib/wassup.class.php:232
+msgid "Spider"
+msgstr "Pavouk"
+
+#: wassup.php:1280
+msgid "Regular visitor"
+msgstr "Pravidelný návštěvník"
+
+#: wassup.php:1289
+msgid "Search Engine"
+msgstr "Vyhledávač"
+
+#: wassup.php:1291
+msgid "Page"
+msgstr "Stránka"
+
+#: wassup.php:1300
+msgid "Locale/Language"
+msgstr "Lokalizace/Jazyk"
+
+#: wassup.php:1303
+msgid "Screen Resolution"
+msgstr "Rozlišení obrazovky"
+
+#: wassup.php:1306
+msgid "End timestamp"
+msgstr "Koncová časová značka"
+
+#: wassup.php:1399
+msgid "ADMINISTRATOR"
+msgstr "ADMINISTRATOR"
+
+#: wassup.php:1440
+msgid "Probably hack attempt!"
+msgstr "Pravděpodobně  pokus o hack!"
+
+#: wassup.php:1509
+msgid "Graph of visitor hits"
+msgstr "Graf návštěv"
+
+#: wassup.php:1528
+msgid "Exec time"
+msgstr "Exec čas"
+
+#: wassup.php:2480
+msgid "Stats"
+msgstr "Statistiky"
+
+#: wassup.php:2480
+msgid "More"
+msgstr "Další"
+
+#: wassup.php:2482
+#: wassup.php:3838
+msgid "visitor stats chart"
+msgstr "Graf statistiky návštěvníků"
+
+#: wassup.php:2672
+msgid "encrypted search"
+msgstr "šifrované vyhledávání"
+
+#: wassup.php:3455
+msgid "If above timestamp is not current time, this page is cached"
+msgstr ""
+"Pokud časová značka výše není aktuální čas, tato stránka je ve vyrovnávací "
+"paměti"
+
+#: wassup.php:3486
+#: wassup.php:3740
+msgid "No Data"
+msgstr "Žádná data"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+msgid "Real Time Visitors Tracking"
+msgstr "Sledování reálného času návštěvníků"
+
+#: wassup.php:3632
+msgid "Title"
+msgstr "Název"
+
+#: wassup.php:3634
+msgid "default \"Visitors Online\""
+msgstr "výchozí \"Návštěvníci online\""
+
+#: wassup.php:3637
+msgid "Stylesheet class for &lt;ul&gt; attribute"
+msgstr "Stylopis třída pro &lt;ul&gt;  atribut"
+
+#: wassup.php:3639
+msgid "default \"links\""
+msgstr "výchozí \"odkazy\""
+
+#: wassup.php:3642
+msgid "Number of characters to display from left"
+msgstr "Počet znaků na displeji zleva"
+
+#: wassup.php:3644
+msgid "For template compatibility - default 18"
+msgstr "Pro kompatibilitu šablony - výchozí 18"
+
+#: wassup.php:3649
+msgid "Show number of logged-in users online"
+msgstr "Zobrazit příhlášené uživatele online"
+
+#: wassup.php:3650
+msgid "Stats recording must be enabled in WassUp options"
+msgstr "Statistiky záznamu musí být povoleny v WassUp nastavení"
+
+#: wassup.php:3651
+#: wassup.php:3657
+#: wassup.php:3663
+#: wassup.php:3675
+msgid "default Yes"
+msgstr "výchozí Ano"
+
+#: wassup.php:3656
+msgid "Show number of comment authors online"
+msgstr "Zobrazit počet online autorů komentářů"
+
+#: wassup.php:3662
+msgid "Show latest searches"
+msgstr "Zobrazit poslední hledání"
+
+#: wassup.php:3666
+msgid "How many searches?"
+msgstr "Kolik vyhledávání?"
+
+#: wassup.php:3668
+#: wassup.php:3680
+#: wassup.php:3692
+#: wassup.php:3704
+msgid "default 5"
+msgstr "výchozí 5"
+
+#: wassup.php:3674
+msgid "Show latest external referrers"
+msgstr "Zobrazit poslední vnější odkazovače"
+
+#: wassup.php:3678
+msgid "How many referrers?"
+msgstr "Kolik odkazovačů?"
+
+#: wassup.php:3686
+msgid "Show top browsers"
+msgstr "Zobrazit Top prohlížeče"
+
+#: wassup.php:3686
+#: wassup.php:3698
+msgid "default No"
+msgstr "výchozí Ne"
+
+#: wassup.php:3687
+#: wassup.php:3699
+msgid "Enabling it could slow down blog)"
+msgstr "Zapnuté by mohlo zpomalit blog)"
+
+#: wassup.php:3690
+msgid "How many browsers?"
+msgstr "Kolik prohlížečů?"
+
+#: wassup.php:3698
+msgid "Show top operating systems"
+msgstr "Zobrazit Top operační systémy"
+
+#: wassup.php:3702
+msgid "How many operating systems?"
+msgstr "Kolik operačních systémů?"
+
+#: wassup.php:3839
+msgid "More Stats"
+msgstr "Další statistiky"
+
+#: lib/action.php:276
+msgid "TOP REFERRER"
+msgstr "TOP ODKAZOVAČ"
+
+#: lib/action.php:364
+msgid "TOP LOCALE"
+msgstr "TOP LOKALITA"
+
+#: lib/action.php:391
+msgid "TOP VISITOR"
+msgstr "TOP NÁVŠTĚVNÍK"
+
+#: lib/main.php:1199
+msgid "Last 3 Months"
+msgstr "Poslední 3 měsíce"
+
+#: lib/main.php:1205
+msgid "Last 6 Months"
+msgstr "Posledních 6 měsíců"
+
+#: lib/main.php:1217
+msgid "All Time"
+msgstr "Všechen čas"
+
+#: lib/settings.php:80
+msgid "Dashboard Settings"
+msgstr "Nastavení nástěnky"
+
+#: lib/settings.php:81
+msgid "Display small chart in the dashboard"
+msgstr "Zobrazit malý graf na nástěnce"
+
+#: lib/settings.php:84
+msgid "GEO IP Map (Spy view)"
+msgstr "GEO IP Map (Špěhování)"
+
+#: lib/settings.php:89
+msgid "Display a GEO IP Map in the spy visitors view"
+msgstr "Zobrazit GEO IP Mapů ve špehování návštěvníků"
+
+#: lib/settings.php:97
+msgid "Activation problem >> Error code"
+msgstr "Problém aktivace >> Chybový kód"
+
+#: lib/settings.php:105
+msgid "key"
+msgstr "klíč"
+
+#: lib/settings.php:105
+msgid "signup for your key"
+msgstr "registrace pro tvůj klíč"
+
+#: lib/settings.php:108
+msgid "Geo IP Map requires"
+msgstr "Geo IP Mapa vyžaduje"
+
+#: lib/settings.php:108
+msgid "Please install it to be able to activate this feature"
+msgstr "Prosím, nainstalujte to aby jste mohli aktivovat tuto funkci"
+
+#: lib/settings.php:112
+msgid "Time format"
+msgstr "Formát času"
+
+#: lib/settings.php:113
+msgid "Time format 12/24 hour"
+msgstr "Formát času 12/54 hodin"
+
+#: lib/settings.php:116
+msgid "Visitor Detail Settings"
+msgstr "Nastavení Detailu návštěvníka"
+
+#: lib/settings.php:117
+msgid "Show chart type - How many axes"
+msgstr "Zobrazit graf - kolik křivek"
+
+#: lib/settings.php:161
+msgid "Websites/domains to exclude from top referrers"
+msgstr "Webové stránky / doménykteré chcete vyloučit z top odkazovačů"
+
+#: lib/settings.php:164
+msgid "Comma separated value"
+msgstr "Hodnoty oddělujte čárkami"
+
+#: lib/settings.php:165
+msgid "Don't list your website domain defined in WordPress"
+msgstr "Neuvádějte doménu své webové stránky definovánou ve WordPressu"
+
+#: lib/settings.php:177
+msgid "Record logged in administrators"
+msgstr "Zaznamenávat přihlášení admina"
+
+#: lib/settings.php:185
+msgid "check if an IP has previous comments as spam"
+msgstr "zkontrolujte, zda IP nemá předchozí komentáře jako spam"
+
+#: lib/settings.php:191
+msgid "Statistics Recording Exceptions"
+msgstr "vyjímky  Statistiky záznamu"
+
+#: lib/settings.php:193
+msgid "Sites"
+msgstr "Stránky"
+
+#: lib/settings.php:197
+msgid "Users"
+msgstr "Uživatelé"
+
+#: lib/settings.php:197
+msgid "Enter usernames to exclude from recording"
+msgstr "Zadejte přihlašovací jména které chcete vyloučit ze záznamu"
+
+#: lib/settings.php:199
+msgid ""
+"comma separated value, enter a registered user's login name (ex: bobmarley, "
+"enyabrennan, etc.)"
+msgstr ""
+"hodnoty oddělujte čárkami, zadejte přihlašovací jméno registrovaného "
+"uživatele  (např.: bobmarley, enyabrennan, atd.)"
+
+#: lib/settings.php:200
+msgid "Posts/pages"
+msgstr "Příspěvky / strany"
+
+#: lib/settings.php:200
+msgid "enter requested URLs to exclude from recording"
+msgstr "zadejte požadované URL, které chcete vyloučit ze záznamu"
+
+#: lib/settings.php:202
+msgid ""
+"comma separated value, don't enter entire url, only the last path or some "
+"word to exclude (ex: /category/wordpress, 2007, etc...)"
+msgstr ""
+"hodnoty oddělujte čárkami, nezadávejte celé url, pouze poslední cestu nebo "
+"některé slovo vyloučete (např.: / kategorie / wordpress, 2007, atd. ..)"
+
+#: lib/settings.php:252
+msgid "backup table to server file"
+msgstr "zálohovat tabulky do souboru na serveru"
+
+#: lib/settings.php:270
+msgid "Server Settings and Memory Resources"
+msgstr "Nastavení serveru a Paměťového zdroje"
+
+#: lib/settings.php:271
+msgid "For information only. Some values may be adjustable in startup files"
+msgstr ""
+"Pouze pro informační účely. Některé hodnoty mohou být nastavitelné ve "
+"spouštěcích souborech"
+
+#: lib/settings.php:271
+msgid "and"
+msgstr "a"
+
+#: lib/settings.php:271
+msgid "or"
+msgstr "nebo"
+
+#: lib/settings.php:272
+#: lib/settings.php:287
+#: lib/settings.php:350
+msgid "Version"
+msgstr "Verze"
+
+#: lib/settings.php:273
+msgid "Host Server"
+msgstr "Hostující server"
+
+#: lib/settings.php:283
+#: lib/settings.php:319
+#: lib/settings.php:329
+#: lib/settings.php:335
+#: lib/settings.php:350
+#: lib/settings.php:353
+#: lib/settings.php:397
+#: lib/settings.php:407
+#: lib/settings.php:418
+#: lib/settings.php:425
+#: lib/settings.php:434
+#: lib/settings.php:445
+msgid "unknown"
+msgstr "neznámý"
+
+#: lib/settings.php:285
+msgid "Time Offset"
+msgstr "Časový posun"
+
+#: lib/settings.php:286
+msgid "hours"
+msgstr "hodin"
+
+#: lib/settings.php:288
+msgid "Safe Mode"
+msgstr "Safe Mode"
+
+#: lib/settings.php:291
+#: lib/settings.php:300
+msgid "on"
+msgstr "zapnout"
+
+#: lib/settings.php:293
+#: lib/settings.php:298
+msgid "off"
+msgstr "vypnout"
+
+#: lib/settings.php:294
+msgid "File Open Restrictions"
+msgstr "Omezení otevření souboru"
+
+#: lib/settings.php:304
+msgid "Memory Allocation"
+msgstr "Alokace paměti"
+
+#: lib/settings.php:322
+msgid "Memory Usage"
+msgstr "Spotřeba paměti"
+
+#: lib/settings.php:332
+msgid "Script Timeout Limit"
+msgstr "Script Timeout Limit"
+
+#: lib/settings.php:337
+msgid "Browser Capabilities File"
+msgstr "Schopnosti prohlížeče"
+
+#: lib/settings.php:339
+msgid "not set"
+msgstr "nezadáno"
+
+#: lib/settings.php:343
+msgid "not installed"
+msgstr "nenainstalován"
+
+#: lib/settings.php:344
+msgid "installed"
+msgstr "nainstalován"
+
+#: lib/settings.php:351
+msgid "Engine"
+msgstr "Motor"
+
+#: lib/settings.php:389
+msgid "Query Cache"
+msgstr "Query Cache"
+
+#: lib/settings.php:394
+#: lib/settings.php:404
+#: lib/settings.php:415
+msgid "disabled"
+msgstr "vypnuto"
+
+#: lib/settings.php:399
+msgid "Index (Key) Buffer"
+msgstr "Index (Klíč) buffer"
+
+#: lib/settings.php:410
+msgid "Read Buffer"
+msgstr "Číst buffer"
+
+#: lib/settings.php:421
+msgid "Wait Timeout"
+msgstr "Čekat na timeout"
+
+#: lib/settings.php:428
+msgid "Char Set/Collation"
+msgstr "Char Nastavení / Shromažďování"
+
+#: lib/settings.php:437
+msgid "Timezone"
+msgstr "Časové pásmo"
+
+#: lib/settings.php:456
+msgid ""
+"All WassUp data and settings will be DELETED upon deactivation of this plugin"
+msgstr ""
+"Všechna WassUp data a nastavení budou odstraněna po deaktivaci tohoto pluginu"
+
+#: lib/wassup.class.php:208
+msgid "Administrator"
+msgstr "Administrátor"
+
+#: lib/wassup.class.php:209
+msgid "Editor"
+msgstr "Editor"
+
+#: lib/wassup.class.php:210
+msgid "Author"
+msgstr "Autor"
+
+#: lib/wassup.class.php:215
+msgid "None - don't show chart"
+msgstr "Nic - Nezobrazit graf"
+
+#: lib/wassup.class.php:216
+msgid "One - 2 lines chart 1 axis"
+msgstr "Jeden - 2 čáry grafu 1 osa"
+
+#: lib/wassup.class.php:217
+msgid "Two - 2 lines chart 2 axes"
+msgstr "Dva - 2 čáry grafu 2 osy"
+
+#: lib/wassup.class.php:239
+msgid "Referrer from search engine"
+msgstr "Odkazovač z vyhledávače"
+
+#: lib/wassup.class.php:240
+msgid "Referrer from ext link"
+msgstr "Odkazovač z expterního linku"
+
+#: lib/wassup.class.php:268
+msgid "6 hours"
+msgstr "6 hodin"
+
+#: lib/wassup.class.php:275
+msgid "all time"
+msgstr "Všechen čas"
