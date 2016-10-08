@@ -26,7 +26,7 @@ if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 unset($wfile);	//to free memory
 
@@ -101,21 +101,8 @@ function wassup_widget_css($embed=false){
 
 /** Embeds form styles in admin head for widget control styling */
 function wassup_widget_form_css(){
-	global $wp_version,$wdebug_mode;
-	$vers=WASSUPVERSION;
-	if($wdebug_mode) $vers.='b'.rand(0,9999);
-	if(!function_exists('wp_enqueue_style')){?>
-<link rel="stylesheet" href="<?php echo WASSUPURL.'/css/wassup.css?ver='.$vers;?>" type="text/css" /><?php
-		echo "\n";
-	}
-	//some override styles for Wordpress 2.2-3.8
-  	if(version_compare($wp_version,'3.8','<')){?>
-<style type="text/css"><?php
-		if(version_compare($wp_version,'2.8','<')) echo "\n".'.wassup-widget-ctrl{margin:-15px -25px 0;}';
-		else echo "\n".'.wassup-widget-ctrl{margin:-10px -11px 0;}';
-		echo "\n".'.wassup-widget-ctrl td{padding:0;line-height:1.1em;}'."\n";?>
-</style><?php
-		echo "\n";
+	if(function_exists('wassup_compat_widget_form_css')){
+		wassup_compat_widget_form_css();
 	}
 }
 

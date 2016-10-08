@@ -29,7 +29,7 @@ if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 //nothing to do here
 if(version_compare($GLOBALS['wp_version'],'4.5','>=')){
@@ -136,10 +136,31 @@ if(version_compare($GLOBALS['wp_version'],'2.5','<')){
 } //end if wp_version < 2.5
 
 //-------------------------------------------------
-//New in v1.9.1: load 'Wassup_Widget' compatible base widget without the 'WP_Widget' parent class
-if(version_compare($GLOBALS['wp_version'],'2.8','<')){
-	if(!class_exists('Wassup_Widget')){
-		include_once($wassup_compatlib.'/compat_widget.php');
+//Widget compatibility functions and classes
+if(version_compare($GLOBALS['wp_version'],'3.8','<')){
+	/** Widget control form css adjustments by Wordpress version */
+	function wassup_compat_widget_form_css(){
+		global $wp_version,$wdebug_mode;
+		$vers=WASSUPVERSION;
+		if($wdebug_mode) $vers.='b'.rand(0,9999);
+		//add stylesheet for Wordpress 2.2-2.8
+		if(version_compare($wp_version,'2.8','<')){ ?>
+<link rel="stylesheet" href="<?php echo WASSUPURL.'/css/wassup.css?ver='.$vers;?>" type="text/css" /><?php
+			echo "\n";
+		}?>
+<style type="text/css"><?php
+		//some css override styles
+		if(version_compare($wp_version,'2.8','<')) echo "\n".'.wassup-widget-ctrl{margin:-15px -25px 0;}';
+		else echo "\n".'.wassup-widget-ctrl{margin:-10px -11px 0;}';
+		echo "\n".'.wassup-widget-ctrl td{padding:0;line-height:1.1em;}'."\n";?>
+</style><?php
+		echo "\n";
+	}
+	//load 'Wassup_Widget' base widget without the 'WP_Widget' parent class
+	if(version_compare($GLOBALS['wp_version'],'2.8','<')){
+		if(!class_exists('Wassup_Widget')){
+			include_once($wassup_compatlib.'/compat_widget.php');
+		}
 	}
 }
 ?>
