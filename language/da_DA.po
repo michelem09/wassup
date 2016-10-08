@@ -1,0 +1,1512 @@
+# Danish translation for wassup
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the wassup package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: WassUp Danish\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-05-18 12:28+0100\n"
+"PO-Revision-Date: 2010-01-09 09:48+0000\n"
+"Last-Translator: Torben Larsen <Unknown>\n"
+"Language-Team: Team Blogos <wordpress@blogos.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-01-12 09:52+0000\n"
+"X-Generator: Launchpad (build 16890)\n"
+"X-Poedit-Country: DENMARK\n"
+"X-Poedit-Language: Danish\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: wassup.php:45
+msgid "Sorry, Wassup requires WordPress 2.2 or higher to work"
+msgstr ""
+"Beklager, men WassUp kræver WordPress 2.2 eller nyere for at kunne fungere"
+
+#: wassup.php:406
+msgid "Hide Search"
+msgstr "Skjul søgning"
+
+#: wassup.php:409
+#: wassup.php:1209
+#: wassup.php:1290
+#: lib/action.php:183
+msgid "Search"
+msgstr "Søg"
+
+#: wassup.php:414
+msgid "Hide TopTen"
+msgstr "Gem Top-ti'en"
+
+#: wassup.php:417
+msgid "Show TopTen"
+msgstr "Vis Top-ti'en"
+
+#: wassup.php:423
+msgid "Collapse All"
+msgstr "Skjul alle"
+
+#: wassup.php:426
+#: wassup.php:761
+#: wassup.php:857
+#: wassup.php:1165
+msgid "Expand All"
+msgstr "Vis alle"
+
+#: wassup.php:431
+msgid "Expand Cronology"
+msgstr "Vis tidsforløb"
+
+#: wassup.php:434
+msgid "Collapse Cronology"
+msgstr "Skjul tidsforløb"
+
+#: wassup.php:526
+msgid "Visitor Details"
+msgstr "Detaljer om besøgende"
+
+#: wassup.php:529
+msgid "Spy Visitors"
+msgstr "Studér besøgende"
+
+#: wassup.php:529
+#: wassup.php:861
+msgid "SPY Visitors"
+msgstr "STUDÉR besøgende"
+
+#: wassup.php:530
+#: wassup.php:759
+msgid "Current Visitors Online"
+msgstr "Besøgende online lige nu"
+
+#: wassup.php:531
+#: wassup.php:917
+msgid "Options"
+msgstr "Indstillinger"
+
+#: wassup.php:629
+#: wassup.php:654
+msgid "Wassup options updated successfully"
+msgstr "WassUp-indstillinger opdateret"
+
+#: wassup.php:641
+msgid "Wassup uninstall option updated successfully"
+msgstr "WassUp-afinstalleringsindstilling opdateret"
+
+#: wassup.php:649
+msgid "Wassup spam options updated successfully"
+msgstr "WassUp-spamindstilling opdateret"
+
+#: wassup.php:750
+msgid "Warning"
+msgstr "Advarsel!"
+
+#: wassup.php:750
+msgid "is NOT recording new statistics"
+msgstr "Optager ikke ny statistik"
+
+#: wassup.php:750
+msgid ""
+"To collect data you must check \"Enable/Disable recording\" in \"Options: "
+"Statistics Recording\" tab"
+msgstr ""
+"For at indsamle data, skal du checke Aktivé/deaktivér indsamling i "
+"\"Indstillinger: Statistik-indsamlings feltet\""
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Legend"
+msgstr "Tegnforklaring"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Logged-in Users"
+msgstr "Brugere, der er logget ind"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Comments Authors"
+msgstr "Kommentarforfattere"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Spiders/bots"
+msgstr "Websøgemaskiner/-botter"
+
+#: wassup.php:767
+msgid "Visitors online"
+msgstr "Besøgende online"
+
+#: wassup.php:791
+#: wassup.php:1319
+#: lib/main.php:641
+msgid "From your blog"
+msgstr "Fra din blog"
+
+#: wassup.php:794
+#: wassup.php:1322
+#: lib/main.php:644
+msgid "Direct hit"
+msgstr "Direkte hit"
+
+#: wassup.php:814
+#: wassup.php:1389
+msgid "LOGGED IN USER"
+msgstr "BRUGER, DER ER LOGGET IND"
+
+#: wassup.php:815
+#: wassup.php:818
+#: wassup.php:1405
+msgid "COMMENT AUTHOR"
+msgstr "KOMMENTARFORFATTER"
+
+#: wassup.php:864
+msgid "Pause"
+msgstr "Pause"
+
+#: wassup.php:865
+msgid "Play"
+msgstr "Afspil"
+
+#: wassup.php:866
+msgid "Spy items by"
+msgstr "Spionér på emner via"
+
+#: wassup.php:918
+msgid ""
+"You can add a sidebar Widget with some useful statistics information by "
+"activating the"
+msgstr ""
+"Du kan tilføje en sidebar widget, med brugbar statistikinformation, ved at "
+"aktivere"
+
+#: wassup.php:919
+msgid "Wassup Widget in the Widgets menu option"
+msgstr "WassUp-widget in Widget-indstillingerne"
+
+#: wassup.php:927
+msgid "Latest hits"
+msgstr "Seneste hits"
+
+#: wassup.php:929
+msgid "WassUp recording is disabled"
+msgstr "WassUp-dataindsamling er deaktiveret"
+
+#: wassup.php:1041
+msgid "records deleted"
+msgstr "poster slettet"
+
+#: wassup.php:1102
+msgid "hide chart"
+msgstr "skjult diagram"
+
+#: wassup.php:1102
+msgid "Hide the chart"
+msgstr "Skjul diagrammet"
+
+#: wassup.php:1105
+msgid "show chart"
+msgstr "vis diagram"
+
+#: wassup.php:1105
+msgid "Show the chart"
+msgstr "Vis diagrammet"
+
+#: wassup.php:1115
+msgid "Summary for the last"
+msgstr "Resumé for seneste"
+
+#: wassup.php:1122
+msgid "Items per page"
+msgstr "Poster pr. side"
+
+#: wassup.php:1132
+msgid "Show items by"
+msgstr "Vis poster efter type:"
+
+#: wassup.php:1151
+msgid "Visits"
+msgstr "Besøg"
+
+#: wassup.php:1152
+msgid "Pageviews"
+msgstr "Sidevisninger"
+
+#: wassup.php:1153
+msgid "Pages/Visits"
+msgstr "Sider/besøg"
+
+#: wassup.php:1156
+msgid "Spams"
+msgstr "Spams"
+
+#: wassup.php:1166
+msgid "Collapse Chronology"
+msgstr "Skjul tidsforløb"
+
+#: wassup.php:1185
+msgid "Spam Options"
+msgstr "Spam-indstillinger"
+
+#: wassup.php:1187
+#: lib/settings.php:182
+msgid "Enable/Disable Spam Check on Records"
+msgstr "Aktivér/Deaktivér spam-tjek på poster"
+
+#: wassup.php:1188
+#: lib/settings.php:185
+msgid "Record Akismet comment spam attempts"
+msgstr "Indsaml Akismet-kommentar-spamforsøg"
+
+#: wassup.php:1189
+#: lib/settings.php:186
+msgid "Record referrer spam attempts"
+msgstr "Indsaml referrer-spamforsøg"
+
+#: wassup.php:1190
+#: lib/settings.php:187
+msgid "Record admin break-in/hacker attempts"
+msgstr "Indsaml administrator/hacker log-in forsøg"
+
+#: wassup.php:1191
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Save Settings"
+msgstr "Gem indstillinger"
+
+#: wassup.php:1200
+msgid "Filter by marked IP"
+msgstr "Filtrér på markeret IP"
+
+#: wassup.php:1200
+msgid "show marked items"
+msgstr "vis markerede poster"
+
+#: wassup.php:1203
+msgid "Searched for"
+msgstr "Søgetermer"
+
+#: wassup.php:1205
+msgid "Auto refresh in"
+msgstr "Auto-genindlæs efter"
+
+#: wassup.php:1205
+#: lib/settings.php:334
+#: lib/settings.php:423
+msgid "seconds"
+msgstr "sekunder"
+
+#: wassup.php:1209
+msgid "Top Ten"
+msgstr "Top ti"
+
+#: wassup.php:1209
+msgid "Show Top Ten"
+msgstr "Vis Top-ti"
+
+#: wassup.php:1263
+#: lib/action.php:175
+msgid "Raw data"
+msgstr "Rå data"
+
+#: wassup.php:1266
+msgid "Visit type"
+msgstr "Besøgs type"
+
+#: wassup.php:1268
+msgid "Logged-in user"
+msgstr "Besøgende logget ind"
+
+#: wassup.php:1270
+msgid "Spammer/Hacker"
+msgstr "Spammer/Hacker"
+
+#: wassup.php:1272
+msgid "Spammer"
+msgstr "Spammer"
+
+#: wassup.php:1274
+msgid "Comment author"
+msgstr "Kommentarens forfatter"
+
+#: wassup.php:1276
+msgid "Feed"
+msgstr "Feed"
+
+#: wassup.php:1278
+#: lib/wassup.class.php:232
+msgid "Spider"
+msgstr "Spider"
+
+#: wassup.php:1280
+msgid "Regular visitor"
+msgstr "Almindelig besøgende"
+
+#: wassup.php:1283
+#: lib/action.php:178
+msgid "IP"
+msgstr "IP"
+
+#: wassup.php:1284
+#: wassup.php:1356
+#: lib/action.php:179
+msgid "Hostname"
+msgstr "Værtsnavn"
+
+#: wassup.php:1285
+msgid "Url Requested"
+msgstr "URL-anmodning"
+
+#: wassup.php:1286
+#: wassup.php:1361
+#: lib/action.php:180
+msgid "User Agent"
+msgstr "Bruger-softwareagent"
+
+#: wassup.php:1287
+#: wassup.php:1356
+#: lib/action.php:181
+msgid "Referrer"
+msgstr "Kommer fra"
+
+#: wassup.php:1289
+msgid "Search Engine"
+msgstr "Søgemaskine"
+
+#: wassup.php:1291
+msgid "Page"
+msgstr "Side"
+
+#: wassup.php:1294
+#: wassup.php:1450
+#: lib/action.php:186
+msgid "OS"
+msgstr "Operativsystem"
+
+#: wassup.php:1297
+#: lib/action.php:189
+msgid "Browser"
+msgstr "Webbrowser"
+
+#: wassup.php:1300
+msgid "Locale/Language"
+msgstr "Lokal/Sprog"
+
+#: wassup.php:1303
+msgid "Screen Resolution"
+msgstr "Skærmopløsning"
+
+#: wassup.php:1306
+msgid "End timestamp"
+msgstr "Afslut tidsstempel"
+
+#: wassup.php:1332
+#: wassup.php:1337
+msgid "delete"
+msgstr "slet"
+
+#: wassup.php:1332
+msgid "Delete ALL marked records with this IP"
+msgstr "Slet ALLE markerede poster med denne IP"
+
+#: wassup.php:1334
+msgid "unmark"
+msgstr "Fjern markering"
+
+#: wassup.php:1334
+msgid "UnMark IP"
+msgstr "Fjern markering for IP"
+
+#: wassup.php:1337
+msgid "Delete this record"
+msgstr "Slet denne post"
+
+#: wassup.php:1339
+msgid "mark"
+msgstr "markér"
+
+#: wassup.php:1339
+msgid "Mark IP"
+msgstr "Markér IP"
+
+#: wassup.php:1342
+msgid "show raw table"
+msgstr "vis rå tabel"
+
+#: wassup.php:1342
+msgid "Show the items as raw table"
+msgstr "Vis posterne som rå tabel"
+
+#: wassup.php:1380
+msgid "SEARCH ENGINE"
+msgstr "SØGEMASKINE"
+
+#: wassup.php:1380
+msgid "page"
+msgstr "side"
+
+#: wassup.php:1381
+msgid "KEYWORDS"
+msgstr "NØGLEORD"
+
+#: wassup.php:1399
+msgid "ADMINISTRATOR"
+msgstr "ADMINISTRATOR"
+
+#: wassup.php:1417
+msgid "FEEDREADER"
+msgstr "FEEDREADER"
+
+#: wassup.php:1419
+msgid "SUBSCRIBER(S)"
+msgstr "ABONNENT(ER)"
+
+#: wassup.php:1424
+msgid "SPIDER"
+msgstr "SØGEROBOT"
+
+#: wassup.php:1432
+msgid "Probably SPAM!"
+msgstr "Sandsynligvis SPAM"
+
+#: wassup.php:1433
+msgid "Referer Spam"
+msgstr "Spam fra"
+
+#: wassup.php:1434
+#: lib/wassup.class.php:234
+msgid "Spam"
+msgstr "Spam"
+
+#: wassup.php:1440
+msgid "Probably hack attempt!"
+msgstr "Sandsynligvis hackerforsøg"
+
+#: wassup.php:1448
+#: lib/action.php:192
+msgid "Language"
+msgstr "Sprog"
+
+#: wassup.php:1451
+msgid "BROWSER"
+msgstr "WEBBROWSER"
+
+#: wassup.php:1453
+msgid "RESOLUTION"
+msgstr "OPLØSNING"
+
+#: wassup.php:1509
+msgid "Graph of visitor hits"
+msgstr "Graf over besøg"
+
+#: wassup.php:1511
+msgid "Too few records to print chart"
+msgstr "For få poster til at vise diagram"
+
+#: wassup.php:1527
+msgid "Check the official"
+msgstr "Tjek den officielle"
+
+#: wassup.php:1527
+msgid "page for updates, bug reports and your hints to improve it"
+msgstr "side for opdateringer, bug-rapporter og dine praj om forbedringer"
+
+#: wassup.php:1527
+msgid "User Guide documentation"
+msgstr "Brugerguide/dokumentation"
+
+#: wassup.php:1528
+msgid "Exec time"
+msgstr "Udført klokken"
+
+#: wassup.php:2349
+msgid "WassUp Plugin table has reached maximum size!"
+msgstr "WassUp-plugin'ets tabel har nået maksimumstørrelsen!"
+
+#: wassup.php:2350
+msgid "Hi"
+msgstr "Hej"
+
+#: wassup.php:2350
+msgid ""
+"you have received this email because your WassUp Database table at your "
+"Wordpress blog"
+msgstr ""
+"du har fået denne e-mail, fordi din WassUp-databasetabel på din WordPress-"
+"blog"
+
+#: wassup.php:2350
+msgid "has reached the maximum value you set in the options menu"
+msgstr "har nået maksimumstørrelsen, du bestemte i indstillingerne"
+
+#: wassup.php:2351
+msgid ""
+"This is only a reminder, please take the actions you want in the WassUp "
+"options menu"
+msgstr ""
+"Dette er kun en påmindelse. Foretag de ønskede handlinger i WassUp-"
+"indstillingerne"
+
+#: wassup.php:2351
+msgid "This alert now will be removed and you will be able to set a new one"
+msgstr "Denne alarm vil nu blive fjernet og du kan vælge en ny"
+
+#: wassup.php:2352
+msgid ""
+"Thank you for using WassUp plugin. Check if there is a new version available "
+"here:"
+msgstr ""
+"Tak, fordi du bruger WassUp-pluginnet. Tjek her, om der er en ny version:"
+
+#: wassup.php:2352
+msgid "Have a nice day!"
+msgstr "Ha' en god dag!"
+
+#: wassup.php:2480
+msgid "Stats"
+msgstr "Statistik"
+
+#: wassup.php:2480
+msgid "More"
+msgstr "Mere"
+
+#: wassup.php:2482
+#: wassup.php:3838
+msgid "visitor stats chart"
+msgstr "Besøgs statistik"
+
+#: wassup.php:2672
+msgid "encrypted search"
+msgstr "Krypteret søgning"
+
+#: wassup.php:3340
+msgid "Error getting table details"
+msgstr "Fejl under hentning af tabel-detaljer"
+
+#: wassup.php:3348
+#, php-format
+msgid "Delete any existing table %s"
+msgstr "Slet enhver eksisterende tabel ved navn %s"
+
+#: wassup.php:3359
+#, php-format
+msgid "Table structure of table %s"
+msgstr "Tabelstruktur for tabellen %s"
+
+#: wassup.php:3367
+#, php-format
+msgid "Error with SHOW CREATE TABLE for %s."
+msgstr "Fejl med \"SHOW CREATE TABLE\" for %s"
+
+#: wassup.php:3374
+#, php-format
+msgid "Error getting table structure of %s"
+msgstr "Fejl i hentning af tabelstruktur for %s"
+
+#: wassup.php:3382
+#, php-format
+msgid "Data contents of table %s"
+msgstr "Dataindhold af tabel %s"
+
+#: wassup.php:3443
+#, php-format
+msgid "End of data contents of table %s"
+msgstr "Slut på dataindhold af tabel %s"
+
+#: wassup.php:3455
+msgid "If above timestamp is not current time, this page is cached"
+msgstr ""
+"Hvis ovenstående tidsstempel ikke er korrekt klokkeslet, så er denne side "
+"cached"
+
+#: wassup.php:3486
+#: wassup.php:3740
+msgid "No Data"
+msgstr "Ingen data"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+#: wassup.php:3814
+msgid "powered by"
+msgstr "Drevet af"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+msgid "Real Time Visitors Tracking"
+msgstr "Realtids besøgs overvågning"
+
+#: wassup.php:3497
+msgid "Last searched terms"
+msgstr "Sidst søg på"
+
+#: wassup.php:3510
+msgid "Last referers"
+msgstr "Seneste referrers"
+
+#: wassup.php:3525
+#: lib/settings.php:149
+msgid "Top Browsers"
+msgstr "Top-browsere"
+
+#: wassup.php:3540
+#: lib/settings.php:150
+msgid "Top OS"
+msgstr "Top styresystem"
+
+#: wassup.php:3559
+msgid "visitor(s) online"
+msgstr "besøgende online"
+
+#: wassup.php:3562
+msgid "logged-in user(s)"
+msgstr "Besøgende logget ind"
+
+#: wassup.php:3566
+msgid "comment author(s)"
+msgstr "kommentarforfatter(e)"
+
+#: wassup.php:3632
+msgid "Title"
+msgstr "Titel"
+
+#: wassup.php:3634
+msgid "default \"Visitors Online\""
+msgstr "Standard \"Besøgende online\""
+
+#: wassup.php:3637
+msgid "Stylesheet class for &lt;ul&gt; attribute"
+msgstr "Stilark klasse for &lt;ul&gt; attribute"
+
+#: wassup.php:3639
+msgid "default \"links\""
+msgstr "Standard \"Links\""
+
+#: wassup.php:3642
+msgid "Number of characters to display from left"
+msgstr "Antal af bogstaver der vises fra venstre"
+
+#: wassup.php:3644
+msgid "For template compatibility - default 18"
+msgstr "Skabelons kompatibilitet - Standard er 18"
+
+#: wassup.php:3649
+msgid "Show number of logged-in users online"
+msgstr "Vis antal af besøgende der er logget ind"
+
+#: wassup.php:3650
+msgid "Stats recording must be enabled in WassUp options"
+msgstr "Indsamling af statistik skal være sat til i WassUp's indstillinger"
+
+#: wassup.php:3651
+#: wassup.php:3657
+#: wassup.php:3663
+#: wassup.php:3675
+msgid "default Yes"
+msgstr "Standardvalg er Ja"
+
+#: wassup.php:3656
+msgid "Show number of comment authors online"
+msgstr "Vis antallet af kommentarforfattere der er online"
+
+#: wassup.php:3662
+msgid "Show latest searches"
+msgstr "Vis sidst søgt"
+
+#: wassup.php:3666
+msgid "How many searches?"
+msgstr "Hvor mange søgninger?"
+
+#: wassup.php:3668
+#: wassup.php:3680
+#: wassup.php:3692
+#: wassup.php:3704
+msgid "default 5"
+msgstr "Standard er 5"
+
+#: wassup.php:3674
+msgid "Show latest external referrers"
+msgstr "Vis sidste eksterne henvisere"
+
+#: wassup.php:3678
+msgid "How many referrers?"
+msgstr "Hvor mange henvisere?"
+
+#: wassup.php:3686
+msgid "Show top browsers"
+msgstr "Vis Top-Browsers"
+
+#: wassup.php:3686
+#: wassup.php:3698
+msgid "default No"
+msgstr "Standard er Nej"
+
+#: wassup.php:3687
+#: wassup.php:3699
+msgid "Enabling it could slow down blog)"
+msgstr "Valg af dette kan gøre din blog langsom!"
+
+#: wassup.php:3690
+msgid "How many browsers?"
+msgstr "Hvor mange browsere?"
+
+#: wassup.php:3698
+msgid "Show top operating systems"
+msgstr "Vis top styresystemer"
+
+#: wassup.php:3702
+msgid "How many operating systems?"
+msgstr "Hvor mange styresystemer?"
+
+#: wassup.php:3713
+msgid "Wassup Widget"
+msgstr "WassUp-widget"
+
+#: wassup.php:3839
+msgid "More Stats"
+msgstr "Mere statistik"
+
+#: lib/action.php:125
+msgid "ERROR: file not found"
+msgstr "FEJL: Filen ikke fundet"
+
+#: lib/action.php:143
+msgid "ERROR: bad date"
+msgstr "FEJL: ugyldig dato"
+
+#: lib/action.php:257
+msgid "TOP QUERY"
+msgstr "TOP-FORESPØRGSLER"
+
+#: lib/action.php:276
+msgid "TOP REFERRER"
+msgstr "Top henvisere"
+
+#: lib/action.php:302
+msgid "TOP REQUEST"
+msgstr "TOP-ANMODNING"
+
+#: lib/action.php:323
+msgid "TOP BROWSER"
+msgstr "TOP-WEBBROWSER"
+
+#: lib/action.php:343
+msgid "TOP OS"
+msgstr "Top styresystemer"
+
+#: lib/action.php:364
+msgid "TOP LOCALE"
+msgstr "Top lokal"
+
+#: lib/action.php:391
+msgid "TOP VISITOR"
+msgstr "Top besøgende"
+
+#: lib/action.php:409
+msgid "This top ten doesn't include Spam records"
+msgstr "Denne Top-ti inkluderer ikke spam-poster"
+
+#: lib/action.php:414
+msgid "ERROR: Missing or unknown parameters"
+msgstr "ERROR: Manglende eller ukendte parametre"
+
+#: lib/action.php:423
+msgid "ERROR: Nothing to do here"
+msgstr "ERROR: Intet at udføre"
+
+#: lib/main.php:85
+msgid "Next"
+msgstr "Næste"
+
+#: lib/main.php:87
+msgid "Previous"
+msgstr "Forrige"
+
+#: lib/main.php:120
+#: lib/main.php:124
+msgid "It is necessary to specify the"
+msgstr "Det er nødvendigt at angive"
+
+#: lib/main.php:120
+msgid "number of pages"
+msgstr "antal sider"
+
+#: lib/main.php:124
+msgid "limit of items"
+msgstr "Grænse for poster"
+
+#: lib/main.php:124
+msgid "to show per page"
+msgstr "der skal vises pr. side"
+
+#: lib/main.php:209
+msgid "Pages"
+msgstr "Sider"
+
+#: lib/main.php:777
+msgid "No visitor activity"
+msgstr "Ingen besøgsaktivitet"
+
+#: lib/main.php:1179
+msgid "Last 6 Hours"
+msgstr "Seneste 6 timer"
+
+#: lib/main.php:1185
+msgid "Last 7 Days"
+msgstr "Seneste 7 dage"
+
+#: lib/main.php:1192
+msgid "Last Month"
+msgstr "Seneste måned"
+
+#: lib/main.php:1199
+msgid "Last 3 Months"
+msgstr "Sidste 3 måneder"
+
+#: lib/main.php:1205
+msgid "Last 6 Months"
+msgstr "Sidste 6 måneder"
+
+#: lib/main.php:1211
+msgid "Last Year"
+msgstr "Seneste år"
+
+#: lib/main.php:1217
+msgid "All Time"
+msgstr "Hele tiden"
+
+#: lib/main.php:1224
+msgid "Last 24 Hours"
+msgstr "Seneste 24 timer"
+
+#: lib/settings.php:31
+msgid ""
+"ATTENTION! Your WassUp table have reached the maximum value you set, I "
+"disabled the alert, you can re-enable it here."
+msgstr ""
+"Advarsel! Din WassUp table har nået den maksimum grænse du har sat! \r\n"
+"Jeg har afstillet alarmen - Du kan indstille den igen hér."
+
+#: lib/settings.php:55
+msgid "Select the options you want for the WassUp plugin"
+msgstr "Vælg de indstillinger, du ønsker, i WassUp-pluginnet"
+
+#: lib/settings.php:62
+msgid "General Setup"
+msgstr "Generel opsætning"
+
+#: lib/settings.php:63
+msgid "Statistics Recording"
+msgstr "Indsamling af statistik"
+
+#: lib/settings.php:64
+msgid "Manage Files & Database"
+msgstr "Håndtér filer og databaser"
+
+#: lib/settings.php:65
+msgid "Uninstall"
+msgstr "Afinstallér"
+
+#: lib/settings.php:69
+msgid "Your default screen resolution (browser width)"
+msgstr "Din standard-skærmopløsning (browser-bredde)"
+
+#: lib/settings.php:70
+msgid "Default screen resolution (in pixels)"
+msgstr "Standard-skærmopløsning (i pixels)"
+
+#: lib/settings.php:75
+msgid ""
+"Set minimum users level which can view and manage WassUp plugin (default "
+"Administrators)"
+msgstr ""
+"Sæt det brugerniveau, der som minimum kræves for at kunne se og administrere "
+"WassUp-pluginnet (standard: Administrator)"
+
+#: lib/settings.php:80
+msgid "Dashboard Settings"
+msgstr "Dashboard indstillinger"
+
+#: lib/settings.php:81
+msgid "Display small chart in the dashboard"
+msgstr "Vis små bogstaver i dashboard"
+
+#: lib/settings.php:84
+msgid "GEO IP Map (Spy view)"
+msgstr "GEO IP kort (Spy view)"
+
+#: lib/settings.php:89
+msgid "Display a GEO IP Map in the spy visitors view"
+msgstr "Vis et GEO IP kort hos spy-besøgende"
+
+#: lib/settings.php:97
+#: lib/settings.php:456
+msgid "WARNING"
+msgstr "ADVARSEL"
+
+#: lib/settings.php:97
+msgid "Activation problem >> Error code"
+msgstr "Aktiveringsproblem >> Fejl kode"
+
+#: lib/settings.php:105
+msgid "key"
+msgstr "nøgle"
+
+#: lib/settings.php:105
+msgid "signup for your key"
+msgstr "Få din nøgle"
+
+#: lib/settings.php:108
+msgid "Geo IP Map requires"
+msgstr "Geo IP Map skal bruge"
+
+#: lib/settings.php:108
+msgid "Please install it to be able to activate this feature"
+msgstr "Installér for at kunne bruge denne funktion"
+
+#: lib/settings.php:112
+msgid "Time format"
+msgstr "Tids format"
+
+#: lib/settings.php:113
+msgid "Time format 12/24 hour"
+msgstr "Tidsformat 12 eller 24 timer"
+
+#: lib/settings.php:116
+msgid "Visitor Detail Settings"
+msgstr "Detaljeret besøgs indstillinger"
+
+#: lib/settings.php:117
+msgid "Show chart type - How many axes"
+msgstr "Vis diagramtype - Hvor mange akser"
+
+#: lib/settings.php:123
+msgid "Set how many minutes wait for automatic page refresh"
+msgstr ""
+"Angiv hvor mange minutter der skal gå mellem automatisk genindlæsning af side"
+
+#: lib/settings.php:123
+msgid "Current Visitors Online and Visitors Details"
+msgstr "Besøgende online nu og detaljer om dem"
+
+#: lib/settings.php:124
+msgid "refresh minutes (default 3)"
+msgstr "Minutter mellem genindlæsning (standard: 3)"
+
+#: lib/settings.php:126
+msgid "Show visitor details for"
+msgstr "Vis detaljer om besøgende for"
+
+#: lib/settings.php:131
+msgid "Number of items per page"
+msgstr "Antal poster pr. side"
+
+#: lib/settings.php:140
+msgid "Customize Top Ten List"
+msgstr "Tilpas Top-ti-liste"
+
+#: lib/settings.php:141
+msgid "Choose one or more items for your Top Ten list"
+msgstr "Vælg en eller flere af følgende for din Top-ti-liste"
+
+#: lib/settings.php:141
+msgid "over 5 selections may cause horizontal scrolling"
+msgstr "vælger du flere end 5, kan det medføre horisontal scrollning"
+
+#: lib/settings.php:144
+msgid "Top Searches"
+msgstr "Top-Søgninger"
+
+#: lib/settings.php:145
+msgid "Top Referrers"
+msgstr "Top henvisere"
+
+#: lib/settings.php:146
+msgid "Top Requests"
+msgstr "Top-Anmodninger"
+
+#: lib/settings.php:151
+msgid "Top Locales"
+msgstr "Top-lokaliteter"
+
+#: lib/settings.php:154
+msgid "Top Visitors"
+msgstr "Top-Besøgende"
+
+#: lib/settings.php:156
+msgid "Top Feeds"
+msgstr "Top-Feeds"
+
+#: lib/settings.php:157
+msgid "Top Crawlers"
+msgstr "Top-Webcrawlers"
+
+#: lib/settings.php:161
+msgid "Websites/domains to exclude from top referrers"
+msgstr "Websider/domæner der skal udelukkes fra Top-henvisere"
+
+#: lib/settings.php:164
+msgid "Comma separated value"
+msgstr "Komma separeret værdi"
+
+#: lib/settings.php:165
+msgid "Don't list your website domain defined in WordPress"
+msgstr "List ikke din websides domæne defineret i Wordpress"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset"
+msgstr "Nulstil"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset to Default Settings"
+msgstr "Nulstil til standardindstillinger"
+
+#: lib/settings.php:172
+msgid "Statistics Recording Settings"
+msgstr "Indstillinger for statistik-indsamling"
+
+#: lib/settings.php:173
+msgid "Enable/Disable Recording"
+msgstr "Aktivér/Deaktivér indsamling af data"
+
+#: lib/settings.php:174
+msgid "Checkbox to record statistics for each type of \"visitor\""
+msgstr ""
+"Afkrydsningsfelt vedr. indsamling af statistik for hver type af \"besøgende\""
+
+#: lib/settings.php:176
+msgid "Record logged in users"
+msgstr "Indsaml data for brugere, der er logget ind"
+
+#: lib/settings.php:177
+msgid "Record logged in administrators"
+msgstr "Registrer administratorer der er logget ind"
+
+#: lib/settings.php:178
+msgid "Record spiders and bots"
+msgstr "Indsaml data om websøgemaskiner og -botter"
+
+#: lib/settings.php:179
+msgid "Record attack/exploit attempts (libwww-perl agent)"
+msgstr "Indsaml data om forsøg på angreb/misbrug (libwww-perl-softwareagent)"
+
+#: lib/settings.php:183
+msgid "Checkbox to record statistics for each type of \"spam\""
+msgstr "Afkrydsningsfelt vedr. opsamling af statistik for hver \"spam\"-type"
+
+#: lib/settings.php:185
+msgid "check if an IP has previous comments as spam"
+msgstr "Check om et IP-nummer tidligere har spammet"
+
+#: lib/settings.php:191
+msgid "Statistics Recording Exceptions"
+msgstr "Statistik-indsamlings undtagelser"
+
+#: lib/settings.php:193
+msgid "Sites"
+msgstr "Sider"
+
+#: lib/settings.php:193
+msgid "Enter source IPs to exclude from recording"
+msgstr ""
+"Indtast de IP'er, som forsøgene kommer fra, så de kan udelukkes fra "
+"dataindsamlingen"
+
+#: lib/settings.php:195
+msgid "comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...)"
+msgstr "kommaseparerede værdier (fx: 127.0.0.1, 10.0.0.1, osv...)"
+
+#: lib/settings.php:197
+msgid "Users"
+msgstr "Brugere"
+
+#: lib/settings.php:197
+msgid "Enter usernames to exclude from recording"
+msgstr "Skriv brugernavne der skal udelukkes fra statistik-indsamling"
+
+#: lib/settings.php:199
+msgid ""
+"comma separated value, enter a registered user's login name (ex: bobmarley, "
+"enyabrennan, etc.)"
+msgstr ""
+"Komma separeret værdi - Skriv brugerens log-in navn (F.eks bobmarley, "
+"enyabrennan, etc.)"
+
+#: lib/settings.php:200
+msgid "Posts/pages"
+msgstr "Poster/Sider"
+
+#: lib/settings.php:200
+msgid "enter requested URLs to exclude from recording"
+msgstr "Skriv URL's der ikke skal samles statistik for"
+
+#: lib/settings.php:202
+msgid ""
+"comma separated value, don't enter entire url, only the last path or some "
+"word to exclude (ex: /category/wordpress, 2007, etc...)"
+msgstr ""
+"Komma separeret værdi - Skriv ikke hele URL'en, kun der sidste del, eller "
+"nogle ord (F.eks: /category/wordpress, 2007, etc...)"
+
+#: lib/settings.php:231
+#: lib/settings.php:233
+msgid "Rescan Old Records"
+msgstr "Genskan gamle poster"
+
+#: lib/settings.php:232
+msgid ""
+"Statistical records collected by earlier versions of WassUp may not have the "
+"latest spider, search engine, and spam data properly identified.  Click the "
+"\"Rescan\" button to retroactively scan and update old records"
+msgstr ""
+"Statistiske poster indsamlet af tidligere versioner af WassUp kan mangle "
+"behørig identifikation af de seneste websøgemaskiner, søgemaskiner og "
+"spamdata. Klik på \"Genskan\"-knappen for at skanne og opdatere de gamle "
+"poster"
+
+#: lib/settings.php:236
+msgid "Select actions for table growth"
+msgstr "Vælg handlinger for tabelvækst"
+
+#: lib/settings.php:237
+msgid ""
+"WassUp table grows very fast (especially if your blog is frequently "
+"visited), I recommend you to delete old records sometimes. You can select "
+"any option below to reset it, delete old records automatically or manually. "
+"(If you haven't database space problems you can leave the table as is)"
+msgstr ""
+"WassUp-tabeller bliver meget hurtigt større (især hvis din blog jævnligt "
+"besøges). Jeg anbefaler, at du sletter gamle poster fra tid til anden. Du "
+"kan vælge en hvilken som helst indstilling nedenfor for at nulstille "
+"tabellen, slette gamle poster automatisk eller manuelt. (Hvis du ikke har "
+"pladsproblemer i din database, kan du lade tabellen være, som den er)"
+
+#: lib/settings.php:238
+msgid "Current WassUp table usage is"
+msgstr "Aktuel Wass-Up-tabelforbrug er"
+
+#: lib/settings.php:244
+msgid "records"
+msgstr "poster"
+
+#: lib/settings.php:247
+msgid "Alert me"
+msgstr "Advar mig"
+
+#: lib/settings.php:247
+msgid "email to"
+msgstr "e-mail til"
+
+#: lib/settings.php:247
+msgid "when table reaches"
+msgstr "når tabellen fylder"
+
+#: lib/settings.php:249
+msgid "Empty table"
+msgstr "Tøm tabel"
+
+#: lib/settings.php:250
+msgid "export table in SQL format"
+msgstr "eksportér tabel i SQL-format"
+
+#: lib/settings.php:252
+msgid "backup table to server file"
+msgstr "Backup tabel til en fil på serveren"
+
+#: lib/settings.php:254
+msgid "Automatically delete records older than:"
+msgstr "Automatisk slet poster ældre end:"
+
+#: lib/settings.php:258
+msgid "Delete NOW records older than:"
+msgstr "Slet poster NU, hvis de er ældre end:"
+
+#: lib/settings.php:260
+msgid "Action is NOT undoable"
+msgstr "Handlingen kan IKKE fortrydes"
+
+#: lib/settings.php:261
+#: lib/wassup.class.php:259
+#: lib/wassup.class.php:269
+msgid "24 hours"
+msgstr "24 timer"
+
+#: lib/settings.php:262
+#: lib/wassup.class.php:260
+msgid "1 week"
+msgstr "1 uge"
+
+#: lib/settings.php:263
+#: lib/wassup.class.php:261
+#: lib/wassup.class.php:271
+msgid "1 month"
+msgstr "måned"
+
+#: lib/settings.php:264
+#: lib/wassup.class.php:262
+#: lib/wassup.class.php:272
+msgid "3 months"
+msgstr "3 måneder"
+
+#: lib/settings.php:265
+#: lib/wassup.class.php:263
+#: lib/wassup.class.php:273
+msgid "6 months"
+msgstr "6 måneder"
+
+#: lib/settings.php:266
+#: lib/wassup.class.php:264
+#: lib/wassup.class.php:274
+msgid "1 year"
+msgstr "1 år"
+
+#: lib/settings.php:270
+msgid "Server Settings and Memory Resources"
+msgstr "Server indstillinger og hukommelses resourser"
+
+#: lib/settings.php:271
+msgid "For information only. Some values may be adjustable in startup files"
+msgstr ""
+"Kun til information! Nogle værdier kan være justérbare i startfilerne"
+
+#: lib/settings.php:271
+msgid "and"
+msgstr "og"
+
+#: lib/settings.php:271
+msgid "or"
+msgstr "eller"
+
+#: lib/settings.php:272
+#: lib/settings.php:287
+#: lib/settings.php:350
+msgid "Version"
+msgstr "Version"
+
+#: lib/settings.php:273
+msgid "Host Server"
+msgstr "Host Server"
+
+#: lib/settings.php:283
+#: lib/settings.php:319
+#: lib/settings.php:329
+#: lib/settings.php:335
+#: lib/settings.php:350
+#: lib/settings.php:353
+#: lib/settings.php:397
+#: lib/settings.php:407
+#: lib/settings.php:418
+#: lib/settings.php:425
+#: lib/settings.php:434
+#: lib/settings.php:445
+msgid "unknown"
+msgstr "Ukendt"
+
+#: lib/settings.php:285
+msgid "Time Offset"
+msgstr "Tidsforskydning"
+
+#: lib/settings.php:286
+msgid "hours"
+msgstr "timer"
+
+#: lib/settings.php:288
+msgid "Safe Mode"
+msgstr "Safe Mode"
+
+#: lib/settings.php:291
+#: lib/settings.php:300
+msgid "on"
+msgstr "Aktiveret"
+
+#: lib/settings.php:293
+#: lib/settings.php:298
+msgid "off"
+msgstr "deaktiveret"
+
+#: lib/settings.php:294
+msgid "File Open Restrictions"
+msgstr "Restriktioner ved Fil åbning"
+
+#: lib/settings.php:304
+msgid "Memory Allocation"
+msgstr "Reserveret hukommelse"
+
+#: lib/settings.php:322
+msgid "Memory Usage"
+msgstr "Hukommelsesforbrug"
+
+#: lib/settings.php:332
+msgid "Script Timeout Limit"
+msgstr "Scripts udløbsgrænse"
+
+#: lib/settings.php:337
+msgid "Browser Capabilities File"
+msgstr "Browser Capabilities File"
+
+#: lib/settings.php:339
+msgid "not set"
+msgstr "Ikke sat"
+
+#: lib/settings.php:343
+msgid "not installed"
+msgstr "Ikke installeret"
+
+#: lib/settings.php:344
+msgid "installed"
+msgstr "Installeret"
+
+#: lib/settings.php:351
+msgid "Engine"
+msgstr "Maskine"
+
+#: lib/settings.php:389
+msgid "Query Cache"
+msgstr "Forespørgsels cache"
+
+#: lib/settings.php:394
+#: lib/settings.php:404
+#: lib/settings.php:415
+msgid "disabled"
+msgstr "Deaktiveret"
+
+#: lib/settings.php:399
+msgid "Index (Key) Buffer"
+msgstr "Index (Key) Buffer"
+
+#: lib/settings.php:410
+msgid "Read Buffer"
+msgstr "Læs buffer"
+
+#: lib/settings.php:421
+msgid "Wait Timeout"
+msgstr "Ventetids Timeout"
+
+#: lib/settings.php:428
+msgid "Char Set/Collation"
+msgstr "Bogstavs Instillinger/Sortering"
+
+#: lib/settings.php:437
+msgid "Timezone"
+msgstr "Tidszone"
+
+#: lib/settings.php:452
+msgid "Want to uninstall WassUp?"
+msgstr "Ønsker du at afinstallere WassUp?"
+
+#: lib/settings.php:453
+msgid ""
+"No problem. Before you deactivate this plugin, check the box below to "
+"cleanup any data that was collected by WassUp that could be left behind."
+msgstr ""
+"Det er ikke noget problem. Men før du deaktiverer dette plugin, så markér i "
+"afkrydsningsfeltet nedenfor, så al data, som WassUp har indsamlet, men "
+"eventuelt efterladt, kan blive fjernet."
+
+#: lib/settings.php:454
+msgid "Permanently remove WassUp data and settings from Wordpress"
+msgstr "Fjern WassUp-data og -indstillinger fuldstændigt fra WordPress"
+
+#: lib/settings.php:456
+msgid ""
+"All WassUp data and settings will be DELETED upon deactivation of this plugin"
+msgstr ""
+"Alle WassUp data og indstillinger vil blive SLETTET, hvis du deaktiverer "
+"dette plug-in!"
+
+#: lib/settings.php:458
+msgid ""
+"This action cannot be undone. Before uninstalling WassUp, you should backup "
+"your Wordpress database first. WassUp data is stored in the table"
+msgstr ""
+"Denne handling kan ikke fortrydes. Før du afinstallerer WassUp, bør du "
+"sikkerhedskopiere din WordPress-database først. WassUp's data gemmes en "
+"tabel heri."
+
+#: lib/settings.php:460
+msgid "To help improve this plugin, we would appreciate your feedback at"
+msgstr ""
+"Vi vil gerne forbedre dette plugin. Derfor vil vi sætte pris på feedback på"
+
+#: lib/wassup.class.php:208
+msgid "Administrator"
+msgstr "Administrator"
+
+#: lib/wassup.class.php:209
+msgid "Editor"
+msgstr "Redaktør"
+
+#: lib/wassup.class.php:210
+msgid "Author"
+msgstr "Forfatter"
+
+#: lib/wassup.class.php:215
+msgid "None - don't show chart"
+msgstr "Ingen - Vis ikke diagram"
+
+#: lib/wassup.class.php:216
+msgid "One - 2 lines chart 1 axis"
+msgstr "Èn - 2 liniers diagram - 1 akse"
+
+#: lib/wassup.class.php:217
+msgid "Two - 2 lines chart 2 axes"
+msgstr "To - 2 liniers diagram - 2 akser"
+
+#: lib/wassup.class.php:231
+msgid "Everything"
+msgstr "Alt"
+
+#: lib/wassup.class.php:233
+msgid "No spider"
+msgstr "Ingen websøgemaskiner"
+
+#: lib/wassup.class.php:235
+msgid "No Spam"
+msgstr "Intet spam"
+
+#: lib/wassup.class.php:236
+msgid "No Spam, No Spider"
+msgstr "Intet spam, ingen søgemaskiner"
+
+#: lib/wassup.class.php:237
+msgid "Users logged in"
+msgstr "Brugere, der er logget ind"
+
+#: lib/wassup.class.php:238
+msgid "Comment authors"
+msgstr "Kommentarforfattere"
+
+#: lib/wassup.class.php:239
+msgid "Referrer from search engine"
+msgstr "Henvist fra søgemaskine"
+
+#: lib/wassup.class.php:240
+msgid "Referrer from ext link"
+msgstr "Henvist fra eksternt link"
+
+#: lib/wassup.class.php:258
+msgid "Don't delete anything"
+msgstr "Slet intet"
+
+#: lib/wassup.class.php:268
+msgid "6 hours"
+msgstr "6 timer"
+
+#: lib/wassup.class.php:270
+msgid "7 days"
+msgstr "7 dage"
+
+#: lib/wassup.class.php:275
+msgid "all time"
+msgstr "Hele tiden"

@@ -1,0 +1,1509 @@
+# Greek translation for wassup
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the wassup package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wassup\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-05-18 12:28+0100\n"
+"PO-Revision-Date: 2009-05-26 17:41+0000\n"
+"Last-Translator: Vasilakis Michalis <Unknown>\n"
+"Language-Team: Greek <el@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-01-12 09:52+0000\n"
+"X-Generator: Launchpad (build 16890)\n"
+
+#: wassup.php:45
+msgid "Sorry, Wassup requires WordPress 2.2 or higher to work"
+msgstr ""
+"To Wassup απαιτεί  έκδοση WordPress 2.2 ή μεγαλύερη για να λειτουργήσει"
+
+#: wassup.php:406
+msgid "Hide Search"
+msgstr "Απόκρυψη αναζήτησης"
+
+#: wassup.php:409
+#: wassup.php:1209
+#: wassup.php:1290
+#: lib/action.php:183
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: wassup.php:414
+msgid "Hide TopTen"
+msgstr "Απόκρυψη κορυφαίας δεκάδας"
+
+#: wassup.php:417
+msgid "Show TopTen"
+msgstr "Προβολή κορυφαίας δεκάδας"
+
+#: wassup.php:423
+msgid "Collapse All"
+msgstr "Σύμπτυξη όλων"
+
+#: wassup.php:426
+#: wassup.php:761
+#: wassup.php:857
+#: wassup.php:1165
+msgid "Expand All"
+msgstr "Ανάπτυξη όλων"
+
+#: wassup.php:431
+msgid "Expand Cronology"
+msgstr "Προβολή Ιστορικού"
+
+#: wassup.php:434
+msgid "Collapse Cronology"
+msgstr "Απόκρυψη Ιστορικού"
+
+#: wassup.php:526
+msgid "Visitor Details"
+msgstr "Στοιχεία επισκεπτών"
+
+#: wassup.php:529
+msgid "Spy Visitors"
+msgstr "Παρακολούθηση επισκεπτών"
+
+#: wassup.php:529
+#: wassup.php:861
+msgid "SPY Visitors"
+msgstr "Παρακολούθηση επισκεπτών"
+
+#: wassup.php:530
+#: wassup.php:759
+msgid "Current Visitors Online"
+msgstr "Συνδεδεμένοι Επισκέπτες"
+
+#: wassup.php:531
+#: wassup.php:917
+msgid "Options"
+msgstr "Επιλογές"
+
+#: wassup.php:629
+#: wassup.php:654
+msgid "Wassup options updated successfully"
+msgstr "Οι ρυθμίσεις του Wassup ενημερώθηκαν με επιτυχία"
+
+#: wassup.php:641
+msgid "Wassup uninstall option updated successfully"
+msgstr "Η απεγκατάσταση του Wassup έγινε με επιτυχία"
+
+#: wassup.php:649
+msgid "Wassup spam options updated successfully"
+msgstr "Η επιλογές των ανεπιθύμητων ενημερώθηκαν με επιτυχία"
+
+#: wassup.php:750
+msgid "Warning"
+msgstr "Προχοχή"
+
+#: wassup.php:750
+msgid "is NOT recording new statistics"
+msgstr "ΔΕΝ καταγράφει νέα στατιστικά"
+
+#: wassup.php:750
+msgid ""
+"To collect data you must check \"Enable/Disable recording\" in \"Options: "
+"Statistics Recording\" tab"
+msgstr ""
+"Για να συλλέγονται στοιχεία, πρέπει να επιλέξετε "
+"\"Ενεργοποίηση/Απενεργοποίηση καταγραφής\" στις \"Επιλογές: Καταγραφή "
+"Στατιστικών\""
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Legend"
+msgstr "Υπόμνημα"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Logged-in Users"
+msgstr "Συνδεδεμένοι Χρήστες"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Comments Authors"
+msgstr "Συντάκτες Σχολίων"
+
+#: wassup.php:760
+#: wassup.php:862
+msgid "Spiders/bots"
+msgstr "Spiders/bots"
+
+#: wassup.php:767
+msgid "Visitors online"
+msgstr "Συνδεδεμένοι επισκέπτες"
+
+#: wassup.php:791
+#: wassup.php:1319
+#: lib/main.php:641
+msgid "From your blog"
+msgstr "Απο το ιστολόγιο σου"
+
+#: wassup.php:794
+#: wassup.php:1322
+#: lib/main.php:644
+msgid "Direct hit"
+msgstr "Απ' ευθείας επίσκεψη"
+
+#: wassup.php:814
+#: wassup.php:1389
+msgid "LOGGED IN USER"
+msgstr "ΣΥΝΔΕΔΕΜΕΝΟΣ ΧΡΗΣΤΗΣ"
+
+#: wassup.php:815
+#: wassup.php:818
+#: wassup.php:1405
+msgid "COMMENT AUTHOR"
+msgstr "ΣΥΝΤΑΚΤΗΣ ΣΧΟΛΙΟΥ"
+
+#: wassup.php:864
+msgid "Pause"
+msgstr "Παύση"
+
+#: wassup.php:865
+msgid "Play"
+msgstr "Αναπαραγωγή"
+
+#: wassup.php:866
+msgid "Spy items by"
+msgstr "Παρακολούθηση κατά"
+
+#: wassup.php:918
+msgid ""
+"You can add a sidebar Widget with some useful statistics information by "
+"activating the"
+msgstr ""
+"Μπορείτε να προσθέσετε μια μονάδα (Widget) με χρήσιμες στατιστικές "
+"πληροφορίες ενεργοποιώντας το"
+
+#: wassup.php:919
+msgid "Wassup Widget in the Widgets menu option"
+msgstr "Μονάδα (Widget ) Wassup στις επιλογές Μονάδων"
+
+#: wassup.php:927
+msgid "Latest hits"
+msgstr "Τελευταίες επισκέψεις"
+
+#: wassup.php:929
+msgid "WassUp recording is disabled"
+msgstr "Η καταγραφή του WassUp έχει απενεργοποιηθεί"
+
+#: wassup.php:1041
+msgid "records deleted"
+msgstr "Οι εγγραφές διαγράφηκαν"
+
+#: wassup.php:1102
+msgid "hide chart"
+msgstr "Απόκρυψη γραφήματος"
+
+#: wassup.php:1102
+msgid "Hide the chart"
+msgstr "Κρύψε το γράφημα"
+
+#: wassup.php:1105
+msgid "show chart"
+msgstr "Προβολή γραφήματος"
+
+#: wassup.php:1105
+msgid "Show the chart"
+msgstr "Δείξε το γράφημα"
+
+#: wassup.php:1115
+msgid "Summary for the last"
+msgstr "Σύνοψη για τα τελευταία"
+
+#: wassup.php:1122
+msgid "Items per page"
+msgstr "στοιχεία ανά σελίδα"
+
+#: wassup.php:1132
+msgid "Show items by"
+msgstr "Προβολή στοιχείων κατά"
+
+#: wassup.php:1151
+msgid "Visits"
+msgstr "Επισκέψεις"
+
+#: wassup.php:1152
+msgid "Pageviews"
+msgstr "Προβολές σελίδων"
+
+#: wassup.php:1153
+msgid "Pages/Visits"
+msgstr "Σελίδες/Επισκέψεις"
+
+#: wassup.php:1156
+msgid "Spams"
+msgstr "Ανεπιθύμητα"
+
+#: wassup.php:1166
+msgid "Collapse Chronology"
+msgstr "Απόκρυψη Ιστορικού"
+
+#: wassup.php:1185
+msgid "Spam Options"
+msgstr "Επιλογές Ανεπιθύμητων"
+
+#: wassup.php:1187
+#: lib/settings.php:182
+msgid "Enable/Disable Spam Check on Records"
+msgstr "Ενεργοποίηση/Απενεργοποίηση ελέγχου για Ανεπιθύμητα στις Εγγραφές"
+
+#: wassup.php:1188
+#: lib/settings.php:185
+msgid "Record Akismet comment spam attempts"
+msgstr ""
+
+#: wassup.php:1189
+#: lib/settings.php:186
+msgid "Record referrer spam attempts"
+msgstr ""
+
+#: wassup.php:1190
+#: lib/settings.php:187
+msgid "Record admin break-in/hacker attempts"
+msgstr ""
+
+#: wassup.php:1191
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Save Settings"
+msgstr "Αποθήκευση Ρυθμίσεων"
+
+#: wassup.php:1200
+msgid "Filter by marked IP"
+msgstr "Φίλτρο με την επιλεχθείσα IP"
+
+#: wassup.php:1200
+msgid "show marked items"
+msgstr "προβολή επιλεγμένων στοιχείων"
+
+#: wassup.php:1203
+msgid "Searched for"
+msgstr "Α"
+
+#: wassup.php:1205
+msgid "Auto refresh in"
+msgstr "Αυτόματη ανανέωση κάθε"
+
+#: wassup.php:1205
+#: lib/settings.php:334
+#: lib/settings.php:423
+msgid "seconds"
+msgstr "δευτερόλεπτα"
+
+#: wassup.php:1209
+msgid "Top Ten"
+msgstr "Κορυφαία Δεκάδα"
+
+#: wassup.php:1209
+msgid "Show Top Ten"
+msgstr "Προβολή Κορυφαίας Δεκάδας"
+
+#: wassup.php:1263
+#: lib/action.php:175
+msgid "Raw data"
+msgstr ""
+
+#: wassup.php:1266
+msgid "Visit type"
+msgstr ""
+
+#: wassup.php:1268
+msgid "Logged-in user"
+msgstr "Συνδεδεμένος χρήστης"
+
+#: wassup.php:1270
+msgid "Spammer/Hacker"
+msgstr ""
+
+#: wassup.php:1272
+msgid "Spammer"
+msgstr ""
+
+#: wassup.php:1274
+msgid "Comment author"
+msgstr "Συντάκτης σχολίου"
+
+#: wassup.php:1276
+msgid "Feed"
+msgstr "Ροή (Feed)"
+
+#: wassup.php:1278
+#: lib/wassup.class.php:232
+msgid "Spider"
+msgstr ""
+
+#: wassup.php:1280
+msgid "Regular visitor"
+msgstr "Συνήθης επισκέπτης"
+
+#: wassup.php:1283
+#: lib/action.php:178
+msgid "IP"
+msgstr "IP"
+
+#: wassup.php:1284
+#: wassup.php:1356
+#: lib/action.php:179
+msgid "Hostname"
+msgstr ""
+
+#: wassup.php:1285
+msgid "Url Requested"
+msgstr ""
+
+#: wassup.php:1286
+#: wassup.php:1361
+#: lib/action.php:180
+msgid "User Agent"
+msgstr ""
+
+#: wassup.php:1287
+#: wassup.php:1356
+#: lib/action.php:181
+msgid "Referrer"
+msgstr "Referrer"
+
+#: wassup.php:1289
+msgid "Search Engine"
+msgstr "Μηχανή Αναζήτησης"
+
+#: wassup.php:1291
+msgid "Page"
+msgstr "Σελίδα"
+
+#: wassup.php:1294
+#: wassup.php:1450
+#: lib/action.php:186
+msgid "OS"
+msgstr "Λειτουργικό"
+
+#: wassup.php:1297
+#: lib/action.php:189
+msgid "Browser"
+msgstr "Φυλλομετρητής"
+
+#: wassup.php:1300
+msgid "Locale/Language"
+msgstr "Γλώσσα"
+
+#: wassup.php:1303
+msgid "Screen Resolution"
+msgstr "Ανάλυση Οθόνης"
+
+#: wassup.php:1306
+msgid "End timestamp"
+msgstr ""
+
+#: wassup.php:1332
+#: wassup.php:1337
+msgid "delete"
+msgstr "διαγραφή"
+
+#: wassup.php:1332
+msgid "Delete ALL marked records with this IP"
+msgstr "Διαγραφή ΟΛΩΝ των σημειωμένων εγγραφών με αυτή την IP"
+
+#: wassup.php:1334
+msgid "unmark"
+msgstr "αποεπιλογή"
+
+#: wassup.php:1334
+msgid "UnMark IP"
+msgstr "Αποεπιλογή IP"
+
+#: wassup.php:1337
+msgid "Delete this record"
+msgstr "Διαγραφή εγγραφής"
+
+#: wassup.php:1339
+msgid "mark"
+msgstr "σημείωση"
+
+#: wassup.php:1339
+msgid "Mark IP"
+msgstr "Επιλογή IP"
+
+#: wassup.php:1342
+msgid "show raw table"
+msgstr ""
+
+#: wassup.php:1342
+msgid "Show the items as raw table"
+msgstr ""
+
+#: wassup.php:1380
+msgid "SEARCH ENGINE"
+msgstr "ΜΗΧΑΝΗ ΑΝΑΖΗΤΗΣΗΣ"
+
+#: wassup.php:1380
+msgid "page"
+msgstr "σελίδα"
+
+#: wassup.php:1381
+msgid "KEYWORDS"
+msgstr "ΛΕΞΕΙΣ ΚΛΕΙΔΙΑ"
+
+#: wassup.php:1399
+msgid "ADMINISTRATOR"
+msgstr "ΔΙΑΧΕΙΡΙΣΤΗΣ"
+
+#: wassup.php:1417
+msgid "FEEDREADER"
+msgstr "FEEDREADER"
+
+#: wassup.php:1419
+msgid "SUBSCRIBER(S)"
+msgstr "ΣΥΝΔΡΟΜΗΤΗΣ(ΕΣ)"
+
+#: wassup.php:1424
+msgid "SPIDER"
+msgstr "SPIDER"
+
+#: wassup.php:1432
+msgid "Probably SPAM!"
+msgstr "Πιθανόν ΑΝΕΠΙΘΥΜΗΤΟ!"
+
+#: wassup.php:1433
+msgid "Referer Spam"
+msgstr "Referer Spam"
+
+#: wassup.php:1434
+#: lib/wassup.class.php:234
+msgid "Spam"
+msgstr "Ανεπιθύμητο"
+
+#: wassup.php:1440
+msgid "Probably hack attempt!"
+msgstr "Πιθανή προσπάθεια παραβίασης ασφάλειας!"
+
+#: wassup.php:1448
+#: lib/action.php:192
+msgid "Language"
+msgstr "Γλώσσα"
+
+#: wassup.php:1451
+msgid "BROWSER"
+msgstr "ΦΥΛΛΟΜΕΤΡΗΤΗΣ"
+
+#: wassup.php:1453
+msgid "RESOLUTION"
+msgstr "ΑΝΑΛΥΣΗ"
+
+#: wassup.php:1509
+msgid "Graph of visitor hits"
+msgstr ""
+
+#: wassup.php:1511
+msgid "Too few records to print chart"
+msgstr "Λίγες εγγραφές για δημιουργία γραφήματος"
+
+#: wassup.php:1527
+msgid "Check the official"
+msgstr ""
+
+#: wassup.php:1527
+msgid "page for updates, bug reports and your hints to improve it"
+msgstr "σελίδα για ενημερώσεις, αναφορά σφαλμάτων και ιδεών για την βελτίωση"
+
+#: wassup.php:1527
+msgid "User Guide documentation"
+msgstr "Οδηγίες Χρήσης"
+
+#: wassup.php:1528
+msgid "Exec time"
+msgstr "Χρόνος εκτέλεσης"
+
+#: wassup.php:2349
+msgid "WassUp Plugin table has reached maximum size!"
+msgstr "Ο πίνακας του πρόσθετου WassUp έφτασε το μέγιστο μέγεθος!"
+
+#: wassup.php:2350
+msgid "Hi"
+msgstr "Γειά"
+
+#: wassup.php:2350
+msgid ""
+"you have received this email because your WassUp Database table at your "
+"Wordpress blog"
+msgstr ""
+"λάβατε αυτό το email  επειδή η βάση δεδομένων του WassUp στο ιστολόγιο σας"
+
+#: wassup.php:2350
+msgid "has reached the maximum value you set in the options menu"
+msgstr "έφτασε το μέγιστο όριο που έχετε ορίσεις στις επιλογές"
+
+#: wassup.php:2351
+msgid ""
+"This is only a reminder, please take the actions you want in the WassUp "
+"options menu"
+msgstr ""
+"Αυτό είναι μια υπενθύμιση, ακολουθήστε τις ενέργειες που επιθυμείτε στις "
+"επιλογές του WassUp"
+
+#: wassup.php:2351
+msgid "This alert now will be removed and you will be able to set a new one"
+msgstr ""
+"Αυτή η προειδοποίηση θα αφαιρεθεί και θα μπορέσετε να ορίσετε μαι νέα"
+
+#: wassup.php:2352
+msgid ""
+"Thank you for using WassUp plugin. Check if there is a new version available "
+"here:"
+msgstr ""
+"Ευχατριστώ που χρησιμοποιείτε το πρόσθετο WassUp. Ελέγξτε μήπως υπάρχει νέα "
+"έκδοση διαθέσιμη εδώ:"
+
+#: wassup.php:2352
+msgid "Have a nice day!"
+msgstr "Καλή σας μέρα!"
+
+#: wassup.php:2480
+msgid "Stats"
+msgstr "Στατιστικά"
+
+#: wassup.php:2480
+msgid "More"
+msgstr "Περισσότερα"
+
+#: wassup.php:2482
+#: wassup.php:3838
+msgid "visitor stats chart"
+msgstr "γράφημα στατιστικών επισκεπτών"
+
+#: wassup.php:2672
+msgid "encrypted search"
+msgstr "κωδικοποιημένη αναζήτηση"
+
+#: wassup.php:3340
+msgid "Error getting table details"
+msgstr "Σφάλμα κατά την λήψη των λεπτομερειών του πίνακα"
+
+#: wassup.php:3348
+#, php-format
+msgid "Delete any existing table %s"
+msgstr "Διαγραφή κάθε υπάρχοντα πίνακα %s"
+
+#: wassup.php:3359
+#, php-format
+msgid "Table structure of table %s"
+msgstr "Δομή του πίνακα %s"
+
+#: wassup.php:3367
+#, php-format
+msgid "Error with SHOW CREATE TABLE for %s."
+msgstr "Σφάλμα με SHOW CREATE TABLE για %s."
+
+#: wassup.php:3374
+#, php-format
+msgid "Error getting table structure of %s"
+msgstr "Σφάλμα κατά την λήψη της δομής του πίνακα %s"
+
+#: wassup.php:3382
+#, php-format
+msgid "Data contents of table %s"
+msgstr "Δεδομένα του πίνακα %s"
+
+#: wassup.php:3443
+#, php-format
+msgid "End of data contents of table %s"
+msgstr "Τέλος των δεδομένων του πίνακα %s"
+
+#: wassup.php:3455
+msgid "If above timestamp is not current time, this page is cached"
+msgstr "If above timestamp is not current time, this page is cached"
+
+#: wassup.php:3486
+#: wassup.php:3740
+msgid "No Data"
+msgstr "Δεν υπάρχουν Δεδομένα"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+#: wassup.php:3814
+msgid "powered by"
+msgstr "powered by"
+
+#: wassup.php:3487
+#: wassup.php:3568
+#: wassup.php:3741
+msgid "Real Time Visitors Tracking"
+msgstr "Παρακολούθηση επισκεπτών σε πραγματικό χρόνο"
+
+#: wassup.php:3497
+msgid "Last searched terms"
+msgstr "Τελευταίοι όροι αναζήτησης"
+
+#: wassup.php:3510
+msgid "Last referers"
+msgstr "Last referers"
+
+#: wassup.php:3525
+#: lib/settings.php:149
+msgid "Top Browsers"
+msgstr "Κορυφαίοι Φυλλομετρητές"
+
+#: wassup.php:3540
+#: lib/settings.php:150
+msgid "Top OS"
+msgstr "Κορυφαία Λειτουργικά"
+
+#: wassup.php:3559
+msgid "visitor(s) online"
+msgstr "Συνδεδεμένοι επισκέπτες"
+
+#: wassup.php:3562
+msgid "logged-in user(s)"
+msgstr "συνδεδεμένοι χρήστες"
+
+#: wassup.php:3566
+msgid "comment author(s)"
+msgstr "συντάκτης(ες) σχολίων"
+
+#: wassup.php:3632
+msgid "Title"
+msgstr "Τίτλος"
+
+#: wassup.php:3634
+msgid "default \"Visitors Online\""
+msgstr "προεπιλογή \"Συνδεδεμένοι Επισκέπτες\""
+
+#: wassup.php:3637
+msgid "Stylesheet class for &lt;ul&gt; attribute"
+msgstr "Stylesheet class for &lt;ul&gt; attribute"
+
+#: wassup.php:3639
+msgid "default \"links\""
+msgstr "Προεπιλεγμένοι \"σύνδεσμοι\""
+
+#: wassup.php:3642
+msgid "Number of characters to display from left"
+msgstr "Αριθμός χαρακτήρων για προβολή από αριστερά"
+
+#: wassup.php:3644
+msgid "For template compatibility - default 18"
+msgstr ""
+
+#: wassup.php:3649
+msgid "Show number of logged-in users online"
+msgstr "Προβολή αριθμού συνδεδεμέων χρηστών"
+
+#: wassup.php:3650
+msgid "Stats recording must be enabled in WassUp options"
+msgstr ""
+"Η καταγρφή των στατιστικών πρέπει να ενεργοποιηθεί στις επιλογές του WassUp"
+
+#: wassup.php:3651
+#: wassup.php:3657
+#: wassup.php:3663
+#: wassup.php:3675
+msgid "default Yes"
+msgstr "από προεπιλογή Ναι"
+
+#: wassup.php:3656
+msgid "Show number of comment authors online"
+msgstr "Προβολή αριθμού συνδεδεμέων σχολιαστών"
+
+#: wassup.php:3662
+msgid "Show latest searches"
+msgstr "Προβολή τελευταίων αναζητήσεων"
+
+#: wassup.php:3666
+msgid "How many searches?"
+msgstr "Πόσες αναζητήσεις;"
+
+#: wassup.php:3668
+#: wassup.php:3680
+#: wassup.php:3692
+#: wassup.php:3704
+msgid "default 5"
+msgstr "προεπιλογή 5"
+
+#: wassup.php:3674
+msgid "Show latest external referrers"
+msgstr "Προβολή τελευταίων εξωτερικών παραπομπών"
+
+#: wassup.php:3678
+msgid "How many referrers?"
+msgstr "Πόσες παραπομπές;"
+
+#: wassup.php:3686
+msgid "Show top browsers"
+msgstr "Προβολή δημοφιλών φυλλομετρητών"
+
+#: wassup.php:3686
+#: wassup.php:3698
+msgid "default No"
+msgstr "προεπιλογή Οχι"
+
+#: wassup.php:3687
+#: wassup.php:3699
+msgid "Enabling it could slow down blog)"
+msgstr "η ενεργοποίση μπορεί να κάνει αργό το ιστολόγιο)"
+
+#: wassup.php:3690
+msgid "How many browsers?"
+msgstr "Πόσοι φυλλομετρητές;"
+
+#: wassup.php:3698
+msgid "Show top operating systems"
+msgstr "Προβολή κορυφαίων λειτουργικών συστημάτων"
+
+#: wassup.php:3702
+msgid "How many operating systems?"
+msgstr "Πόσα λειτουργικά συστήματα;"
+
+#: wassup.php:3713
+msgid "Wassup Widget"
+msgstr "Μονάδα Wassup"
+
+#: wassup.php:3839
+msgid "More Stats"
+msgstr "Περισσότερα Στατιστικά"
+
+#: lib/action.php:125
+msgid "ERROR: file not found"
+msgstr "ΣΦΑΛΜΑ: το αρχείο δεν βρέθηκε"
+
+#: lib/action.php:143
+msgid "ERROR: bad date"
+msgstr "ΣΦΑΛΜΑ: λάθος ημερομηνία"
+
+#: lib/action.php:257
+msgid "TOP QUERY"
+msgstr ""
+
+#: lib/action.php:276
+msgid "TOP REFERRER"
+msgstr ""
+
+#: lib/action.php:302
+msgid "TOP REQUEST"
+msgstr ""
+
+#: lib/action.php:323
+msgid "TOP BROWSER"
+msgstr ""
+
+#: lib/action.php:343
+msgid "TOP OS"
+msgstr "ΚΟΡΥΦΑΙΑ ΛΕΙΤΟΥΡΓΙΚΑ"
+
+#: lib/action.php:364
+msgid "TOP LOCALE"
+msgstr ""
+
+#: lib/action.php:391
+msgid "TOP VISITOR"
+msgstr "ΚΟΡΥΦΑΙΟΙ ΕΠΙΣΚΕΠΤΕΣ"
+
+#: lib/action.php:409
+msgid "This top ten doesn't include Spam records"
+msgstr ""
+
+#: lib/action.php:414
+msgid "ERROR: Missing or unknown parameters"
+msgstr "ΣΦΑΛΜΑ: Λείπουν ή υπάρχουν άγνωστες παράμετροι"
+
+#: lib/action.php:423
+msgid "ERROR: Nothing to do here"
+msgstr "ΣΦΑΛΜΑ: Δεν υπάρχει τίποτα να γίνει"
+
+#: lib/main.php:85
+msgid "Next"
+msgstr "Επόμενο"
+
+#: lib/main.php:87
+msgid "Previous"
+msgstr "Προηγούμενο"
+
+#: lib/main.php:120
+#: lib/main.php:124
+msgid "It is necessary to specify the"
+msgstr "είναι απαραίτητο να καθορίσετε τον"
+
+#: lib/main.php:120
+msgid "number of pages"
+msgstr "αριθμό των σελίδων"
+
+#: lib/main.php:124
+msgid "limit of items"
+msgstr "περιορισμός στοιχείων"
+
+#: lib/main.php:124
+msgid "to show per page"
+msgstr "για παρουσίαση σε κάθε σελίδα"
+
+#: lib/main.php:209
+msgid "Pages"
+msgstr "Σελίδες"
+
+#: lib/main.php:777
+msgid "No visitor activity"
+msgstr "Δεν υπάρχει δραστηριότητα επισκεπτών"
+
+#: lib/main.php:1179
+msgid "Last 6 Hours"
+msgstr "Τελευταίες 6 Ωρες"
+
+#: lib/main.php:1185
+msgid "Last 7 Days"
+msgstr "Τελευταίες 7 Ημέρες"
+
+#: lib/main.php:1192
+msgid "Last Month"
+msgstr "Τελευταίο Μήνα"
+
+#: lib/main.php:1199
+msgid "Last 3 Months"
+msgstr "Τελευταίους 3 Μήνες"
+
+#: lib/main.php:1205
+msgid "Last 6 Months"
+msgstr "Τελευταίους 6 Μήνες"
+
+#: lib/main.php:1211
+msgid "Last Year"
+msgstr "Τελευταίο Χρόνο"
+
+#: lib/main.php:1217
+msgid "All Time"
+msgstr "Οποτεδήποτε"
+
+#: lib/main.php:1224
+msgid "Last 24 Hours"
+msgstr "Τελευταίες 24 Ωρες"
+
+#: lib/settings.php:31
+msgid ""
+"ATTENTION! Your WassUp table have reached the maximum value you set, I "
+"disabled the alert, you can re-enable it here."
+msgstr ""
+"ΠΡΟΣΟΧΗ! Ο πίνακας του WassUp  έφτασε το όριο που είχατε θέσει, "
+"απενεργοποίησα την προειδοποίηση, αλλά μπορείτε να την ενεργοποιήσετε ξανά "
+"εδώ."
+
+#: lib/settings.php:55
+msgid "Select the options you want for the WassUp plugin"
+msgstr "Διαλλέξτε τις επιλογές που θέλετε για το πρόσθετο WassUp"
+
+#: lib/settings.php:62
+msgid "General Setup"
+msgstr "Γενικές Ρυθμίσεις"
+
+#: lib/settings.php:63
+msgid "Statistics Recording"
+msgstr "Καταγραφή Στατιστικών"
+
+#: lib/settings.php:64
+msgid "Manage Files & Database"
+msgstr "Διαχείρηση Αρχείων και Βάσης Δεδομένων"
+
+#: lib/settings.php:65
+msgid "Uninstall"
+msgstr "Απεγκατάσταση"
+
+#: lib/settings.php:69
+msgid "Your default screen resolution (browser width)"
+msgstr "Η προεπιλεγμένη ανάλυση (πλάτος φυλλομετρητή)"
+
+#: lib/settings.php:70
+msgid "Default screen resolution (in pixels)"
+msgstr "Προεπιλεγμένη ανάλυση (σε pixels)"
+
+#: lib/settings.php:75
+msgid ""
+"Set minimum users level which can view and manage WassUp plugin (default "
+"Administrators)"
+msgstr ""
+"Ορίστε το ελάχιστο επίπεδο χρήστη που μπορεί να δει και να διαχειριστεί το "
+"πρόσθετο WassUp (προεπιλογή Διαχειριστές)"
+
+#: lib/settings.php:80
+msgid "Dashboard Settings"
+msgstr ""
+
+#: lib/settings.php:81
+msgid "Display small chart in the dashboard"
+msgstr ""
+
+#: lib/settings.php:84
+msgid "GEO IP Map (Spy view)"
+msgstr ""
+
+#: lib/settings.php:89
+msgid "Display a GEO IP Map in the spy visitors view"
+msgstr ""
+
+#: lib/settings.php:97
+#: lib/settings.php:456
+msgid "WARNING"
+msgstr "ΠΡΟΣΟΧΗ"
+
+#: lib/settings.php:97
+msgid "Activation problem >> Error code"
+msgstr "Πρόβλημα ενεργοποίησης >> Κωδικός σφάλματος"
+
+#: lib/settings.php:105
+msgid "key"
+msgstr "κλειδί"
+
+#: lib/settings.php:105
+msgid "signup for your key"
+msgstr "συνδεθείτε για κλειδί"
+
+#: lib/settings.php:108
+msgid "Geo IP Map requires"
+msgstr ""
+
+#: lib/settings.php:108
+msgid "Please install it to be able to activate this feature"
+msgstr ""
+"Παρακαλώ εγκαταστήστετο για να μπορείτε να ενεργοποιήσετε αυτή τη δυνατότητα"
+
+#: lib/settings.php:112
+msgid "Time format"
+msgstr "Τρόπος προβολής χρόνο"
+
+#: lib/settings.php:113
+msgid "Time format 12/24 hour"
+msgstr "Μορφή ώρας 12/24"
+
+#: lib/settings.php:116
+msgid "Visitor Detail Settings"
+msgstr "Ρυθμίσεις λεπτομερειών επισκεπτών"
+
+#: lib/settings.php:117
+msgid "Show chart type - How many axes"
+msgstr "Τύπος γραφήματος - Αριθμός αξόνων"
+
+#: lib/settings.php:123
+msgid "Set how many minutes wait for automatic page refresh"
+msgstr "Ορίστε λεπτά αναμονής πριν την ανανέωση της σελίδας"
+
+#: lib/settings.php:123
+msgid "Current Visitors Online and Visitors Details"
+msgstr "Συνδεδεμένοι Χρήστες και Στοιχεία Επισκεπτών"
+
+#: lib/settings.php:124
+msgid "refresh minutes (default 3)"
+msgstr "λεπτά ανανέωσης (προεπιλογή 3)"
+
+#: lib/settings.php:126
+msgid "Show visitor details for"
+msgstr "Προβολή λεπτομερειών επισκέπτη για"
+
+#: lib/settings.php:131
+msgid "Number of items per page"
+msgstr "Αριθμός στοιχείων ανά σελίδα"
+
+#: lib/settings.php:140
+msgid "Customize Top Ten List"
+msgstr "Παραμετροποιήστε την λίστα κορυφαίας δεκάδας"
+
+#: lib/settings.php:141
+msgid "Choose one or more items for your Top Ten list"
+msgstr "Επιλλέξτε ένα ή περισσότερα στοιχεία για την κορυφαία δεκάδα"
+
+#: lib/settings.php:141
+msgid "over 5 selections may cause horizontal scrolling"
+msgstr ""
+
+#: lib/settings.php:144
+msgid "Top Searches"
+msgstr "Κορυφαίες Αναζητήσεις"
+
+#: lib/settings.php:145
+msgid "Top Referrers"
+msgstr ""
+
+#: lib/settings.php:146
+msgid "Top Requests"
+msgstr ""
+
+#: lib/settings.php:151
+msgid "Top Locales"
+msgstr ""
+
+#: lib/settings.php:154
+msgid "Top Visitors"
+msgstr "Κορυφαίοι Επισκέπτες"
+
+#: lib/settings.php:156
+msgid "Top Feeds"
+msgstr ""
+
+#: lib/settings.php:157
+msgid "Top Crawlers"
+msgstr ""
+
+#: lib/settings.php:161
+msgid "Websites/domains to exclude from top referrers"
+msgstr ""
+
+#: lib/settings.php:164
+msgid "Comma separated value"
+msgstr "Τιμές χωρισμένες με κόμμα"
+
+#: lib/settings.php:165
+msgid "Don't list your website domain defined in WordPress"
+msgstr "Don't list your website domain defined in WordPress"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset"
+msgstr "Μηδενισμός"
+
+#: lib/settings.php:168
+#: lib/settings.php:203
+#: lib/settings.php:448
+#: lib/settings.php:462
+msgid "Reset to Default Settings"
+msgstr "Επαναφορά στις προεπιλεγμένες ρυθμίσεις"
+
+#: lib/settings.php:172
+msgid "Statistics Recording Settings"
+msgstr "Ρυμθίσεις Καταγραφής Στατιστικών"
+
+#: lib/settings.php:173
+msgid "Enable/Disable Recording"
+msgstr "Ενεργοποίηση/Απενεργοποίηση Καταγραφής"
+
+#: lib/settings.php:174
+msgid "Checkbox to record statistics for each type of \"visitor\""
+msgstr "Επιλέξτε για να καταγράφετε στατιστικά για κάθε είδους \"επισκέπτη\""
+
+#: lib/settings.php:176
+msgid "Record logged in users"
+msgstr "Καταγραφή συνδεδεμένων χρηστών"
+
+#: lib/settings.php:177
+msgid "Record logged in administrators"
+msgstr "Καταγραφή συνδεδεμέων διαχειριστών"
+
+#: lib/settings.php:178
+msgid "Record spiders and bots"
+msgstr ""
+
+#: lib/settings.php:179
+msgid "Record attack/exploit attempts (libwww-perl agent)"
+msgstr ""
+
+#: lib/settings.php:183
+msgid "Checkbox to record statistics for each type of \"spam\""
+msgstr ""
+"Επιλέξτε για να καταγράφετε στατιστικά για κάθε κατηγορία \"ανεπιθύμητων\""
+
+#: lib/settings.php:185
+msgid "check if an IP has previous comments as spam"
+msgstr ""
+
+#: lib/settings.php:191
+msgid "Statistics Recording Exceptions"
+msgstr "Εξαιρέσεις από την Καταγραφή Στατιστικών"
+
+#: lib/settings.php:193
+msgid "Sites"
+msgstr "Ιστότοποι"
+
+#: lib/settings.php:193
+msgid "Enter source IPs to exclude from recording"
+msgstr ""
+"Εισάγετε διευθύνσεις IP προέλευσης για να εξαιρεθούν από την καταγραφή"
+
+#: lib/settings.php:195
+msgid "comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...)"
+msgstr "τιμές χωρισμένες με κόμμα (πχ 127.0.0.1, 10.0.0.1, κλπ...)"
+
+#: lib/settings.php:197
+msgid "Users"
+msgstr "Χρήστες"
+
+#: lib/settings.php:197
+msgid "Enter usernames to exclude from recording"
+msgstr "Εισάγετε όνομα χρήστη για εξαίρεση από την καταγραφή"
+
+#: lib/settings.php:199
+msgid ""
+"comma separated value, enter a registered user's login name (ex: bobmarley, "
+"enyabrennan, etc.)"
+msgstr ""
+"τιμές χωρισμένες με κόμμα, εισάγετε το όνομα των εγγεγραμμένων χρηστών (πχ "
+"bobmarley, enyabrennan, κλπ...)"
+
+#: lib/settings.php:200
+msgid "Posts/pages"
+msgstr "Αρθρα/σελίδες"
+
+#: lib/settings.php:200
+msgid "enter requested URLs to exclude from recording"
+msgstr ""
+
+#: lib/settings.php:202
+msgid ""
+"comma separated value, don't enter entire url, only the last path or some "
+"word to exclude (ex: /category/wordpress, 2007, etc...)"
+msgstr ""
+"τιμές διαχωρισμένες με κόμμα. μην εισάγετε ολόκληρη τη διεύθυνση, αλλά μόνο "
+"τον κατάλογο ή κάποια λέξη για να εξαιρεθεί (πχ /category/wordpress, 2007, "
+"κλπ...)"
+
+#: lib/settings.php:231
+#: lib/settings.php:233
+msgid "Rescan Old Records"
+msgstr ""
+
+#: lib/settings.php:232
+msgid ""
+"Statistical records collected by earlier versions of WassUp may not have the "
+"latest spider, search engine, and spam data properly identified.  Click the "
+"\"Rescan\" button to retroactively scan and update old records"
+msgstr ""
+
+#: lib/settings.php:236
+msgid "Select actions for table growth"
+msgstr ""
+
+#: lib/settings.php:237
+msgid ""
+"WassUp table grows very fast (especially if your blog is frequently "
+"visited), I recommend you to delete old records sometimes. You can select "
+"any option below to reset it, delete old records automatically or manually. "
+"(If you haven't database space problems you can leave the table as is)"
+msgstr ""
+"Ο πίνακας του WassUp μεγαλώνει γρήγορα (ειδικά αν το ιστολόγιο σας είναι "
+"συχνά επισκέψιμο). Συνιστώ να διαγράφετε τις παλιές εγγραφές κατά καιρούς. "
+"Μπορείτε να επιλλέξετε οποιαδήποτε επιλογή για να επαναφέρετε, διαγράψετε "
+"παλιές εγγραφές αυτόματα ή χειροκίνητα (αν δεν έχετε πρόβλημα χώρου στη βάση "
+"δεδομένων μπορείτε να αφήσετε τον πίνακα ως έχει)"
+
+#: lib/settings.php:238
+msgid "Current WassUp table usage is"
+msgstr "Η παρούσα χρήση του πίνακα WassUp  είναι"
+
+#: lib/settings.php:244
+msgid "records"
+msgstr "εγγραφές"
+
+#: lib/settings.php:247
+msgid "Alert me"
+msgstr "Ειδοποίησε με"
+
+#: lib/settings.php:247
+msgid "email to"
+msgstr "email στο"
+
+#: lib/settings.php:247
+msgid "when table reaches"
+msgstr "όταν ο πίνακας φτάσει"
+
+#: lib/settings.php:249
+msgid "Empty table"
+msgstr "Αδειασμα πίνακα"
+
+#: lib/settings.php:250
+msgid "export table in SQL format"
+msgstr "εξαγωγή πίνακα σε μορφή SQL"
+
+#: lib/settings.php:252
+msgid "backup table to server file"
+msgstr "λήψη αντιγράφου ασφαλείας σε αρχείο στον διακομιστή"
+
+#: lib/settings.php:254
+msgid "Automatically delete records older than:"
+msgstr "Αυτόματη διαγραφή εγγραφών παλαιότερων από:"
+
+#: lib/settings.php:258
+msgid "Delete NOW records older than:"
+msgstr "Διαγραφή ΤΩΡΑ εγγραφών παλαιότερων από:"
+
+#: lib/settings.php:260
+msgid "Action is NOT undoable"
+msgstr "Η ενέργεια ΔΕΝ είναι αναστρέψιμη"
+
+#: lib/settings.php:261
+#: lib/wassup.class.php:259
+#: lib/wassup.class.php:269
+msgid "24 hours"
+msgstr "24 ώρες"
+
+#: lib/settings.php:262
+#: lib/wassup.class.php:260
+msgid "1 week"
+msgstr "1 βδομάδα"
+
+#: lib/settings.php:263
+#: lib/wassup.class.php:261
+#: lib/wassup.class.php:271
+msgid "1 month"
+msgstr "1 μήνα"
+
+#: lib/settings.php:264
+#: lib/wassup.class.php:262
+#: lib/wassup.class.php:272
+msgid "3 months"
+msgstr "3 μήνες"
+
+#: lib/settings.php:265
+#: lib/wassup.class.php:263
+#: lib/wassup.class.php:273
+msgid "6 months"
+msgstr "6 μήνες"
+
+#: lib/settings.php:266
+#: lib/wassup.class.php:264
+#: lib/wassup.class.php:274
+msgid "1 year"
+msgstr "1 χρόνο"
+
+#: lib/settings.php:270
+msgid "Server Settings and Memory Resources"
+msgstr "Ρυθμίσεις διακομιστής και των πόρων μνήμης"
+
+#: lib/settings.php:271
+msgid "For information only. Some values may be adjustable in startup files"
+msgstr ""
+"Πληροφοριακά μόνο. Μερικές τιμές μπορούν να ρυθμιστούν στα αρχεία εκκίνησης"
+
+#: lib/settings.php:271
+msgid "and"
+msgstr "και"
+
+#: lib/settings.php:271
+msgid "or"
+msgstr "ή"
+
+#: lib/settings.php:272
+#: lib/settings.php:287
+#: lib/settings.php:350
+msgid "Version"
+msgstr "Εκδοση"
+
+#: lib/settings.php:273
+msgid "Host Server"
+msgstr ""
+
+#: lib/settings.php:283
+#: lib/settings.php:319
+#: lib/settings.php:329
+#: lib/settings.php:335
+#: lib/settings.php:350
+#: lib/settings.php:353
+#: lib/settings.php:397
+#: lib/settings.php:407
+#: lib/settings.php:418
+#: lib/settings.php:425
+#: lib/settings.php:434
+#: lib/settings.php:445
+msgid "unknown"
+msgstr "άγνωστο"
+
+#: lib/settings.php:285
+msgid "Time Offset"
+msgstr "Διαφορά Ωρας"
+
+#: lib/settings.php:286
+msgid "hours"
+msgstr "ώρες"
+
+#: lib/settings.php:288
+msgid "Safe Mode"
+msgstr "Ασφαλής λειτουργία"
+
+#: lib/settings.php:291
+#: lib/settings.php:300
+msgid "on"
+msgstr "ανοικτό"
+
+#: lib/settings.php:293
+#: lib/settings.php:298
+msgid "off"
+msgstr "κλειστό"
+
+#: lib/settings.php:294
+msgid "File Open Restrictions"
+msgstr "Περιορισμοί ανοίγματος αρχείων"
+
+#: lib/settings.php:304
+msgid "Memory Allocation"
+msgstr "Κατανομή μνήμης"
+
+#: lib/settings.php:322
+msgid "Memory Usage"
+msgstr "Χρήση Μνήμης"
+
+#: lib/settings.php:332
+msgid "Script Timeout Limit"
+msgstr ""
+
+#: lib/settings.php:337
+msgid "Browser Capabilities File"
+msgstr ""
+
+#: lib/settings.php:339
+msgid "not set"
+msgstr "δεν έχει οριστεί"
+
+#: lib/settings.php:343
+msgid "not installed"
+msgstr "δεν έχει εγκατασταθεί"
+
+#: lib/settings.php:344
+msgid "installed"
+msgstr "εγκατεστειμένο"
+
+#: lib/settings.php:351
+msgid "Engine"
+msgstr "Μηχανή"
+
+#: lib/settings.php:389
+msgid "Query Cache"
+msgstr ""
+
+#: lib/settings.php:394
+#: lib/settings.php:404
+#: lib/settings.php:415
+msgid "disabled"
+msgstr "απενεργοποιημένο"
+
+#: lib/settings.php:399
+msgid "Index (Key) Buffer"
+msgstr ""
+
+#: lib/settings.php:410
+msgid "Read Buffer"
+msgstr ""
+
+#: lib/settings.php:421
+msgid "Wait Timeout"
+msgstr "Χρόνος Αναμονής"
+
+#: lib/settings.php:428
+msgid "Char Set/Collation"
+msgstr ""
+
+#: lib/settings.php:437
+msgid "Timezone"
+msgstr "Ζώνη Ωρας"
+
+#: lib/settings.php:452
+msgid "Want to uninstall WassUp?"
+msgstr "Θέλετε α απεγκαταστήσετε το WassUp;"
+
+#: lib/settings.php:453
+msgid ""
+"No problem. Before you deactivate this plugin, check the box below to "
+"cleanup any data that was collected by WassUp that could be left behind."
+msgstr ""
+"Κανένα πρόβλημα. Πριν απενεργοποιήσετε το πρόσθετο, τσεκάρετε την ακόλουθη "
+"επιλογή για να καθαρίστε όσα δεδομένα έχουν συλλεχθεί από το WassUp και "
+"μπορεί να παραμείνουν."
+
+#: lib/settings.php:454
+msgid "Permanently remove WassUp data and settings from Wordpress"
+msgstr ""
+"Μόνιμη απομάκρυνση των δεδομένων και των ρυθμίσεων του WassUp από το "
+"Wordpress"
+
+#: lib/settings.php:456
+msgid ""
+"All WassUp data and settings will be DELETED upon deactivation of this plugin"
+msgstr ""
+"Ολα τα δεδομένα και οι ρυθμίσεις του WassUp πρόκειται να ΔΙΑΓΡΑΦΟΥΝ με την "
+"απενεργοποίηση του πρόσθετου"
+
+#: lib/settings.php:458
+msgid ""
+"This action cannot be undone. Before uninstalling WassUp, you should backup "
+"your Wordpress database first. WassUp data is stored in the table"
+msgstr ""
+"Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Πριν απεγκαταστήσετε το WassUp, "
+"πρέπει πρώτα να πάρετε αντίγραφο ασφαλείας της βάσης δεδομένων του "
+"Wordpress. Τα δεδομένα του WassUp είναι αποθηκευμένα σε πίνακα"
+
+#: lib/settings.php:460
+msgid "To help improve this plugin, we would appreciate your feedback at"
+msgstr ""
+"Για να βοηθήσετε την βελτίωση του προσθέτου, θα εκτιμούσαμε τα σχόλια σας"
+
+#: lib/wassup.class.php:208
+msgid "Administrator"
+msgstr "Διαχειριστής"
+
+#: lib/wassup.class.php:209
+msgid "Editor"
+msgstr "Συντάκτης"
+
+#: lib/wassup.class.php:210
+msgid "Author"
+msgstr "Συντάκτης"
+
+#: lib/wassup.class.php:215
+msgid "None - don't show chart"
+msgstr "Κανένα - μην εμφανίσεις γράφημα"
+
+#: lib/wassup.class.php:216
+msgid "One - 2 lines chart 1 axis"
+msgstr "Ενα - Γράφημα 2 γραμμών ενός άξονα"
+
+#: lib/wassup.class.php:217
+msgid "Two - 2 lines chart 2 axes"
+msgstr "Δύο  - Γράφημα 2 γραμμών δύο αξόνων"
+
+#: lib/wassup.class.php:231
+msgid "Everything"
+msgstr "Οτιδήποτε"
+
+#: lib/wassup.class.php:233
+msgid "No spider"
+msgstr ""
+
+#: lib/wassup.class.php:235
+msgid "No Spam"
+msgstr "Οχι Ανεπιθύμητα"
+
+#: lib/wassup.class.php:236
+msgid "No Spam, No Spider"
+msgstr ""
+
+#: lib/wassup.class.php:237
+msgid "Users logged in"
+msgstr "Χρήστες συνδεδεμένοι"
+
+#: lib/wassup.class.php:238
+msgid "Comment authors"
+msgstr "Συντάκτες σχολίων"
+
+#: lib/wassup.class.php:239
+msgid "Referrer from search engine"
+msgstr "Παραπομπή από μηχανές αναζήτησης"
+
+#: lib/wassup.class.php:240
+msgid "Referrer from ext link"
+msgstr "Παραπομπή από εξωτερικό σύνδεσμο"
+
+#: lib/wassup.class.php:258
+msgid "Don't delete anything"
+msgstr "Μην διαγράψεις τίποτα"
+
+#: lib/wassup.class.php:268
+msgid "6 hours"
+msgstr "6 ώρες"
+
+#: lib/wassup.class.php:270
+msgid "7 days"
+msgstr "7 μέρες"
+
+#: lib/wassup.class.php:275
+msgid "all time"
+msgstr "οποτεδήποτε"
