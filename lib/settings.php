@@ -6,28 +6,22 @@
  * @subpackage settings.php
  * @author helened (http://helenesit.com)
  */
-//-------------------------------------------------
-//# No direct requests for this plugin module
-$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
 //abort if this is direct uri request for file
-if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF']).'$#',$wfile)>0) || 
-   (!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile))){
+if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath(preg_replace('/\\\\/','/',__FILE__))){
 	//try track this uri request
 	if(!headers_sent()){
 		//triggers redirect to 404 error page so Wassup can track this attempt to access itself (original request_uri is lost)
-		header('Location: /?p=404page&err=wassup403'.'&wf='.basename($wfile));
+		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename(__FILE__));
 		exit;
 	}else{
 		//'wp_die' may be undefined here
 		die('<strong>Sorry. Unable to display requested page.</strong>');
 	}
-	exit;
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
-unset($wfile);	//to free memory
 //-------------------------------------------------
 /**
  * Form to change Wassup's wp_option settings and to show plugin info.
@@ -46,9 +40,9 @@ function wassup_optionsView($tab=0) {
 	$adminemail = get_bloginfo('admin_email');
 	$wassup_table=$wassup_options->wassup_table;
 	$wassup_network_settings=array();
-	//bugfix in v1.9.1: fix wassup-options links for multisite network admin screens
 	$multisite_whereis="";
 	$is_shared_table=false;
+	//different wassup-options links for single-site/ multisite @since v1.9.1
 	if(is_multisite()){
 		$wassup_network_settings=get_site_option('wassup_network_settings');
 		if(!empty($wassup_network_settings['wassup_table'])){
@@ -66,9 +60,11 @@ function wassup_optionsView($tab=0) {
 			$wassup_options->wassup_remind_flag=$site_settings['wassup_remind_flag'];
 			
 		}
+		//wassup-options link for multisite network admin
 		if(is_network_admin()) $options_link=network_admin_url('admin.php?page=wassup-options');
 		else $options_link=admin_url('admin.php?page=wassup-options');
 	}else{
+		//wassup-options link for single-site
 		$options_link=admin_url('admin.php?page=wassup-options');
 	}
 	$wassup_meta_table = $wassup_table . "_meta";
@@ -224,7 +220,7 @@ function wassup_optionsView($tab=0) {
 	$disabled=' disabled="DISABLED" style="color:#99a;"';
 	$api_key="";
 	if ($wassup_options->wassup_geoip_map == 1) {
-		//New in v1.9.1: Api key IS required for accessing Google!Maps v3
+		//Api key now required for accessing Google!Maps v3 - 2016/06/22
 		if(!empty($wassup_options->wassup_googlemaps_key)) $api_key=esc_attr(strip_tags(html_entity_decode($wassup_options->wassup_googlemaps_key)));
 		$disabled="";
 	} else {
@@ -339,7 +335,7 @@ function wassup_optionsView($tab=0) {
 		<input type="checkbox" name="wassup_spam" value="1" <?php if($wassup_options->wassup_spam == 1) echo $checked; ?> /> <?php _e('Record Akismet comment spam attempts','wassup');?> (<?php _e('checks IP for previous spam comments','wassup');?>)<br />
 		<input type="checkbox" name="wassup_refspam" value="1" <?php if($wassup_options->wassup_refspam == 1) echo $checked; ?> /> <?php _e('Record referrer spam attempts','wassup'); ?><br />
 		<input type="checkbox" name="wassup_hack" value="1" <?php if($wassup_options->wassup_hack == 1) echo $checked; ?> /> <?php _e("Record admin break-in/hacker attempts", "wassup") ?><br />
-		<input type="checkbox" name="wassup_attack" value="1" <?php if($wassup_options->wassup_attack == 1) echo $checked; ?> /> <?php _e("Record attack/exploit attempts (libwww-perl agent)", "wassup") ?><br />
+		<input type="checkbox" name="wassup_attack" value="1" <?php if($wassup_options->wassup_attack == 1) echo $checked; ?> /> <?php echo __("Record attack/exploit attempts", "wassup").' (libwww-perl '.__("or","wassup").' XSS user-agent)';?><br />
 		</span>
 		</p><br />
 		<h3><?php _e('Recording Exceptions','wassup');?></h3>
@@ -444,7 +440,7 @@ function wassup_optionsView($tab=0) {
 		if($tengine !="myisam" && $tengine !="archive"){
 			$is_optimizable_table=wassupDb::is_optimizable_table($wassup_table);
 		}
-		//New in v1.9.1: table optimization and delayed insert options for multisite subsites that are NOT network activated only
+		//table optimization and delayed insert options for multisite subsites that are NOT network activated only @since v1.9.1
 		if(!$is_shared_table){
 			echo __("You can cancel automatic optimization by unchecking the box below.","wassup");
 		}elseif($is_optimizable_table){

@@ -5,28 +5,22 @@
  * @package WassUp Real-time Analytics
  * @subpackage akismet.class.php module
  */
-//-------------------------------------------------
-//# No direct requests for this plugin module
-$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
 //abort if this is direct uri request for file
-if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF']).'$#',$wfile)>0) || 
-   (!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile))){
+if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath(preg_replace('/\\\\/','/',__FILE__))){
 	//try track this uri request
 	if(!headers_sent()){
 		//triggers redirect to 404 error page so Wassup can track this attempt to access itself (original request_uri is lost)
-		header('Location: /?p=404page&err=wassup403'.'&wf='.basename($wfile));
+		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename(__FILE__));
 		exit;
 	}else{
 		//'wp_die' may be undefined here
 		die('<strong>Sorry. Unable to display requested page.</strong>');
 	}
-	exit;
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
-unset($wfile);
 //-------------------------------------------------
 //Classes and constants renamed for compatibility with Akismet v3.0 -Helene D. @since v1.9
 /**
@@ -112,14 +106,14 @@ class wassup_AkismetHttpClient extends wassup_AkismetObject {
 				"\r\n".$request;
 			$response="";
 			@fwrite($this->con,$request);
-			//new in v1.9.1: don't wait for slow server
+			//don't wait for slow server @since v1.9.1
 			stream_set_timeout($this->con,5);
 			$info=stream_get_meta_data($this->con);
 			while(!feof($this->con) && !$info['timed_out']){
 				$response .= @fgets($this->con,$responseLength);
-				$info=stream_get_meta_data($this->con); //new in v1.9.1: for timeout checking
+				$info=stream_get_meta_data($this->con);
 			}
-			//New in v1.9.1: timeout error message
+			//timeout error message @since  v1.9.1
 			if(!empty($response)){
 				$response=explode("\r\n\r\n",$response,2);
 				return $response[1];
@@ -195,7 +189,6 @@ class wassup_Akismet extends wassup_AkismetObject {
 	}
 	/** Query Akismet server to check if comment is spam or not */
 	function isSpam() {
-		//v1.9.1 bugfix: removed 'set_time_limit' code (since v1.9) because it has no effect on remote requests
 		$response=$this->http->getResponse($this->_getQueryString(), 'comment-check');
 		return ($response=="true");
 	}

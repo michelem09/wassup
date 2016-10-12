@@ -10,32 +10,27 @@
  * @since:	v1.8
  * @author:	helened <http://helenesit.com>
  */
-//-------------------------------------------------
-//# No direct requests for this plugin module
-$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
 //abort if this is direct uri request for file
-if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF']).'$#',$wfile)>0) || 
-   (!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile))){
+if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath(preg_replace('/\\\\/','/',__FILE__))){
 	//try track this uri request
 	if(!headers_sent()){
 		//triggers redirect to 404 error page so Wassup can track this attempt to access itself (original request_uri is lost)
-		header('Location: /?p=404page&err=wassup403'.'&wf='.basename($wfile));
+		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename(__FILE__));
 		exit;
 	}else{
 		//'wp_die' may be undefined here
 		die('<strong>Sorry. Unable to display requested page.</strong>');
 	}
-	exit;
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
 	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
+//-------------------------------------------------
 //nothing to do here
 if(version_compare($GLOBALS['wp_version'],'4.5','>=')){
 	return;
 }
-//-------------------------------------------------
 //Compatibility functions and action hooks for Wassup pages
 $wassup_compatlib=dirname($wfile);
 if(!empty($_GET['page']) && stristr($_GET['page'],'wassup')!==FALSE){
@@ -108,7 +103,7 @@ if(version_compare($GLOBALS['wp_version'],'3.0','<')){
 } //end if page==Wassup
 
 //-------------------------------------------------
-//New in v1.9.1: Recreate missing action hooks in Wordpress:
+//Recreate missing action hooks in Wordpress @since v1.9.1
 //Run missing action hooks via other Wordpress action hooks
 if(version_compare($GLOBALS['wp_version'],'2.8','<')){
 	/** run 'admin_enqueue_scripts' from 'admin_init' action hook */

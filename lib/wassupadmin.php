@@ -7,26 +7,23 @@
  * @since:	v1.9
  * @author:	helened <http://helenesit.com>
  */
-//-------------------------------------------------
-//# No direct requests for this plugin module
-$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
 //abort if this is direct uri request for file
-if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF']).'$#',$wfile)>0) || 
-   (!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile))){
+$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
+if((!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile)) ||
+   (!empty($_SERVER['PHP_SELF']) && preg_match('#'.str_replace('#','\#',preg_quote($_SERVER['PHP_SELF'])).'$#',$wfile)>0)){
 	//try track this uri request
 	if(!headers_sent()){
 		//triggers redirect to 404 error page so Wassup can track this attempt to access itself (original request_uri is lost)
-		header('Location: /?p=404page&err=wassup403'.'&wf='.basename($wfile));
+		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename($wfile));
 		exit;
 	}else{
 		//'wp_die' may be undefined here
 		die('<strong>Sorry. Unable to display requested page.</strong>');
 	}
-	exit;
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 unset($wfile);	//to free memory
 //-------------------------------------------------
@@ -172,7 +169,7 @@ function wassup_embeded_scripts($wassuppage="") {
 		echo "\n";
 		//only administrators can delete
 		if(current_user_can('manage_options')){
-			//Add nonce to query vars to validate deleteID @since v1.9.1.
+			//add nonce to query vars to validate deleteID @since v1.9.1.
 			$action_param['_wpnonce']=wp_create_nonce('wassupdeleteID-'.$current_user->ID);
 			//format 'action_param' for ajax post data
 			$postparams="";
@@ -282,8 +279,8 @@ function wassup_embeded_scripts($wassuppage="") {
 	}elseif($wassuppage=="wassup-spia" || $wassuppage=="wassup-spy"){
 		// GEO IP Map
 		//google!Maps map init and marker javascripts in document head @since v1.9
-		if($wassup_user_settings['spy_map']==1 || !empty($_GET['map'])){
-			//New in v1.9.1: Wassup api key for Google!maps
+		if($wassup_user_settings['spy_map']== 1 || !empty($_GET['map'])){
+			//check for api key for Google!maps
 			$apikey="AIzaSyCu_plin97TltY8Zk6KualGCmRjdF-OXDo";
 			if(!empty($wassup_options->wassup_googlemaps_key)) $apikey=$wassup_options->wassup_googlemaps_key;
 			echo '<script src="https://maps.googleapis.com/maps/api/js?key='.esc_attr($apikey).'" type="text/javascript"></script>';
@@ -607,7 +604,7 @@ function WassUp() {
 	//add a select condition for subsite in multisite
 	$multisite_whereis="";
 	if(is_multisite()){
-		//v1.9.1 bugfix for multisite: use table name/optimize setting from network/main site
+		//use table name/optimize setting from network/main site @since v1.9.1
 		$network_settings=get_site_option('wassup_network_settings');
 		if(!empty($network_settings['wassup_table'])){
 			$multisite_whereis=sprintf(" AND `subsite_id`=%d",$GLOBALS['current_blog']->blog_id);
@@ -727,7 +724,7 @@ function WassUp() {
 					$wassup_options->wassup_optimize=$last_week;
 					$wassup_options->saveSettings();
 				}
-				//New in v1.9.1: for multisite: reset optimize in main site when plugin is network-activated
+				//reset optimize in main site when plugin is network-activated @since v1.9.1
 				if(!empty($network_settings['wassup_table']) && !empty($site_settings['wassup_optimize'])){
 					if($site_settings['wassup_optimize'] >$last_week){
 						$site_settings['wassup_optimize']=$last_week;
@@ -748,7 +745,7 @@ function WassUp() {
 		$wassup_settings=get_option('wassup_settings');
 		//form input validated and saved in wassupOptions::saveFormChanges() @since v1.9
 		$admin_message=$wassup_options->saveFormChanges();
-		//New in v1.9.1: after save, stop scheduled wp-cron tasks when wassup_active is changed to "0" and restart if changed to "1"
+		//after save, stop scheduled wp-cron tasks when wassup_active is changed to "0" and restart if changed to "1" @since v1.9.1
 		if(empty($wassup_options->wassup_active)) wassup_cron_terminate();
 		elseif(empty($wassup_settings['wassup_active']) && (!is_multisite() || !empty($network_settings['wassup_active']))) wassup_cron_startup();
 		if(isset($_POST['submit-options'])) $tab=1;
@@ -758,7 +755,7 @@ function WassUp() {
 		if (!empty($_POST['wassup_uninstall'])) {
 			$wassup_options->wassup_uninstall="1";
 			$wassup_options->wassup_active="0"; //disable recording now
-			//New in v1.9.1: for uninstall, stop all wassup wp-cron tasks
+			//for uninstall, stop all wassup wp-cron tasks @since v1.9.1
 			wassup_cron_terminate();
 		} else {
 			$wassup_options->wassup_uninstall = "0";
@@ -768,7 +765,7 @@ function WassUp() {
 		}
 		$tab=4;
 	} elseif (isset($_POST['reset-to-default'])) {
-		//New in v1.9.1: for reset-to-default, stop and restart scheduled wassup wp-cron tasks
+		//for reset-to-default, stop and restart scheduled wassup wp-cron tasks @since v1.9.1
 		wassup_cron_terminate(); //stop wp-cron
 		$wassup_options->loadDefaults();
 		if ($wassup_options->saveSettings()) {
@@ -914,8 +911,8 @@ function WassUp() {
 function wassup_page_contents($args=array()){
 	global $wpdb, $wp_version, $current_user, $wassup_options, $wdebug_mode;
 	if(!empty($args) && is_array($args)) extract($args);	
-	if($wdebug_mode){
-		$mode_reset=@ini_get('display_errors');
+	if ($wdebug_mode) {
+		$mode_reset=ini_get('display_errors');
 		//don't check for 'strict' php5 standards (part of E_ALL since PHP 5.4)
 		if (defined('PHP_VERSION') && version_compare(PHP_VERSION, 5.4, '<')) @error_reporting(E_ALL);
 		else @error_reporting(E_ALL ^ E_STRICT); //E_STRICT=php5 only
@@ -973,7 +970,6 @@ function wassup_page_contents($args=array()){
 	}else{
 		$wassupmenulink='admin.php?page='.$_GET['page'];
 	}
-	//v1.9.1 bugfix: use 'network_admin_url' for network admin links in multisite
 	$wassuppageurl=wassupURI::get_admin_url($wassupmenulink);
 	$expcol='
 	<table width="100%" class="toggle"><tbody><tr>
@@ -1269,7 +1265,6 @@ function wassup_page_contents($args=array()){
 			<p style="color:red;font-weight:bold;"><?php _e("WassUp recording is disabled for network.", "wassup");?></p><?php
 			}
 		}
-		//v1.9.1 bugfix: pagination url fixed for 'ml' param and moved below
 		$remove_it=array(); //for GET param cleanup
 		$stickyFilters=""; //filters that remain in effect after page reloads
 		$timenow=current_time('timestamp');
@@ -1448,7 +1443,7 @@ function wassup_page_contents($args=array()){
 		if(!empty($ipsearch)) $wsearch=$ipsearch;
 		//Clear non-sticky filter parameters from URL before applying new filters 
 		$URLQuery=trim(html_entity_decode($_SERVER['QUERY_STRING']));
-		//New in v1.9.1: replaced "preg_replace" for "remove_it" with 'remove_query_arg' function
+		//'remove_query_arg' function replaces "preg_replace" to remove args from query string @since v1.9.1
 		if(!empty($remove_it)){
 			$newURL=remove_query_arg($remove_it,$_SERVER['REQUEST_URI']);
 			if(!empty($newURL) && $newURL !=$_SERVER['REQUEST_URI'] && preg_match('/[^\?]+\?([A-Za-z\-_]+.*)/',$newURL,$pcs)>0){
@@ -1586,7 +1581,7 @@ function wassup_page_contents($args=array()){
 		<div class="search-ip" <?php if (empty($wsearch)) echo 'style="display: none;"'; ?>>
 		<form id="wassup-ip-search" class="wassup-search" action="" method="get">
 		<input type="hidden" name="page" value="<?php echo $_GET['page'];?>"/><?php
-		if(isset($_GET['ml'])){	//v1.9.1 bugfix: add 'ml' query param as hidden input field
+		if(isset($_GET['ml'])){	//'ml' query param is hidden input field @since v1.9.1
 			echo "\n";?>
 		<input type="hidden" name="ml" value="<?php echo $_GET['ml'];?>"/><?php
 		}
@@ -1635,7 +1630,7 @@ function wassup_page_contents($args=array()){
 		//monitor for script timeout limit and extend, if needed @since v1.9
 		if((time()-$stimer_start) >($stimeout-7)){
 			//extend timeout if more than 80% done
-			if($witems > $witemstot) $percen=($rkcount/$witemstot)*100; //v1.9.1 bugfix
+			if($witems > $witemstot) $percen=($rkcount/$witemstot)*100;
 			else $percen=($rkcount/$witems)*100;
 			if($rkcount>0 && $percen >80 && $stimeout >=180 && $can_set_timelimit){
 				@set_time_limit($stimeout);

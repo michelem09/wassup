@@ -9,29 +9,22 @@
  *
  * This module is loaded once by the 'wassup_install' hook function when plugin is installed/upgraded.
  */
-//-------------------------------------------------
-//# No direct requests for this plugin module
-$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
 //abort if this is direct uri request for file
-if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF']).'$#',$wfile)>0) || 
-   (!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile))){
+if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath(preg_replace('/\\\\/','/',__FILE__))){
 	//try track this uri request
 	if(!headers_sent()){
 		//triggers redirect to 404 error page so Wassup can track this attempt to access itself (original request_uri is lost)
-		header('Location: /?p=404page&err=wassup403'.'&wf='.basename($wfile));
+		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename(__FILE__));
 		exit;
 	}else{
 		//'wp_die' may be undefined here
 		die('<strong>Sorry. Unable to display requested page.</strong>');
 	}
-	exit;
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
-unset($wfile);	//to free memory
-
 //-------------------------------------------------
 function log_me($message) {
     if ( WP_DEBUG === true ) {
@@ -330,7 +323,7 @@ function wassup_createTable($wtable="",$withcharset=true) {
 		$logged_user = (!empty($current_user->user_login)? $current_user->user_login: "");
 		$screen_res="";
 		$sessionhash=$wassup_options->whash;
-		if(isset($_COOKIE['wassup_screen_res'.$sessionhash])){ //v1.9.1 bugfix
+		if(isset($_COOKIE['wassup_screen_res'.$sessionhash])){
 			$screen_res=esc_attr(trim($_COOKIE['wassup_screen_res'.$sessionhash]));
 			if($screen_res == "x") $screen_res="";
 		}
@@ -487,7 +480,7 @@ function wassup_updateTable($wtable=""){
 	$dbtask_keys=array();
 	//Since Wordpress 3.1, 'wassup_createTable' no longer upgrades "wp_wassup" table structure because of an ALTER TABLE error in the "dbDelta" function. @since v1.8.3
 	//Do table structure upgrades
-	//New in v1.9.1: skip some upgrade checks when script timeout is small number
+	//skip some upgrade checks when script timeout is small number @since v1.9.1
 	if($stimeout >180){
 	// Upgrade from version < v1.8.4:
 	// -add 'spam' field to table - v1.3.9
@@ -557,7 +550,7 @@ function wassup_updateTable($wtable=""){
 	//}
 	// Upgrade from v1.9:
 	// -remove all Wassup 1.9 scheduled actions from wp-cron
-	if(!empty($from_version) && ($from_version=="1.9" || WASSUPVERSION=="1.9.1")){
+	if(!empty($from_version) && $from_version=="1.9"){
 		remove_action('wassup_scheduled_optimize',array('wassupDb','scheduled_dbtask'));
 		remove_action('wassup_scheduled_dbtasks',array('wassupDb','scheduled_dbtask'));
 		remove_action('wassup_scheduled_cleanup','wassup_temp_cleanup');
@@ -641,7 +634,7 @@ function wassup_updateTable($wtable=""){
 	//increase mysql session timeout to 10 minutes for index rebuild
 	if(is_numeric($mtimeout) && $mtimeout< 600) $result=$wpdb->query("SET wait_timeout=600");
 	$result=false;
-	//New in v1.9.1: rebuild wassup_id index first, in case of script timeout
+	//rebuild wassup_id index first, in case of script timeout @since v1.9.1
 	$wkey=$wpdb->get_results(sprintf("SHOW INDEX FROM `%s` WHERE Column_name='wassup_id'",$wassup_table));
 	if(empty($wkey)) $result=$wpdb->query(sprintf("ALTER TABLE `%s` ADD KEY idx_wassup (wassup_id(32))",$wassup_table));
 	if($wdebug_mode && !empty($result) && is_wp_error($result)){
@@ -668,7 +661,7 @@ function wassup_updateTable($wtable=""){
 
 	//Do retroactive data updates by version#
 	//Retroactive data updates are run separately from table structure upgrades (via wp_cron). @since v1.9
-	//Bugfix in v1.9.1: LOW_PRIORITY in update is strictly for separate cron/ajax processes only..otherwise it will cause long waits when site is busy
+	//LOW_PRIORITY in update is strictly for separate cron/ajax processes only..otherwise it will cause long waits when site is busy @since v1.9.1
 	$low_priority="LOW_PRIORITY";
 	if(version_compare($wp_version,'3.0','<')) $low_priority="";
 	else add_action('wassup_upgrade_dbtasks',array('wassupDb','scheduled_dbtask'),10,1);

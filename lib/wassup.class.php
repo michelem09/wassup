@@ -10,28 +10,25 @@
  * @subpackage	wassup.class.php module
  * @author	helened <http://helenesit.com>
  */
-//-------------------------------------------------
-//# No direct requests for this plugin module
-$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
 //abort if this is direct uri request for file
-if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF']).'$#',$wfile)>0) || 
-   (!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile))){
+$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
+if((!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile)) ||
+   (!empty($_SERVER['PHP_SELF']) && preg_match('#'.str_replace('#','\#',preg_quote($_SERVER['PHP_SELF'])).'$#',$wfile)>0)){
 	//try track this uri request
 	if(!headers_sent()){
 		//triggers redirect to 404 error page so Wassup can track this attempt to access itself (original request_uri is lost)
-		header('Location: /?p=404page&err=wassup403'.'&wf='.basename($wfile));
+		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename($wfile));
 		exit;
 	}else{
 		//'wp_die' may be undefined here
 		die('<strong>Sorry. Unable to display requested page.</strong>');
 	}
-	exit;
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
-unset($wfile);
+unset($wfile);	//to free memory
 //-------------------------------------------------
 if (!class_exists('wassupOptions')) {
 /**
@@ -77,8 +74,8 @@ class wassupOptions {
 	var $wassup_remind_mb = "100";
 	var $wassup_remind_flag = "1";
 	var $delayed_insert = "1";	//for use of "Delayed" option in MySQL INSERT command
-	var $export_spam = "0";	//New in v1.9.1: no spam in exported data
-	var $export_omit_recid="0"; //New in v1.9.1
+	var $export_spam = "0";	//since v1.9.1: no spam in exported data
+	var $export_omit_recid="0"; //since v1.9.1
 
 	/* chart/map display settings */
 	var $wassup_dashboard_chart = 0;
@@ -639,7 +636,7 @@ class wassupOptions {
 		if(function_exists('sanitize_text_field')) $text=sanitize_text_field($input);
 		else $text=strip_tags(html_entity_decode(wp_kses($input,array())));
 		//only alphanumeric chars allowed with few exceptions
-		//v1.9.1 bugfix: allow email '@' char in search field
+		//allow email '@' char in search field
 		$cleantext=preg_replace('/([^0-9a-z\-_\.,\:*#@\'" ]+)/i','',$text);
 		return $cleantext;
 	}
@@ -772,7 +769,7 @@ class wassupOptions {
 			}else{
 				wp_clear_scheduled_hook('wassup_scheduled_purge');
 			}
-			//new in v1.9.1: save export options
+			//save export options
 			$this->export_spam=(!empty($_POST['export_spam'])?"1":"0");
 			$this->export_omit_recid=(!empty($_POST['export_omit_recid'])?"1":"0");
 			//save optimization timestamp and delayed_insert boolean values @since v1.9
@@ -807,7 +804,7 @@ class wassupOptions {
 	public function getHostTimezone($getoffset=false){
 		global $wdebug_mode;
 		$hostTZ=false;
-		$hostTimezone=array();	//v1.9.1 bugfix
+		$hostTimezone=array();
 		$is_nix_server=true;
 		//cannot use 'date' for timezone on Windows
 		if(defined('PHP_OS') && preg_match('/^win/i',PHP_OS)>0){
@@ -1018,17 +1015,16 @@ class wassupOptions {
 		return true;
 	} //end _options2class
 
-	/** display a system notice or message in admin panel. */
+	/** display a system notice or user message in admin panel. */
 	public function showMessage($message="") {
 		global $wp_version,$current_user;
-		if(empty($message) && (empty($_GET['page'])|| stristr($_GET['page'],'wassup')!==false)){
-			//new in v1.9.1: prioritize user alerts first
-			if(!is_object($current_user) || empty($current_user->ID)) wp_get_current_user();
+		if(empty($message)){
+			//prioritize user alerts and show anytime
+			if(!is_object($current_user) || empty($current_user->ID)) $user=wp_get_current_user();
 			$wassup_user_settings = get_user_option('_wassup_settings',$current_user->ID);
 			if(!empty($wassup_user_settings['ualert_message'])){
 				$message=$wassup_user_settings['ualert_message'];
-				//v1.9.1 bugfix: user alert cleared after message display
-			}elseif(!empty($this->wassup_alert_message)){
+			}elseif(!empty($this->wassup_alert_message) && (empty($_GET['page']) || stristr($_GET['page'],'wassup')!==false)){
 				$message=$this->wassup_alert_message;
 			}
 		}
@@ -1724,7 +1720,7 @@ class wassupDb{
 					$wassup_meta_table='`'.$wassup_settings['wassup_table'].'_meta`';
 					if(strpos($db_sql,$wassup_table)>0){
 						$timestamp=time();
-						$last_optimized=self::get_wassupmeta($wassup_table,'_optimize'); //v1.9.1 bugfix
+						$last_optimized=self::get_wassupmeta($wassup_table,'_optimize');
 						if(empty($last_optimized) || ($timestamp - $last_optimized)>24*3600){
 							//save timestamp to prevent repeat of optimize
 							$expire=time()+7*24*3600;
@@ -1926,14 +1922,14 @@ class wassupDb{
 		$stimer_start=time();
 		$row_count=0;
 		$last_recid=0;
-		//New in v1.9.1: omit recid from export
+		//omit recid from export @since v1.9.1
 		$exclude_id=false;
 		if(isset($_REQUEST['omit_recid'])){
 			$exclude_id=true;
 		}elseif(!empty($wassup_options->export_omit_recid)){
 			$exclude_id=true;
 		}
-		//New in v1.9.1: omit `spam` records from export
+		//omit `spam` records from export @since v1.9.1
 		if(empty($wassup_options->export_spam)){
 			if(empty($condition)) $condition=" WHERE `spam`='0'";
 			else $condition .=" AND `spam`='0'";
@@ -2187,7 +2183,7 @@ class wassupURI {
 			}
 			return self::cleanURL($outputurl);
 		}else{
-			return self::cleanURL($inputurl);	//v1.9.1 security fix
+			return self::cleanURL($inputurl); //security fix
 		}
 	}
 	/** Return the url and "path" for wordpress site's "home". */
@@ -2231,7 +2227,7 @@ class wassupURI {
 		$request=strtolower($urlrequested);
 		if(strlen($request)>60) $tooltip=' title="'.self::cleanURL($request).'" ';
 		else $tooltip="";
-		//New in v1.9.1: no link for spam, 404, wp-admin, wp-login or any possible unidentified spam
+		//no link for spam, 404, wp-admin, wp-login or any possible unidentified spam @since v1.9.1
 		if(!empty($spam) || self::is_xss($urlrequested)){
 			$urllink='<span class="malware"'.$tooltip.'>';
 			if($chars >0) $urllink .=stringShortener("$urlrequested",round($chars*.9,0));
@@ -2296,7 +2292,7 @@ class wassupURI {
 			//external referrer
 			}else{
 				$favicon_img="";
-				//New in v1.9.1: no link for spam or wp-admin
+				//no link for spam or wp-admin
 				if($spam==2 || self::is_xss($ref)){
 					$referrerlink='<span class="malware"'.$tooltip.'>'.stringShortener($referer,round($chars*.9,0)).'</span>';
 				}elseif($spam >0 || strpos($ref,'http')===false || strpos($ref,'http')>0 || preg_match('/\/wp\-(?:admin|content|includes)\/|\/wp\-login\.php/i',$ref)>0){
