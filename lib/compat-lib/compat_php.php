@@ -2280,7 +2280,7 @@ class wassupURI {
 			//referrer from site or site-admin
 			if(stristr($referer,$wpurl)==$referer || stristr($referer,$siteurl)==$referer){
 				//direct hit when referrer == request
-				if(!empty($wrec->urlrequested) && $ref == $siteurl.$wrec->urlrequested){
+				if(!empty($wrec->urlrequested) && ($ref == $siteurl.$wrec->urlrequested || $ref == rtrim($siteurl.$wrec->urlrequested,'/'))){
 					$referrerlink='<span>'.__("direct hit","wassup").'</span>';
 				}elseif($spam==2 || wassupURI::is_xss($ref)){
 					//show spam referrers w/o link

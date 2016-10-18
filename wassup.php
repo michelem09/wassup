@@ -55,8 +55,21 @@ function wassup_init($init_settings=false){
 		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
 	}
 	//turn on debugging (global)...Use cautiously! Will display errors from all plugins, not just WassUp
-	if(!isset($GLOBALS['wdebug_mode'])) $wdebug_mode=false;
+	$wdebug_mode=false;
 	if(defined('WP_DEBUG') && WP_DEBUG==true) $wdebug_mode=true;
+	if($wdebug_mode){
+		//New in v1.9.2: turn off debug mode if this is ajax action request
+		if((!empty($_REQUEST['action']) && isset($_REQUEST['wajax'])) || (defined('DOING_AJAX') && DOING_AJAX)){
+			$wdebug_mode=false;
+			@wassup_disable_errors();
+		}else{
+			if(headers_sent()){
+				//an error was likely displayed to screen
+				echo "\n".'<!-- wassup_init start -->';
+			}
+			wassup_enable_errors();
+		}
+	}
 	//load language translation
 	if(empty($GLOBALS['locale']) || strlen($GLOBALS['locale'])>5) $current_locale=get_locale();
 	else $current_locale=$GLOBALS['locale'];
@@ -110,6 +123,10 @@ function wassup_init($init_settings=false){
 			add_action('admin_notices','wassup_show_compat_message');
 		}
 	}
+	if($wdebug_mode && headers_sent()){
+		//an error message was likely displayed to screen
+		echo "\n".'<!-- wassup_init end -->'."\n";
+	}
 	return $is_compatible;
 } //end wassup_init
 
@@ -130,9 +147,11 @@ function wassup_install($network_wide=false) {
 	$wassup_settings=get_option('wassup_settings'); //save old settings
 	$wassup_network_settings=array();
 	//first check Wordpress compatibility via 'wassup_init'
-	if(!wassup_init(true)){
-		wassup_show_compat_message();
-		exit(1);
+	if(!defined('WASSUPURL')){
+		if(!wassup_init(true)){
+			wassup_show_compat_message();
+			exit(1);
+		}
 	}
 	//additional install/upgrade functions in "upgrade.php" module
 	if (file_exists(WASSUPDIR.'/lib/upgrade.php')) {
@@ -474,6 +493,10 @@ function wassup_preload(){
 			return;
 		}
 	}
+	if($wdebug_mode && headers_sent()){
+		//an error message was likely displayed to screen
+		echo "\n".'<!-- wassup_preload start -->';
+	}
 	//v1.9.2 bugfix: fix for object error seen in support forum, but redundant to fix already in 'wassup_init'
 	if(empty($wassup_options)){
 		if(!class_exists('wassupOptions')) require_once(WASSUPDIR.'/lib/wassup.class.php');
@@ -505,6 +528,10 @@ function wassup_preload(){
 			if(!has_action('wassup_scheduled_purge')) add_action('wassup_scheduled_purge','wassup_auto_cleanup');
 		}
 		wassupPrepend();
+	}
+	if($wdebug_mode && headers_sent()){
+		//an error message was likely displayed to screen
+		echo "\n".'<!-- wassup_preload end -->'."\n";
 	}
 } // end wassup_preload
 
@@ -722,6 +749,29 @@ function export_wassup(){
 	}
 } //end export_wassup
 
+/** Turns off all error notices except fatal errors. */
+function wassup_disable_errors(){
+	ini_set('error_reporting',E_ERROR);
+	//error_reporting(0);	//same as above
+	ini_set('display_errors','Off');
+}
+/** Turns on all error notices */
+function wassup_enable_errors(){
+	global $wp_version;
+	ini_set('display_errors','On');
+	//don't use 'strict standards' in old Wordpress versions (part of E_ALL since PHP 5.4)
+	$php_vers=phpversion();
+	if(version_compare($php_vers,'5.0','>=')){
+		if(version_compare($wp_version,'4.0','>=')){
+			ini_set('error_reporting',E_ALL);
+		}else{
+			ini_set('error_reporting',E_ALL & ~E_STRICT & ~E_DEPRECATED);
+		}
+	}else{
+		ini_set('error_reporting',E_ALL);
+	}
+} //end wassup_enable_errors
+
 if (!function_exists('microtime_float')) {
 function microtime_float() {	//replicates microtime(true) from PHP5
     list($usec, $sec) = explode(" ", microtime());
@@ -807,7 +857,7 @@ function wassupPrepend() {
 	$timenow=current_time('timestamp');
 	//check if user is logged-in
 	$logged_user="";
- 	if(empty($current_user->user_login)) wp_get_current_user();
+ 	if(empty($current_user->user_login)) $user=wp_get_current_user();
 	if(!empty($current_user->user_login)){
 		$logged_user=$current_user->user_login;
 		//for recent successful login.. undo hack attempt label
@@ -818,57 +868,57 @@ function wassupPrepend() {
 			//retroactively undo "hack attempt" label
 			$wassup_dbtask[]=sprintf("UPDATE `$wassup_table` SET `username`='%s', `spam`='0' WHERE `wassup_id`='%s' AND `spam`!='0' AND `timestamp`>'%d'",$logged_user,$wsession_id,$timenow-90);
 		}
+		//New in v1.9.2: timeout logged-in users after 10 mins to trigger save into temp for online counts
+		if($wassup_timer > 5361){ //for 1st save/cookie reset
+			$session_timeout=true;
+		}elseif($wassup_timer < 4801){	//timeout after ~10 mins
+			$session_timeout=true;	//...for save to temp
+		}
 	}
 	//Track visitor
-	//Don't do admin exclusions here so that logged-in users are included in online counts @since v1.9.1
-	//use 'send_headers' hook for media and files except when request is wp-admin which doesn't run this hook
-	if(is_feed() || preg_match('#[=/?&](feed|atom)#',$urlRequested)>0){
-		//New in v1.9.2: track feed requests separately with 'rss_head' since 'send_headers' hook doesn't seem to work on feeds
-		if(is_feed()){
-			add_action('rss_head','wassupAppend');
-			add_action('atom_head','wassupAppend');
-		}elseif(!is_admin() && !headers_sent()){
-			add_action('send_headers','wassupAppend');
-		}else{
-			wassupAppend($req_code);
-		}
-	}elseif(preg_match("/(\.(3gp|7z|f4[pv]|mp[34])(?:[?&#]|$))/i",$urlRequested)>0){
-		//this is an audio, video, or archive file request
-		if(!is_admin() && !headers_sent()){
-			add_action('send_headers','wassupAppend');
-		}else{
-			wassupAppend($req_code);
-		}
-	}elseif(preg_match("/([^?#&]+\.([a-z]{1,4}))(?:[?&#]|$)/i",$urlRequested)>0 && basename($urlRequested)!="robots.txt"){
-		//this is a multimedia or specific file request
-		if(!is_admin() && !headers_sent()){
-			add_action('send_headers','wassupAppend');
-		}else{
-			wassupAppend($req_code);
-		}
-	}elseif(empty($wassup_id) || $session_timeout || $req_code!=200){
-		//use 'send_headers' hook for cookie write or 404
-		if(!headers_sent() && !is_admin()){
-			add_action('send_headers','wassupAppend',15);
+	//New in v1.9.2: Exclude for logged-in user in admin area (unless session_timeout is set)
+	if(!is_admin() || empty($logged_user) || $session_timeout || $req_code !=200 || empty($wassup_id)){
+		//use 'send_headers' hook for feed, media, and files except when request is wp-admin which doesn't run this hook
+		if(is_feed() || preg_match('#[=/?&](feed|atom)#',$urlRequested)>0){
+			if(is_feed() && !headers_sent()){
+				add_action('send_headers','wassupAppend');
+			}else{
+				wassupAppend($req_code);
+			}
+		}elseif(preg_match("/(\.(3gp|7z|f4[pv]|mp[34])(?:[?&#]|$))/i",$urlRequested)>0){
+			//this is audio, video, or archive file request
+			if(!is_admin() && !headers_sent()){
+				add_action('send_headers','wassupAppend');
+			}else{
+				wassupAppend($req_code);
+			}
+		}elseif(preg_match("/([^?#&]+\.([a-z]{1,4}))(?:[?&#]|$)/i",$urlRequested)>0 && basename($urlRequested)!="robots.txt"){
+			//this is multimedia or specific file request
+			if(!is_admin() && !headers_sent()){
+				add_action('send_headers','wassupAppend');
+			}else{
+				wassupAppend($req_code);
+			}
 		}elseif(!is_admin()){
-			add_action('shutdown','wassupAppend',1);
+			//use 'send_headers' hook for cookie write or 404 and shutdown hook for all others
+			if(empty($wassup_id) || $session_timeout || $req_code!=200){
+				if(!headers_sent()){
+					add_action('send_headers','wassupAppend',15);
+				}else{
+					add_action('shutdown','wassupAppend',1);
+				}
+			}else{
+				add_action('shutdown','wassupAppend',1);
+			}
 		}else{
+			//use 'admin_footer' hook for admin area hits @since v1.9.1
 			add_action('admin_footer','wassupAppend',15);
 		}
-	}else{
-		//use shutdown hook for page/post hits and 'admin_footer' for admin area hits
-		if(is_admin()){
-			//'admin_footer' replaces 'shutdown' hook for admin hits @since v1.9.1
-			add_action('admin_footer','wassupAppend',15);
-		}else{
-			//'shutdown' is 1-priority so runs before other shutdown actions
-			add_action('shutdown','wassupAppend',1);
+		//add tracking for login page separately since 'shutdown' hook doesn't seem to run on login page @since v1.9.1
+		if(empty($logged_user) && stristr($urlRequested,'login.php')!==FALSE){
+			add_action('login_footer','wassupAppend',15);
 		}
-	}
-	//add tracking for login page separately since 'shutdown' hook doesn't appear to run on login page @since v1.9.1
-	if(empty($logged_user) && stristr($urlRequested,'login.php')!==FALSE){
-		add_action('login_footer','wassupAppend',15);
-	}
+	} //end if !is_admin
 	//do retroactive update, if any
 	if(!empty($wassup_dbtask)){
 		$args=array('dbtasks'=>$wassup_dbtask);
@@ -906,31 +956,21 @@ function wassupAppend($req_code=0) {
 		if(ini_get('allow_url_fopen')) $fileRequested=$blogurl.$pcs[1];
 	}
 	$debug_output="";
-	if ($wdebug_mode) {
-		//turn off debug mode for media and non-html requests 
-		if($is_media || (!is_page() && !is_home() && !is_single() && !is_archive())){
+	if($wdebug_mode){
+		if($is_media || is_feed() || (!is_page() && !is_home() && !is_single() && !is_archive())){
+			//turn off error display for media, feed, and any non-html requests 
 			$wdebug_mode=false;
+			@wassup_disable_errors();
 		}else{
-			$mode_reset=ini_get('display_errors');
-			$debug_reset=$wdebug_mode;
-			//don't check for 'strict' php5 standards (part of E_ALL since PHP 5.4)
-			if (defined('PHP_VERSION') && version_compare(PHP_VERSION, 5.4, '<')) @error_reporting(E_ALL);
-			else @error_reporting(E_ALL ^ E_STRICT); //E_STRICT=php5 only
-			@ini_set('display_errors','On');
-			//Debug: Output open comment tag to hide PHP errors from visitors
-			if(headers_sent()){
-				echo "\n<!-- *WassUp DEBUG On\n";   //hide errors
+			if(is_admin() || headers_sent()){
+				echo "\n".'<!-- *WassUp DEBUG On '."\n";   //hide errors
 				echo date('H:i:s');
 			}else{
-				$debug_output="\n<!-- *WassUp DEBUG On\n";   //hide errors
-				$debug_output.=date('H:i:s');
+				$debug_output="\n".'<!-- *WassUp DEBUG On '."\n";   //hide errors
+				$debug_output .=date('H:i:s');
 			}
+			wassup_enable_errors();
 		}
-	} else {
-		//do only fatal error reporting
-		// note: this won't work if PHP in safe mode
-		$errlvl = @error_reporting();
-		if (!empty($errlvl)) @error_reporting(E_ERROR);
 	} //end if $wdebug_mode
 	$error_msg="";
 	$wassup_table = $wassup_options->wassup_table;
@@ -1023,8 +1063,16 @@ function wassupAppend($req_code=0) {
 			$language=$ua->language;
 		}
 		if($wdebug_mode){
-			if(headers_sent()) echo "\nUAdetecter results: \$ua=".serialize($ua);
-			else $debug_output .= "\nUAdetecter results: \$ua=".serialize($ua);
+			if(is_admin() || headers_sent()){
+				if(!empty($debug_output)){
+					echo $debug_output;
+					echo "\nwassupappend-debug#1";
+					$debug_output="";
+				}
+				echo "\nUAdetecter results: \$ua=".serialize($ua);
+			}else{
+				$debug_output .="\nUAdetecter results: \$ua=".serialize($ua);
+			}
 		}
 	} //end if $ua->name
 	//Set visitor identifier fields: username, wassup_id, ipAddress, hostname
@@ -1180,7 +1228,14 @@ function wassupAppend($req_code=0) {
 		if(ini_get('allow_url_fopen')) $fileRequested=$blogurl.$pcs[1];
 	}
 	if($wdebug_mode){
-		if(headers_sent()) echo "\n\$req_code=$req_code";
+		if(is_admin() || headers_sent()){
+			if(!empty($debug_output)){
+				echo $debug_output;
+				echo "\nwassupappend-debug#2";
+				$debug_output="";
+			}
+			echo "\n\$req_code=$req_code";
+		}
 	}
 	$hackercheck=true;	//for malware checking
 	//do early check for xss code on url and label as spam/malware for temp record, even if spam detection is disabled  @since v1.9.1
@@ -1292,8 +1347,16 @@ function wassupAppend($req_code=0) {
 		}
 		$wpdb->query("SET wait_timeout=7");
 		if($wdebug_mode){
-			if(headers_sent()) echo "\nSet MySQL wait_timeout=7 from ".$mtimeout;
-			else $debug_output .="\nSet MySQL wait_timeout=7 from ".$mtimeout;
+			if(is_admin() || headers_sent()){
+				if(!empty($debug_output)){
+					echo $debug_output;
+					echo "\nwassupappend-debug#3";
+					$debug_output="";
+				}
+				echo "\nSet MySQL wait_timeout=7 from ".$mtimeout;
+			}else{
+				$debug_output .="\nSet MySQL wait_timeout=7 from ".$mtimeout;
+			}
 		}
 		//get recent hits with same wassup_id
 		$recent_hit=$wpdb->get_results(sprintf("SELECT SQL_NO_CACHE `wassup_id`, `ip`, `timestamp`, `urlrequested`, `screen_res`, `username`, `browser`, `os`, `spider`, `feed`, `spam`, `language`, `agent`, `referrer` FROM `$wassup_tmp_table` WHERE `wassup_id`='%s' AND `timestamp` >'%d' %s ORDER BY `timestamp` DESC",esc_sql($wassup_id),$timenow-183,$multisite_whereis));
@@ -1473,8 +1536,16 @@ function wassupAppend($req_code=0) {
 				list($browser,$os)=wGetBrowser($userAgent);
 				if(!empty($browser)) $agent=$browser;
 				if ($wdebug_mode){
-					if(headers_sent()) echo "\n".date('H:i:s.u').' wGetBrowser results: $browser='.$browser.'  $os='.$os;
-					else $debug_output .= "\n".date('H:i:s.u').' wGetBrowser results: $browser='.$browser.'  $os='.$os;
+					if(is_admin() || headers_sent()){
+						if(!empty($debug_output)){
+							echo $debug_output;
+							echo "\nwassupappend-debug#4";
+							$debug_output="";
+						}
+						echo "\n".date('H:i:s.u').' wGetBrowser results: $browser='.$browser.'  $os='.$os;
+					}else{
+						$debug_output .= "\n".date('H:i:s.u').' wGetBrowser results: $browser='.$browser.'  $os='.$os;
+					}
 				}
 			}
 		}
@@ -1484,8 +1555,16 @@ function wassupAppend($req_code=0) {
 		if(empty($agent) || preg_match($spider_hosts,$hostname)>0 || stristr($agent,'unknown')!==false){
 			list($spider,$spidertype,$feed) = wGetSpider($userAgent,$hostname,$browser);
 			if($wdebug_mode){
-				if(headers_sent()) echo "\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
-				else $debug_output .= "\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
+				if(is_admin() || headers_sent()){
+					if(!empty($debug_output)){
+						echo $debug_output;
+						echo "\nwassupappend-debug#5";
+						$debug_output="";
+					}
+					echo "\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
+				}else{
+					$debug_output .= "\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
+				}
 			}
 			//it's a browser
 			if($spidertype == "B" && $urlRequested != "/robots.txt"){ 
@@ -1506,13 +1585,24 @@ function wassupAppend($req_code=0) {
 				if(strlen($agent)<5 || empty($os) || preg_match("#\s?([a-z]+(?:bot|crawler|google|spider|reader|agent))[^a-z]#i",$userAgent)>0 || strstr($urlRequested,"robots.txt")!==FALSE || is_feed()){
 					list($spider,$spidertype,$feed) = wGetSpider($userAgent,$hostname,$browser);
 					if($wdebug_mode){
-						if(headers_sent()) echo "\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
-						else $debug_output .= "\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
+						if(is_admin() || headers_sent()){
+							if(!empty($debug_output)){
+								echo $debug_output;
+								echo "\nwassupappend-debug#6";
+								$debug_output="";
+							}
+							echo "\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
+						}else{
+							$debug_output .="\n".date('H:i:s.u').' wGetSpider results: $spider='.$spider.'  $spidertype='.$spidertype.' $feed='.$feed;
+						}
 					}
-				}elseif(preg_match('#(msie|firefox|chrome)[\/ ](\d+)#',strtolower($userAgent),$pcs)>0){
+				}elseif(!empty($browser) && preg_match('#^(Google Chrome|Netscape|Mozilla|Mozilla Firefox)([0-9./ ]|$)#i',$browser)>0){
+					//New in v1.9.2: old browser name is likely spider
+					list($spider,$spidertype,$feed)=wGetSpider($userAgent,$hostname,$browser);
+				}elseif(preg_match('#(msie|firefox|chrome)[\/ ](\d+)#i',$userAgent,$pcs)>0){
 					//obsolete browser is likely a spider
 					if($pcs[2]<8 || ($pcs[2]<30 && $pcs[1]!="msie")){
-						list($spider,$spidertype,$feed) = wGetSpider($userAgent,$hostname,$browser);
+						list($spider,$spidertype,$feed)=wGetSpider($userAgent,$hostname,$browser);
 					}
 				}
 				//it's a browser
@@ -1646,16 +1736,32 @@ function wassupAppend($req_code=0) {
 		//get language/locale
 		if(empty($language) && !empty($recent_hit[0]->language)) $language=$recent_hit[0]->language;
 		if($wdebug_mode){
-			if(headers_sent()) echo "\n  language=$language";
-			else $debug_output .= "\n  language=$language";
+			if(is_admin() || headers_sent()){
+				if(!empty($debug_output)){
+					echo $debug_output;
+					echo "\nwassupappend-debug#7";
+					$debug_output="";
+				}
+				echo "\n  language=$language";
+			}else{
+				$debug_output .= "\n  language=$language";
+			}
 		}
 		if(preg_match('/\.[a-z]{2,3}$/i',$hostname) >0 || preg_match('/[a-z\-_]+\.[a-z]{2,3}[^a-z]/i',$referrer) >0 || strlen($language)>2){
 			//get language/locale info from hostname or referrer data
 			$language=wGetLocale($language,$hostname,$referrer);
 		}
 		if($wdebug_mode){
-			if(headers_sent()) echo "\n...language=$language (after geoip/wgetlocale)";
-			else $debug_output .= " ...language=$language (after geoip/wgetlocale)";
+			if(is_admin() || headers_sent()){
+				if(!empty($debug_output)){
+					echo $debug_output;
+					echo "\nwassupappend-debug#8";
+					$debug_output="";
+				}
+				echo "\n...language=$language (after geoip/wgetlocale)";
+			}else{
+				$debug_output .= " ...language=$language (after geoip/wgetlocale)";
+			}
 		}
 		// get search engine and search keywords from referrer
 		$searchengine="";
@@ -1813,7 +1919,12 @@ function wassupAppend($req_code=0) {
 				}
 			}
 			if($wdebug_mode){
-				if(headers_sent()){
+				if(is_admin() || headers_sent()){
+					if(!empty($debug_output)){
+						echo $debug_output;
+						echo "\nwassupappend-debug#9";
+						$debug_output="";
+					}
 					if(!empty($wassup_recid)){
 						echo "\nWassUp record data:";
 						print_r($wassup_rec);
@@ -1833,72 +1944,72 @@ function wassupAppend($req_code=0) {
 			}
 		} //end if prefetch
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #18 Excluded by: wp-content/plugins (after 404)";
+		if(is_admin() || headers_sent()) echo "\n #18 Excluded by: wp-content/plugins (after 404)";
 		else $debug_output .="\n #18 Excluded by: wp-content/plugins (after 404)";
 	} //end if !wp-content/plugins
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #17 Excluded by: wassup_spam";
+		if(is_admin() || headers_sent()) echo "\n #17 Excluded by: wassup_spam";
 		else $debug_output .="\n #17 Excluded by: wassup_spam";
 	} //end if $spam == 0
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #16 Excluded by: wassup_spider";
+		if(is_admin() || headers_sent()) echo "\n #16 Excluded by: wassup_spider";
 		else $debug_output .="\n #16 Excluded by: wassup_spider";
 	} //end if wassup_spider
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #15 Excluded by: wassup_hack";
+		if(is_admin() || headers_sent()) echo "\n #15 Excluded by: wassup_hack";
 		else $debug_output .="\n #15 Excluded by: wassup_hack";
 	} //end if wassup_hack
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #14 Excluded by: is_404";
+		if(is_admin() || headers_sent()) echo "\n #14 Excluded by: is_404";
 		else $debug_output .="\n #14 Excluded by: is_404";
 	} //end if !is_404
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #13 Excluded by: !wp-admin (ajax)";
+		if(is_admin() || headers_sent()) echo "\n #13 Excluded by: !wp-admin (ajax)";
 		else $debug_output .="\n #13 Excluded by: !wp_admin (ajax)";
 	} //end if !wp_admin (ajax) && recent_hit
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #12 Excluded by: dup_urlrequest";
+		if(is_admin() || headers_sent()) echo "\n #12 Excluded by: dup_urlrequest";
 		else $debug_output .="\n #12 Excluded by: dup_urlrequest";
 	} //end if dup_urlrequest == 0
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #11 Excluded by: wassup_attack";
+		if(is_admin() || headers_sent()) echo "\n #11 Excluded by: wassup_attack";
 		else $debug_output .="\n #11 Excluded by: wassup_attack";
 	} //end if wassup_attack
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #10 Excluded by: wassup_loggedin";
+		if(is_admin() || headers_sent()) echo "\n #10 Excluded by: wassup_loggedin";
 		else $debug_output .="\n #10 Excluded by: wassup_loggedin";
 	} //end if wassup_loggedin
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #9 Excluded by: wp-content/themes";
+		if(is_admin() || headers_sent()) echo "\n #9 Excluded by: wp-content/themes";
 		else $debug_output .="\n #9 Excluded by: wp-content/themes";
 	} //end if !themes
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #8 Excluded by: wp-content/plugins (or hostname wildcard)";
+		if(is_admin() || headers_sent()) echo "\n #8 Excluded by: wp-content/plugins (or hostname wildcard)";
 		else $debug_output .="\n #8 Excluded by: wp-content/plugins (or hostname wildcard)";
 	} //end if !plugins
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #7 Excluded by: exclude_host (or IP wilcard)";
+		if(is_admin() || headers_sent()) echo "\n #7 Excluded by: exclude_host (or IP wilcard)";
 		else $debug_output .="\n #7 Excluded by: exclude_host (or IP wildcard)";
 	} //end if wassup_exclude_host
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #6 Excluded by: wassup_exclude";
+		if(is_admin() || headers_sent()) echo "\n #6 Excluded by: wassup_exclude";
 		else $debug_output .="\n #6 Excluded by: wassup_exclude";
 	} //end if wassup_exclude
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #5 Excluded by: exclude_url";
+		if(is_admin() || headers_sent()) echo "\n #5 Excluded by: exclude_url";
 		else $debug_output .="\n #5 Excluded by: exclude_url";
 	} //end if wassup_exclude_url
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #4 Excluded by: exclude_user";
+		if(is_admin() || headers_sent()) echo "\n #4 Excluded by: exclude_user";
 		else $debug_output .="\n #4 Excluded by: exclude_user";
 	} //end if wassup_exclude_user
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #3 Excluded by: is_admin";
+		if(is_admin() || headers_sent()) echo "\n #3 Excluded by: is_admin";
 		else $debug_output .="\n #3 Excluded by: is_admin";
 	} //end if !is_admin
 	} //end if wp-cron.php?doing_wp_cron===FALSE //#2
 	}elseif($wdebug_mode){
-		if(headers_sent()) echo "\n #1 Excluded by: is_admin_login";
+		if(is_admin() || headers_sent()) echo "\n #1 Excluded by: is_admin_login";
 		else $debug_output .="\n #1 Excluded by: is_admin_login";
 	} //end if !is_admin_login
 
@@ -1914,7 +2025,7 @@ function wassupAppend($req_code=0) {
 		}
 		if(is_numeric($result)) $in_temp=(int)$result;
 		if($wdebug_mode){
-			if(headers_sent()) echo "\nin_temp=".$result;
+			if(is_admin() || headers_sent()) echo "\nin_temp=".$result;
 			else $debug_output .="\nin_temp=".$result;
 		}
 		//add new temp record 
@@ -2028,21 +2139,21 @@ function wassupAppend($req_code=0) {
 			wp_schedule_single_event(time()+40,'wassup_scheduled_dbtasks',$args);
 		}
 		if($wdebug_mode){
-			if(headers_sent()){
+			if(is_admin() || headers_sent()){
 				echo "\nWassup scheduled tasks:";
 				print_r($wassup_dbtask);
 			}
 		}
 	}
 	if($wdebug_mode){ //close comment tag to hide debug data from visitors 
-		if(headers_sent()){
+		if(is_admin() || headers_sent()){
 			echo "\n--> \n";
 		}else{
 			$debug_output .= "<br />\n--> \n";
 			//add debug output to wp_footer output - TODO
 			$expire=time()+180;
 			$wassup_key=wassup_clientIP($_SERVER['REMOTE_ADDR']);
-			update_wassupmeta($wassup_key,'_debug_output',$expire,$debug_output);
+			wassupDb::update_wassupmeta($wassup_key,'_debug_output',$expire,$debug_output); //v1.9.2 bugfix
 		}
 		//restore normal mode
 		@ini_set('display_errors',$mode_reset);

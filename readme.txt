@@ -235,16 +235,19 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 == Changelog ==
 = v1.9.2 =
 = Urgent bugfix upgrade = 
-* fixed fatal error, `call to member function is_recording_active`, that occured in some configurations
-* fixed erroneous 'hack attempt' label of page hits when permalinks are disabled
-* fixed problem with feed hits not being recorded ?? - test
-* fixed 'WASSUPVERSION already defined' error with PHP strict standards
+* fixed fatal error on `wassup_options::is_recording_active` that occurred in some configurations
+* fixed erroneous 'hack attempt' labels that occurred on sites without permalinks
+* fixed a refresh timer bug that disabled dropdown selections in Visitor Details when refresh setting is 0.
+* fixed a debug_mode bug that caused error notices to show as output for Wassup ajax action
+* new functions(2) to reset error display in debug_mode
+* improved spider detection.
+* updated "compatibility.php" module for multisite compatibility tests
 * miscellaneous minor bug fixes
-* Minor code changes.
+* miscellaneous minor code changes.
 
 = v1.9.1 =
 = Critical security, compatibility, and bugfix upgrade =
-* patched security loopholes (xss vulnerability) in the 'Top stats' widget and in `wassupURI::add_siteurl` method
+* patched security loopholes (xss vulnerability) in the 'Top stats' widget and in `wassupURI::add_siteurl` method (in Visitor Details/Online)
 * improved security against xss attacks on interface and widgets.
 * improved compliance with the latest Wordpress.org plugin repository guidelines.
 * improved browser/os detection.

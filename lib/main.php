@@ -228,10 +228,11 @@ class wDetector{
 		$browser="";
 		$version="";
 		$match=array();
-		if(strstr($useragent,' Gecko/')==false && preg_match("#^Mozilla\/\d\.\d\s\(Windows\sNT\s\d+(?:\.\d+)?;(?:\s[0-9A-Za-z./]+;)+\srv\:([0-9\.]+)\)#",$useragent,$match)){
-			$browser="IE";
-		}elseif(preg_match("#^Mozilla\/[0-9.\s]+\(Windows\s(?:NT|Phone)\s[0-9.]+.+\).+(?:\sChrome|Safari)\/[0-9.]+.+\sEdge\/([0-9\.]+)#",$useragent,$match)){
+		if(strpos($useragent,' Gecko/')>0 && preg_match("#^Mozilla\/[0-9.\s]+\(Windows\s(?:NT|Phone)\s[0-9.]+.+\).+(?:\sChrome|Safari)\/[0-9.]+.+\sEdge\/([0-9\.]+)#",$useragent,$match)){
 			$browser="Edge";
+			$version=$match[1];
+		}elseif(preg_match("#^Mozilla\/[0-9.\s]+\(Windows\sNT\s[0-9.]+;.+;\s?rv\:([0-9.]+)\)#",$useragent,$match)){
+			$browser="IE";
 			$version=$match[1];
 		}elseif(preg_match("/^Mozilla(?:.*)compatible;\sMSIE\s(?:.*)Opera\s([0-9\.]+)/",$useragent,$match)){
 			$browser = "Opera";

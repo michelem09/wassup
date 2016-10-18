@@ -335,7 +335,7 @@ function wassup_optionsView($tab=0) {
 		<input type="checkbox" name="wassup_spam" value="1" <?php if($wassup_options->wassup_spam == 1) echo $checked; ?> /> <?php _e('Record Akismet comment spam attempts','wassup');?> (<?php _e('checks IP for previous spam comments','wassup');?>)<br />
 		<input type="checkbox" name="wassup_refspam" value="1" <?php if($wassup_options->wassup_refspam == 1) echo $checked; ?> /> <?php _e('Record referrer spam attempts','wassup'); ?><br />
 		<input type="checkbox" name="wassup_hack" value="1" <?php if($wassup_options->wassup_hack == 1) echo $checked; ?> /> <?php _e("Record admin break-in/hacker attempts", "wassup") ?><br />
-		<input type="checkbox" name="wassup_attack" value="1" <?php if($wassup_options->wassup_attack == 1) echo $checked; ?> /> <?php echo __("Record attack/exploit attempts", "wassup").' (libwww-perl '.__("or","wassup").' XSS user-agent)';?><br />
+		<input type="checkbox" name="wassup_attack" value="1" <?php if($wassup_options->wassup_attack == 1) echo $checked; ?> /> <?php echo __("Record attack/exploit attempts", "wassup").' (libwww-perl '.__("or","wassup").' xss in user-agent)';?><br />
 		</span>
 		</p><br />
 		<h3><?php _e('Recording Exceptions','wassup');?></h3>

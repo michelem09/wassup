@@ -11,11 +11,13 @@
  * @author:	helened <http://helenesit.com>
  */
 //abort if this is direct uri request for file
-if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath(preg_replace('/\\\\/','/',__FILE__))){
+$wfile=preg_replace('/\\\\/','/',__FILE__);
+if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile) ||
+  (!empty($_SERVER['PHP_SELF']) && preg_match('#'.str_replace('#','\#',preg_quote($_SERVER['PHP_SELF'])).'$#',$wfile)>0)){
 	//try track this uri request
 	if(!headers_sent()){
 		//triggers redirect to 404 error page so Wassup can track this attempt to access itself (original request_uri is lost)
-		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename(__FILE__));
+		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename($wfile));
 		exit;
 	}else{
 		//'wp_die' may be undefined here
@@ -96,7 +98,7 @@ if(version_compare($GLOBALS['wp_version'],'3.0','<')){
 		}else{
 			$ajaxurl=admin_url('index.php?page=wassup-stats');
 		}
-		echo '<script type="text/javascript">var ajaxurl="'.$ajaxurl.'";</script>'."\n";
+		echo "\n".'<script type="text/javascript">var ajaxurl="'.$ajaxurl.'";</script>'."\n";
 	}
 	add_action('admin_head','wassup_compat_embed_scripts',11);
 } //end if wp_version < 3.0
@@ -158,4 +160,5 @@ if(version_compare($GLOBALS['wp_version'],'3.8','<')){
 		}
 	}
 }
+unset($wfile);	//to free memory
 ?>

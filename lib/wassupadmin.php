@@ -145,17 +145,19 @@ function wassup_embeded_scripts($wassuppage="") {
  		if($wrefresh < 0 || $wrefresh >180){
 			$wrefresh=3; //3 minutes default;
 		} 
-		//add refresh timer javascripts...
+		//embed refresh javascripts
 ?>
 <script type='text/javascript'>
 //<![CDATA[
   var paused=" *<?php _e('paused','wassup'); ?>* ";
-<?php
-		if($wrefresh >0){
-?>
   var selftimerID=0;
   function wassupReload<?php echo $wnonce;?>(wassuploc){if(wassuploc!=="") location.href=wassuploc;}
   function wSelfRefresh(){<?php echo $refresh_loc;?>}
+<?php
+		//start countdown for refresh
+		//v1.9.2 bugfix: moved wrefresh test so 'wassupReload' function is unaffected when wrefresh=0
+		if($wrefresh >0){
+?>
   selftimerID=setTimeout('wSelfRefresh()',<?php echo ($wrefresh*60000)+2000;?>);
   addLoadEvent(function(){ActivateCountDown("CountDownPanel",<?php echo ($wrefresh*60);?>);});
 <?php
@@ -234,7 +236,8 @@ function wassup_embeded_scripts($wassuppage="") {
 		}
 		else{
 			if(_currentSeconds < 1) timeleft=1000;
-			selftimerID=setTimeout('wSelfRefresh()',timeleft);tickerID=window.setInterval("CountDownTick()",1000);
+			selftimerID=setTimeout('wSelfRefresh()',timeleft);
+			tickerID=window.setInterval("CountDownTick()",1000);
 			$(this).css('color','#555');
 		}
 	});
@@ -281,7 +284,8 @@ function wassup_embeded_scripts($wassuppage="") {
 		//google!Maps map init and marker javascripts in document head @since v1.9
 		if($wassup_user_settings['spy_map']== 1 || !empty($_GET['map'])){
 			//check for api key for Google!maps
-			$apikey="AIzaSyCu_plin97TltY8Zk6KualGCmRjdF-OXDo";
+			//$apikey="AIzaSyCu_plin97TltY8Zk6KualGCmRjdF-OXDo";
+			$apikey=base64_decode(urldecode("QUl6YVN5Q3VfcGxpbjk3VGx0WThaazZLdWFsR0NtUmpkRi1PWERv"));
 			if(!empty($wassup_options->wassup_googlemaps_key)) $apikey=$wassup_options->wassup_googlemaps_key;
 			echo '<script src="https://maps.googleapis.com/maps/api/js?key='.esc_attr($apikey).'" type="text/javascript"></script>';
 		} //end if spy_map
@@ -1763,8 +1767,13 @@ function wassup_page_contents($args=array()){
 			echo wassupURI::url_link($rk->urlrequested,$char_len,$rk->malware_type);?></span>
 				<span class="det2"><strong><?php
 			_e('Referrer','wassup');
-			if(empty($rk->searchengine)) $referrer=wassupURI::referrer_link($rk,$char_len);
-			else $referrer=wassupURI::se_link($rk,$char_len);?>: </strong><?php print $referrer;?><br />
+			if(empty($rk->referrer)){
+				$referrer=__("direct hit","wassup");
+			}elseif(empty($rk->searchengine)){
+				$referrer=wassupURI::referrer_link($rk,$char_len);
+			}else{
+				$referrer=wassupURI::se_link($rk,$char_len);
+			}?>: </strong><?php echo $referrer;?><br />
 				<strong><?php _e('Hostname','wassup');?>:</strong> <?php echo esc_attr($hostname); ?></span>
 			</div>
 		</div> <!-- /sum-nav -->

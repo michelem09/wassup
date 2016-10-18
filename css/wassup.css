@@ -97,8 +97,6 @@ div.main-tabs{margin:10px auto 3px;padding:3px;color:#445;background-color:#e1df
 #wassup-wrap .sum-det .det1{padding-left:10px;text-indent:-5px;font-size:14px;}
 #wassup-wrap .det3{padding-left:20px;}
 #wassup-wrap .det1 span{color:#00284a;}
-#wassup-wrap span.malware{color:#777;}
-#wassup-wrap ul.useragent >li span.malware{color:inherit;}
 #wassup-wrap .det1 a{font-weight:bold;border-bottom:1px solid !important;}
 #wassup-wrap .det2 a,#wassup-wrap .det2 a:link, #wassup-wrap .sum-det span.det2 a{color:#02a !important;}
 #wassup-wrap .det2 a:hover, #wassup-wrap .sum-det span.det2 a:hover {color:#d54d22 !important;}
