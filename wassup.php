@@ -562,6 +562,7 @@ function wassup_load() {
 
 //-------------------------------------------------
 //### Admin functions
+// WassUp admin panels and menus display functions are in a separate module, "wassupadmin.php" @since v1.9.1
 /**
  * Perform plugin admin tasks for before http headers are sent.
  *  - run 'initialize settings' for new network subsites, if needed
