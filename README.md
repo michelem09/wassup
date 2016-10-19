@@ -4,7 +4,7 @@ Donate link:  [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&busines
 Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
 Requires at least: WordPress 2.2  
 Tested up to: 4.6.1  
-Stable tag: 1.9.1  
+Stable tag: 1.9.2  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
