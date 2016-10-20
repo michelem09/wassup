@@ -1,1 +1,316 @@
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('6 1z="31.1D";(9($){$.14=9(1k){14(1k)};$.O=9(t,a,g){O(t,a,g)};$.v=9(){v()};$(c).32(9(){14(\'a.1f, 39.1f, 3r.1f\');1q=1E 1U();3(1L 1z!=="1B")1q.J=1z});9 14(1k){$(1k).l(9(){6 t=Q.U||Q.1w||K;6 a=Q.n||Q.2k;6 g=Q.2e||M;O(t,a,g);Q.3s();G M})}9 O(B,d,16){3d{3(1L c.o.H.2D==="1B"){$("o","12").D({q:"2b%",p:"2b%"});$("12").D("2z","2X");3(c.2c("1K")===K){$("o").m("<T 5=\'1K\'></T><4 5=\'r\'></4><4 5=\'8\'></4>");$("#r").l(v)}}b{3(c.2c("r")===K){$("o").m("<4 5=\'r\'></4><4 5=\'8\'></4>");$("#r").l(v)}}3(2s()){$("#r").2d("3a")}b{$("#r").2d("3D")}3(B===K){B=""}$("o").m("<4 5=\'F\'><2n J=\'"+1q.J+"\' /></4>");$(\'#F\').3B();6 1n;3(d.L("?")!==-1){1n=d.35(0,d.L("?"))}b{1n=d}6 1O=/\\.2a$|\\.28$|\\.24$|\\.1D$|\\.26$/;6 P=1n.1Q().2f(1O);3(P==\'.2a\'||P==\'.28\'||P==\'.24\'||P==\'.1D\'||P==\'.26\'){1G="";1u="";15="";1s="";1x="";R="";1F="";1J=M;3(16){z=$("a[@2e="+16+"]").37();2F(s=0;((s<z.1b)&&(R===""));s++){6 3b=z[s].n.1Q().2f(1O);3(!(z[s].n==d)){3(1J){1s=z[s].U;1x=z[s].n;R="<1h 5=\'2h\'>&1a;&1a;<a n=\'#\'>38 &3c;</a></1h>"}b{1G=z[s].U;1u=z[s].n;15="<1h 5=\'2j\'>&1a;&1a;<a n=\'#\'>&2Q; 2P</a></1h>"}}b{1J=19;1F="1U "+(s+1)+" 2T "+(z.1b)}}}S=1E 1U();S.1e=9(){S.1e=K;6 1R=2I();6 x=1R[0]-2m;6 y=1R[1]-2m;6 f=S.p;6 k=S.q;3(f>x){k=k*(x/f);f=x;3(k>y){f=f*(y/k);k=y}}b 3(k>y){f=f*(y/k);k=y;3(f>x){k=k*(x/f);f=x}}X=f+30;1l=k+3E;$("#8").m("<a n=\'\' 5=\'2o\' U=\'1P\'><2n 5=\'3v\' J=\'"+d+"\' p=\'"+f+"\' q=\'"+k+"\' 2k=\'"+B+"\'/></a>"+"<4 5=\'3x\'>"+B+"<4 5=\'3y\'>"+1F+15+R+"</4></4><4 5=\'3C\'><a n=\'#\' 5=\'V\' U=\'1P\'>1T</a> 1I 1H 1W</4>");$("#V").l(v);3(!(15==="")){9 18(){3($(c).I("l",18)){$(c).I("l",18)}$("#8").u();$("o").m("<4 5=\'8\'></4>");O(1G,1u,16);G M}$("#2j").l(18)}3(!(R==="")){9 1y(){$("#8").u();$("o").m("<4 5=\'8\'></4>");O(1s,1x,16);G M}$("#2h").l(1y)}c.1m=9(e){3(e==K){C=2q.2r}b{C=e.2H}3(C==27){v()}b 3(C==3g){3(!(R=="")){c.1m="";1y()}}b 3(C==3j){3(!(15=="")){c.1m="";18()}}};Z();$("#F").u();$("#2o").l(v);$("#8").1d(3o)};S.J=d}b{6 21=d.2u(/^[^\\?]+\\??/,\'\');6 E=2B(21);X=(E[\'p\']*1)+30||3m;1l=(E[\'q\']*1)+3w||3n;W=X-30;N=1l-3p;3(d.L(\'2w\')!=-1){1M=d.1N(\'3i\');$("#11").u();3(E[\'1r\']!="19"){$("#8").m("<4 5=\'2M\'><4 5=\'1v\'>"+B+"</4><4 5=\'2K\'><a n=\'#\' 5=\'V\' U=\'1P\'>1T</a> 1I 1H 1W</4></4><T 1Y=\'0\' 22=\'0\' J=\'"+1M[0]+"\' 5=\'11\' 1w=\'11"+1j.20(1j.1C()*2p)+"\' 1e=\'1S()\' H=\'p:"+(W+29)+"j;q:"+(N+17)+"j;\' > </T>")}b{$("#r").I();$("#8").m("<T 1Y=\'0\' 22=\'0\' J=\'"+1M[0]+"\' 5=\'11\' 1w=\'11"+1j.20(1j.1C()*2p)+"\' 1e=\'1S()\' H=\'p:"+(W+29)+"j;q:"+(N+17)+"j;\'> </T>")}}b{3($("#8").D("2x")!="2y"){3(E[\'1r\']!="19"){$("#8").m("<4 5=\'2M\'><4 5=\'1v\'>"+B+"</4><4 5=\'2K\'><a n=\'#\' 5=\'V\'>1T</a> 1I 1H 1W</4></4><4 5=\'A\' H=\'p:"+W+"j;q:"+N+"j\'></4>")}b{$("#r").I();$("#8").m("<4 5=\'A\' 2Z=\'2U\' H=\'p:"+W+"j;q:"+N+"j;\'></4>")}}b{$("#A")[0].H.p=W+"j";$("#A")[0].H.q=N+"j";$("#A")[0].3A=0;$("#1v").12(B)}}$("#V").l(v);3(d.L(\'3l\')!=-1){$("#A").m($(\'#\'+E[\'2G\']).2v());$("#8").2E(9(){$(\'#\'+E[\'2G\']).m($("#A").2v())});Z();$("#F").u();$("#8").1d(1p)}b 3(d.L(\'2w\')!=-1){Z();3($.1o.3k){$("#F").u();$("#8").1d(1p)}}b{$("#A").3f(d+="&1C="+(1E 3e().3h()),9(){Z();$("#F").u();14("#A a.1f");$("#8").1d(1p)})}}3(!E[\'1r\']){c.2A=9(e){3(e==K){C=2q.2r}b{C=e.2H}3(C==27){v()}}}}3u(e){}}9 1S(){$("#F").u();$("#8").D({2x:"2y"})}9 v(){$("#2V").I("l");$("#V").I("l");$("#8").2O(2N,9(){$(\'#8,#r,#1K\').2R("2E").I().u()});$("#F").u();3(1L c.o.H.2D=="1B"){$("o","12").D({q:"2C",p:"2C"});$("12").D("2z","")}c.1m="";c.2A="";G M}9 Z(){$("#8").D({33:\'-\'+2L((X/2),10)+\'j\',p:X+\'j\'});3(!(1V.1o.34&&1V.1o.3t<7)){$("#8").D({3q:\'-\'+2L((1l/2),10)+\'j\'})}}})(1V);9 2B(1A){6 1i={};3(!1A){G 1i}6 1t=1A.1N(/[;&]/);2F(6 i=0;i<1t.1b;i++){6 13=1t[i].1N(\'=\');3(!13||13.1b!=2){2Y}6 2J=2t(13[0]);6 1g=2t(13[1]);1g=1g.2u(/\\+/g,\' \');1i[2J]=1g}G 1i}9 2I(){6 Y=c.2W;6 w=2i.1X||2g.1X||(Y&&Y.1Z)||c.o.1Z;6 h=2i.23||2g.23||(Y&&Y.25)||c.o.25;2l=[w,h];G 2l}9 2s(){6 1c=2S.1c.1Q();3(1c.L(\'3z\')!=-1&&1c.L(\'36\')!=-1){G 19}}',62,227,'|||if|div|id|var||TB_window|function||else|document|url||imageWidth||||px|imageHeight|click|append|href|body|width|height|TB_overlay|TB_Counter||remove|tb_remove||||TB_TempArray|TB_ajaxContent|caption|keycode|css|params|TB_load|return|style|unbind|src|null|indexOf|false|ajaxContentH|tb_show|urlType|this|TB_NextHTML|imgPreloader|iframe|title|TB_closeWindowButton|ajaxContentW|TB_WIDTH|de|tb_position||TB_iframeContent|html|KeyVal|tb_init|TB_PrevHTML|imageGroup||goPrev|true|nbsp|length|userAgent|slideDown|onload|thickbox|val|span|Params|Math|domChunk|TB_HEIGHT|onkeydown|baseURL|browser|500|imgLoader|modal|TB_NextCaption|Pairs|TB_PrevURL|TB_ajaxWindowTitle|name|TB_NextURL|goNext|tb_pathToImage|query|undefined|random|gif|new|TB_imageCount|TB_PrevCaption|Esc|or|TB_FoundURL|TB_HideSelect|typeof|urlNoQuery|split|urlString|Close|toLowerCase|pagesize|tb_showIframe|close|Image|jQuery|Key|innerWidth|frameborder|clientWidth|round|queryString|hspace|innerHeight|png|clientHeight|bmp||jpeg||jpg|100|getElementById|addClass|rel|match|self|TB_next|window|TB_prev|alt|arrayPageSize|150|img|TB_ImageOff|1000|event|keyCode|tb_detectMacXFF|unescape|replace|children|TB_iframe|display|block|overflow|onkeyup|tb_parseQuery|auto|maxHeight|unload|for|inlineId|which|tb_getPageSize|key|TB_closeAjaxWindow|parseInt|TB_title|600|slideUp|Prev|lt|trigger|navigator|of|TB_modal|TB_imageOff|documentElement|hidden|continue|class||loadingAnimation|ready|marginLeft|msie|substr|firefox|get|Next|area|TB_overlayMacFFBGHack|urlTypeTemp|gt|try|Date|load|190|getTime|TB_|188|safari|TB_inline|630|440|900|45|marginTop|input|blur|version|catch|TB_Image|40|TB_caption|TB_secondLine|mac|scrollTop|show|TB_closeWindow|TB_overlayBG|60'.split('|'),0,{}))
+/*
+ * Thickbox 3.1 - One Box To Rule Them All.
+ * By Cody Lindley (http://www.codylindley.com)
+ * Copyright (c) 2007 cody lindley
+ * Licensed under the MIT License: http://www.opensource.org/licenses/mit-license.php
+*/
+
+/*!!!!!!!!!!!!!!!!! edit below this line at your own risk !!!!!!!!!!!!!!!!!!!!!!!*/
+(function($) {
+	//on page load call tb_init
+	$(document).ready(function(){   
+		tb_init('a.thickbox, area.thickbox, input.thickbox');//pass where to apply thickbox
+		imgLoader = new Image();// preload image
+		imgLoader.src = tb_pathToImage;
+	});
+	
+	//add thickbox to href & area elements that have a class of .thickbox
+	function tb_init(domChunk){
+		$(domChunk).click(function(){
+		var t = this.title || this.name || null;
+		var a = this.href || this.alt;
+		var g = this.rel || false;
+		tb_show(t,a,g);
+		this.blur();
+		return false;
+		});
+	}
+	
+	function tb_show(caption, url, imageGroup) {//function called when the user clicks on a thickbox link
+	
+		try {
+			if (typeof document.body.style.maxHeight === "undefined") {//if IE 6
+				$("body","html").css({height: "100%", width: "100%"});
+				$("html").css("overflow","hidden");
+				if (document.getElementById("TB_HideSelect") === null) {//iframe to hide select elements in ie6
+					$("body").append("<iframe id='TB_HideSelect'></iframe><div id='TB_overlay'></div><div id='TB_window'></div>");
+					$("#TB_overlay").click(tb_remove);
+				}
+			}else{//all others
+				if(document.getElementById("TB_overlay") === null){
+					$("body").append("<div id='TB_overlay'></div><div id='TB_window'></div>");
+					$("#TB_overlay").click(tb_remove);
+				}
+			}
+			
+			if(tb_detectMacXFF()){
+				$("#TB_overlay").addClass("TB_overlayMacFFBGHack");//use png overlay so hide flash
+			}else{
+				$("#TB_overlay").addClass("TB_overlayBG");//use background and opacity
+			}
+			
+			if(caption===null){caption="";}
+			$("body").append("<div id='TB_load'><img src='"+imgLoader.src+"' /></div>");//add loader to the page
+			$('#TB_load').show();//show loader
+			
+			var baseURL;
+		   if(url.indexOf("?")!==-1){ //ff there is a query string involved
+				baseURL = url.substr(0, url.indexOf("?"));
+		   }else{ 
+		   		baseURL = url;
+		   }
+		   
+		   var urlString = /\.jpg$|\.jpeg$|\.png$|\.gif$|\.bmp$/;
+		   var urlType = baseURL.toLowerCase().match(urlString);
+	
+			if(urlType == '.jpg' || urlType == '.jpeg' || urlType == '.png' || urlType == '.gif' || urlType == '.bmp'){//code to show images
+					
+				TB_PrevCaption = "";
+				TB_PrevURL = "";
+				TB_PrevHTML = "";
+				TB_NextCaption = "";
+				TB_NextURL = "";
+				TB_NextHTML = "";
+				TB_imageCount = "";
+				TB_FoundURL = false;
+				if(imageGroup){
+					TB_TempArray = $("a[@rel="+imageGroup+"]").get();
+					for (TB_Counter = 0; ((TB_Counter < TB_TempArray.length) && (TB_NextHTML === "")); TB_Counter++) {
+						var urlTypeTemp = TB_TempArray[TB_Counter].href.toLowerCase().match(urlString);
+							if (!(TB_TempArray[TB_Counter].href == url)) {						
+								if (TB_FoundURL) {
+									TB_NextCaption = TB_TempArray[TB_Counter].title;
+									TB_NextURL = TB_TempArray[TB_Counter].href;
+									TB_NextHTML = "<span id='TB_next'>&nbsp;&nbsp;<a href='#'>Next &gt;</a></span>";
+								} else {
+									TB_PrevCaption = TB_TempArray[TB_Counter].title;
+									TB_PrevURL = TB_TempArray[TB_Counter].href;
+									TB_PrevHTML = "<span id='TB_prev'>&nbsp;&nbsp;<a href='#'>&lt; Prev</a></span>";
+								}
+							} else {
+								TB_FoundURL = true;
+								TB_imageCount = "Image " + (TB_Counter + 1) +" of "+ (TB_TempArray.length);											
+							}
+					}
+				}
+	
+				imgPreloader = new Image();
+				imgPreloader.onload = function(){		
+				imgPreloader.onload = null;
+					
+				// Resizing large images - orginal by Christian Montoya edited by me.
+				var pagesize = tb_getPageSize();
+				var x = pagesize[0] - 150;
+				var y = pagesize[1] - 150;
+				var imageWidth = imgPreloader.width;
+				var imageHeight = imgPreloader.height;
+				if (imageWidth > x) {
+					imageHeight = imageHeight * (x / imageWidth); 
+					imageWidth = x; 
+					if (imageHeight > y) { 
+						imageWidth = imageWidth * (y / imageHeight); 
+						imageHeight = y; 
+					}
+				} else if (imageHeight > y) { 
+					imageWidth = imageWidth * (y / imageHeight); 
+					imageHeight = y; 
+					if (imageWidth > x) { 
+						imageHeight = imageHeight * (x / imageWidth); 
+						imageWidth = x;
+					}
+				}
+				// End Resizing
+				
+				TB_WIDTH = imageWidth + 30;
+				TB_HEIGHT = imageHeight + 60;
+				$("#TB_window").append("<a href='' id='TB_ImageOff' title='Close'><img id='TB_Image' src='"+url+"' width='"+imageWidth+"' height='"+imageHeight+"' alt='"+caption+"'/></a>" + "<div id='TB_caption'>"+caption+"<div id='TB_secondLine'>" + TB_imageCount + TB_PrevHTML + TB_NextHTML + "</div></div><div id='TB_closeWindow'><a href='#' id='TB_closeWindowButton' title='Close'>close</a> or Esc Key</div>"); 		
+				
+				$("#TB_closeWindowButton").click(tb_remove);
+				
+				if (!(TB_PrevHTML === "")) {
+					function goPrev(){
+						if($(document).unbind("click",goPrev)){$(document).unbind("click",goPrev);}
+						$("#TB_window").remove();
+						$("body").append("<div id='TB_window'></div>");
+						tb_show(TB_PrevCaption, TB_PrevURL, imageGroup);
+						return false;	
+					}
+					$("#TB_prev").click(goPrev);
+				}
+				
+				if (!(TB_NextHTML === "")) {		
+					function goNext(){
+						$("#TB_window").remove();
+						$("body").append("<div id='TB_window'></div>");
+						tb_show(TB_NextCaption, TB_NextURL, imageGroup);				
+						return false;	
+					}
+					$("#TB_next").click(goNext);
+					
+				}
+	
+				document.onkeydown = function(e){ 	
+					if (e == null) { // ie
+						keycode = event.keyCode;
+					} else { // mozilla
+						keycode = e.which;
+					}
+					if(keycode == 27){ // close
+						tb_remove();
+					} else if(keycode == 190){ // display previous image
+						if(!(TB_NextHTML == "")){
+							document.onkeydown = "";
+							goNext();
+						}
+					} else if(keycode == 188){ // display next image
+						if(!(TB_PrevHTML == "")){
+							document.onkeydown = "";
+							goPrev();
+						}
+					}	
+				};
+				
+				tb_position();
+				$("#TB_load").remove();
+				$("#TB_ImageOff").click(tb_remove);
+				$("#TB_window").css({display:"block"}); //for safari using css instead of show
+				};
+				
+				imgPreloader.src = url;
+			}else{//code to show html
+				
+				var queryString = url.replace(/^[^\?]+\??/,'');
+				var params = tb_parseQuery( queryString );
+	
+				TB_WIDTH = (params['width']*1) + 30 || 630; //defaults to 630 if no paramaters were added to URL
+				TB_HEIGHT = (params['height']*1) + 40 || 440; //defaults to 440 if no paramaters were added to URL
+				ajaxContentW = TB_WIDTH - 30;
+				ajaxContentH = TB_HEIGHT - 45;
+				
+				if(url.indexOf('TB_iframe') != -1){// either iframe or ajax window		
+						urlNoQuery = url.split('TB_');
+						$("#TB_iframeContent").remove();
+						if(params['modal'] != "true"){//iframe no modal
+							$("#TB_window").append("<div id='TB_title'><div id='TB_ajaxWindowTitle'>"+caption+"</div><div id='TB_closeAjaxWindow'><a href='#' id='TB_closeWindowButton' title='Close'>close</a> or Esc Key</div></div><iframe frameborder='0' hspace='0' src='"+urlNoQuery[0]+"' id='TB_iframeContent' name='TB_iframeContent"+Math.round(Math.random()*1000)+"' onload='tb_showIframe()' style='width:"+(ajaxContentW + 29)+"px;height:"+(ajaxContentH + 17)+"px;' > </iframe>");
+						}else{//iframe modal
+						$("#TB_overlay").unbind();
+							$("#TB_window").append("<iframe frameborder='0' hspace='0' src='"+urlNoQuery[0]+"' id='TB_iframeContent' name='TB_iframeContent"+Math.round(Math.random()*1000)+"' onload='tb_showIframe()' style='width:"+(ajaxContentW + 29)+"px;height:"+(ajaxContentH + 17)+"px;'> </iframe>");
+						}
+				}else{// not an iframe, ajax
+						if($("#TB_window").css("display") != "block"){
+							if(params['modal'] != "true"){//ajax no modal
+							$("#TB_window").append("<div id='TB_title'><div id='TB_ajaxWindowTitle'>"+caption+"</div><div id='TB_closeAjaxWindow'><a href='#' id='TB_closeWindowButton'>close</a> or Esc Key</div></div><div id='TB_ajaxContent' style='width:"+ajaxContentW+"px;height:"+ajaxContentH+"px'></div>");
+							}else{//ajax modal
+							$("#TB_overlay").unbind();
+							$("#TB_window").append("<div id='TB_ajaxContent' class='TB_modal' style='width:"+ajaxContentW+"px;height:"+ajaxContentH+"px;'></div>");	
+							}
+						}else{//this means the window is already up, we are just loading new content via ajax
+							$("#TB_ajaxContent")[0].style.width = ajaxContentW +"px";
+							$("#TB_ajaxContent")[0].style.height = ajaxContentH +"px";
+							$("#TB_ajaxContent")[0].scrollTop = 0;
+							$("#TB_ajaxWindowTitle").html(caption);
+						}
+				}
+						
+				$("#TB_closeWindowButton").click(tb_remove);
+				
+					if(url.indexOf('TB_inline') != -1){	
+						$("#TB_ajaxContent").append($('#' + params['inlineId']).children());
+						$("#TB_window").unload(function () {
+							$('#' + params['inlineId']).append( $("#TB_ajaxContent").children() ); // move elements back when you're finished
+						});
+						tb_position();
+						$("#TB_load").remove();
+						$("#TB_window").css({display:"block"}); 
+					}else if(url.indexOf('TB_iframe') != -1){
+						tb_position();
+						if($.browser.safari){//safari needs help because it will not fire iframe onload
+							$("#TB_load").remove();
+							$("#TB_window").css({display:"block"});
+						}
+					}else{
+						$("#TB_ajaxContent").load(url += "&random=" + (new Date().getTime()),function(){//to do a post change this load method
+							tb_position();
+							$("#TB_load").remove();
+							tb_init("#TB_ajaxContent a.thickbox");
+							$("#TB_window").css({display:"block"});
+						});
+					}
+				
+			}
+	
+			if(!params['modal']){
+				document.onkeyup = function(e){ 	
+					if (e == null) { // ie
+						keycode = event.keyCode;
+					} else { // mozilla
+						keycode = e.which;
+					}
+					if(keycode == 27){ // close
+						tb_remove();
+					}	
+				};
+			}
+			
+		} catch(e) {
+			//nothing here
+		}
+	}
+	
+	//helper functions below
+	function tb_showIframe(){
+		$("#TB_load").remove();
+		$("#TB_window").css({display:"block"});
+	}
+	
+	function tb_remove() {
+	 	$("#TB_imageOff").unbind("click");
+		$("#TB_closeWindowButton").unbind("click");
+		$("#TB_window").fadeOut("fast",function(){$('#TB_window,#TB_overlay,#TB_HideSelect').trigger("unload").unbind().remove();});
+		$("#TB_load").remove();
+		if (typeof document.body.style.maxHeight == "undefined") {//if IE 6
+			$("body","html").css({height: "auto", width: "auto"});
+			$("html").css("overflow","");
+		}
+		document.onkeydown = "";
+		document.onkeyup = "";
+		return false;
+	}
+	
+	function tb_position() {
+	$("#TB_window").css({marginLeft: '-' + parseInt((TB_WIDTH / 2),10) + 'px', width: TB_WIDTH + 'px'});
+		if ( !(jQuery.browser.msie && jQuery.browser.version < 7)) { // take away IE6
+			$("#TB_window").css({marginTop: '-' + parseInt((TB_HEIGHT / 2),10) + 'px'});
+		}
+	}
+	
+	function tb_parseQuery ( query ) {
+	   var Params = {};
+	   if ( ! query ) {return Params;}// return empty object
+	   var Pairs = query.split(/[;&]/);
+	   for ( var i = 0; i < Pairs.length; i++ ) {
+	      var KeyVal = Pairs[i].split('=');
+	      if ( ! KeyVal || KeyVal.length != 2 ) {continue;}
+	      var key = unescape( KeyVal[0] );
+	      var val = unescape( KeyVal[1] );
+	      val = val.replace(/\+/g, ' ');
+	      Params[key] = val;
+	   }
+	   return Params;
+	}
+	
+	function tb_getPageSize(){
+		var de = document.documentElement;
+		var w = window.innerWidth || self.innerWidth || (de&&de.clientWidth) || document.body.clientWidth;
+		var h = window.innerHeight || self.innerHeight || (de&&de.clientHeight) || document.body.clientHeight;
+		arrayPageSize = [w,h];
+		return arrayPageSize;
+	}
+	
+	function tb_detectMacXFF() {
+	  var userAgent = navigator.userAgent.toLowerCase();
+	  if (userAgent.indexOf('mac') != -1 && userAgent.indexOf('firefox')!=-1) {
+	    return true;
+	  }
+	}
+}(jQuery));
