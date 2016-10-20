@@ -2,7 +2,7 @@
 Contributors: michelem, helened   
 Donate link:  [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8)   
 Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web   
-Requires at least: WordPress 4.0   
+Requires at least: WordPress 2.0   
 Tested up to: 4.6.1   
 Stable tag: 1.9.2   
 License: GPLv2 or later   
