@@ -10,16 +10,12 @@
  * @since:	v1.9.1
  * @author:	helened <http://helenesit.com>
  */
-//-------------------------------------------------
-//# No direct requests for this plugin module
-$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
 //abort if this is direct uri request for file
-if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF']).'$#',$wfile)>0) || 
-   (!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile))){
+if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath(preg_replace('/\\\\/','/',__FILE__))){
 	//try track this uri request
 	if(!headers_sent()){
 		//triggers redirect to 404 error page so Wassup can track this attempt to access itself (original request_uri is lost)
-		header('Location: /?p=404page&err=wassup403'.'&wf='.basename($wfile));
+		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename(__FILE__));
 		exit;
 	}else{
 		//'wp_die' may be undefined here
@@ -28,8 +24,8 @@ if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF
 	exit;
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
-	//'wp_die' is undefined here
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	//show escaped bad request on exit
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 //-------------------------------------------------
 /**
@@ -46,10 +42,14 @@ function wassup_load_compat_modules(){
 		if(version_compare($wp_version,'3.1','<')){
 			if(file_exists($wassup_compatlib.'/compat_wp.php')){
 				require_once($wassup_compatlib.'/compat_wp.php');
-				include_once($wassup_compatlib.'/compat_functions.php');
+				//New in v1.9.2: added multisite compatibility check
+				if(function_exists('is_multisite') && is_multisite()){
+					$is_compatible=false;
+				}else{
+					include_once($wassup_compatlib.'/compat_functions.php');
+				}
 			}else{
 				$is_compatible=false;
-				//wp_die("Missing file $wassup_compatlib/compat_wp.php");	//debug
 			}
 		}elseif(version_compare($wp_version,'4.5','<')){
 			if(file_exists($wassup_compatlib.'/compat_functions.php')){
@@ -62,7 +62,6 @@ function wassup_load_compat_modules(){
 				require_once($wassup_compatlib.'/compat_php.php');
 			}else{
 				$is_compatible=false;
-				//wp_die("Missing file $wassup_compatlib/compat_php.php");	//debug
 			}
 		}
 	}
@@ -81,9 +80,16 @@ function wassup_show_compat_message(){
 		$php_vers=phpversion();
 		$wassup_compatlib=WASSUPDIR.'/lib/compat-lib';
 		$download_link='<a href="https://github.com/michelem09/wassup/releases/tag/v'.WASSUPVERSION.'">GitHub</a>';
-		if(version_compare($wp_version,'3.1','<') && !file_exists($wassup_compatlib.'/compat_wp.php')){
-			$msg= __("WARNING! WassUp's backward compatibility modules are missing.","wassup");
-			$msg .= ' '.sprintf(__('Download and install the full version of Wassup with compatibility library included directly from %s.','wassup'),$download_link);
+		if(version_compare($wp_version,'3.1','<')){
+			if(!file_exists($wassup_compatlib.'/compat_wp.php')){
+				$msg= __("WARNING! WassUp's backward compatibility modules are missing.","wassup");
+				$msg .= ' '.sprintf(__('Download and install the full version of Wassup with compatibility library included directly from %s.','wassup'),$download_link);
+			}
+			//New in v1.9.2: added multisite compatibility message
+			//WassUp works only in WP3.1 or higher for multisite 
+			if(function_exists('is_multisite') && is_multisite()){
+				$msg =__("Sorry, WassUp requires WordPress 3.1 or higher to work in multisite setups","wassup");
+			}
 		}elseif(version_compare($php_vers,'5.2','<') && !file_exists($wassup_compatlib.'/compat_php.php')){
 			$msg= __("WARNING! WassUp's PHP compatibility module is missing.","wassup");
 			$msg .= ' '.sprintf(__('Download and install the full version of Wassup with compatibility library included directly from %s.','wassup'),$download_link);
@@ -95,4 +101,4 @@ function wassup_show_compat_message(){
 		echo '<div '.$mstyle.'>'.$msg.'</div>';
 	}
 }
-unset($wfile); //to free memory
+?>

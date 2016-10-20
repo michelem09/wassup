@@ -5,29 +5,22 @@
  * @package WassUp Real-time Analytics
  * @subpackage main.php module
  */
-//-------------------------------------------------
-//# No direct requests for this plugin module
-$wfile=preg_replace('/\\\\/','/',__FILE__); //for windows
 //abort if this is direct uri request for file
-if((!empty($_SERVER['PHP_SELF']) && preg_match('#'.preg_quote($_SERVER['PHP_SELF']).'$#',$wfile)>0) || 
-   (!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath($wfile))){
+if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])===realpath(preg_replace('/\\\\/','/',__FILE__))){
 	//try track this uri request
 	if(!headers_sent()){
 		//triggers redirect to 404 error page so Wassup can track this attempt to access itself (original request_uri is lost)
-		header('Location: /?p=404page&err=wassup403'.'&wf='.basename($wfile));
+		header('Location: /?p=404page&werr=wassup403'.'&wf='.basename(__FILE__));
 		exit;
 	}else{
 		//'wp_die' may be undefined here
 		die('<strong>Sorry. Unable to display requested page.</strong>');
 	}
-	exit;
 //abort if no WordPress
 }elseif(!defined('ABSPATH') || empty($GLOBALS['wp_version'])){
 	//show escaped bad request on exit
-	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;|&amp;#0*37;|&#0*38;#0*37;|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
+	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
-unset($wfile);	//to free memory
-
 //-------------------------------------------------
 if(!class_exists('wassup_pagination')){
 /**
@@ -235,10 +228,11 @@ class wDetector{
 		$browser="";
 		$version="";
 		$match=array();
-		if(strstr($useragent,' Gecko/')==false && preg_match("#^Mozilla\/\d\.\d\s\(Windows\sNT\s\d+(?:\.\d+)?;(?:\s[0-9A-Za-z./]+;)+\srv\:([0-9\.]+)\)#",$useragent,$match)){
-			$browser="IE";
-		}elseif(preg_match("#^Mozilla\/[0-9.\s]+\(Windows\s(?:NT|Phone)\s[0-9.]+.+\).+(?:\sChrome|Safari)\/[0-9.]+.+\sEdge\/([0-9\.]+)#",$useragent,$match)){
+		if(strpos($useragent,' Gecko/')>0 && preg_match("#^Mozilla\/[0-9.\s]+\(Windows\s(?:NT|Phone)\s[0-9.]+.+\).+(?:\sChrome|Safari)\/[0-9.]+.+\sEdge\/([0-9\.]+)#",$useragent,$match)){
 			$browser="Edge";
+			$version=$match[1];
+		}elseif(preg_match("#^Mozilla\/[0-9.\s]+\(Windows\sNT\s[0-9.]+;.+;\s?rv\:([0-9.]+)\)#",$useragent,$match)){
+			$browser="IE";
 			$version=$match[1];
 		}elseif(preg_match("/^Mozilla(?:.*)compatible;\sMSIE\s(?:.*)Opera\s([0-9\.]+)/",$useragent,$match)){
 			$browser = "Opera";
@@ -317,7 +311,7 @@ class wDetector{
 		}elseif(preg_match("/^SonyEricsson([0-9a-zA-Z\-.]+)\/([a-zA-Z0-9\.]+)/i",$useragent,$match)){
 			$browser="SonyEricsson";
 		}
-		if(empty($version) && !empty($match[1]) && preg_match("/^\d+(\.\d+)?/",$match[1],$pcs)>0){	//v1.9.1 bugfix
+		if(empty($version) && !empty($match[1]) && preg_match("/^\d+(\.\d+)?/",$match[1],$pcs)>0){
 			$version=$pcs[0];
 		}
 		$this->browser=$browser;
@@ -641,7 +635,7 @@ function wassup_spiaView ($from_date="",$rows=0,$spytype="",$spy_datasource="") 
 				$flag='<img src="'.WASSUPURL.'/img/flags/'.$locale.'.png" title="'.$flag_title.'" />';
 				//update language/locale code when different from geoip country code (not us)
 				if(empty($cv->language) || ($cv->language =="us" && $locale!="us")){
-					$wassup_dbtask[]=sprintf("UPDATE `$wassup_table` SET `language`='%s' WHERE `wassup_id`='%s' AND `language`='%s'",$locale,$cv->wassup_id,$cv->language); //v1.9.1 bugfix
+					$wassup_dbtask[]=sprintf("UPDATE `$wassup_table` SET `language`='%s' WHERE `wassup_id`='%s' AND `language`='%s'",$locale,$cv->wassup_id,$cv->language);
 				}
 			}
 		}
@@ -2070,7 +2064,7 @@ function wFetchAPIData($api_url) {
 	global $wdebug_mode;
 	$wassup_agent=apply_filters('http_headers_useragent',"WassUp/".WASSUPVERSION." - www.wpwp.org");
 	$apidata=array();
-	//v1.9.1 bugfix: timeout now set in http/curl settings, not via 'set_time_limit' which does not apply to remote requests
+	//timeout now set in http/curl settings, not via 'set_time_limit' which does not apply to remote requests @since v1.9.1
 	//try Wordpress 'wp_remote_get' for api results
 	if(function_exists('wp_remote_get')){
 		$opts=array('user-agent'=>"$wassup_agent",'timeout'=>5);

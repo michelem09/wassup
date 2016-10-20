@@ -1,12 +1,12 @@
-# WassUp Real Time Analytics for WordPress  
-Contributors: michelem, helened  
+# WassUp Real Time Analytics for WordPress
+Contributors: michelem, helened   
 Donate link:  [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8)   
-Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
-Requires at least: WordPress 2.2  
-Tested up to: 4.6.1  
-Stable tag: 1.9.1  
-License: GPLv2 or later  
-License URI: http://www.gnu.org/licenses/gpl-2.0.html  
+Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web   
+Requires at least: WordPress 4.0   
+Tested up to: 4.6.1   
+Stable tag: 1.9.2   
+License: GPLv2 or later   
+License URI: http://www.gnu.org/licenses/gpl-2.0.html   
 
 #### Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more.
 -----
@@ -66,7 +66,7 @@ For people with database size limitations, WassUp has a few options to manage th
 * usage chart (Google!chart)
 * top stats lists with aggregate data (top queries, requests, os, browsers)
 
-#### There are many options to customize how WassUp tracks and displays data:
+#### There are many options to customize how data is tracked and displayed:
 * Enable/Disable recording (tracking)
 * Screen refresh frequency (minutes)
 * Screen resolution (browser width)
@@ -79,11 +79,18 @@ For people with database size limitations, WassUp has a few options to manage th
 * Record or not referrer spammers
 * registered users to exclude from recording
 * IP or hostname to exclude from recording
-* Email alert for table growth
-* Auto delete of old records  
 
-### IMPORTANT NOTICES
-* To run Wassup in Wordpress 2.2 - 3.7, you must install the full copy of Wassup with backward-compatibility features available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)
+#### There are tools to monitor and control Wassup's table growth:
+* Empty table, manually
+* Delete old records, manually
+* Setup automatic delete of old records
+* Send an e-mail notice when table exceeds a preset size limit
+* Export table in SQL format
+* Database and server settings infos.
+
+### IMPORTANT NOTICES 
+* Wassup is compatible with Wordpress 4.0+ and PHP 5.2+ 
+* To run Wassup with Wordpress 2.2 - 3.9 or with PHP 4.3 - 5.1, you must install the full copy of Wassup with backward-compatibility feature available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)
 * WassUp is incompatible with static page caching plugins such as "WP Super-Cache"
 * &sup1;WassUp is NOT a security plugin. It does not block unwanted visitors nor protect your site from malware attempts. You need a separate security plugin for that
 
@@ -146,64 +153,61 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 ### Compatibility Notice 
 * WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, and WP Hyper Cache. 
 
-
-## Upgrade Notice 
-
-### v1.9.1 
-* Critical security, compatibility and bugfix upgrade.  
-  64MB memory is now required for Wassup! See [codex document "Editing wp-config.php"](https://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP) to increase memory allocated to Wordpress before upgrading.  
-  DO NOT UPGRADE when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.  
+## Upgrade Notice
+### 1.9.2
+* Urgent bugfix upgrade.
+* DO NOT UPGRADE when your site busy!
+* Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
 
 ## Changelog
-### v1.9.1: Critical security, compatibility, and bugfix upgrade 
+### v1.9.2: Urgent bugfix upgrade 
+* fixed fatal error on `wassup_options::is_recording_active` that occurred in some configurations
+* fixed erroneous 'hack attempt' labels that occurred on sites without permalinks
+* fixed a refresh timer bug that disabled dropdown selections in Visitor Details when refresh setting is 0.
+* fixed a debug_mode bug that caused error notices to show as output for Wassup ajax action
+* new functions(2) to reset error display in debug_mode
+* improved spider detection.
+* updated "compatibility.php" module for multisite compatibility tests
+* miscellaneous minor bug fixes
+* miscellaneous minor code changes.
+
+### v1.9.1: Critical security, compatibility, and bugfix upgrade
 * patched security loopholes (xss vulnerability) in the 'Top stats' widget and in `wassupURI::add_siteurl` method
-* revised plugin code to improve prevention of XSS attacks via it's interface and widgets
-* revised plugin code to comply with the latest requirements for inclusion in Wordpress.org plugin repository
-* revised 'readme.txt' to comply with Wordpress.org plugin repository guidelines.
+* improved security against xss attacks on interface and widgets.
+* improved compliance with the latest Wordpress.org plugin repository guidelines.
+* improved browser/os detection.
 * new module, 'wassupadmin.php' for WassUp admin panels and dashboard widget
 * new module, 'compatibility.php' to check for Wordpress and PHP compatibility and to load compatibility modules from `/lib/compat-lib/` subfolder when available
-* removed backward compatibility folder, modules, and javascripts from Wordpress's copy of Wassup package to comply with Wordpress plugin repository requirements.  
+* removed backward compatibility modules ('/lib/compat-lib/') and features from Wordpress repository.
   Wassup's backward-compatibility feature remains in the full copy of Wassup available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)  
-* removed obsolete files 'badhosts.txt', 'badhosts-intl.txt'
+* deleted obsolete files ('badhosts.txt','badhosts-intl.txt') and javascripts
 * updated Google!Maps API link to use a common API key for Wassup-Spy (required by Google since 2016-06-22).
 * updated WassUp 'wp-cron' scheduled tasks to terminate (and restart) at reset-to-default, recording stop/start, and at plugin deactivate/reactivate events.
 * updated Wassup table export to omit all known spam/malware records from export by default...to avoid propagation of malware code when exported records are imported into other applications.
-* updated `wassup_Akismet` class to abort remote requests with timeout error after 5 seconds to avoid plugin slowdown due to slow server response.
-* updated 'UADetector' and 'wDetector' classes to improve browser and os detection (Microsoft Edge, Win10).
 * updated translation template, 'wassup.pot'.
 * fixed problem with login page hits not being recorded.
 * fixed errors caused by disabled 'set_time_limit' function in some configurations.
-* fixed a 'preg_match' error that affected 404 and spam detection.
-* fixed a "script timeout" calculation/test error in Visitor-details.
-* fixed incorrect Wassup menu "href" values in network admin panels.
-* fixed a MySQL timezone/offset calculation error in some queries.
-* fixed a scheduled task validation error that caused some wp-cron tasks to fail.
-* miscellaneous minor bugfixes.
-* miscellaneous minor text changes
+* miscellaneous bugfixes.
+* miscellaneous text changes
 * minor css changes for small screen devices.
 
-### v1.9: Important compatibility and feature improvement upgrade.
-* new caching of MySQL expensive queries to improve plugin performance
-* new options for improved MySQL table management 
-* new multisite network compatibility feature added
-* new and improved aside widgets with multi-widget capability
-* new tracking filters to exclude some automated requests and to add wildcard filtering by hostnames and ip
+### v1.9: Important feature improvement upgrade
+* improved MySQL performance and table management
+* improved tracking filters.
+* improved security with more input validation, deprecated function removal and escaped output.
+* new multisite network capability.
+* new multi-widget capability in widgets.
 * new "FAQ" and "Donate" panels in Wassup-Options submenu
 * new "top stats" popup-window in Visitor Details panel
-* updated code for Wordpress 4.x, PHP 5.6-mysqli compatibility, and Akismet 3.0 plugin compatibility
-* updated plugin security with more input validation, deprecated functions removal, and escaped output
-* updated javascripts libraries, `jquery.js`,`jquery-ui.js` and added jquery-migrate.js and wassup.js
+* updated code for Wordpress 4/PHP 5.6-mysqli compatibility
+* updated internal javascripts libaries.
 * updated css and validated as 100% W3C CSS3 compliant
 * updated browser and os detection for new agents (Win10)
 * updated translation template (wassup.pot)
 * updated "readme.txt"
-* fixed search engine referrer data to substitute "not provided" for missing keywords from secure searches (https-to-http omission)
-* fixed a fatal error in Wassup-options caused by disabled PHP functions in some host configurations
-* fixed a bug in Wassup-options that caused table export to fail
-* fixed an activation failure problem in `upgrade.php` that occurred in some host configurations
 * 3 new classes added to code: `wassupDb` for MySQL table operations and caching, `wassupURI` to format and clean urls/links for safe output, and `Wassup_Widget` a base widget for building Wassup widgets
-* minor text changes
-* minor bugfixes
+* miscellaneous minor text changes
+* miscellaneous minor bugfixes
 
 ### v1.8.6
 * Removed deprecated Wordpress methods, minor text changes.
@@ -235,6 +239,16 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * new GEOIP API [freegeoip.net](http://freegeoip.net) for map geolocation in SPY view. Thanks to [@AlexandreFiori](http://twitter.com/alexandrefiori) for giving us access to his API.
 * bugfixes, security fixes, and changes for Wordpress compatibility.
 
+### 1.7.2.1
+* fixed a security loophole found in main.php module.
+
+### 1.7.2
+* new clickable refresh timer in "Visitor Details" submenu.
+* initial sample record added to WassUp table for new installs.
+* improved browser, OS, and search engine detection.
+* more language translations added.
+
+...
 
 ## Infos
 ### Plugin Home
