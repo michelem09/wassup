@@ -1427,7 +1427,7 @@ function wassupAppend($req_code=0) {
 			}
 		}
 	//#14 Exclude 404 hits unless 1st visit or malware attempt
-	if($req_code == 200 || empty($recent_hit) || ($hackercheck && $spam==0 && (stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&#0*60;?|&#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){
+	if($req_code == 200 || empty($recent_hit) || ($hackercheck && $spam==0 && (stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){
 		//identify hackers/malware 
 		if($hackercheck && $spam==0){
 			$pcs=array();
