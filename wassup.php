@@ -3,7 +3,7 @@
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
 Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
-Version: 1.9.2
+Version: 1.9.2.1
 Author: Michele Marcucci, Helene Duncker
 Author URI: http://www.michelem.org/
 Text Domain: wassup
@@ -50,15 +50,15 @@ if((!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])
 function wassup_init($init_settings=false){
 	global $wp_version,$wassup_options,$wdebug_mode;
 	//define wassup globals & constants
-	if(!defined('WASSUPVERSION')){	//v1.9.2 bugfix
-		define('WASSUPVERSION','1.9.2');
+	if(!defined('WASSUPVERSION')){
+		define('WASSUPVERSION','1.9.2.1');
 		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
 	}
 	//turn on debugging (global)...Use cautiously! Will display errors from all plugins, not just WassUp
 	$wdebug_mode=false;
 	if(defined('WP_DEBUG') && WP_DEBUG==true) $wdebug_mode=true;
 	if($wdebug_mode){
-		//New in v1.9.2: turn off debug mode if this is ajax action request
+		//turn off debug mode if this is ajax action request @since v1.9.2
 		if((!empty($_REQUEST['action']) && isset($_REQUEST['wajax'])) || (defined('DOING_AJAX') && DOING_AJAX)){
 			$wdebug_mode=false;
 			@wassup_disable_errors();
@@ -108,10 +108,10 @@ function wassup_init($init_settings=false){
 			$wassup_settings=get_option('wassup_settings');
 			if(count($wassup_settings)>1 && !empty($wassup_settings['wassup_version']) && $wassup_settings['wassup_version']==WASSUPVERSION){
 				$wassup_options=new wassupOptions;
-			}else{	//v1.9.2 bugfix
+			}else{
 				//'else' shouldn't happen unless 'wassup_settings' wp_option record is corrupted or deleted/locked by another application
 				$wassup_options=new wassupOptions(true);
-				//New in v1.9.2: corruption maybe caused by a 'wassup_install' interrupt or time out before update is done, so try re-save settings
+				//corruption maybe caused by a 'wassup_install' interrupt or time out before update is done, so try re-save settings @since v1.9.2
 				//$wassup_options->wassup_version=WASSUPVERSION;
 				$wassup_options->saveSettings();
 			}
@@ -166,7 +166,6 @@ function wassup_install($network_wide=false) {
 	}
 	//network-wide settings for multisite @since v1.9
 	if(is_multisite()){
-		//New in v1.9.2: moved multisite compatibility check to 'compatibility.php' module
 		if(is_network_admin()){
 			$network_wide=true;
 			//no network activation in subdomain networks, subdomain sites must activate Wassup separately @TODO
@@ -383,7 +382,7 @@ function wassup_uninstall($network_wide=false){
 			$dropped=$wpdb->query("DROP TABLE IF EXISTS $table_tmp_name");
 			$dropped=$wpdb->query("DROP TABLE IF EXISTS $wassup_table");
 		}
-		//New in v1.9.2: make sure tables were dropped (for backward compatibility)
+		//make sure tables were dropped (compatibility code) @since v1.9.2
 		if($wpdb->get_var(sprintf("SHOW TABLES LIKE '%s'",like_escape($wassup_table)))==$wassup_table){
 			//"if exists" in wpdb::query caused error in early versions of Wordpress
 			if($wpdb->get_var(sprintf("SHOW TABLES LIKE '%s'",like_escape($table_meta_name)))==$table_meta_name){
@@ -460,10 +459,10 @@ function wassup_preload(){
 	//block any obvious sql injection attempts involving WassUp
 	$request_uri=$_SERVER['REQUEST_URI'];
 	if(!$request_uri) $request_uri=$_SERVER['SCRIPT_NAME']; // IIS
-	//v1.9.2 bugfix: removed referrer from test..could cause non-wassup request redirect
+	//don't test referrer for Wassup..could cause non-wassup request redirect @since v1.9.2
 	if(stristr($request_uri,'wassup')!==false && strstr($request_uri,'err=wassup403')===false){
 		$error_msg="";
-		//v1.9.2 bugfix: don't test logged-in user requests
+		//don't test logged-in user requests @since v1.9.2
 		if(!is_user_logged_in()){
 			if(preg_match('/(<|&lt;?|&#0*60;?|%3C)scr(ipt|[^0-9a-z\-_])/i',$request_uri)>0){
 				$error_msg=__('Bad request!','wassup');
@@ -497,7 +496,7 @@ function wassup_preload(){
 		//an error message was likely displayed to screen
 		echo "\n".'<!-- wassup_preload start -->';
 	}
-	//v1.9.2 bugfix: fix for object error seen in support forum, but redundant to fix already in 'wassup_init'
+	//fix for object error seen in support forum, but redundant to fix already in 'wassup_init' @since v1.9.2
 	if(empty($wassup_options)){
 		if(!class_exists('wassupOptions')) require_once(WASSUPDIR.'/lib/wassup.class.php');
 		$wassup_options=new wassupOptions;
@@ -546,7 +545,7 @@ function wassup_load() {
 		if(!wassup_init()) return;	//nothing to do
 	}
 	//load widgets and visitor tracking footer scripts
-	if(!empty($wassup_options)){	//v1.9.2 bugfix
+	if(!empty($wassup_options)){
 		if($wassup_options->is_recording_active()){
 			add_action("widgets_init",'wassup_widget_init',9);
 			if(is_admin()) add_action('admin_footer','wassup_foot');
@@ -869,7 +868,7 @@ function wassupPrepend() {
 			//retroactively undo "hack attempt" label
 			$wassup_dbtask[]=sprintf("UPDATE `$wassup_table` SET `username`='%s', `spam`='0' WHERE `wassup_id`='%s' AND `spam`!='0' AND `timestamp`>'%d'",$logged_user,$wsession_id,$timenow-90);
 		}
-		//New in v1.9.2: timeout logged-in users after 10 mins to trigger save into temp for online counts
+		//timeout logged-in users after 10 mins to trigger save into temp for online counts @since v1.9.2
 		if($wassup_timer > 5361){ //for 1st save/cookie reset
 			$session_timeout=true;
 		}elseif($wassup_timer < 4801){	//timeout after ~10 mins
@@ -877,7 +876,7 @@ function wassupPrepend() {
 		}
 	}
 	//Track visitor
-	//New in v1.9.2: Exclude for logged-in user in admin area (unless session_timeout is set)
+	//Exclude for logged-in user in admin area (unless session_timeout is set)
 	if(!is_admin() || empty($logged_user) || $session_timeout || $req_code !=200 || empty($wassup_id)){
 		//use 'send_headers' hook for feed, media, and files except when request is wp-admin which doesn't run this hook
 		if(is_feed() || preg_match('#[=/?&](feed|atom)#',$urlRequested)>0){
@@ -952,7 +951,7 @@ function wassupAppend($req_code=0) {
 	//identify media requests
 	$is_media=false;
 	$fileRequested="";
-	if(preg_match("#(^/[0-9a-z\-/\._]+\.(3gp|avi|bmp|flv|gif|gifv|ico|img|jpe?g|mkv|mov|mpa|mpe?g|mp[234]|ogg|oma|omg|png|pdf|pp[st]x?|psd|svg|swf|tiff|vob|wav|webm|wma|wmv))(?:[?\#&]|$)#i",$_SERVER['REQUEST_URI'],$pcs)>0){
+	if(preg_match("#^(/(?:[0-9a-z.\-\/_]+\.(?:3gp|avi|bmp|flv|gif|gifv|ico|img|jpe?g|mkv|mov|mpa|mpe?g|mp[234]|ogg|oma|omg|png|pdf|pp[st]x?|psd|svg|swf|tiff|vob|wav|webm|wma|wmv))|(?:[0-9a-z.\-\/_]+(?:zoom(?:in|out)\.cur)))(?:[?\#&]|$)#i",$_SERVER['REQUEST_URI'],$pcs)>0){	//v1.9.2.1 bugfix
 		$is_media=true;
 		if(ini_get('allow_url_fopen')) $fileRequested=$blogurl.$pcs[1];
 	}
@@ -1239,7 +1238,7 @@ function wassupAppend($req_code=0) {
 		}
 	}
 	$hackercheck=true;	//for malware checking
-	//do early check for xss code on url and label as spam/malware for temp record, even if spam detection is disabled  @since v1.9.1
+	//do an early quick-check for xss code on url and label as spam/malware for temp record, even if spam detection is disabled  @since v1.9.1
 	if(preg_match('/(document\.write(?:ln)?|(?:<|&lt;|&#0*60;?|%3C)scr(?:ipt|[^0-9a-z\-_])|[0t;];script|[ +;0]src=|[ +;]href=|%20href=)([^0-9a-z]|http[:s]|ftp[:s])/',$urlRequested)>0){
 		$spam=3;
 		$hackercheck=false;
@@ -1416,23 +1415,27 @@ function wassupAppend($req_code=0) {
 				}
 			}
 		}
-	//#13 Exclude admin (ajax?) requests with same session cookie as recent hit but does not show as a logged user request (ex: /wp-admin/post.php hit from edit link in website page?)
-	if((!is_admin() && stristr($urlRequested,"/wp-admin/")===false) || empty($recent_hit) || ((empty($recent_hit[0]->username) || $recent_hit[0]->username != $cookieUser) && stristr($recent_hit[0]->urlrequested,"/wp-admin/")===false)){
+	//#13 Exclude admin/admin-ajax requests with same session cookie as recent hit but does not show as a logged user request (ex: /wp-admin/post.php hit from edit link in website page?)
+	if((!is_admin() && stristr($urlRequested,"/wp-admin/")===false) || $urlRequested !='/wp-admin/admin-ajax.php' || empty($recent_hit) || ((empty($recent_hit[0]->username) || $recent_hit[0]->username != $cookieUser) && stristr($recent_hit[0]->urlrequested,"/wp-admin/")===false)){
 		//check for xss attempts on referrer
 		if($spam==0 && $hackercheck && empty($logged_user)){
-			if(!empty($referrer) && $referrer != $blogurl.$urlRequested){
+			//...skip if referrer is own blog
+			if(!empty($referrer) && !$is_admin_login && stristr($referrer,$wpurl)!=$referrer && stristr($referrer,$blogurl)!=$referrer && $referrer!=$blogurl.$urlRequested){
 				if(wassupURI::is_xss($referrer)){
+					$spam=3;
+				}elseif(wIsAttack($referrer)){
 					$spam=3;
 				}
 			}
 		}
 	//#14 Exclude 404 hits unless 1st visit or malware attempt
-	if($req_code == 200 || empty($recent_hit) || ($hackercheck && $spam==0 && (stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){
-		//identify hackers/malware 
-		if($hackercheck && $spam==0){
+	if($req_code == 200 || empty($recent_hit) || ($hackercheck && $spam==0 && (stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){ //v1.9.2.1 bugfix
+		//New in v1.9.2.1: omit 'admin-ajax.php' and 'wp-login.php' from malware checks
+		if($hackercheck && $spam==0 && $urlRequested !='/wp-login.php' && $urlRequested !='/wp-admin/admin-ajax.php'){
 			$pcs=array();
+		//identify malware
 		//xss attempt
-		if(!empty($logged_user) && wassupURI::is_xss($urlRequested)){
+		if(wassupURI::is_xss($urlRequested)){
 			$spam=3;
 		//non-admin users trying to access root files, password or ids or upgrade script are up to no good
 		}elseif(!$is_admin_login){
@@ -1465,7 +1468,7 @@ function wassupAppend($req_code=0) {
 				}elseif(!empty($pcs[5])){
 					if($req_code==404){
 						$spam=3;
-					}elseif($pcs[5]!='/index.php' && $pcs[5]!='/admin-ajax.php' && $pcs[5]!='/wp-login.php'){
+					}elseif($pcs[5]!='/index.php' && $pcs[5]!='/wp-login.php'){
 						if(empty($recent_hit)){
 							$spam=3;
 						}elseif(strpos($urlRequested,'wp-admin/')>0){
@@ -1478,8 +1481,15 @@ function wassupAppend($req_code=0) {
 						}
 					}
 				}
-				if($spam==0 && preg_match('/[^a-z\-_](admin|administrator|base64|bin|code|config|cookie|delete|dll|document|drop|etc|eval|exec|exit|function|href|ini|insert|install|login|passw|root|script|select|setting|setup|table|update|upgrade|upload|where|window)([^0-9a-z\.\-_]|$)/',$urlRequested)>0){
-					$spam=3;
+				if($spam==0 && preg_match('/[^a-z\-_](admin|administrator|base64|bin|code|config|cookie|delete|dll|document|drop|etc|eval|exec|exit|function|href|ini|insert|install|login|passw|root|script|select|setting|setup|table|update|upgrade|upload|wp\-|where|window)([^0-9a-z\.\-_]|$)/',$urlRequested)>0){
+					if($req_code==404){
+						$spam=3;
+					}elseif(!empty($pcs[2])){
+						$spam=3;
+					}elseif(!empty($pcs[5])){
+						if(strpos($urlRequested,'/wp-')>0) $spam=3;
+						elseif($pcs[5]!='/index.php') $spam=3;
+					}
 				}
 			} //elseif empty(logged_user)
 		}
@@ -1487,11 +1497,7 @@ function wassupAppend($req_code=0) {
 		if(empty($spam) && empty($logged_user) && empty($cookieUser)){
 			$pcs=array();
 			if(preg_match('#[^0-9a-z_]wp\-admin\/.+\.php\d?([^a-z0-9_]|$)#i',$urlRequested)>0){
-				if($req_code == 404){
-					$spam=3;
-				}elseif(strpos('/admin-ajax.php',$urlRequested)===false){
-					$spam=3;
-				}
+				$spam=3;
 			}elseif(preg_match('#\/wp\-(config|load|settings)\.php#',$urlRequested)>0){
 			//regular visitor trying to access setup files is up to no good
 				$spam=3;
@@ -1517,9 +1523,7 @@ function wassupAppend($req_code=0) {
 				$spam=3;
 			}elseif($req_code==404 && wIsAttack($urlRequested)){
 				$spam=3;
-			//lastly check for attack in referrer string
-			}elseif(!empty($referrer) && $referrer != $blogurl.$urlRequested){
-				if(wIsAttack($referrer)) $spam=3;
+				//v1.9.2.1 bugfix: moved referrer 'attack' test to #13 above..some referrer attacks were missed here
 			}
 		} //end if empty logged_user
 			//retroactively update recent visitor records as spam/malware
@@ -1598,7 +1602,7 @@ function wassupAppend($req_code=0) {
 						}
 					}
 				}elseif(!empty($browser) && preg_match('#^(Google Chrome|Netscape|Mozilla|Mozilla Firefox)([0-9./ ]|$)#i',$browser)>0){
-					//New in v1.9.2: old browser name is likely spider
+					//old browser name is likely spider
 					list($spider,$spidertype,$feed)=wGetSpider($userAgent,$hostname,$browser);
 				}elseif(preg_match('#(msie|firefox|chrome)[\/ ](\d+)#i',$userAgent,$pcs)>0){
 					//obsolete browser is likely a spider
@@ -1676,15 +1680,15 @@ function wassupAppend($req_code=0) {
 		//## Check for referrer spam...
 		if($wassup_options->wassup_spamcheck == 1 && $spam == 0 && !$goodbot){
 			$spamComment = New wassup_checkComment;
-			if($wassup_options->wassup_refspam == 1 && !empty($referrer) && !$is_admin_login){
-				//...skip if referrer is own blog
-				if(stristr($referrer,$wpurl)===FALSE && stristr($referrer,$blogurl)===FALSE && !$wdebug_mode){
+			//...skip if referrer is own blog
+			if(!empty($referrer) && !$is_admin_login && stristr($referrer,$wpurl)!=$referrer && stristr($referrer,$blogurl)!=$referrer && $referrer!=$blogurl.$urlRequested){
+				if($wassup_options->wassup_refspam == 1){
 					//check if referrer is a previous comment spammer
 					if($spamComment->isRefSpam($referrer)>0){
 						$spam=2;
 					}else{
 						//check for known referer spammer
-				 		$isspam=wGetSpamRef($referrer,$hostname);
+						$isspam=wGetSpamRef($referrer,$hostname);
 						if ($isspam) $spam = 2;
 					}
 				}
@@ -2154,7 +2158,7 @@ function wassupAppend($req_code=0) {
 			//add debug output to wp_footer output - TODO
 			$expire=time()+180;
 			$wassup_key=wassup_clientIP($_SERVER['REMOTE_ADDR']);
-			wassupDb::update_wassupmeta($wassup_key,'_debug_output',$expire,$debug_output); //v1.9.2 bugfix
+			wassupDb::update_wassupmeta($wassup_key,'_debug_output',$expire,$debug_output);
 		}
 		//restore normal mode
 		@ini_set('display_errors',$mode_reset);

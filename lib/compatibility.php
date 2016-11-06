@@ -42,7 +42,7 @@ function wassup_load_compat_modules(){
 		if(version_compare($wp_version,'3.1','<')){
 			if(file_exists($wassup_compatlib.'/compat_wp.php')){
 				require_once($wassup_compatlib.'/compat_wp.php');
-				//New in v1.9.2: added multisite compatibility check
+				//multisite compatibility check @since v1.9.2
 				if(function_exists('is_multisite') && is_multisite()){
 					$is_compatible=false;
 				}else{
@@ -85,7 +85,7 @@ function wassup_show_compat_message(){
 				$msg= __("WARNING! WassUp's backward compatibility modules are missing.","wassup");
 				$msg .= ' '.sprintf(__('Download and install the full version of Wassup with compatibility library included directly from %s.','wassup'),$download_link);
 			}
-			//New in v1.9.2: added multisite compatibility message
+			//multisite compatibility message @since v1.9.2
 			//WassUp works only in WP3.1 or higher for multisite 
 			if(function_exists('is_multisite') && is_multisite()){
 				$msg =__("Sorry, WassUp requires WordPress 3.1 or higher to work in multisite setups","wassup");

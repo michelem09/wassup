@@ -155,7 +155,7 @@ function wassup_embeded_scripts($wassuppage="") {
   function wSelfRefresh(){<?php echo $refresh_loc;?>}
 <?php
 		//start countdown for refresh
-		//v1.9.2 bugfix: moved wrefresh test so 'wassupReload' function is unaffected when wrefresh=0
+		//check 'wrefresh' value after 'wassupReload' is defined @since v1.9.2
 		if($wrefresh >0){
 ?>
   selftimerID=setTimeout('wSelfRefresh()',<?php echo ($wrefresh*60000)+2000;?>);
@@ -284,7 +284,6 @@ function wassup_embeded_scripts($wassuppage="") {
 		//google!Maps map init and marker javascripts in document head @since v1.9
 		if($wassup_user_settings['spy_map']== 1 || !empty($_GET['map'])){
 			//check for api key for Google!maps
-			//$apikey="AIzaSyCu_plin97TltY8Zk6KualGCmRjdF-OXDo";
 			$apikey=base64_decode(urldecode("QUl6YVN5Q3VfcGxpbjk3VGx0WThaazZLdWFsR0NtUmpkRi1PWERv"));
 			if(!empty($wassup_options->wassup_googlemaps_key)) $apikey=$wassup_options->wassup_googlemaps_key;
 			echo '<script src="https://maps.googleapis.com/maps/api/js?key='.esc_attr($apikey).'" type="text/javascript"></script>';
