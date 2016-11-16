@@ -161,8 +161,13 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 
 ## Changelog
 ### v1.9.2.1: Important bugfix upgrade 
-* fix to exclude '/wp-admin/admin-ajax.php' from front-end hit recordings
-* fix for 'unknown modifier' preg_match error in "wassup.php" module
+* fixed the preg_match error 'unknown modifier' in "wassup.php" module.  
+* fixed code to exclude '/wp-admin/admin-ajax.php' from front-end visit recording.  
+* fixed code to restore 'shutdown' hook as the main hook used for visit recording.  
+* fixed bug that caused invalid/malformed forwarding IP addresses to be stored in client IP field.  
+* updated translation load to make a 2nd attempt using filename with language code x2 when standard filename by locale (language code+country_code) is not found.  
+* updated translation template and language files to v1.9.2  
+* miscellaneous minor changes.  
 
 ### v1.9.2: Urgent bugfix upgrade 
 * fixed fatal error on `wassup_options::is_recording_active` that occurred in some configurations

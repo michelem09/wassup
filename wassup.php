@@ -73,9 +73,19 @@ function wassup_init($init_settings=false){
 	//load language translation
 	if(empty($GLOBALS['locale']) || strlen($GLOBALS['locale'])>5) $current_locale=get_locale();
 	else $current_locale=$GLOBALS['locale'];
-	if(!empty($current_locale)){
+	if(!empty($current_locale) && $current_locale !="en_US"){
 		$moFile=WASSUPDIR."/language/".$current_locale.".mo";
-		if(@is_readable($moFile)) load_textdomain('wassup',$moFile);
+		if(@is_readable($moFile)){
+			load_textdomain('wassup',$moFile);
+		}elseif(strlen($current_locale)<6){
+			//new in v1.9.2.1: try load translation file with language code x2 instead of locale with language+2-digit country code
+			$lang_only=substr($current_locale,0,2).'_'.strtoupper(substr($current_locale,0,2));
+			if($lang_only != $current_locale && preg_match('/^[a-z]{2}_[A-Z]{2}$/',$lang_only)>0){
+				$moFile=WASSUPDIR."/language/".$lang_only."mo";
+				if(@is_readable($moFile))
+					load_textdomain('wassup',$moFile);
+			}
+		}
 	}
 	//load required modules
 	//check Wordpress and PHP compatibility and load compatibility modules before using 'plugins_url' function
@@ -792,7 +802,7 @@ function wassupPrepend() {
 	$wassup_tmp_table=$wassup_table."_tmp";
 	$wscreen_res="";
 	//session tracking with cookie
-	$session_timeout=true;
+	$session_timeout=false;	//v1.9.2.1 bugfix
 	$wassup_timer=0;
 	$wassup_id="";
 	$subsite_id=(!empty($GLOBALS['current_blog']->blog_id)?$GLOBALS['current_blog']->blog_id:0);
@@ -812,8 +822,8 @@ function wassupPrepend() {
 			}
 			//username in wassup cookie @since v1.8.3
 			if(!empty($cookie_data[5])) $cookieUser=$cookie_data[5];
-			if($wassup_timer > 0 && $wassup_timer < 86400){
-				$session_timeout=false;
+			if($wassup_timer <= 0 || $wassup_timer > 86400){
+				$session_timeout=true;	//v1.9.2.1 bugfix
 			}
 			//don't reuse wassup_id when subsite changed
 			if(is_multisite()){
@@ -824,12 +834,13 @@ function wassupPrepend() {
 	}
 	//for tracking 404 hits when it is 1st visit record
 	$urlRequested=$_SERVER['REQUEST_URI'];
+	$req_code=200;
 	if(is_404()){
 		$req_code=404;
 	}elseif(function_exists('http_response_code')){
 		$req_code=http_response_code();	//PHP 5.4+ function
-	}else{
-		$req_code=(isset($_SERVER['REDIRECT_STATUS'])?(int)$_SERVER['REDIRECT_STATUS']:200);
+	}elseif(isset($_SERVER['REDIRECT_STATUS'])){
+		$req_code=(int)$_SERVER['REDIRECT_STATUS'];
 	}
 	//get screen resolution from cookie or browser header data, if any
 	if (empty($wscreen_res) && isset($_COOKIE['wassup_screen_res'.$sessionhash])) {
@@ -879,20 +890,20 @@ function wassupPrepend() {
 	//Exclude for logged-in user in admin area (unless session_timeout is set)
 	if(!is_admin() || empty($logged_user) || $session_timeout || $req_code !=200 || empty($wassup_id)){
 		//use 'send_headers' hook for feed, media, and files except when request is wp-admin which doesn't run this hook
-		if(is_feed() || preg_match('#[=/?&](feed|atom)#',$urlRequested)>0){
+		if(is_feed() || preg_match('#[=/\?&](feed|atom)#',$urlRequested)>0){	//v1.9.2.1 bugfix
 			if(is_feed() && !headers_sent()){
 				add_action('send_headers','wassupAppend');
 			}else{
 				wassupAppend($req_code);
 			}
-		}elseif(preg_match("/(\.(3gp|7z|f4[pv]|mp[34])(?:[?&#]|$))/i",$urlRequested)>0){
+		}elseif(preg_match('/(\.(3gp|7z|f4[pv]|mp[34])(?:[\?#]|$))/i',$urlRequested)>0){	//v1.9.2.1 bugfix
 			//this is audio, video, or archive file request
 			if(!is_admin() && !headers_sent()){
 				add_action('send_headers','wassupAppend');
 			}else{
 				wassupAppend($req_code);
 			}
-		}elseif(preg_match("/([^?#&]+\.([a-z]{1,4}))(?:[?&#]|$)/i",$urlRequested)>0 && basename($urlRequested)!="robots.txt"){
+		}elseif(preg_match('/([^\?#&]+\.([a-z]{1,4}))(?:[\?#]|$)/i',$urlRequested)>0 && basename($urlRequested)!="robots.txt"){	//v1.9.2.1 bugfix
 			//this is multimedia or specific file request
 			if(!is_admin() && !headers_sent()){
 				add_action('send_headers','wassupAppend');
@@ -901,12 +912,16 @@ function wassupPrepend() {
 			}
 		}elseif(!is_admin()){
 			//use 'send_headers' hook for cookie write or 404 and shutdown hook for all others
-			if(empty($wassup_id) || $session_timeout || $req_code!=200){
+			if(empty($wassup_id) || $req_code!=200){
 				if(!headers_sent()){
 					add_action('send_headers','wassupAppend',15);
 				}else{
 					add_action('shutdown','wassupAppend',1);
 				}
+			}elseif($session_timeout && ($wassup_timer <=0 || $wassup_timer >86400) && !headers_sent()){
+				//for cookie re-write
+				add_action('send_headers','wassupAppend',15);
+
 			}else{
 				add_action('shutdown','wassupAppend',1);
 			}
@@ -964,10 +979,10 @@ function wassupAppend($req_code=0) {
 		}else{
 			if(is_admin() || headers_sent()){
 				echo "\n".'<!-- *WassUp DEBUG On '."\n";   //hide errors
-				echo date('H:i:s');
+				echo 'time: '.date('H:i:s').'     locale: '.$GLOBALS['locale'];
 			}else{
 				$debug_output="\n".'<!-- *WassUp DEBUG On '."\n";   //hide errors
-				$debug_output .=date('H:i:s');
+				$debug_output .='time: '.date('H:i:s').'     locale: '.$GLOBALS['locale'];
 			}
 			wassup_enable_errors();
 		}
@@ -1129,8 +1144,7 @@ function wassupAppend($req_code=0) {
 	}else{
 		$ipAddress=wassup_get_clientAddr();
 		$IP=wassup_clientIP($ipAddress);
-		if($cookieIP==$IP)$hostname=$cookieHost;
-		else $hostname=wassup_get_hostname($IP);
+		$hostname=wassup_get_hostname($IP);
 	}
 	if (empty($ipAddress)) $ipAddress = $_SERVER['REMOTE_ADDR'];
 	if (empty($IP)) $IP = wassup_clientIP($ipAddress);
@@ -3828,16 +3842,17 @@ function wValidIP($multiIP) {
 	//look through forwarded list for a good IP
 	foreach ($ips as $ipa) {
 		$IP=trim(strtolower($ipa));
+		//v1.9.2.1 bugfix: exclude badly formatted ip's
 		if(!empty($IP)){
 			//exclude dummy IPv4 addresses
-			if(strpos($IP,'.')>0){
+			if(preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/',$IP)>0){
 				if($IP!="0.0.0.0" && $IP!="127.0.0.1" && substr($IP,0,8)!="192.168." && substr($IP,0,3)!="10." && substr($IP,0,4)!="172." && substr($IP,0,7)!='192.18.' && substr($IP,0,4)!='255.' && substr($IP,-4)!='.255'){
 					$goodIP=$IP;
 				}elseif(substr($IP,0,4)=="172." && preg_match('/172\.(1[6-9]|2[0-9]|3[0-1])\./',$IP)===false){
 					$goodIP=$IP;
 				}
-			//exclude dummy IPv6 addresses
-			}elseif(strpos($IP,':')!==false){
+			//exclude dummy IPv6 addresses 
+			}elseif(preg_match('/^(?:((?:[0-9a-f]{1,4}\:){1,}(?:\:?[0-9a-f]{1,4}){1,})|(\:\:(?:[0-9a-f]{1,4})?))$/i',$IP)>0){
 				$ipv6=str_replace("0000","0",$IP);
 				if($ipv6!='::' && $ipv6!='0:0:0:0:0:0:0:0' && $ipv6!='::1' && $ipv6!='0:0:0:0:0:0:0:1' && substr($ipv6,0,2)!='fd' && substr($ipv6,0,5)!='ff01:' && substr($ipv6,0,5)!='ff02:' && substr($ipv6,0,5)!='2001:'){
 					$goodIP=$IP;
