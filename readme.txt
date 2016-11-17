@@ -234,11 +234,11 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 
 == Changelog ==
 = v1.9.2.1 =
-* fixed the preg_match error 'unknown modifier' in "wassup.php" module.  
-* fixed code to exclude '/wp-admin/admin-ajax.php' from front-end visit recording.  
-* fixed code to restore 'shutdown' hook as the main hook used for visit recording.  
-* fixed bug that caused invalid/malformed forwarding IP addresses to be stored in client IP field.  
-* updated translation load to make a 2nd attempt using filename with language code x2 when standard filename by locale (language code+country_code) is not found.  
+* fixed an 'unknown modifier' preg_match error in 'wassup.php' module.
+* fixed an IP validation loophole that could cause invalid/malformed forwarding IPs in client's http_header to be stored as client IP.
+* fixed code to stop recording of front-end ajax requests ('/wp-admin/admin-ajax.php' url) as "possible spam/malware" hits.
+* updated code to restore 'shutdown' hook as the primary hook for 'wassupAppend' function.  
+* updated translation script to re-attempt language load with "language x2" as filename whenever the initial load (with "locale") fails.
 * updated translation template and language files to v1.9.2  
 * miscellaneous minor changes.  
 
