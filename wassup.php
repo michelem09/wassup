@@ -3,7 +3,7 @@
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
 Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
-Version: 1.9.2.1
+Version: 1.9.3
 Author: Michele Marcucci, Helene Duncker
 Author URI: http://www.michelem.org/
 Text Domain: wassup
@@ -51,7 +51,7 @@ function wassup_init($init_settings=false){
 	global $wp_version,$wassup_options,$wdebug_mode;
 	//define wassup globals & constants
 	if(!defined('WASSUPVERSION')){
-		define('WASSUPVERSION','1.9.2.1');
+		define('WASSUPVERSION','1.9.3');
 		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
 	}
 	//turn on debugging (global)...Use cautiously! Will display errors from all plugins, not just WassUp
@@ -78,7 +78,7 @@ function wassup_init($init_settings=false){
 		if(@is_readable($moFile)){
 			load_textdomain('wassup',$moFile);
 		}elseif(strlen($current_locale)<6){
-			//new in v1.9.2.1: try load translation file with language code x2 instead of locale with language+2-digit country code
+			//new in v1.9.3: try load translation file with language code x2 as locale
 			$lang_only=substr($current_locale,0,2).'_'.strtoupper(substr($current_locale,0,2));
 			if($lang_only != $current_locale && preg_match('/^[a-z]{2}_[A-Z]{2}$/',$lang_only)>0){
 				$moFile=WASSUPDIR."/language/".$lang_only."mo";
@@ -802,7 +802,7 @@ function wassupPrepend() {
 	$wassup_tmp_table=$wassup_table."_tmp";
 	$wscreen_res="";
 	//session tracking with cookie
-	$session_timeout=false;	//v1.9.2.1 bugfix
+	$session_timeout=false;	//v1.9.3 bugfix
 	$wassup_timer=0;
 	$wassup_id="";
 	$subsite_id=(!empty($GLOBALS['current_blog']->blog_id)?$GLOBALS['current_blog']->blog_id:0);
@@ -823,7 +823,7 @@ function wassupPrepend() {
 			//username in wassup cookie @since v1.8.3
 			if(!empty($cookie_data[5])) $cookieUser=$cookie_data[5];
 			if($wassup_timer <= 0 || $wassup_timer > 86400){
-				$session_timeout=true;	//v1.9.2.1 bugfix
+				$session_timeout=true;	//v1.9.3 bugfix
 			}
 			//don't reuse wassup_id when subsite changed
 			if(is_multisite()){
@@ -890,20 +890,20 @@ function wassupPrepend() {
 	//Exclude for logged-in user in admin area (unless session_timeout is set)
 	if(!is_admin() || empty($logged_user) || $session_timeout || $req_code !=200 || empty($wassup_id)){
 		//use 'send_headers' hook for feed, media, and files except when request is wp-admin which doesn't run this hook
-		if(is_feed() || preg_match('#[=/\?&](feed|atom)#',$urlRequested)>0){	//v1.9.2.1 bugfix
+		if(is_feed() || preg_match('#[=/\?&](feed|atom)#',$urlRequested)>0){	//v1.9.3 bugfix
 			if(is_feed() && !headers_sent()){
 				add_action('send_headers','wassupAppend');
 			}else{
 				wassupAppend($req_code);
 			}
-		}elseif(preg_match('/(\.(3gp|7z|f4[pv]|mp[34])(?:[\?#]|$))/i',$urlRequested)>0){	//v1.9.2.1 bugfix
+		}elseif(preg_match('/(\.(3gp|7z|f4[pv]|mp[34])(?:[\?#]|$))/i',$urlRequested)>0){	//v1.9.3 bugfix
 			//this is audio, video, or archive file request
 			if(!is_admin() && !headers_sent()){
 				add_action('send_headers','wassupAppend');
 			}else{
 				wassupAppend($req_code);
 			}
-		}elseif(preg_match('/([^\?#&]+\.([a-z]{1,4}))(?:[\?#]|$)/i',$urlRequested)>0 && basename($urlRequested)!="robots.txt"){	//v1.9.2.1 bugfix
+		}elseif(preg_match('/([^\?#&]+\.([a-z]{1,4}))(?:[\?#]|$)/i',$urlRequested)>0 && basename($urlRequested)!="robots.txt"){	//v1.9.3 bugfix
 			//this is multimedia or specific file request
 			if(!is_admin() && !headers_sent()){
 				add_action('send_headers','wassupAppend');
@@ -966,7 +966,7 @@ function wassupAppend($req_code=0) {
 	//identify media requests
 	$is_media=false;
 	$fileRequested="";
-	if(preg_match("#^(/(?:[0-9a-z.\-\/_]+\.(?:3gp|avi|bmp|flv|gif|gifv|ico|img|jpe?g|mkv|mov|mpa|mpe?g|mp[234]|ogg|oma|omg|png|pdf|pp[st]x?|psd|svg|swf|tiff|vob|wav|webm|wma|wmv))|(?:[0-9a-z.\-\/_]+(?:zoom(?:in|out)\.cur)))(?:[?\#&]|$)#i",$_SERVER['REQUEST_URI'],$pcs)>0){	//v1.9.2.1 bugfix
+	if(preg_match("#^(/(?:[0-9a-z.\-\/_]+\.(?:3gp|avi|bmp|flv|gif|gifv|ico|img|jpe?g|mkv|mov|mpa|mpe?g|mp[234]|ogg|oma|omg|png|pdf|pp[st]x?|psd|svg|swf|tiff|vob|wav|webm|wma|wmv))|(?:[0-9a-z.\-\/_]+(?:zoom(?:in|out)\.cur)))(?:[?\#&]|$)#i",$_SERVER['REQUEST_URI'],$pcs)>0){	//v1.9.3 bugfix
 		$is_media=true;
 		if(ini_get('allow_url_fopen')) $fileRequested=$blogurl.$pcs[1];
 	}
@@ -1443,8 +1443,8 @@ function wassupAppend($req_code=0) {
 			}
 		}
 	//#14 Exclude 404 hits unless 1st visit or malware attempt
-	if($req_code == 200 || empty($recent_hit) || ($hackercheck && $spam==0 && (stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){ //v1.9.2.1 bugfix
-		//New in v1.9.2.1: omit 'admin-ajax.php' and 'wp-login.php' from malware checks
+	if($req_code == 200 || empty($recent_hit) || ($hackercheck && $spam==0 && (stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){ //v1.9.3 bugfix
+		//New in v1.9.3: omit 'admin-ajax.php' and 'wp-login.php' from malware checks
 		if($hackercheck && $spam==0 && $urlRequested !='/wp-login.php' && $urlRequested !='/wp-admin/admin-ajax.php'){
 			$pcs=array();
 		//identify malware
@@ -1537,7 +1537,7 @@ function wassupAppend($req_code=0) {
 				$spam=3;
 			}elseif($req_code==404 && wIsAttack($urlRequested)){
 				$spam=3;
-				//v1.9.2.1 bugfix: moved referrer 'attack' test to #13 above..some referrer attacks were missed here
+				//v1.9.3 bugfix: moved referrer 'attack' test to #13 above..some referrer attacks were missed here
 			}
 		} //end if empty logged_user
 			//retroactively update recent visitor records as spam/malware
@@ -3842,7 +3842,7 @@ function wValidIP($multiIP) {
 	//look through forwarded list for a good IP
 	foreach ($ips as $ipa) {
 		$IP=trim(strtolower($ipa));
-		//v1.9.2.1 bugfix: exclude badly formatted ip's
+		//v1.9.3 bugfix: exclude badly formatted ip's
 		if(!empty($IP)){
 			//exclude dummy IPv4 addresses
 			if(preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/',$IP)>0){

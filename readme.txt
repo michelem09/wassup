@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%
 Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
 Requires at least: 4.0  
 Tested up to: 4.6.1  
-Stable tag: 1.9.2.1  
+Stable tag: 1.9.3  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -229,11 +229,11 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * WassUp is incompatible with the following static page caching plugins: [WP Super Cache], [WP Cache] and [WP Hyper Cache]. 
 
 == Upgrade Notice ==
-= 1.9.2.1 =
+= 1.9.3 =
 * Important bugfix upgrade. DO NOT UPGRADE when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
 
 == Changelog ==
-= v1.9.2.1 =
+= v1.9.3 =
 * fixed an 'unknown modifier' preg_match error in 'wassup.php' module.
 * fixed an IP validation loophole that could cause invalid/malformed forwarding IPs in client's http_header to be stored as client IP.
 * fixed code to stop recording of front-end ajax requests ('/wp-admin/admin-ajax.php' url) as "possible spam/malware" hits.
