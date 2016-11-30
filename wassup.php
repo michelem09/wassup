@@ -3,7 +3,7 @@
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
 Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
-Version: 1.9.3
+Version: 1.9.3.1
 Author: Michele Marcucci, Helene Duncker
 Author URI: http://www.michelem.org/
 Text Domain: wassup
@@ -51,7 +51,7 @@ function wassup_init($init_settings=false){
 	global $wp_version,$wassup_options,$wdebug_mode;
 	//define wassup globals & constants
 	if(!defined('WASSUPVERSION')){
-		define('WASSUPVERSION','1.9.3');
+		define('WASSUPVERSION','1.9.3.1');
 		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
 	}
 	//turn on debugging (global)...Use cautiously! Will display errors from all plugins, not just WassUp
@@ -78,7 +78,7 @@ function wassup_init($init_settings=false){
 		if(@is_readable($moFile)){
 			load_textdomain('wassup',$moFile);
 		}elseif(strlen($current_locale)<6){
-			//new in v1.9.3: try load translation file with language code x2 as locale
+			//try load translation file with language code x2 as locale @since v1.9.3
 			$lang_only=substr($current_locale,0,2).'_'.strtoupper(substr($current_locale,0,2));
 			if($lang_only != $current_locale && preg_match('/^[a-z]{2}_[A-Z]{2}$/',$lang_only)>0){
 				$moFile=WASSUPDIR."/language/".$lang_only."mo";
@@ -469,10 +469,9 @@ function wassup_preload(){
 	//block any obvious sql injection attempts involving WassUp
 	$request_uri=$_SERVER['REQUEST_URI'];
 	if(!$request_uri) $request_uri=$_SERVER['SCRIPT_NAME']; // IIS
-	//don't test referrer for Wassup..could cause non-wassup request redirect @since v1.9.2
 	if(stristr($request_uri,'wassup')!==false && strstr($request_uri,'err=wassup403')===false){
 		$error_msg="";
-		//don't test logged-in user requests @since v1.9.2
+		//don't test logged-in user requests
 		if(!is_user_logged_in()){
 			if(preg_match('/(<|&lt;?|&#0*60;?|%3C)scr(ipt|[^0-9a-z\-_])/i',$request_uri)>0){
 				$error_msg=__('Bad request!','wassup');
@@ -802,7 +801,7 @@ function wassupPrepend() {
 	$wassup_tmp_table=$wassup_table."_tmp";
 	$wscreen_res="";
 	//session tracking with cookie
-	$session_timeout=false;	//v1.9.3 bugfix
+	$session_timeout=false;
 	$wassup_timer=0;
 	$wassup_id="";
 	$subsite_id=(!empty($GLOBALS['current_blog']->blog_id)?$GLOBALS['current_blog']->blog_id:0);
@@ -823,7 +822,7 @@ function wassupPrepend() {
 			//username in wassup cookie @since v1.8.3
 			if(!empty($cookie_data[5])) $cookieUser=$cookie_data[5];
 			if($wassup_timer <= 0 || $wassup_timer > 86400){
-				$session_timeout=true;	//v1.9.3 bugfix
+				$session_timeout=true;
 			}
 			//don't reuse wassup_id when subsite changed
 			if(is_multisite()){
@@ -890,20 +889,20 @@ function wassupPrepend() {
 	//Exclude for logged-in user in admin area (unless session_timeout is set)
 	if(!is_admin() || empty($logged_user) || $session_timeout || $req_code !=200 || empty($wassup_id)){
 		//use 'send_headers' hook for feed, media, and files except when request is wp-admin which doesn't run this hook
-		if(is_feed() || preg_match('#[=/\?&](feed|atom)#',$urlRequested)>0){	//v1.9.3 bugfix
+		if(is_feed() || preg_match('#[=/\?&](feed|atom)#',$urlRequested)>0){
 			if(is_feed() && !headers_sent()){
 				add_action('send_headers','wassupAppend');
 			}else{
 				wassupAppend($req_code);
 			}
-		}elseif(preg_match('/(\.(3gp|7z|f4[pv]|mp[34])(?:[\?#]|$))/i',$urlRequested)>0){	//v1.9.3 bugfix
+		}elseif(preg_match('/(\.(3gp|7z|f4[pv]|mp[34])(?:[\?#]|$))/i',$urlRequested)>0){
 			//this is audio, video, or archive file request
 			if(!is_admin() && !headers_sent()){
 				add_action('send_headers','wassupAppend');
 			}else{
 				wassupAppend($req_code);
 			}
-		}elseif(preg_match('/([^\?#&]+\.([a-z]{1,4}))(?:[\?#]|$)/i',$urlRequested)>0 && basename($urlRequested)!="robots.txt"){	//v1.9.3 bugfix
+		}elseif(preg_match('/([^\?#&]+\.([a-z]{1,4}))(?:[\?#]|$)/i',$urlRequested)>0 && basename($urlRequested)!="robots.txt"){
 			//this is multimedia or specific file request
 			if(!is_admin() && !headers_sent()){
 				add_action('send_headers','wassupAppend');
@@ -966,7 +965,7 @@ function wassupAppend($req_code=0) {
 	//identify media requests
 	$is_media=false;
 	$fileRequested="";
-	if(preg_match("#^(/(?:[0-9a-z.\-\/_]+\.(?:3gp|avi|bmp|flv|gif|gifv|ico|img|jpe?g|mkv|mov|mpa|mpe?g|mp[234]|ogg|oma|omg|png|pdf|pp[st]x?|psd|svg|swf|tiff|vob|wav|webm|wma|wmv))|(?:[0-9a-z.\-\/_]+(?:zoom(?:in|out)\.cur)))(?:[?\#&]|$)#i",$_SERVER['REQUEST_URI'],$pcs)>0){	//v1.9.3 bugfix
+	if(preg_match('#^(/(?:[0-9a-z.\-\/_]+\.(?:3gp|avi|bmp|flv|gif|gifv|ico|img|jpe?g|mkv|mov|mpa|mpe?g|mp[234]|ogg|oma|omg|png|pdf|pp[st]x?|psd|svg|swf|tiff|vob|wav|webm|wma|wmv))|(?:[0-9a-z.\-\/_]+(?:zoom(?:in|out)\.cur)))(?:[\?\#&]|$)#i',$_SERVER['REQUEST_URI'],$pcs)>0){
 		$is_media=true;
 		if(ini_get('allow_url_fopen')) $fileRequested=$blogurl.$pcs[1];
 	}
@@ -1121,7 +1120,6 @@ function wassupAppend($req_code=0) {
 			if(!empty($cookie_data[5])) $cookieUser = $cookie_data[5];
 		}
 	}
-	//if(!empty($wassup_id)){ - test moved below
 	//Get visitor ip/hostname from http_header
 	if(!empty($cookieIP)){
 		$ipAddress = $_SERVER['REMOTE_ADDR'];
@@ -1237,7 +1235,7 @@ function wassupAppend($req_code=0) {
 		if($req_code==200 && !empty($fileRequested) && !file_exists($fileRequested)){
 			$req_code=404;
 		}
-	}elseif(preg_match("#(^/[0-9a-z\-/\._]+\.([a-z]{1,4}))(?:[?&\#]|$)#i",$urlRequested,$pcs)>0 && basename($urlRequested)!="robots.txt"){
+	}elseif(preg_match('#(^/[0-9a-z\-/\._]+\.([a-z]{1,4}))(?:[\?&\#]|$)#i',$urlRequested,$pcs)>0 && basename($urlRequested)!="robots.txt"){
 		//identify file requests
 		if(ini_get('allow_url_fopen')) $fileRequested=$blogurl.$pcs[1];
 	}
@@ -1382,7 +1380,7 @@ function wassupAppend($req_code=0) {
 			if($recent_hit[0]->agent == $userAgent || empty($recent_hit[0]->agent)){
 				if($recent_hit[0]->urlrequested == $urlRequested || $recent_hit[0]->urlrequested == '[404] '.$urlRequested){
 					$dup_urlrequest=1;
-				}elseif($is_media && $req_code == 200 && preg_match("/\.(gif|ico|jpe?g|png|tiff)$/i",$fileRequested) >0){
+				}elseif($is_media && $req_code == 200 && preg_match('/\.(gif|ico|jpe?g|png|tiff)$/i',$fileRequested) >0){
 					//exclude images/photos only after confirmation of other valid page hit by visitor
 					$dup_urlrequest=1;
 				}
@@ -1443,8 +1441,8 @@ function wassupAppend($req_code=0) {
 			}
 		}
 	//#14 Exclude 404 hits unless 1st visit or malware attempt
-	if($req_code == 200 || empty($recent_hit) || ($hackercheck && $spam==0 && (stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){ //v1.9.3 bugfix
-		//New in v1.9.3: omit 'admin-ajax.php' and 'wp-login.php' from malware checks
+	if($req_code == 200 || empty($recent_hit) || ($hackercheck && ($spam!=0 || stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){ //v1.9.3.1 bugfix: parenthesis correction
+		//omit 'admin-ajax.php' and 'wp-login.php' from malware checks @since v1.9.3
 		if($hackercheck && $spam==0 && $urlRequested !='/wp-login.php' && $urlRequested !='/wp-admin/admin-ajax.php'){
 			$pcs=array();
 		//identify malware
@@ -1533,11 +1531,10 @@ function wassupAppend($req_code=0) {
 					}
 				}
 			//regular visitor attempts to access "upload" page is likely malware
-			}elseif(preg_match('#[?&][0-9a-z\-_]*(page\=upload)(?:[^0-9a-z\-_]|$)#i',$urlRequested)>0){
+			}elseif(preg_match('#[\?&][0-9a-z\-_]*(page\=upload)(?:[^0-9a-z\-_]|$)#i',$urlRequested)>0){
 				$spam=3;
 			}elseif($req_code==404 && wIsAttack($urlRequested)){
 				$spam=3;
-				//v1.9.3 bugfix: moved referrer 'attack' test to #13 above..some referrer attacks were missed here
 			}
 		} //end if empty logged_user
 			//retroactively update recent visitor records as spam/malware
@@ -1601,7 +1598,7 @@ function wassupAppend($req_code=0) {
 				//no userAgent == spider
 				$spider=$unknown_spider;
 			}else{
-				if(strlen($agent)<5 || empty($os) || preg_match("#\s?([a-z]+(?:bot|crawler|google|spider|reader|agent))[^a-z]#i",$userAgent)>0 || strstr($urlRequested,"robots.txt")!==FALSE || is_feed()){
+				if(strlen($agent)<5 || empty($os) || preg_match('#\s?([a-z]+(?:bot|crawler|google|spider|reader|agent))[^a-z]#i',$userAgent)>0 || strstr($urlRequested,"robots.txt")!==FALSE || is_feed()){
 					list($spider,$spidertype,$feed) = wGetSpider($userAgent,$hostname,$browser);
 					if($wdebug_mode){
 						if(is_admin() || headers_sent()){
@@ -1674,9 +1671,8 @@ function wassupAppend($req_code=0) {
 		} //end if empty($spider)
 		//identify spoofers of Google/Yahoo 
 		if(!empty($spider)){
-			if(!empty($hostname) && preg_match('/^(googlebot|yahoo\!\ slurp)/i',$spider)>0 && preg_match('/\.(googlebot|yahoo)\./i',$hostname)==0){
+			if(!empty($hostname) && preg_match('/^(googlebot|yahoo\!\sslurp)/i',$spider)>0 && preg_match('/\.(googlebot|yahoo)\./i',$hostname)==0){
 				$spider= __("Spoofer bot","wassup");
-				//if($spam == "0") $spam=3;
 			}
 			//for late spider identification, update previous records
 			if($wpageviews >1 && empty($recent_hit[0]->spider)){
@@ -1755,32 +1751,16 @@ function wassupAppend($req_code=0) {
 		//get language/locale
 		if(empty($language) && !empty($recent_hit[0]->language)) $language=$recent_hit[0]->language;
 		if($wdebug_mode){
-			if(is_admin() || headers_sent()){
-				if(!empty($debug_output)){
-					echo $debug_output;
-					echo "\nwassupappend-debug#7";
-					$debug_output="";
-				}
-				echo "\n  language=$language";
-			}else{
-				$debug_output .= "\n  language=$language";
-			}
+			if(headers_sent()) echo "\n  language=$language";
+			else $debug_output .= "\n  language=$language";
 		}
 		if(preg_match('/\.[a-z]{2,3}$/i',$hostname) >0 || preg_match('/[a-z\-_]+\.[a-z]{2,3}[^a-z]/i',$referrer) >0 || strlen($language)>2){
 			//get language/locale info from hostname or referrer data
 			$language=wGetLocale($language,$hostname,$referrer);
 		}
 		if($wdebug_mode){
-			if(is_admin() || headers_sent()){
-				if(!empty($debug_output)){
-					echo $debug_output;
-					echo "\nwassupappend-debug#8";
-					$debug_output="";
-				}
-				echo "\n...language=$language (after geoip/wgetlocale)";
-			}else{
-				$debug_output .= " ...language=$language (after geoip/wgetlocale)";
-			}
+			if(headers_sent()) echo "\n...language=$language (after geoip/wgetlocale)";
+			else $debug_output .= " ...language=$language (after geoip/wgetlocale)";
 		}
 		// get search engine and search keywords from referrer
 		$searchengine="";
@@ -1860,7 +1840,8 @@ function wassupAppend($req_code=0) {
 						$searchcountry=$match[3];
 					}
 					if(!empty($searchcountry) && $searchcountry!="us"){
-						$searchengine .=" ".strtoupper($searchcountry);
+						//v1.9.3.1 bugfix: avoid duplicate country code in searchengine name
+						if(stristr($searchengine," $searchcountry")===false) $searchengine .=" ".strtoupper($searchcountry);
 						if($language == "us" || empty($language) || $language=="en"){
 							//make tld consistent with language
 							if($searchcountry=="uk") $searchcountry="gb";
@@ -1938,12 +1919,7 @@ function wassupAppend($req_code=0) {
 				}
 			}
 			if($wdebug_mode){
-				if(is_admin() || headers_sent()){
-					if(!empty($debug_output)){
-						echo $debug_output;
-						echo "\nwassupappend-debug#9";
-						$debug_output="";
-					}
+				if(headers_sent()){
 					if(!empty($wassup_recid)){
 						echo "\nWassUp record data:";
 						print_r($wassup_rec);
@@ -1963,72 +1939,72 @@ function wassupAppend($req_code=0) {
 			}
 		} //end if prefetch
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #18 Excluded by: wp-content/plugins (after 404)";
+		if(headers_sent()) echo "\n #18 Excluded by: wp-content/plugins (after 404)";
 		else $debug_output .="\n #18 Excluded by: wp-content/plugins (after 404)";
 	} //end if !wp-content/plugins
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #17 Excluded by: wassup_spam";
+		if(headers_sent()) echo "\n #17 Excluded by: wassup_spam";
 		else $debug_output .="\n #17 Excluded by: wassup_spam";
 	} //end if $spam == 0
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #16 Excluded by: wassup_spider";
+		if(headers_sent()) echo "\n #16 Excluded by: wassup_spider";
 		else $debug_output .="\n #16 Excluded by: wassup_spider";
 	} //end if wassup_spider
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #15 Excluded by: wassup_hack";
+		if(headers_sent()) echo "\n #15 Excluded by: wassup_hack";
 		else $debug_output .="\n #15 Excluded by: wassup_hack";
 	} //end if wassup_hack
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #14 Excluded by: is_404";
+		if(headers_sent()) echo "\n #14 Excluded by: is_404";
 		else $debug_output .="\n #14 Excluded by: is_404";
 	} //end if !is_404
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #13 Excluded by: !wp-admin (ajax)";
+		if(headers_sent()) echo "\n #13 Excluded by: !wp-admin (ajax)";
 		else $debug_output .="\n #13 Excluded by: !wp_admin (ajax)";
 	} //end if !wp_admin (ajax) && recent_hit
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #12 Excluded by: dup_urlrequest";
+		if(headers_sent()) echo "\n #12 Excluded by: dup_urlrequest";
 		else $debug_output .="\n #12 Excluded by: dup_urlrequest";
 	} //end if dup_urlrequest == 0
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #11 Excluded by: wassup_attack";
+		if(headers_sent()) echo "\n #11 Excluded by: wassup_attack";
 		else $debug_output .="\n #11 Excluded by: wassup_attack";
 	} //end if wassup_attack
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #10 Excluded by: wassup_loggedin";
+		if(headers_sent()) echo "\n #10 Excluded by: wassup_loggedin";
 		else $debug_output .="\n #10 Excluded by: wassup_loggedin";
 	} //end if wassup_loggedin
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #9 Excluded by: wp-content/themes";
+		if(headers_sent()) echo "\n #9 Excluded by: wp-content/themes";
 		else $debug_output .="\n #9 Excluded by: wp-content/themes";
 	} //end if !themes
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #8 Excluded by: wp-content/plugins (or hostname wildcard)";
+		if(headers_sent()) echo "\n #8 Excluded by: wp-content/plugins (or hostname wildcard)";
 		else $debug_output .="\n #8 Excluded by: wp-content/plugins (or hostname wildcard)";
 	} //end if !plugins
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #7 Excluded by: exclude_host (or IP wilcard)";
+		if(headers_sent()) echo "\n #7 Excluded by: exclude_host (or IP wilcard)";
 		else $debug_output .="\n #7 Excluded by: exclude_host (or IP wildcard)";
 	} //end if wassup_exclude_host
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #6 Excluded by: wassup_exclude";
+		if(headers_sent()) echo "\n #6 Excluded by: wassup_exclude";
 		else $debug_output .="\n #6 Excluded by: wassup_exclude";
 	} //end if wassup_exclude
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #5 Excluded by: exclude_url";
+		if(headers_sent()) echo "\n #5 Excluded by: exclude_url";
 		else $debug_output .="\n #5 Excluded by: exclude_url";
 	} //end if wassup_exclude_url
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #4 Excluded by: exclude_user";
+		if(headers_sent()) echo "\n #4 Excluded by: exclude_user";
 		else $debug_output .="\n #4 Excluded by: exclude_user";
 	} //end if wassup_exclude_user
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #3 Excluded by: is_admin";
+		if(headers_sent()) echo "\n #3 Excluded by: is_admin";
 		else $debug_output .="\n #3 Excluded by: is_admin";
 	} //end if !is_admin
 	} //end if wp-cron.php?doing_wp_cron===FALSE //#2
 	}elseif($wdebug_mode){
-		if(is_admin() || headers_sent()) echo "\n #1 Excluded by: is_admin_login";
+		if(headers_sent()) echo "\n #1 Excluded by: is_admin_login";
 		else $debug_output .="\n #1 Excluded by: is_admin_login";
 	} //end if !is_admin_login
 
@@ -2044,7 +2020,7 @@ function wassupAppend($req_code=0) {
 		}
 		if(is_numeric($result)) $in_temp=(int)$result;
 		if($wdebug_mode){
-			if(is_admin() || headers_sent()) echo "\nin_temp=".$result;
+			if(headers_sent()) echo "\nin_temp=".$result;
 			else $debug_output .="\nin_temp=".$result;
 		}
 		//add new temp record 
@@ -2158,14 +2134,14 @@ function wassupAppend($req_code=0) {
 			wp_schedule_single_event(time()+40,'wassup_scheduled_dbtasks',$args);
 		}
 		if($wdebug_mode){
-			if(is_admin() || headers_sent()){
+			if(headers_sent()){
 				echo "\nWassup scheduled tasks:";
 				print_r($wassup_dbtask);
 			}
 		}
 	}
 	if($wdebug_mode){ //close comment tag to hide debug data from visitors 
-		if(is_admin() || headers_sent()){
+		if(headers_sent()){
 			echo "\n--> \n";
 		}else{
 			$debug_output .= "<br />\n--> \n";
@@ -2350,7 +2326,7 @@ function wSeReferer($ref = false) {
 		return false;
 	}
 	//Check against Google, Yahoo, MSN, Ask and others
-	if(preg_match("#^https?://([^/]+).*[&\?](prev|q|p|s|search|searchfor|as_q|as_epq|query|keywords|term|encquery)=([^&]+)#i",$SeReferer,$pcs) > 0){
+	if(preg_match('#^https?://([^/]+).*[&\?](prev|q|p|s|search|searchfor|as_q|as_epq|query|keywords|term|encquery)=([^&]+)#i',$SeReferer,$pcs) > 0){
 		$SeDomain = trim(strtolower($pcs[1]));
 		if ($pcs[2] == "encquery") { 
 			$SeQuery = " *".__("encrypted search","wassup")."* ";
@@ -2359,14 +2335,14 @@ function wSeReferer($ref = false) {
 		}
 
 	//Check for search engines that show query as a url with 'search' and keywords in path (ex: Dogpile.com)
-	} elseif (preg_match("#^https?://([^/]+).*/(results|search)/web/([^/]+)/(\d+)?#i", $SeReferer,$pcs)>0){
+	}elseif(preg_match('#^https?://([^/]+).*/(results|search)/web/([^/]+)/(\d+)?#i',$SeReferer,$pcs)>0){
 		$SeDomain = trim(strtolower($pcs[1]));
 		$SeQuery = $pcs[3];
 		if (!empty($pcs[4])) {
 			$SePos=(int)$pcs[4];
 		}
 	//Check for search engines that show query as a url with 'search' in domain and keywords in path (ex: twitnitsearch.appspot.com)
-	} elseif (preg_match("#^https?://([a-z0-9_\-\.]*(search)(?:[a-z0-9_\-\.]*\.(?:[a-z]{2,4})))/([^/]+)(?:[a-z_\-=/]+)?/(\d+)?#i",$SeReferer."/",$pcs)>0) {
+	}elseif(preg_match('#^https?://([a-z0-9_\-\.]*(search)(?:[a-z0-9_\-\.]*\.(?:[a-z]{2,4})))/([^/]+)(?:[a-z_\-=/]+)?/(\d+)?#i',$SeReferer."/",$pcs)>0){
 		$SeDomain = trim(strtolower($pcs[1]));
 		$SeQuery = $pcs[3];
 		if (!empty($pcs[4])) {
@@ -2386,7 +2362,7 @@ function wSeReferer($ref = false) {
 			}
 		}
 		if (!isset($SePos)) { 
-			if (preg_match("#[&\?](start|startpage|b|cd|first|stq|pi|page)[=/](\d+)#i",$SeReferer,$pcs)) {
+			if(preg_match('#[&\?](start|startpage|b|cd|first|stq|pi|page)[=/](\d+)#i',$SeReferer,$pcs)) {
 				$SePos = $pcs[2];
 			} else {
 				$SePos = 1;
@@ -2794,7 +2770,7 @@ function wGetSE($referrer = null){
 	//search engine or key is not in list, so check for search phrase instead
 	if (empty($search_phrase) && !empty($referrer)) {
 		//Check for general search phrases
-		if (preg_match("#^https?://([^/]+).*[&?](q|search|searchfor|as_q|as_epq|query|keywords?|term|text|encquery)=([^&]+)#i",$referrer,$pcs) > 0) {
+		if(preg_match('#^https?://([^/]+).*[&?](q|search|searchfor|as_q|as_epq|query|keywords?|term|text|encquery)=([^&]+)#i',$referrer,$pcs) > 0){
 			if (empty($searchengine)) $searchengine=trim(strtolower($pcs[1]));
 			if ($pcs[2] =="encquery"){
 				$search_phrase=" *".__("encrypted search","wassup")."* ";
@@ -2802,14 +2778,14 @@ function wGetSE($referrer = null){
 				$search_phrase = $pcs[3];
 			}
 		//Check separately for queries that use nonstandard search variable to avoid retrieving values like "p=parameter" when "q=query" exists
-		} elseif(preg_match("#^https?://([^/]+).*(?:results|search|query).*[&?](aq|as|p|su|s|kw|k|qo|qp|qs|string)=([^&]+)#i",$referrer,$pcs) > 0) {
+		}elseif(preg_match('#^https?://([^/]+).*(?:results|search|query).*[&?](aq|as|p|su|s|kw|k|qo|qp|qs|string)=([^&]+)#i',$referrer,$pcs) > 0){
 			if (empty($searchengine)) $searchengine = trim(strtolower($pcs[1]));
 			$search_phrase = $pcs[3];
 		}
 	} //end if search_phrase
 	//do a separate check for page number, if not found above
 	if (!empty($search_phrase)) {
-		if (empty($searchpage) && preg_match("#[&\?](start|startpage|b|cd|first|stq|p|pi|page)[=/](\d+)#i",$referrer,$pcs)>0) {
+		if(empty($searchpage) && preg_match('#[&\?](start|startpage|b|cd|first|stq|p|pi|page)[=/](\d+)#i',$referrer,$pcs)>0){
 			$searchpage = $pcs[2];
 		}
 	}
@@ -2909,13 +2885,14 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 	$pcs=array();
 	//identify obvious script injection bots 
 	if(!empty($ua)){
+		//New in v1.9.3.1: check for more variations of <script> and <a> tags embedded in user agent string
 		if(stristr($ua,'location.href')!==FALSE){
 			$crawlertype="H";
 			$crawler="Script Injection bot";
-		}elseif(preg_match('/(<|&lt;|&#60;)a(\s|%20|&#32;|\+)href/i',$ua)>0){
+		}elseif(preg_match('/(<|&lt;?|&#0*60;?|%3C)a(\s|%20|&#32;|\+)href/i',$ua)>0){
 			$crawlertype="H";
 			$crawler="Script Injection bot";
-		}elseif(preg_match('/(<|&lt;|&#60;)script/i',$ua)>0){
+		}elseif(preg_match('/(<|&lt;?|&#0*60;?|%3C)scr(ipt|[^0-9a-z\-_])/i',$ua)>0){
 			$crawlertype="H";
 			$crawler="Script Injection bot";
 		}elseif(preg_match('/select.*(\s|%20|\+|%#32;)from(\s|%20|\+|%#32;)wp_/i',$ua)>0){
@@ -2958,7 +2935,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 	$pcs2=array();
 	if(empty($crawler)){
 		// check for crawlers that identify themselves clearly in their user agent string with words like bot, spider, and crawler
-		if ((!empty($ua) && preg_match("#(\w+[ \-_]?(bot|crawl|google|reader|seeker|spider|feed|indexer|parser))[0-9/ -:_.;\)]#",$ua,$pcs) >0) || preg_match("#(crawl|feed|google|indexer|parser|reader|robot|seeker|spider)#",$hostname,$pcs2) >0){
+		if ((!empty($ua) && preg_match('#(\w+[ \-_]?(bot|crawl|google|reader|seeker|spider|feed|indexer|parser))[0-9/ -:_.;\)]#',$ua,$pcs) >0) || preg_match('#(crawl|feed|google|indexer|parser|reader|robot|seeker|spider)#',$hostname,$pcs2) >0){
 			if(!empty($pcs[1])) $crawler=$pcs[1];
 			elseif(!empty($pcs2[1])) $crawler="unknown_spider";
 			$crawlertype="R";
@@ -3300,7 +3277,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 	if(empty($crawler)){
 		$pcs=array();
 		//Assume first word in useragent is crawler name
-		if(preg_match("/^(\w+)[\/ \-\:_\.;]/",$ua,$pcs) > 0){
+		if(preg_match('/^(\w+)[\/ \-\:_\.;]/',$ua,$pcs) > 0){
 			if(strlen($pcs[1])>1 && $pcs[1]!="Mozilla"){ 
 				$crawler=$pcs[1];
 			}
@@ -3309,7 +3286,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 		//if (empty($crawler) && !empty($browser)) $crawler = $browser;
 	}
 	//#do a feed check and get feed subcribers, if available
-	if(preg_match("/([0-9]{1,10})\s?subscriber/i",$ua,$subscriber) > 0){
+	if(preg_match('/([0-9]{1,10})\s?subscriber/i',$ua,$subscriber) > 0){
 		// It's a feedreader with some subscribers
 		$feed=$subscriber[1];
 		if(empty($crawler) && empty($browser)){
@@ -3349,7 +3326,7 @@ function wGetLocale($language="",$hostname="",$referrer="") {
 		list($language)=explode(";",$langarray[0]);
 	}
 	//use 2-digit top-level domains (TLD) for country code, if any
-	if (strlen($hostname)>2 && preg_match("/\.[a-z]{2}$/i", $hostname)>0){
+	if (strlen($hostname)>2 && preg_match('/\.[a-z]{2}$/i', $hostname)>0){
 		$country=strtolower(substr($hostname,-2));
 		//ignore domains commonly used for media
 		if($country == "tv" || $country == "fm") $country="";
@@ -3404,14 +3381,14 @@ function wGetLocale($language="",$hostname="",$referrer="") {
 	}
 	//Replace language with locale for widely spoken languages
 	if(!empty($country)){
-		if(empty($language) || $language=="us" || preg_match("/^([a-z]{2})$/",$language)==0){
+		if(empty($language) || $language=="us" || preg_match('/^([a-z]{2})$/',$language)==0){
 			$language=$country;
 		}elseif($language=="es"){
 			//for Central/South American locales
 			$language=$country;
 		}
 	}
-	if(!empty($language) && preg_match("/^[a-z]{2}$/",$language)>0){
+	if(!empty($language) && preg_match('/^[a-z]{2}$/',$language)>0){
 		$clocale=$language;
 	}
 	return $clocale;
@@ -3842,7 +3819,7 @@ function wValidIP($multiIP) {
 	//look through forwarded list for a good IP
 	foreach ($ips as $ipa) {
 		$IP=trim(strtolower($ipa));
-		//v1.9.3 bugfix: exclude badly formatted ip's
+		//exclude badly formatted ip's @since v1.9.3
 		if(!empty($IP)){
 			//exclude dummy IPv4 addresses
 			if(preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/',$IP)>0){
