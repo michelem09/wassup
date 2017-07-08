@@ -3,8 +3,8 @@ Contributors: michelem, helened
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8  
 Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
 Requires at least: 4.0  
-Tested up to: 4.6.1  
-Stable tag: 1.9.3  
+Tested up to: 4.8 
+Stable tag: 1.9.4 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -95,7 +95,7 @@ For people with database size limitations, WassUp has a few options to manage th
 = IMPORTANT NOTICES =
 * Wassup is compatible with Wordpress 4.0+ and PHP 5.2+ 
 * To run Wassup with Wordpress 2.2 - 3.9 or with PHP 4.3 - 5.1, you must install the full copy of Wassup with backward-compatibility feature available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)
-* WassUp is incompatible with static page caching plugins such as "WP Super-Cache"
+* WassUp is incompatible with static html caching plugins such as "WP Super-Cache"
 * WassUp is NOT a security plugin. It does not block unwanted visitors nor protect your site from malware attempts. You need a separate security plugin for that
 
 == Frequently Asked Questions ==
@@ -106,46 +106,23 @@ Check the box for "Enable widget/small chart in admin dashboard" under WassUp >>
 = How do I display WassUp widgets on my site? =
 From the Wordpress widgets panel, drag the "WassUp Online" widget or the "Wassup Top Stats" widget from the list of available widgets on the left into your theme's "Sidebar" or "Footer" area on the right.
 
-= My Wordpress theme is not widget ready. Is it possible to display WassUp widget on my site? =
-Yes. Insert the template tag `wassup_sidebar()` into your theme's "sidebar.php" file to display Wassup widgets as a single combined widget on your site.
-
 = How do I view the real-time visitor geolocation map in WassUp? = 
-Check the box for "Display a GEO IP Map in spy visitors view" under WassUp >>Options >>[General Setup] tab and save, then navigate to WassUp >>SPY Visitors panel to see the map.
+Check the box for "Display a GEO IP Map in spy visitors view" under WassUp >>Options >>[General Setup] and save, then navigate to WassUp >>SPY Visitors panel to see the map.
 
-= Can Wassup record visits on a web site that is not Wordpress? =
-No. Wassup is a Wordpress-only plugin and requires at least Wordpress 2.2 to work.
+= The map has vanished and I get a message like: "Oops, something went wrong" or "Google has disabled use of the Maps API for this application". How do I fix this?" =
+Try upgrading to the latest version of Wassup, or go to Wassup-Options and click the Reset-to-Default button if you have already upgraded, or sign up for your own Google!Maps API key at https://developers.google.com/maps/documentation/javascript/get-api-key#key then enter the key under \"Spy Visitors settings\" in Wassup >>Options >>General Settings tab.
 
 = How do I exclude a visitor from being recorded? =
-Navigate to WassUp >>Options >>[Filters & Exclusions] tab and enter a visitor's username, IP address, or hostname into the appropriate text area for that "Recording Exclusion" type.
+Navigate to WassUp >>Options >>[Filters & Exclusions] tab and enter a visitor's username, IP address, or hostname into the appropriate field and save.
 
 = How do I stop (temporarily) WassUp from recording new visits on my site? =
 Uncheck the box for "Enable statistics recording" under WassUp >>Options >>[General Setup] tab.
-
-= In Wordpress multisite, how do I stop (temporarily) WassUp from recording new visitors on all sites in the network? =
-Answer #1: If plugin is "network activated", login as network admin, go to the Network admin dashboard, navigate to WassUp >>Options >>[General Setup] tab and uncheck the box for "Enable Statistics Recording for network" and save.
-
-Answer #2: If plugin is NOT "network activated", login as network admin, go to the main site/parent domain admin dashboard, navigate to WassUp >>Options >>[General Setup] tab, then uncheck the box for "Enable Statistics Recording for network" and save.
-
-= No data is displayed; or the "Visitor Details" panel show 0 records for the last 24 hours. How do I fix this? =
-Answer #1: Check the box for "Enable statistics recording" setting under WassUp >>Options >>[General Setup] tab and save.
-
-Answer #2: Click the [Reset to Default] button under WassUp >>Options >>[General Setup] tab.
-
-Answer #3: Navigate to WassUp >>Options >>[Manage File & Data] tab and uncheck the "MySQL Delayed Insert" setting and save.
-
-Answer #4: Deactivate and Re-activate Wassup from Wordpress plugins panel.
 
 = My popular web site is hosted on a shared server with restrictive database size limits. How do I prevent WassUp's table from growing too big for my allocated quota? =
 Navigate to Wassup >> Options >> [Manage Files & Data] tab and enable the setting for "Auto Delete" of old records and/or check the box to receive an email alert when the table size limit is exceeded.
 
 = WassUp visitor counts are much lower than actual for my website. Why is there a discrepancy and how do I fix it? =
-Low visitor count is likely caused by page caching on your website. WassUp is incompatible with static page caching plugins such as WP Supercache, WP Cache, and Hyper Cache. To fix, uninstall your cache plugin or switch to a different (javascript-based) statistics plugin.
-
-= Is there any caching plugin that works with WassUp? =
-[WP Widget Cache](http://wordpress.org/extend/plugins/wp-widget-cache/) is the only caching plugin verified to work with WassUp.
-
-= Why does WassUp stats sometimes show more page views than actual pages clicked by a person? =
-"Phantom" page views can occur when a user's browser does automatic feed retrieval, link pre-fetching, a page refresh, or automatically adds your website to it's "Top sites" window (Safari). WassUp tracks these because they are valid requests from the browser and are sometimes indistinguishable from user link clicks.
+Low visitor count is likely caused by page caching on your website. WassUp is incompatible with static html caching plugins such as WP Supercache, WP Cache, WP Fastest Cache, and Hyper Cache. To fix, uninstall your cache plugin or switch to a different (javascript-based) statistics plugin.
 
 = How do I upgrade WassUp safely when my site has frequent visitors? =
 Read the "IMPORTANT safe upgrade instructions" in the [installation section](http://wordpress.org/extend/plugins/wassup/installation/) of this plugin's README.txt file.
@@ -226,13 +203,31 @@ To safely upgrade WassUp when your site is busy, you must manually stop visitor 
 When you activate this plugin (as described in "Installation"), it works "as is". You don't have anything to do. Wait for visitors to hit your site and start seeing details (click the dashboard and go to WassUp page)
 
 = Compatibility Notice =
-* WassUp is incompatible with the following static page caching plugins: [WP Super Cache], [WP Cache] and [WP Hyper Cache]. 
+* WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache. 
 
 == Upgrade Notice ==
-= 1.9.3.1 =
-* Important bugfix upgrade. DO NOT UPGRADE when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
+= 1.9.4 =
+* Important feature & bugfix upgrade. DO NOT upgrade when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
 
 == Changelog ==
+= v1.9.4 =
+= Important feature improvement & bugfix upgrade = 
+* new option to whitelist referrers that are mislabeled as spam in WassUp (ex: Rx or sexy words in domain name)
+* new option to export data in Excel-compatible CSV format
+* improved export speed and added a dialog window
+* improved queries on big data by using temporary tables as subsets in "wassupItems" class
+* updated visitor detail code to speed up output display
+* updated plugin FAQ section and added a FAQ link to top menu tabs
+* updated css files, wassup.css and jquery-ui.css for widgets & dialog
+* updated translation template "wassup.pot"
+* fixed a compatibility issue with Woocommerce plugin AJAX requests
+* fixed a search field validation issue with URL special characters
+* fixed a bug in "stringShortener" function that caused empty results
+* fixed a bug in Top Stats widget that caused blank lines to display 
+* fixed some Top Stats widget translations
+* removed Google!maps API key from Wassup source due to Google's TOS limitations
+* miscellaneous minor bugfixes
+
 = v1.9.3.1 =
 = Important bugfix upgrade = 
 * fixed various preg_match regexes to improve matching
@@ -345,6 +340,7 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 ...
 
 == Infos ==
+
 = Plugin Home =
 * [http://www.wpwp.org](http://www.wpwp.org "http://www.wpwp.org")
 

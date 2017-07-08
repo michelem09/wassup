@@ -130,10 +130,8 @@ function wassup_embeded_scripts($wassuppage="") {
 			if(empty($URLQuery) && preg_match('/[^\?]+\?([A-Za-z\-_]+.*)/',html_entity_decode($_SERVER['REQUEST_URI']),$pcs)>0) $URLQuery=$pcs[1];
 			if(!empty($URLQuery)){
 				$refresh_loc='location.href="?'.wassupURI::cleanURL($URLQuery).'"';
-				//remove "delete","search", and "chart" query parameters from url for auto-refresh @since v1.9
 				if(isset($_GET['deleteMARKED']) || isset($_GET['chart']) || isset($_GET['dip']) || isset($_GET['mark']) || isset($_GET['search-submit'])){
 					$remove_args=array('deleteMARKED','dip','chart','mark','submit-search');
-					//$newQuery=preg_replace(array('/&deleteMARKED=[^&]+/','/&dip=[^&]+/','/&chart=[^&]+/','/&mark=[^&]+/','/&submit\-search=[^&]+/'),"",$URLQuery);
 					$newURL=remove_query_arg($remove_args);
  					if(!empty($newURL) && $newURL != $_SERVER['REQUEST_URI']){
 						$refresh_loc='location.href="'.wassupURI::cleanURL($newURL).'"';
@@ -150,19 +148,8 @@ function wassup_embeded_scripts($wassuppage="") {
 <script type='text/javascript'>
 //<![CDATA[
   var paused=" *<?php _e('paused','wassup'); ?>* ";
-  var selftimerID=0;
-  function wassupReload<?php echo $wnonce;?>(wassuploc){if(wassuploc!=="") location.href=wassuploc;}
+  function wassupReload<?php echo $wnonce;?>(wassuploc){if(wassuploc!=="") location.href=wassuploc;else location.reload(true);}
   function wSelfRefresh(){<?php echo $refresh_loc;?>}
-<?php
-		//start countdown for refresh
-		//check 'wrefresh' value after 'wassupReload' is defined @since v1.9.2
-		if($wrefresh >0){
-?>
-  selftimerID=setTimeout('wSelfRefresh()',<?php echo ($wrefresh*60000)+2000;?>);
-  addLoadEvent(function(){ActivateCountDown("CountDownPanel",<?php echo ($wrefresh*60);?>);});
-<?php
-		} //end if $wrefresh > 0
-?>
   jQuery(document).ready(function($){
 	$("a.showhide").click(function(){var id=$(this).attr('id');$("div.navi"+id).toggle("slow");return false;});
 	$("a.toggleagent").click(function(){var id=$(this).attr('id');$("div.naviagent"+id).slideToggle("slow");return false;});
@@ -255,7 +242,7 @@ function wassup_embeded_scripts($wassuppage="") {
 <script type="text/javascript">
 //<![CDATA[
   function wSelfRefresh(){location.reload(true)}
-  var selftimerID=setTimeout('wSelfRefresh()',<?php echo ($wrefresh*60000)+2000;?>);
+  var refreshID=setTimeout('wSelfRefresh()',<?php echo ($wrefresh*60000)+2000;?>);
   jQuery(document).ready(function($){
 	$("a.showhide").click(function(){var id=$(this).attr('id');$("div.navi"+id).toggle("slow");return false;});
 	$("a.toggle-all").toggle(function(){
@@ -267,16 +254,96 @@ function wassup_embeded_scripts($wassuppage="") {
 //]]>
 </script><?php
 		echo "\n";
-	}elseif($wassuppage == "wassup-options"){
+	}elseif($wassuppage=="wassup-options" || $wassuppage=="wassup-donate"){
 ?>
 <script type="text/javascript">
-  //<![CDATA[
-  jQuery(document).ready(function($) {
-	  var tabs=$('#tabcontainer').tabs();
-	  $('.submit-opt').click(function(){$(this).css("background-color","#d71");});
-	  $('.default-opt').click(function(){$(this).css("background-color","#d71");});
-  });
-  //]]>
+//<![CDATA[
+<?php
+	//New in v1.9.4: ajax script to check download status of dynamically generated export file
+?>
+var exportID="";
+var exportTimerCount=0;
+var exportTimerID=0;
+function checkExportstatus(msgID){
+	if(exportID == "") exportID=msgID;
+	exportTimerCount +=1;
+	jQuery(function($){
+		if(exportTimerCount >30){ //stop timer after 1 min
+			var msg="<?php echo __('timed out!','wassup');?>";
+			$("#wassup-dialog >p").append(msg);
+			stopExportTimer();
+		}
+		var request = $.ajax({
+			url: ajaxurl,
+			method: "POST",
+			dataType: "html",
+		  	data: {'type':"exportmessage",'mid':exportID,<?php
+			//format 'action_param' for ajax post data
+			$postparams="";
+			foreach($action_param AS $key => $value){
+				if(preg_match('/[0-9a-z\-_ ]/i',$key)>0) {
+				$postparams .= "'".$key."':'".preg_replace('/\'/','\\\'',esc_attr($value))."',";
+				}
+			}
+			echo $postparams;?>},
+			});
+		request.done(function(msg){
+			if(msg == ""){
+				$("#wassup-dialog >p").append("..");
+			}else{
+				$("#wassup-dialog >p").html(msg);
+				exportTimerCount=0;
+				stopExportTimer();
+			}
+		});
+	});
+}
+function startExportTimer(msgID){
+	exportTimerID=setInterval("checkExportstatus()",2000,msgID);
+	exportTimerCount=0;
+	jQuery(function($){
+		$("#wassup-overlay").addClass("ui-widget-overlay");
+		$("#wassup-dialog >p").html("<?php echo __('Retrieving data for export. Download will start soon. Please wait.','wassup');?> ");
+		$("#wassup-dialog").dialog("open");
+		$("#wassup-dialog").on("dialogclose",function(event,ui){
+			stopExportTimer();
+		});
+	});
+}
+function stopExportTimer(){
+	if(exportTimerID >0) clearInterval(exportTimerID);
+	if(exportTimerCount==0) exportTimerID=0;
+	jQuery(function($){
+		$("#wassup-overlay").removeClass("ui-widget-overlay");
+	});
+}
+jQuery(document).ready(function($) {
+	//initialize tabs
+	var tabs=$('#tabcontainer').tabs();
+	$('.submit-opt').click(function(){$(this).css("background-color","#d71");});
+	$('.default-opt').click(function(){$(this).css("background-color","#d71");});
+	$("a#BCdonate").toggle(function(){$('div#bc_placeholder').slideDown("slow");},function(){$('div#bc_placeholder').slideUp("slow");return false;});
+<?php
+	//new in v1.9.4: dialog and javascripts for export action
+?>
+	$('#wassup-dialog').dialog({
+		modal:true,
+		autoOpen:false,
+		draggable:false,
+		resizable:false,
+	});
+	$(".export-link").click(function(e){
+		e.preventDefault();
+		e.returnValue=false;
+		//only 1 instance of "export" allowed at a time
+		if(exportTimerID==0){
+			exportID=$(this).attr('id');
+			startExportTimer(exportID);
+			location.href=$(this).attr('href');
+		}
+	});
+});
+//]]>
 </script><?php
 		echo "\n";
 	}elseif($wassuppage=="wassup-spia" || $wassuppage=="wassup-spy"){
@@ -284,8 +351,7 @@ function wassup_embeded_scripts($wassuppage="") {
 		//google!Maps map init and marker javascripts in document head @since v1.9
 		if($wassup_user_settings['spy_map']== 1 || !empty($_GET['map'])){
 			//check for api key for Google!maps
-			$apikey=base64_decode(urldecode("QUl6YVN5Q3VfcGxpbjk3VGx0WThaazZLdWFsR0NtUmpkRi1PWERv"));
-			if(!empty($wassup_options->wassup_googlemaps_key)) $apikey=$wassup_options->wassup_googlemaps_key;
+			$apikey=$wassup_options->get_apikey();
 			echo '<script src="https://maps.googleapis.com/maps/api/js?key='.esc_attr($apikey).'" type="text/javascript"></script>';
 		} //end if spy_map
 		//add 'action_param' query params to ajaxurl
@@ -310,10 +376,12 @@ jQuery(document).ready(function($){
 	$('#spy-pause').click(function(){
 		$(this).css("background-color","#ebb");$("#spy-play").css("background-color","#eae9e9");<?php
 		if(!empty($wassup_user_settings['spy_map']) || !empty($_GET['map'])) echo '$("div#spia_map").css({"opacity":"0.7","background":"none"});';?>
+		if(spyRunning==1) spyRunning=0;
 	});
 	$('#spy-play').click(function(){
 		$(this).css("background-color","#cdc");$("#spy-pause").css("background-color","#eae9e9");<?php
 		if(!empty($wassup_user_settings['spy_map']) || !empty($_GET['map'])) echo '$("div#spia_map").css("opacity","1");';?>
+		if(spyRunning==0) spyRunning=1;
 	});
 });
 <?php
@@ -357,27 +425,29 @@ function showMarkerinfo(mmap,mlat,mlon,marker,markerwin){
  * -assign an admin body class (wassup, wassup-wp-legacy) for wassup page styling
  */
 function wassup_add_css() {
-	global $wassup_options;
+	global $wassup_options,$wdebug_mode;
 	//jqueryui-css and thickbox.css to wassup pages
 	$wassuppage=wassupURI::get_menu_arg();
 	if(!empty($wassuppage) && strpos($wassuppage,'wassup')!==FALSE){
 		//TODO: Add a WassUp favicon to wassup pages
 		//output the stylesheet links
 		//always use Wassup's jquery-ui.css in Wassup-options
-		if($wassuppage=="wassup-options"){?>
-<link href="<?php echo WASSUPURL;?>/css/jquery-ui/jquery.ui.theme.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo WASSUPURL;?>/css/jquery-ui/jquery.ui.tabs.css" rel="stylesheet" type="text/css" /><?php
+		if($wassuppage=="wassup-options"){
 			echo "\n";
+			if(!$wdebug_mode){
+				echo '<link href="'.WASSUPURL.'/css/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />'."\n";
+			}else{
+				echo '<link href="'.WASSUPURL.'/css/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />'."\n";
+			}
 		}
 		//always use Wassup's thickbox.css in Wassup panels
 		if($wassuppage=="wassup" || $wassuppage=="wassup-online"){?>
 <link rel="stylesheet" href="<?php echo WASSUPURL.'/js/thickbox/thickbox.css';?>" type="text/css" /><?php
 			echo "\n";
 		}
-		// Override some Wordpress css and Wassup default css settings on Wassup pages- TODO: check against latest version of ozh drop-down plugin
+		// Override some Wordpress css and Wassup default css settings on Wassup pages
 ?>
 <style type="text/css">
-#ozh_menu_wrap{margin-top:-3px !important;} /* ozh drop-down plugin */
 #contextual-help-link{display:none;}
 .update-nag{display:none;} /* nag messes up tab menus, so hide it */
 </style>
@@ -488,7 +558,7 @@ function wassup_plugin_links($links, $file){
  * Add a horizontal navigation (tab) menu to Wassup pages.
  * - automatically adds tab links for each submenu in Wassup's main menu when available (admin users only)
  * - adds tab links to Wassup-stats dashboard submenu using the 'ml' query parameter
- * - appends a "Donate" tab to menu
+ * - appends a "Donate" and "FAQ" tab to menu
  * @author helened
  * @since v1.9
  */
@@ -520,25 +590,44 @@ function wassup_menu_links($selected=""){
 				$menu_class=" current";
 			}
 			if(current_user_can($menu_access)){
-				if($menu_page=="wassup-online") $menu_name =__("Current Visitors Online","wassup");
+				//add extra tab for faq next-to options
+				if($menu_page=="wassup-options"){
+					$menu_class="";
+					if($selected == "wassup-faq"){
+						$menu_class=" current";
+					}
+					$menu_name ="FAQ";
+					echo "\n";?>
+		<li id="faq-link" class="wassup-menu-link<?php echo $menu_class;?>"><a href="<?php echo wassupURI::get_admin_url('admin.php?page='.$menu_page.'&ml=wassup-faq');?>"><?php echo $menu_name;?></a></li><?php
+					$menu_class="";
+					if($selected =="wassup-options"){
+						$menu_class=" current";
+					}
+					$menu_name="Options";
+				}elseif($menu_page=="wassup-online"){
+					$menu_name =__("Current Visitors Online","wassup");
+				}
 				echo "\n";?>
-		<li class="wassup-menu-link<?php echo $menu_class;?>"><a href="<?php echo wassupURI::get_admin_url('admin.php?page='.$menu_page);?>"><?php echo $menu_name;?></a></li><?php
+		<li id="options-link" class="wassup-menu-link<?php echo $menu_class;?>"><a href="<?php echo wassupURI::get_admin_url('admin.php?page='.$menu_page);?>"><?php echo $menu_name;?></a></li><?php
 			}
 		}//end for
+		echo "\n";?>
+		<li id="donate-link" class="wassup-menu-link"><?php
 		$donate_link_url="";
 		if(is_multisite() && is_network_admin()){
 			$donate_link_url=network_admin_url('admin.php?page=wassup-options&tab=donate');
 		}elseif(current_user_can('manage_options')){
 			$donate_link_url=admin_url('admin.php?page=wassup-options&tab=donate');
 		}
-		wassup_donate_link($donate_link_url);
+		wassup_donate_link($donate_link_url);?></li><?php
 	}else{
 		if (($selected=="wassup-stats" || $selected=="wassup") && !empty($_GET['ml'])) $selected=$_GET['ml'];
 		echo "\n";?>
-		<li class="wassup-menu-link<?php if($selected=='wassup-online') echo ' current';?>"><a href="<?php echo wassupURI::get_admin_url('index.php?page=wassup-stats&ml=wassup-online');?>"><?php _e('Current Visitors Online','wassup');?></a></li>
-		<li class="wassup-menu-link<?php if($selected=='wassup-spia' || $selected=='wassup-spy') echo ' current';?>"><a href="<?php echo wassupURI::get_admin_url('index.php?page=wassup-stats&ml=wassup-spia');?>"><?php _e('SPY Visitors','wassup');?></a></li>
-		<li class="wassup-menu-link<?php if($selected=='wassup' || $selected==$wassupfolder || $selected=='wassup-stats') echo ' current';?>"><a href="<?php echo wassupURI::get_admin_url('index.php?page=wassup-stats');?>"><?php _e('Visitor Details','wassup');?></a></li><?php
-		wassup_donate_link();
+		<li id="menu-link-3" class="wassup-menu-link<?php if($selected=='wassup-online') echo ' current';?>"><a href="<?php echo wassupURI::get_admin_url('index.php?page=wassup-stats&ml=wassup-online');?>"><?php _e('Current Visitors Online','wassup');?></a></li>
+		<li id="menu-link-2" class="wassup-menu-link<?php if($selected=='wassup-spia' || $selected=='wassup-spy') echo ' current';?>"><a href="<?php echo wassupURI::get_admin_url('index.php?page=wassup-stats&ml=wassup-spia');?>"><?php _e('SPY Visitors','wassup');?></a></li>
+		<li id="menu-link-1" class="wassup-menu-link<?php if($selected=='wassup' || $selected==$wassupfolder || $selected=='wassup-stats') echo ' current';?>"><a href="<?php echo wassupURI::get_admin_url('index.php?page=wassup-stats');?>"><?php _e('Visitor Details','wassup');?></a></li><?php
+		echo "\n";?>
+		<li id="donate-link" class="wassup-menu-link"><?php wassup_donate_link();?></li><?php
 	} //end if submenu
 	echo "\n";?>
 	</ul><div style="clear:right;"></div>
@@ -547,9 +636,7 @@ function wassup_menu_links($selected=""){
 
 function wassup_donate_link($link_url=""){
 	global $wdebug_mode;
-	//add menu tab for donate link to Paypal
-	echo "\n";?>
-	<li id="donate-link" class="wassup-menu-link"><?php
+	//display Paypal link/form for donate tab 
 	if(!empty($link_url) && strpos($link_url,'//')!==false){
 		echo '<a href="'.$link_url.'"><img src="'.WASSUPURL.'/img/donate-button-sm.png" alt="'.__("Donate","wassup").'"/></a>';
 	}else{
@@ -569,7 +656,7 @@ function wassup_donate_link($link_url=""){
 		echo "\n";?>
 		</form>
 		<?php
-	}?></li><?php
+	}
 } //end wassup_donate_link
 
 /**
@@ -600,6 +687,7 @@ function WassUp() {
 	if(!is_object($current_user) || empty($current_user->ID)) wp_get_current_user();
 	$wassup_user_settings = get_user_option('_wassup_settings',$current_user->ID);
 	$tab=0;
+	if(isset($_GET['tab'])) $tab=esc_attr($_GET['tab']);
 	$admin_message="";
 	$wassup_table = $wassup_options->wassup_table;
 	$network_settings=array();
@@ -622,8 +710,8 @@ function WassUp() {
 	// RUN THE DELETE/SAVE/RESET FORM OPTIONS 
 	// Processed here so that any resulting "admin_message" or errors will display with page
 	//DELETE NOW options...
-	if(!empty($_POST) && ($wassuppage== "wassup-options" || $wassuppage == "wassup" || $wassuppage=="wassup-stats")){
-	if($wassuppage=="wassup-options"){
+	if(!empty($_POST) && ($wassuppage== "wassup-options" || $wassuppage == "wassup" || $wassuppage=="wassup-stats" || $wassuppage=="wassup-donate")){
+	if($wassuppage=="wassup-options" || $wassuppage=="wassup-donate"){
 	//check user capability and verify admin referer/wp nonce before processing form changes and delete requests @since v1.9
 	if(current_user_can('manage_options') && wassupURI::is_valid_admin_referer('wassupsettings-'.$current_user->ID)){
 	//workaround code for Google Chrome's empty 'onclick=submit()' "delete NOW" value @since v1.9
@@ -775,6 +863,10 @@ function WassUp() {
 			$admin_message = __("Wassup options reset successfully","wassup")."." ;
 			$wassup_user_settings=$wassup_options->resetUserSettings();
 			if($wassup_options->is_recording_active()) wassup_cron_startup(); //restart wp-cron
+			//New in v1.9.4: reset-to-default updates Wassup's map apikey
+			if(empty($wassup_options->wassup_googlemaps_key)){
+				$key=$wassup_options->lookup_apikey();
+			}
 		}
 	}
 	} //end if !delete_now
@@ -888,10 +980,14 @@ function WassUp() {
 	}elseif ($wassuppage == "wassup-spia" || $wassuppage == "wassup-spy"){?>
 		<h2>WassUp - <?php _e("SPY Visitors", "wassup"); ?></h2><?php
 		wassup_page_contents(array('wassuppage'=>$wassuppage,'tab'=>$tab));
-	}elseif ($wassuppage == "wassup-options"){?>
+	}elseif ($wassuppage=="wassup-options" || $wassuppage=="wassup-donate"){?>
 		<h2>WassUp - <?php _e('Options','wassup'); ?></h2><?php
 		if (!function_exists('wassup_optionsView')) include_once(WASSUPDIR.'/lib/settings.php');
 		wassup_optionsView($tab);
+	}elseif ($wassuppage=="wassup-faq"){ ?>
+		<h2>WassUp - <?php _e('Frequently Asked Questions','wassup'); ?></h2><?php
+		if (!function_exists('wassup_faq')) include_once(WASSUPDIR.'/lib/faq.php');
+		wassup_faq();
 	}else{
 		return;
 	}
@@ -904,6 +1000,16 @@ function WassUp() {
 		<nobr><span class="separator">|</span> <?php echo __('Exec time','wassup').": $totaltime"; ?></nobr>
 		</small></p>
 	</div>	<!-- end wassup-wrap --><?php
+
+	//New in v1.9.4: start the refresh timer at end of page render
+	if($wassuppage == "wassup"){
+		$wrefresh = (int)$wassup_options->wassup_refresh;
+		if($wrefresh >0){
+			echo "\n";?>
+<script type="text/javascript">ActivateCountDown("CountDownPanel",<?php echo ($wrefresh*60);?>);</script><?php
+		}
+	}
+	echo "\n";
 } //end WassUp
 
 /**
@@ -1024,7 +1130,7 @@ function wassup_page_contents($args=array()){
 		if ($currenttot > 0) {
 			$currentlogged = $TotOnline->calc_tot("count",null,"AND `username`!=''","DISTINCT");
 			$currentauth = $TotOnline->calc_tot("count",null,"AND `comment_author`!='' AND `username`=''","DISTINCT");
-			$sql=sprintf("SELECT SQL_NO_CACHE `id`, wassup_id, count(wassup_id) as numurl, max(`timestamp`) as max_timestamp, `ip`, `hostname`, `searchengine`, `search`, `searchpage`, `urlrequested`, `referrer`, `agent`, `browser`, `spider`, `feed`, `os`, `screen_res`, GROUP_CONCAT(DISTINCT `username` ORDER BY `username` SEPARATOR ', ') AS login_name, `comment_author`, `language`, `spam` AS malware_type, `url_wpid` FROM $wassup_tmp_table WHERE %s GROUP BY `wassup_id` ORDER BY max_timestamp DESC",$whereis);
+			$sql=sprintf("SELECT SQL_NO_CACHE `id`, wassup_id, count(wassup_id) as numurl, max(`timestamp`) as max_timestamp, `ip`, `hostname`, `searchengine`, `search`, `searchpage`, `urlrequested`, `referrer`, `agent`, `browser`, `spider`, `feed`, `os`, `screen_res`, GROUP_CONCAT(DISTINCT `username` ORDER BY `username` SEPARATOR '| ') AS login_name, `comment_author`, `language`, `spam` AS malware_type, `url_wpid` FROM $wassup_tmp_table WHERE %s GROUP BY `wassup_id` ORDER BY max_timestamp DESC",$whereis);
 			$qryC=$wpdb->get_results($sql);
 			if(!empty($qryC) && is_wp_error($qryC)){
 				$errno=$qryC->get_error_code();
@@ -1070,19 +1176,17 @@ function wassup_page_contents($args=array()){
 			$Ousername="";
 			$ulclass="users";
 			$unclass="";
+			$logged_user="";
 			// User is logged in or is a comment's author
 			if($cv->login_name != "" || $cv->comment_author !=""){
 				$utype="";
-				$logged_user="";
-				if($cv->login_name != ""){
-					$logged_user=trim($cv->login_name,', ');
-					if(strpos($logged_user,',')!==false){
-						$loginnames=explode(',',$logged_user);
+				$logged_user=trim($cv->login_name,'| ');
+				if($logged_user != ""){
+					if(strpos($logged_user,'|')!==false){
+						$loginnames=explode('|',$logged_user);
 						foreach($loginnames AS $name){
 							$logged_user=trim($name);
-						if(!empty($logged_user)){
-							break;
-						}
+							if(!empty($logged_user)) break;
 						}
 					}
 					$utype=__("LOGGED IN USER","wassup");
@@ -1100,7 +1204,7 @@ function wassup_page_contents($args=array()){
 							$Ousername='<li class="users"><span class="indent-li-agent">'.$utype.': <strong>'.esc_attr($logged_user).'</strong></span></li>';
 						}
 					}else{
-						$Ousername='<li class="users"><span class="indent-li-agent">'.$utype.': <strong>'.esc_attr($cv->login_name).'</strong></span></li>';
+						$Ousername='<li class="users"><span class="indent-li-agent">'.$utype.': <strong>'.esc_attr($logged_user).'</strong></span></li>';
 					}
 					$unclass="sum-box-log";
 				}
@@ -1112,6 +1216,7 @@ function wassup_page_contents($args=array()){
 			}
 			if(!empty($cv->spider)) $unclass="sum-box-spider";
 			if(!empty($cv->malware_type)) $unclass="sum-box-spam";
+			if(strlen($ip)>20) $unclass .=" sum-box-ipv6";
 			echo "\n";?>
 		<div class="sum-rec"><?php
 		// Visitor Record - raw data (hidden)
@@ -1396,54 +1501,7 @@ function wassup_page_contents($args=array()){
 			$wwhereis .=" AND `ip`='$wip'";
 		}
 		update_user_option($current_user->ID,'_wassup_settings',$wassup_user_settings);
-		//to prevent browser timeouts, send <!--heartbeat--> output
-		echo "<!--heartbeat-->\n";
-		// Instantiate class to count items
-		$wTot = New WassupItems($wassup_table,$from_date,$to_date,$wwhereis,$wlimit);
-		$wTot->WpUrl=$wpurl;
-		$witemstot=0;
-		$wpagestot=0;
-		$wspamtot=0;
-		$markedtot=0;
-		$searchtot=0;
-		$wmain=array();
-		$ipsearch="";
-		//don't apply "search" for marked ip (in whereis)
-		if(!empty($wsearch) && $wsearch==$wip){
-			$ipsearch=$wsearch;
-			$wsearch="";
-		}
-		echo "\n<!--heartbeat-->";
-		// MAIN QUERY
-		if(!empty($wTot->totrecords)){
-			$wmain=$wTot->calc_tot("main",$wsearch);
-			echo "\n<!--heartbeat-->";
-			$witemstot=$wTot->calc_tot("count",$wsearch,null,"DISTINCT");
-			echo "\n<!--heartbeat-->";
-			if(!empty($wsearch))$wpagestot=$wTot->calc_tot("count",$wsearch);
-			else $wpagestot=(int)$wTot->totrecords;
-			echo "\n<!--heartbeat-->";
-			$wspamtot=$wTot->calc_tot("count",$wsearch,"AND `spam`>'0'");
-			// Check if some records were marked
-			if (!empty($wip)){
-				if (empty($ipsearch)){
-					echo "\n<!--heartbeat-->";
-					$markedtot=$wTot->calc_tot("count",$wsearch," AND `ip`='".$wip."'","DISTINCT");
-				}else{
-					//avoid redundant calculations when search and mark/wip are the same
-					$markedtot=$witemstot;
-				}
-			}
-			// Check if some records were searched
-			if(!empty($wsearch)) {
-				//searchtot is the same query as witemstot above and shouldn't be re-calculated (visitor detail fix)
-				//$searchtot=$wTot->calc_tot("count",$wsearch,null,"DISTINCT");
-				$searchtot=$witemstot;
-			}elseif(!empty($ipsearch)){
-				$searchtot=$markedtot;
-			}
-		}
-		if(!empty($ipsearch)) $wsearch=$ipsearch;
+		
 		//Clear non-sticky filter parameters from URL before applying new filters 
 		$URLQuery=trim(html_entity_decode($_SERVER['QUERY_STRING']));
 		//'remove_query_arg' function replaces "preg_replace" to remove args from query string @since v1.9.1
@@ -1491,6 +1549,50 @@ function wassup_page_contents($args=array()){
 		</td></tr>
 		</tbody></table>
 	</form><?php
+		// Instantiate class to count items
+		$wTot = New WassupItems($wassup_table,$from_date,$to_date,$wwhereis,$wlimit);
+		$wTot->WpUrl=$wpurl;
+		$witemstot=0;
+		$wpagestot=0;
+		$wspamtot=0;
+		$markedtot=0;
+		$searchtot=0;
+		$ipsearch="";
+		//don't apply "search" for marked ip (in whereis)
+		if(!empty($wsearch) && $wsearch==$wip){
+			$ipsearch=$wsearch;
+			$wsearch="";
+		}
+		//to prevent browser timeouts, send <!--heartbeat-->
+		echo "\n<!--heartbeat-->";
+		// MAIN QUERY
+		if(!empty($wTot->totrecords)){
+			$witemstot=$wTot->calc_tot("count",$wsearch,null,"DISTINCT");
+			echo "\n<!--heartbeat-->";
+			if(!empty($wsearch))$wpagestot=$wTot->calc_tot("count",$wsearch);
+			else $wpagestot=(int)$wTot->totrecords;
+			echo "\n<!--heartbeat-->";
+			$wspamtot=$wTot->calc_tot("count",$wsearch,"AND `spam`>'0'");
+			// Check if some records were marked
+			if (!empty($wip)){
+				if (empty($ipsearch)){
+					echo "\n<!--heartbeat-->";
+					$markedtot=$wTot->calc_tot("count",$wsearch," AND `ip`='".$wip."'","DISTINCT");
+				}else{
+					//avoid redundant calculations when search and mark/wip are the same
+					$markedtot=$witemstot;
+				}
+			}
+			// Check if some records were searched
+			if(!empty($wsearch)) {
+				//searchtot is the same query as witemstot above and shouldn't be re-calculated (visitor detail fix)
+				//$searchtot=$wTot->calc_tot("count",$wsearch,null,"DISTINCT");
+				$searchtot=$witemstot;
+			}elseif(!empty($ipsearch)){
+				$searchtot=$markedtot;
+			}
+		}
+		if(!empty($ipsearch)) $wsearch=$ipsearch;
 		// Print Site Usage summary
 		echo "\n";?>
 	<div class='centered'>
@@ -1498,7 +1600,7 @@ function wassup_page_contents($args=array()){
 			<ul><li><span style="border-bottom:2px solid #0077CC;"><?php echo (int)$witemstot;?></span> <?php _e('Visits','wassup');?></li>
 			<li><span style="border-bottom:2px dashed #FF6D06;"><?php echo (int)$wpagestot;?></span> <?php _e('Pageviews','wassup');?></li>
 			<li><span><?php echo @number_format(($wpagestot/$witemstot),2);?></span> <?php _e('Pages/Visits','wassup');?></li>
-			<li><span class="spamtoggle"><?php
+			<li><span class="spamtoggle"><nobr><?php
 		//add spam form overlay when spamcheck is enabled and user is admin or can 'manage_options'
 		$hidden_spam_form=false;
 		if($wassup_options->wassup_spamcheck == 1 && ($wassup_options->is_admin_login() || current_user_can('manage_options'))){
@@ -1513,7 +1615,7 @@ function wassup_page_contents($args=array()){
 		}
 		echo '%)</span>';
 		if($hidden_spam_form) echo '</a>';
-		echo '</span> '.__('Spams','wassup');?></li>
+		echo '</span> '.__('Spams','wassup');?></nobr></li>
 			</ul><br/>
 			<div id="chart_placeholder" class="placeholder" align="center"></div>
 		</div>
@@ -1534,7 +1636,7 @@ function wassup_page_contents($args=array()){
 		<p class="indent-opt"><input type="checkbox" name="wassup_refspam" value="1" <?php if($wassup_options->wassup_refspam==1) echo $checked;?>/> <?php _e('Record referrer spam attempts','wassup');?></p>
 		<p class="indent-opt"><input type="checkbox" name="wassup_attack" value="1" <?php if($wassup_options->wassup_attack==1) echo $checked;?>/> <?php _e("Record attack/exploit attempts (libwww-perl agent)","wassup");?></p>
 		<p class="indent-opt"><input type="checkbox" name="wassup_hack" value="1" <?php if($wassup_options->wassup_hack==1) echo $checked;?>/> <?php _e("Record admin break-in/hacker attempts","wassup");?></p>
-		<p><input type="submit" name="submit-spam" value="<?php _e('Save Settings','wassup'); ?>" /></p>
+		<p><input type="submit" name="submit-spam" class="button" value="<?php _e('Save Settings','wassup'); ?>" /></p>
 		</form>
 	</div> <!-- /hiddenspam --><?php
 		}
@@ -1553,6 +1655,12 @@ function wassup_page_contents($args=array()){
 		<a href="?<?php echo esc_attr($URLQuery.'&chart=1');?>" class="icon"><img src="<?php echo WASSUPURL.'/img/chart_add.png" alt="'.__('show chart','wassup').'" title="'.__('Show the chart','wassup'); ?>"/></a><a href="?<?php echo esc_attr($URLQuery.'&chart=1');?>"><?php _e("Show chart","wassup");?></a><?php
 		}?> <span class="separator">|</span>
 		<?php
+		//Top Stats window/popup params
+		//v1.9.4 bugfix: topstats from_date cannot be "0"
+		if($from_date==0 && $wlast==0){
+			$from_date=$wpdb->get_var(sprintf("SELECT MIN(`timestamp`) FROM `$wassup_table` WHERE `timestamp` < '%d'",$to_date));
+		}
+		//for date range shown in topstats report
 		$wdformat = get_option("date_format");
 		if(($to_date - $from_date)>24*3600){
 			$stats_range=gmdate("$wdformat",$from_date)." - ".gmdate("$wdformat",$to_date);
@@ -1625,27 +1733,23 @@ function wassup_page_contents($args=array()){
 		<div id="pag" align="center"><?php $p->show();?></div><?php
  	}
 	//# Detailed List of Wassup Records...
+	$wmain=$wTot->calc_tot("main",$wsearch);
+	echo "\n<!--heartbeat-->";
 	$error_msg="";
 	$data_error="";
 	if($witemstot>0 && is_array($wmain) && count($wmain)>0){
 		$rkcount=0;
 	foreach($wmain as $rk){
 		//monitor for script timeout limit and extend, if needed @since v1.9
-		if((time()-$stimer_start) >($stimeout-7)){
-			//extend timeout if more than 80% done
-			if($witems > $witemstot) $percen=($rkcount/$witemstot)*100;
-			else $percen=($rkcount/$witems)*100;
-			if($rkcount>0 && $percen >80 && $stimeout >=180 && $can_set_timelimit){
-				@set_time_limit($stimeout);
-				$stimer_start=time();
-			}elseif($rkcount>0){
+		$time_passed=time() - $stimer_start;
+		if($time_passed > ($stimeout-10)){
+			if($rkcount>0){
 				//report is hung, so terminate here
 				$data_error=__("Records display interrupted.","wassup")." - script timeout/partial data.";
-				break;
 			}else{	//no data, database problem
 				$data_error=__("Unable to display records.","wassup")." - script timeout/no data.";
-				break;
 			}
+			break;
 		}
 		$rkcount++;
 		$dateF = gmdate("d M Y", $rk->max_timestamp);
@@ -1664,11 +1768,13 @@ function wassup_page_contents($args=array()){
 		$ulclass="users";
 		$Ouser="";
 		$Ospider="";
+		$referrer="";
+		$urlrequested="";
 		//for logged-in user/administrator in ul list
-		if($rk->login_name != ""){
-			$logged_user=trim($rk->login_name,', ');
-			if(strpos($logged_user,',')!==false){
-				$loginnames=explode(',',$logged_user);
+		$logged_user=trim($rk->login_name,'| ');
+		if($logged_user != ""){
+			if(strpos($logged_user,'|')!==false){
+				$loginnames=explode('|',$logged_user);
 				foreach($loginnames AS $name){
 					$logged_user=trim($name);
 					if(!empty($logged_user)){
@@ -1691,7 +1797,7 @@ function wassup_page_contents($args=array()){
 				if($show_avatars) $Ouser='<li class="users"><span class="indent-li-agent">'.$utype.': <strong>'.get_avatar($udata->ID,'20').' '.esc_attr($logged_user).'</strong></span></li>';
 				else $Ouser='<li class="users"><span class="indent-li-agent">'.$utype.': <strong>'.esc_attr($logged_user).'</strong></span></li>';
 			}else{
-				$Ouser='<li class="users"><span class="indent-li-agent">'.$utype.': <strong>'.esc_attr($rk->login_name).'</strong></span></li>';
+				$Ouser='<li class="users"><span class="indent-li-agent">'.$utype.': <strong>'.esc_attr($logged_user).'</strong></span></li>';
 			}
 			$unclass="sum-box-log";
 			if($wdebug_mode){
@@ -1723,6 +1829,7 @@ function wassup_page_contents($args=array()){
 		if(!empty($rk->malware_type)){
 			$unclass="sum-box-spam";
 		}
+		if(strlen($ip)>20) $unclass .=" sum-box-ipv6";
 		echo "\n";?>
 	<div id="delID<?php echo esc_attr($rk->wassup_id);?>" class="sum-rec <?php if($wassup_user_settings['umark']==1 && $wassup_user_settings['uip']==$ip) echo 'sum-mark';?>"> <?php
 		// Visitor Record - raw data (hidden)
@@ -1930,6 +2037,7 @@ function wassup_page_contents($args=array()){
 	if (!empty($wassup_user_settings['detail_chart']) || (!empty($_GET['chart']) && "1" == $_GET['chart'])) {
 		$chart_type = (!empty($wassup_options->wassup_chart_type))? $wassup_options->wassup_chart_type: "2";
 		//show Google!Charts image
+		$html='<p style="padding-top:10px;">'.__("Too few records to print chart","wassup").'...</p>';
 		if ($wpagestot > 12) {
 			//extend script timeout for chart
 			if($can_set_timelimit && (time()-$stimer_start)>$stimeout-30){
@@ -1938,8 +2046,6 @@ function wassup_page_contents($args=array()){
 			}
 			$chart_url=$wTot->TheChart($wlast,$res,"180",$wsearch,$chart_type,"bg,s,e9e9ea|c,lg,90,deeeff,0,e9e9ea,0.8","page",$wtype);
 			$html='<img src="'.$chart_url.'" alt="'.__("Graph of visitor hits","wassup").'" class="chart" width="'.$res.'" />';
-		} else {
-			$html='<p style="padding-top:10px;">'.__("Too few records to print chart","wassup").'...</p>';
 		}
 	} else {
 		$html='<p style="padding-top:10px">&nbsp;</p>';

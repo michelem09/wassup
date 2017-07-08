@@ -1,6 +1,6 @@
 <?php
 /**
- * Additional functions and action hooks required for Wassup to run in older versions of Wordpress
+ * Additional functions and action hooks required for Wassup to run in older versions of Wordpress and PHP
  *
  * IMPORTANT NOTE: this module is loaded by 'wassup_init' function before the WASSUPURL constant is set and before the 'wassup_options' global is set.
  * Don't use WASSUPURL constant or $wassup_options global variable here and don't call 'wassup_init' function to set them!
@@ -29,12 +29,28 @@ if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])=
 	die("Bad Request: ".htmlspecialchars(preg_replace('/(&#0*37;?|&amp;?#0*37;?|&#0*38;?#0*37;?|%)(?:[01][0-9A-F]|7F)/i','',$_SERVER['REQUEST_URI'])));
 }
 //-------------------------------------------------
-//nothing to do here
+//Function to emulate PHP5 functions used by Wassup 
+$php_vers=phpversion();
+if(version_compare($php_vers,'5.2','<')){
+	if(!function_exists('json_decode')){	//PHP 5.2+ function
+	/** crude emulation of function to load remote json data */
+	function json_decode($json,$to_array=false){
+		$x=false;
+		if(!empty($json)&& strpos($json,'{"')!==false){
+			$out='$x='.str_replace(array('{','":','}'),array('array(','"=>',')'),$json);
+			eval($out.';');
+			if(!$to_array) $x=(object)$x;
+		}
+		return $x;
+	}
+	}
+}
+//nothing more to do here
 if(version_compare($GLOBALS['wp_version'],'4.5','>=')){
 	return;
 }
-//Compatibility functions and action hooks for Wassup pages
-$wassup_compatlib=dirname($wfile);
+//-------------------------------------------------
+//Workaround functions for missing Wordpress hooks/filters used by Wassup
 if(!empty($_GET['page']) && stristr($_GET['page'],'wassup')!==FALSE){
 if(version_compare($GLOBALS['wp_version'],'4.5','<')){
 	/** Load latest 'jquery.js' and 'jquery-migrate.js' in Wassup */
@@ -133,7 +149,7 @@ if(version_compare($GLOBALS['wp_version'],'2.5','<')){
 } //end if wp_version < 2.5
 
 //-------------------------------------------------
-//Widget compatibility functions and classes
+//Widget compatibility function (see also "compat_widget.php" module)
 if(version_compare($GLOBALS['wp_version'],'3.8','<')){
 	/** Widget control form css adjustments by Wordpress version */
 	function wassup_compat_widget_form_css(){
@@ -152,12 +168,6 @@ if(version_compare($GLOBALS['wp_version'],'3.8','<')){
 		echo "\n".'.wassup-widget-ctrl td{padding:0;line-height:1.1em;}'."\n";?>
 </style><?php
 		echo "\n";
-	}
-	//load 'Wassup_Widget' base widget without the 'WP_Widget' parent class
-	if(version_compare($GLOBALS['wp_version'],'2.8','<')){
-		if(!class_exists('Wassup_Widget')){
-			include_once($wassup_compatlib.'/compat_widget.php');
-		}
 	}
 }
 unset($wfile);	//to free memory

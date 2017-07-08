@@ -155,8 +155,6 @@ function wassup_settings_install($wassup_table=""){
 				}
 			}
 		} //!is_multisite
-	//clear table status cache for table upgrade
-	//$result=wassupDb::clear_cache('_table_status'); //-redundant...all cache is cleared in wassup_updateTable() function
 	} //end if wassup_alert_message
 	$wassup_options->wassup_table= $wassup_table;
 	$wassup_options->wassup_upgraded= time();
@@ -478,6 +476,16 @@ function wassup_updateTable($wtable=""){
 	//Do the upgrades
 	$dbtasks=array();
 	$dbtask_keys=array();
+	//create wp-cron action for background updates 
+	//Note that 'LOW_PRIORITY' is strictly for separate cron/ajax processes only..otherwise it will cause long waits when site is busy
+	$low_priority="";
+	if(version_compare($wp_version,'3.0','>')){
+		$low_priority="LOW_PRIORITY";
+		add_action('wassup_upgrade_dbtasks',array('wassupDb','scheduled_dbtask'),10,1);
+		if(empty($wassup_options->wassup_googlemaps_key)){
+			add_action('wassup_scheduled_api_upg',array('wassupOptions','lookup_apikey'),10,1);
+		}
+	}
 	//Since Wordpress 3.1, 'wassup_createTable' no longer upgrades "wp_wassup" table structure because of an ALTER TABLE error in the "dbDelta" function. @since v1.8.3
 	//Do table structure upgrades
 	//skip some upgrade checks when script timeout is small number @since v1.9.1
@@ -661,10 +669,6 @@ function wassup_updateTable($wtable=""){
 
 	//Do retroactive data updates by version#
 	//Retroactive data updates are run separately from table structure upgrades (via wp_cron). @since v1.9
-	//LOW_PRIORITY in update is strictly for separate cron/ajax processes only..otherwise it will cause long waits when site is busy @since v1.9.1
-	$low_priority="LOW_PRIORITY";
-	if(version_compare($wp_version,'3.0','<')) $low_priority="";
-	else add_action('wassup_upgrade_dbtasks',array('wassupDb','scheduled_dbtask'),10,1);
 	//For upgrade from < v1.8:
 	// -retroactively fix incorrect OS "win2008" (="win7") in table
 	if(version_compare($from_version,"1.8","<")){
@@ -692,6 +696,15 @@ function wassup_updateTable($wtable=""){
 		$dbtasks[]=sprintf("UPDATE $low_priority `$wassup_table` SET `browser`='IE 11' WHERE `timestamp`>='%d' AND `browser`='' AND (`os` LIKE 'Win10%%' OR `os` LIKE 'WinNT 10%%') AND `agent` LIKE '%% Edge%%'",strtotime("1 January 2015"));
 	} //end if 1.9
 
+	//For all upgrades: 
+	// New in v1.9.4: get a new api key
+	if(empty($wassup_options->wassup_googlemaps_key)){
+		if(!empty($low_priority)){
+			wp_schedule_single_event(time()+600,'wassup_scheduled_api_upg');
+		}else{
+			$key=wassupOptions::lookup_apikey();
+		}
+	}
 	//Queue the retroactive updates
 	//schedule retroactive updates via cron so it dosen't slow down activation
 	if(count($dbtasks)>0){
@@ -702,10 +715,10 @@ function wassup_updateTable($wtable=""){
 			wassupDb::scheduled_dbtask($arg);
 		}
 	}
+
 	//Lastly, check for browser timeout..may not work because of output redirection in Wordpress during plugin install, so also use timer.
-	//...1 min is normal http request keepAlive time
-	//echo chr(0); //send null to check if browser is still alive
-	//run 'wassup_settings_install' on browser abort and save settings
+	//'echo chr(0);' to send null to browser to check if it is still alive - doesn't work
+	//...after 1 minute (normal http request keepAlive time) or browser abort, run 'wassup_settings_install' and save settings
 	if(connection_aborted() || (time() - $stimer_start) > 57){
 		$wassup_options->wassup_alert_message="Wassup ".WASSUPVERSION.": ".__("Database created/upgraded successfully","wassup");
 		wassup_settings_install($wassup_table);

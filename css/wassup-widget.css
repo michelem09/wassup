@@ -14,7 +14,8 @@
 .wassup-widget strong{font-size:1.1em;text-shadow:-1px 1px 0 #efe;}
 .wassup-widget p{text-indent:0 !important;}
 .wassup-widget .nobullet li p,.wassup-widget .nobullet li div{max-width:90%;margin:1em 0 0;padding:2px 2px 3px 5px;word-wrap:normal;}
-.wassup-widget li a{}
+.wassup-widget li a{text-decoration:none;}
+.wassup-widget li a:hover {text-decoration:underline;}
 .wassup-widget .online-count{min-width:25px;margin:0 2px 5px 7px;padding:2px 3px 0;font-family:"Lucida Console",Monaco,monospace;display:inline;display:inline-block;line-height:1.2em;color:#223;font-size:1.1em;text-align:center;background-color:#ddf0ff;border:1px solid #bbb;border-radius:3px;}
 .wassup-widget .online-total{min-width:30px;margin-left:5px;padding:2px 4px 0;font-size:1.3em;}
 .wassup-widget p img {margin:0 2px;padding:0;vertical-align:middle;}
@@ -23,7 +24,8 @@
 .wassup-widget .online-spider{background-color:#f6ecce;}
 .wassup-widget .online-loggedin{background-color:#dfffcc;}
 .wassup-widget p.online-loggedin{color:#223;background-color:#efffe0;border:1px solid #eee;border-radius:7px;}
-.wassup-widget .wassup-flag img,.wassup-widget .icon{margin-left:3px;padding:0;border:1px solid #eee;}
+.wassup-widget .wassup-flag img,.wassup-widget .icon{margin-left:3px;margin-right:2px;padding:0;border:1px solid #eee; display:inline;display:inline-block;}
+.wassup-widget .topstats img {float:left;margin:3px 3px 3px 0;}
 .wassup-widget li.stat-count .top-item,.wassup-widget li .top-url{max-width:95%;display:inline-block;float:none;}
 .wassup-widget ul li.stat-count .top-item,.wassup-widget ul li.stat-count .top-url{max-width:83%;vertical-align:top;}
 .wassup-widget ul li .top-url a{display:block;line-height:1em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}

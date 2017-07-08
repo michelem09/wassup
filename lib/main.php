@@ -349,16 +349,19 @@ class wassup_checkComment{
 } //end if !class_exists('wDetector')
 
 /** Truncate $input string to a length of $max */
-function stringShortener($input, $max=0, $separator="(...)", $exceedFromEnd=0){
-	if(!$input || !is_string($input)){
-		return false;
+function stringShortener($input,$max=0,$sep='(...)',$exceedFromEnd=0){
+	//check for valid input
+	$strng=rtrim($input);
+	if(empty($strng) || !is_string($input)){
+		return esc_attr($input);	//v1.9.4 bugfix
 	}
 	//temporarily replace all %-hex chars with literals and trim the input string of whitespaces...re-encoded after truncation
-	$instring=trim(stripslashes(rawurldecode(html_entity_decode(wassupURI::disarm_attack($input))))," +\t");
+	$instring=rtrim(stripslashes(rawurldecode(html_entity_decode(wassupURI::disarm_attack($input))))," +\t");
+	if(empty($instring)) $instring=$input;	//v1.9.4 bugfix
 	$inputlen=strlen($instring);
 	$max=(is_numeric($max))?(integer)$max:$inputlen;
 	if($max <$inputlen){
-		$separator=($separator)?$separator:"(...)";
+		$separator=($sep)?$sep:'(...)';
 		$modulus=(($max%2));
 		$halfMax=floor($max/2);
 		$begin="";
@@ -373,7 +376,7 @@ function stringShortener($input, $max=0, $separator="(...)", $exceedFromEnd=0){
 		}else{
 			$end=($exceedFromEnd)? substr($instring,$inputlen-$halfMax-1) :substr($instring,$inputlen-$halfMax);
 		}
-		$extracted=substr($instring, strpos($instring,$begin)+strlen($begin), $inputlen-$max );
+		//$extracted=substr($instring, strpos($instring,$begin)+strlen($begin),$inputlen-$max); //not used here
 		$outstring=$begin.$separator.$end;
 		if(strlen($outstring) >= $inputlen){  //Because "Fir(...)fox" is longer than "Firefox"
 			$outstring=$instring;
@@ -812,11 +815,12 @@ function wGeolocateIP($ip) {
  * Return an associative array containing the top statistics results from MySql query
  * parameters are: stat_type, limit, from-condition (mysql)
  * return array keys('top_count','top_item','visit_timestamp",["top_group","top_link"])
- * @author Helene D. 2009-03-04
+ * function renamed from 'wGetStats' to avoid name conflicts
+ * @author Helene D. 2009-03-0$hostname=@gethostbyaddr($IP);4
  * @param string, integer, string
  * @return array
  */
-function wGetStats($stat_type, $stat_limit=10, $stat_condition="",$return_sql=false) {
+function get_wassupstat($stat_type, $stat_limit=10, $stat_condition="",$return_sql=false) {
 	global $wpdb, $wassup_options, $wdebug_mode;
 	if(!class_exists('wassupOptions')){
 		if(!wassup_init()) return;	//nothing to do
@@ -866,7 +870,7 @@ function wGetStats($stat_type, $stat_limit=10, $stat_condition="",$return_sql=fa
 		foreach ($exclude_array as $exclude_domain) {
 			$www='www\\.';
 			if(preg_match('#^(www\d?\.)(.+)#i',$exclude_domain,$pcs)>0){
-				if(!empty($pcs[1]))$www=str_replace('.','\\.',$pcs[1]);
+				if(!empty($pcs[1])) $www=str_replace('.','\\.',$pcs[1]);
 				$exclude_domain=$pcs[2];
 			}
 			//wildcard(*) allowed in domain @since v1.9
@@ -941,7 +945,7 @@ function wGetStats($stat_type, $stat_limit=10, $stat_condition="",$return_sql=fa
 		if($wdebug_mode)echo "\n<!-- ".__FUNCTION__." ERROR: ".$error_msg." -->";
 	}
 	return false;
-} //end function wGetStats
+} //end function get_wassupstat
 
 /**
  * Display the top 10 stats in table columns
@@ -970,7 +974,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 	$wassup_table=$wassup_options->wassup_table;
 	$blogurl=wassupURI::get_sitehome();
 	$url=parse_url($blogurl);
-	$sitedomain=preg_replace('/^www\./i','',$url['host']);
+	$sitedomain=preg_replace('/^www?[0-9a-z]\./i','',$url['host']);
 
 	//extend php script timeout length for large tables
 	$stimeout=ini_get("max_execution_time");
@@ -1042,7 +1046,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 
 	//#output top 10 searches
 	if ($top_ten['topsearch'] == 1) {
-		$top_results = wGetStats("searches",$top_limit,$top_condition);
+		$top_results=get_wassupstat("searches",$top_limit,$top_condition);
 ?>
 	<td<?php
 		if($cols==0) echo ' class="firstcol"';
@@ -1078,7 +1082,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 	if ($top_ten['topreferrer'] == 1) {
 		//to prevent browser timeouts, send <!--heartbeat--> output
 		echo "\n<!--heartbeat-->";
-		$top_results = wGetStats("referrers",$top_limit,$top_condition);
+		$top_results = get_wassupstat("referrers",$top_limit,$top_condition);
 ?>
 	<td<?php
 		if($cols==0) echo ' class="firstcol"';
@@ -1117,7 +1121,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 	$top_results=array();
 	if($top_ten['toprequest']==1){
 		echo "\n<!--heartbeat-->\n";
-		$top_results=wGetStats("urlrequested",$top_limit,$top_condition);
+		$top_results=get_wassupstat("urlrequested",$top_limit,$top_condition);
 ?>
 	<td<?php
 		if($cols==0) echo ' class="firstcol"';
@@ -1155,7 +1159,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 	$top_results=array();
 	if($top_ten['topbrowser']==1){
 		echo "\n<!--heartbeat-->\n";
-		$top_results=wGetStats("browser",$top_limit,$top_condition);
+		$top_results=get_wassupstat("browser",$top_limit,$top_condition);
 ?>
 	<td<?php
 		if($cols==0) echo ' class="firstcol"';
@@ -1188,7 +1192,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 	$top_results=array();
 	if($top_ten['topos']==1){
 		echo "\n<!--heartbeat-->\n";
-		$top_results=wGetStats("os",$top_limit,$top_condition);
+		$top_results=get_wassupstat("os",$top_limit,$top_condition);
 ?>
 	<td<?php
 		if($cols==0) echo ' class="firstcol"';
@@ -1220,7 +1224,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 	$top_results=array();
 	if($top_ten['toplocale']==1){
 		echo "\n<!--heartbeat-->\n";
-		$top_results=wGetStats("language",$top_limit,$top_condition);
+		$top_results=get_wassupstat("language",$top_limit,$top_condition);
 ?>
 	<td<?php
 		if($cols==0) echo ' class="firstcol"';
@@ -1254,7 +1258,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 	$top_results=array();
 	if($top_ten['topvisitor']==1){
 		echo "\n<!--heartbeat-->\n";
-		$top_results=wGetStats("visitor",$top_limit,$top_condition);
+		$top_results=get_wassupstat("visitor",$top_limit,$top_condition);
 ?>
 	<td<?php
 		if($cols==0) echo ' class="firstcol"';
@@ -1292,7 +1296,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 	$top_results=array();
 	if($top_ten['toppostid']==1){
 		echo "\n<!--heartbeat-->\n";
-		$top_results=wGetStats("postid",$top_limit,$top_condition);
+		$top_results=get_wassupstat("postid",$top_limit,$top_condition);
 ?>
 	<td<?php
 		if($cols==0) echo ' class="firstcol"';
@@ -1580,7 +1584,10 @@ class WassupItems {
 	}
 	// Function to show main query and count items
 	function calc_tot($Type,$Search="",$specific_where_clause=null,$distinct_type=null){
-		global $wpdb,$wdebug_mode;
+		global $wpdb,$current_user,$wdebug_mode;
+		//get/set user-specific wassup_settings
+		if(!is_object($current_user) || empty($current_user->ID)) wp_get_current_user();
+		$wassup_user_settings=get_user_option('_wassup_settings',$current_user->ID);
 		$this->ItemsType=$Type;
 		$this->searchString=$Search;
 		$ss="";
@@ -1592,37 +1599,50 @@ class WassupItems {
 		}else{
 			$whereis= $this->_whereis . $ss;
 		}
-		$buffered="";
 		//abort if there is nothing in totrecords var
 		if(empty($this->totrecords) || !is_numeric($this->totrecords)){
 			return;
 		}
-		//use "sql_buffer_result" to help speed up retrieval of large datasets
-		if($this->totrecords >5000) $buffered="SQL_BUFFER_RESULT";
 		// Switch by every (global) items type (visits, pageviews, spams, etc...)
 		switch ($Type) {
 		// This is the MAIN query to show the chronology
 		case "main":
-			//extend PHP and MySql timeouts to prevent script hangs
-			$stimeout=ini_get("max_execution_time");
-			if(is_numeric($stimeout) && $stimeout >0 && $stimeout <180){
-				$disabled_funcs=ini_get('disable_functions');
-				if((empty($disabled_funcs) || strpos($disabled_funcs,'set_time_limit')===false) && !ini_get('safe_mode')){
-					@set_time_limit(3*60);
+			//New in v1.9.4: use temporary table to help speed up retrieval of large datasets
+			$bigdata=false;
+			$totrecords=$wpdb->get_var("SELECT COUNT(*) FROM $this->tableName");
+			if($totrecords >50000) $bigdata=true;
+			//main query
+			if($bigdata){
+				//extend PHP and MySql timeouts to prevent script hangs
+				$stimeout=ini_get("max_execution_time");
+				if(is_numeric($stimeout) && $stimeout >0 && $stimeout <180){
+					$disabled_funcs=ini_get('disable_functions');
+					if((empty($disabled_funcs) || strpos($disabled_funcs,'set_time_limit')===false) && !ini_get('safe_mode')){
+						@set_time_limit(3*60);
+					}
+				}
+				$mtimeout=$wpdb->get_var("SELECT @@session.wait_timeout AS mtimeout FROM dual");
+				if(is_numeric($mtimeout) && $mtimeout<160) $result=$wpdb->query("SET wait_timeout=160");
+				//use a temporary table for large datasets 
+				$tmptable='_wassup_'.$current_user->user_login.rand();
+				//create temp table of records
+				$qry1 = sprintf("CREATE TEMPORARY TABLE IF NOT EXISTS %s AS (SELECT `wassup_id`, max(`timestamp`) as max_timestamp, min(`timestamp`) as min_timestamp, count(`wassup_id`) as page_hits, GROUP_CONCAT(DISTINCT `username` ORDER BY `username` SEPARATOR '| ') AS login_name, max(`spam`) AS malware_type, max(`screen_res`) as resolution FROM %s WHERE %s GROUP BY `wassup_id` ORDER BY max_timestamp DESC %s); ",
+					$tmptable,
+					$this->tableName,
+					$whereis,
+					$this->Limit);
+				$results = $wpdb->query($qry1);
+				//get detail data using temp table
+				if(!is_wp_error($results)){
+					$qry2 = sprintf("SELECT a1.*, b1.id, b1.timestamp, b1.ip, b1.hostname, b1.referrer, b1.comment_author, b1.agent, b1.browser, b1.os, b1.spider, b1.feed, b1.language, b1.search, b1.searchengine, b1.searchpage, c1.urlrequested, c1.url_wpid FROM %1\$s a1, %2\$s b1, %2\$s c1 WHERE b1.wassup_id = a1.wassup_id AND b1.timestamp = (SELECT MIN(b2.timestamp) FROM %2\$s b2 WHERE b2.wassup_id = b1.wassup_id) AND c1.wassup_id = a1.wassup_id AND c1.timestamp = (SELECT MAX(c2.timestamp) FROM %2\$s c2 WHERE c2.wassup_id = c1.wassup_id); ",
+						$tmptable,
+						$this->tableName);
+					$results = $wpdb->get_results($qry2);
 				}
 			}
-			$mtimeout=$wpdb->get_var("SELECT @@session.wait_timeout AS mtimeout FROM dual");
-			if(is_numeric($mtimeout) && $mtimeout<160) $result=$wpdb->query("SET wait_timeout=160");
-			//main query
-			// "sql_buffer_result" select option helps in cases where it takes a long time to retrieve results.
-			$qry = sprintf("SELECT $buffered `id`, `wassup_id`, max(`timestamp`) as max_timestamp, min(`timestamp`) as min_timestamp, count(`wassup_id`) as page_hits, `ip`, `hostname`, `urlrequested`, `referrer`, GROUP_CONCAT(DISTINCT `username` ORDER BY `username` SEPARATOR ', ') AS login_name, `comment_author`, `agent`, `browser`, `os`, `spider`, `feed`, max(`spam`) AS malware_type, max(`screen_res`) as resolution, `language`, `search`, `searchengine`, `searchpage`, `url_wpid` FROM `%s` WHERE %s GROUP BY `wassup_id` ORDER BY max_timestamp DESC %s",
-				$this->tableName,
-				$whereis,
-				$this->Limit);
-			$results = $wpdb->get_results($qry);
-			//try without buffer
-			if ((is_wp_error($results) || empty($results) || !is_array($results)) && !empty($this->totrecords) && !empty($buffered)) {
-				$qry = sprintf("SELECT `id`, `wassup_id`, max(`timestamp`) as max_timestamp, min(`timestamp`) as min_timestamp, count(`wassup_id`) as page_hits, `ip`, `hostname`, `urlrequested`, `referrer`, GROUP_CONCAT(DISTINCT `username` ORDER BY `username` SEPARATOR ', ') AS login_name, `comment_author`, `agent`, `browser`, `os`, `spider`, `feed`, max(`spam`) AS malware_type, max(`screen_res`) as resolution, `language`, `search`, `searchengine`, `searchpage`, `url_wpid` FROM `%s` WHERE %s GROUP BY `wassup_id` ORDER BY max_timestamp DESC %s",
+			//old query fall back for small dataset or if error
+			if(!$bigdata || is_wp_error($results) || empty($results) || !is_array($results)){
+				$qry = sprintf("SELECT `wassup_id`, max(`timestamp`) as max_timestamp, min(`timestamp`) as min_timestamp, count(`wassup_id`) as page_hits, GROUP_CONCAT(DISTINCT `username` ORDER BY `username` SEPARATOR '| ') AS login_name, max(`spam`) AS malware_type, `id`, `ip`, `hostname`, `urlrequested`, `referrer`, `comment_author`, `agent`, `browser`, `os`, `spider`, `feed`, max(`screen_res`) as resolution, `language`, `search`, `searchengine`, `searchpage`, `url_wpid` FROM `%s` WHERE %s GROUP BY `wassup_id` ORDER BY max_timestamp DESC %s",
 					$this->tableName,
 					$whereis,
 					$this->Limit);
@@ -1686,6 +1706,12 @@ class WassupItems {
 			if(!empty($wip)&& $Search==$wip){
 				//for IP-only search
 				$ss=sprintf(" AND `ip`='%s'",$searchParam);
+			//New in v1.9.4: separate url searches
+			}elseif(strpos($Search,'/')!==FALSE){
+				$ss = sprintf(" AND (`urlrequested` LIKE '%%%s%%' OR `agent` LIKE '%%%s%%' OR `referrer` LIKE '%%%s%%')",
+				$searchParam,
+				$searchParam,
+				$searchParam);
 			}else{	//for general search
 				$ss = sprintf(" AND (`ip` LIKE '%%%s%%' OR `hostname` LIKE '%%%s%%' OR `urlrequested` LIKE '%%%s%%' OR `agent` LIKE '%%%s%%' OR `referrer` LIKE '%%%s%%' OR `username` LIKE '%s%%' OR `comment_author` LIKE '%s%%')",
 				$searchParam,

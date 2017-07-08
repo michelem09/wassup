@@ -257,9 +257,9 @@ function wassup_widget_get_online_counts($instance=array()){
 				$i++;
 				$flag='/img/flags/'.$loc->top_item.'.png';
 				if(is_readable(WASSUPDIR.$flag)){
-					$html .=' <nobr><img src="'.WASSUPURL.$flag.'" class="icon" alt="'.$loc->top_item.'"/>'.$loc->top_count.'</nobr>';
+					$html .=' <nobr><img src="'.WASSUPURL.$flag.'" class="icon" alt="'.$loc->top_item.'"/><span class="flag-count">'.$loc->top_count.'</span></nobr>';
 				}else{
-					$html .=strtoupper($loc->top_item).'-'.$loc->top_count;
+					$html .='<span class="flag-count">'.strtoupper($loc->top_item).'-'.$loc->top_count.'</span>';
 				}
 				if($i < $fc) $html .='&nbsp;&middot;&nbsp;';
 			}
@@ -280,9 +280,9 @@ function wassup_widget_get_topstat($item,$limit,$chars,$from_date,$show_counts=0
 	global $wpdb,$wassup_options,$wdebug_mode;
 	$html="";
 	if($limit >0){
-		//exclude spiders from widget data (spam already excluded in wGetStats)
+		//exclude spiders from widget data (spam already excluded in get_wassupstat)
 		$top_results=array();
-		if(!function_exists('wGetStats')) include_once(WASSUPDIR ."/lib/main.php");
+		if(!function_exists('get_wassupstat')) include_once(WASSUPDIR ."/lib/main.php");
 		$wpurl=strtolower(rtrim(wassupURI::get_wphome()));
 		$blogurl=strtolower(rtrim(wassupURI::get_sitehome()));
 		$top_condition=" `timestamp`>='".$from_date."' AND `spider`=''";
@@ -311,7 +311,7 @@ function wassup_widget_get_topstat($item,$limit,$chars,$from_date,$show_counts=0
 		}elseif($item == 'locale'){
 			$scol="language";
 		}
-		$top_sql=wGetStats($scol,$limit,$top_condition,"sql");
+		$top_sql=get_wassupstat($scol,$limit,$top_condition,"sql");
 		if(!empty($top_sql)) $top_results=$wpdb->get_results($top_sql);
 		$ndigits=1;
 		if(!empty($top_results) && count($top_results)>0){
@@ -320,16 +320,17 @@ function wassup_widget_get_topstat($item,$limit,$chars,$from_date,$show_counts=0
 			$liclass="";
 			if(!empty($show_counts)) $liclass=' class="stat-count"';
 			if($wdebug_mode){
-				echo "\n\t".'<!-- '.count($top_results).' results from query '.$top_sql.' -->';
+				echo "\n\t".'<!-- '.count($top_results).' results from query '.$top_sql;
+				echo "\n\t".' '.serialize($top_results).' -->';
 			}
 		foreach($top_results as $wtop){
 			$top_count='';
 			if(!empty($show_counts)){
 				$top_count=wPadNum($wtop->top_count,$ndigits);
 			}
-			$html .='
-	<li'.$liclass.'>';
 			if($scol == "language"){
+				$html .='
+	<li'.$liclass.'>';
 				$flag='/img/flags/'.esc_attr($wtop->top_item).'.png';
 				if(is_readable(WASSUPDIR.$flag)){
 					$flagsrc=WASSUPURL.$flag;
@@ -337,33 +338,45 @@ function wassup_widget_get_topstat($item,$limit,$chars,$from_date,$show_counts=0
 				}else{
 					$html .='<nobr>'.$top_count.'<span class="top-item">'.wassupURI::disarm_attack($wtop->top_item).'</span></nobr>';
 				}
+				$html .='</li>';
 			}elseif($scol == "url_wpid" || $scol == "search"){
+				$html .='
+	<li'.$liclass.'>';
 				if(!empty($wtop->top_link)){
 					$html .=$top_count.'<span class="top-item"><a href="'.wassupURI::cleanURL($wtop->top_link).'" title="'.wassupURI::disarm_attack($wtop->top_item).'">'.wassupURI::disarm_attack($wtop->top_item).'</a></span>';
 				}else{
 					$html .=$top_count.'<span class="top-item">'.wassupURI::disarm_attack($wtop->top_item).'</span>';
 				}
+				$html .='</li>';
 			}elseif($scol == "urlrequested"){
 				//don't show possible spam/malware
 				if(preg_match('/\/wp\-(?:admin|content|includes)\/|\/wp\-(login|cron)\.php|["\'\<\>\{\}\(\)\*\\\\`]|&[lgr]t;|&#0?3[49];|&#0?4[01];|&#0?6[02];|&#0?9[26];|&#8217;|&#8221;|&quot;/i',$wtop->top_link)>0 || wassupURI::is_xss($wtop->top_link)){
 					continue;
 				}
+				$html .='
+	<li'.$liclass.'>';
 				if(!empty($wtop->top_link)){
 					$urllink=wassupURI::url_link($wtop->top_link,false);
 				}else{
 					$urllink=wassupURI::url_link($wtop->top_item,false);
 				}
 				$html .=$top_count.'<span class="top-url">'.$urllink.'</span>';
+				$html .='</li>';
 			}elseif($scol == "referrers"){
 				//don't show possible spam/malware
 				if(preg_match('/\/wp\-(?:admin|content|includes)\/|\/wp\-(login|cron)\.php|["\'\<\>\{\}\(\)\*\\\\`]|&[lgr]t;|&#0?3[49];|&#0?4[01];|&#0?6[02];|&#0?9[26];|&#8217;|&#8221;|&quot;/i',$wtop->top_link)>0 || wassupURI::is_xss($wtop->top_link)){
 					continue;
 				}
+				$html .='
+	<li'.$liclass.'>';
 				$trec=(array)$wtop;
 				$trec['referrer']=$trec['top_link'];
 				$reflink=wassupURI::referrer_link((object)$trec,false);
 				$html .=$top_count.'<span class="top-url">'.$reflink.'</span>';
+				$html .='</li>';
 			}else{
+				$html .='
+	<li'.$liclass.'>';
 				if($chars >0 && strlen($wtop->top_item)>$chars){
 					if(!empty($wtop->top_link)){
 						$html .=$top_count.'<span class="top-item"><a href="'.wassupURI::cleanURL($wtop->top_link).'" title="'.wassupURI::disarm_attack($wtop->top_item).'">'.stringShortener($wtop->top_item,$chars).'</a></span>';
@@ -377,8 +390,8 @@ function wassup_widget_get_topstat($item,$limit,$chars,$from_date,$show_counts=0
 						$html .=$top_count.'<span class="top-item">'.wassupURI::disarm_attack($wtop->top_item).'</span>';
 					}
 				}
+				$html .='</li>';
 			}
-			$html .='</li>';
 		} //end foreach
 		}elseif($wdebug_mode){
 			echo "\n".'<!-- No results for '.esc_attr($item).' on query $top_sql='.$top_sql.' found! -->';
@@ -394,14 +407,65 @@ function wassup_widget_get_topstat($item,$limit,$chars,$from_date,$show_counts=0
  */
 function wassup_widget_stat_gettext($statitem,$heading=""){
 	if(empty($heading)) $heading=__("Top","wassup");
-	if($statitem=="articles") $gettext=sprintf(__("%s articles","wassup"),$heading);
-	elseif($statitem=="searches") $gettext=sprintf(__("%s searches","wassup"),$heading);
-	elseif($statitem=="referrers") $gettext=sprintf(__("%s referrers","wassup"),$heading);
-	elseif($statitem=="requests") $gettext=sprintf(__("%s requests","wassup"),$heading);
-	elseif($statitem=="browsers") $gettext=sprintf(__("%s browsers","wassup"),$heading);
-	elseif($statitem=="os") $gettext=sprintf(__("%s OS","wassup"),$heading);
-	elseif($statitem=="locale") $gettext=sprintf(__("%s locale","wassup"),$heading);
-	else $gettext=$statitem;
+	if($statitem=="articles"){
+		if($heading == "Top"){
+			$gettext=__("Top Articles","wassup");
+		}elseif($heading == "Latest"){
+			$gettext=__("Latest articles","wassup");
+		}else{
+			$gettext=sprintf(__("%s articles","wassup"),$heading);
+		}
+	}elseif($statitem=="searches"){
+		if($heading == "Top"){
+			$gettext=__("Top Searches","wassup");
+		}elseif($heading == "Latest"){
+			$gettext=__("Latest searches","wassup");
+		}else{
+			$gettext=sprintf(__("%s searches","wassup"),$heading);
+		}
+	}elseif($statitem=="referrers"){
+		if($heading == "Top"){
+			$gettext=__("Top Referrers","wassup");
+		}elseif($heading == "Latest"){
+			$gettext=__("Latest referrers","wassup");
+		}else{
+			$gettext=sprintf(__("%s referrers","wassup"),$heading);
+		}
+	}elseif($statitem=="requests"){
+		if($heading == "Top"){
+			$gettext=__("Top Requests","wassup");
+		}elseif($heading == "Latest"){
+			$gettext=__("Latest URL requests","wassup");
+		}else{
+			$gettext=sprintf(__("%s requests","wassup"),$heading);
+		}
+	}elseif($statitem=="browsers"){
+		if($heading == "Top"){
+			$gettext=__("Top Browsers","wassup");
+		}elseif($heading == "Latest"){
+			$gettext=__("Latest browsers","wassup");
+		}else{
+			$gettext=sprintf(__("%s browsers","wassup"),$heading);
+		}
+	}elseif($statitem=="os"){
+		if($heading == "Top"){
+			$gettext=__("Top OS","wassup");
+		}elseif($heading == "Latest"){
+			$gettext=__("Latest OS","wassup");
+		}else{
+			$gettext=sprintf(__("%s OS","wassup"),$heading);
+		}
+	}elseif($statitem=="locale"){
+		if($heading == "Top"){
+			$gettext=__("Top Locales","wassup");
+		}elseif($heading == "Latest"){
+			$gettext=__("Latest locales","wassup");
+		}else{
+			$gettext=sprintf(__("%s locale","wassup"),$heading);
+		}
+	}else{
+		$gettext=$statitem;
+	}
 	return $gettext;
 }
 ?>

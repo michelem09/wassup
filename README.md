@@ -3,8 +3,8 @@ Contributors: michelem, helened
 Donate link:  [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8)   
 Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
 Requires at least: WordPress 2.2  
-Tested up to: 4.6.1  
-Stable tag: 1.9.3  
+Tested up to: 4.8 
+Stable tag: 1.9.4 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -91,7 +91,7 @@ For people with database size limitations, WassUp has a few options to manage th
 ### IMPORTANT NOTICES 
 * Wassup is compatible with Wordpress 4.0+ and PHP 5.2+ 
 * To run Wassup with Wordpress 2.2 - 3.9 or with PHP 4.3 - 5.1, you must install the full copy of Wassup with backward-compatibility feature available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)
-* WassUp is incompatible with static page caching plugins such as "WP Super-Cache"
+* WassUp is incompatible with static html caching plugins such as "WP Super-Cache"
 * &sup1;WassUp is NOT a security plugin. It does not block unwanted visitors nor protect your site from malware attempts. You need a separate security plugin for that
 
 ## Screenshots
@@ -151,18 +151,35 @@ To safely upgrade WassUp when your site is busy, you must manually stop visitor 
 When you activate this plugin (as described in "Installation"), it works "as is". You don't have anything to do. Wait for visitors to hit your site and start seeing details (click the dashboard and go to WassUp page)
 
 ### Compatibility Notice 
-* WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, and WP Hyper Cache. 
+* WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache. 
 
 ## Upgrade Notice
-### 1.9.3.1
-* Important bugfix upgrade.
+### 1.9.4
+* Important feature & bugfix upgrade.
 * DO NOT UPGRADE when your site busy!
 * Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
 
 ## Changelog
+### v1.9.4: Important feature & bugfix upgrade
+* new option to whitelist referrers that are mislabeled as spam in WassUp (ex: Rx or sexy words in domain name)
+* new option to export data in Excel-compatible CSV format
+* improved export speed and added a dialog window
+* improved queries on big data by using temporary tables as subsets in "wassupItems" class
+* updated visitor detail code to speed up output display
+* updated plugin FAQ section and added a FAQ link to top menu tabs
+* updated css files, wassup.css and jquery-ui.css for widgets & dialog
+* updated translation template "wassup.pot"
+* fixed a compatibility issue with Woocommerce plugin AJAX requests
+* fixed a search field validation issue with URL special characters
+* fixed a bug in "stringShortener" function that caused empty results
+* fixed a bug in Top Stats widget that caused blank lines to display 
+* fixed some Top Stats widget translations
+* removed Google!maps API key from Wassup source due to Google TOS limitations
+* miscellaneous minor bugfixes
+
 ### v1.9.3.1: Important bugfix upgrade
 * fixed various preg_match regexes to improve matching
-* fixed a parenthesis error in tracking/exclusion code for 404/spam hits
+* fixed a parenthesis error in tracking/exclusion code for 404 hits
 * fixed bug that caused duplicate country code in searchengine name
 * minor code changes.
 

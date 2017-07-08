@@ -41,7 +41,7 @@ function wassup_action_handler($action=""){
 	//check for invalid Wassup action requests
 	if(empty($action)){
 		if($_REQUEST['action']=="wassup_action_handler"){
-			$msg=__("Missing or invalid action parameter!","wassup");
+			$msg=__("Missing or invalid parameter!","wassup");
 			die($msg);
 		}else{
 			//return not exit, in case is Wordpress action
@@ -56,8 +56,8 @@ function wassup_action_handler($action=""){
 	if(!is_user_logged_in()) die(__("Login required!","wassup"));
 
 	// check for valid hash
-	if(!isset($_REQUEST['whash'])){
-		die(__('Missing or invalid whash parameter!','wassup'));
+	if(!isset($_REQUEST['whash'])){	//don't reveal 'whash' name
+		die(__('Missing or invalid parameter!','wassup'));
 	}
 	$whash=$_REQUEST['whash'];
 	$wassup_settings=get_option('wassup_settings');
@@ -66,8 +66,8 @@ function wassup_action_handler($action=""){
 	}else{
 		$hashfail=true;
 	}
-	if($hashfail){
-		die(__('invalid hash parameter!','wassup'));
+	if($hashfail){ //don't reveal 'hash'
+		die(__('invalid parameter!','wassup'));
 	}
 	if(empty($current_user->ID)) $user=wp_get_current_user();
 	if(!class_exists('wassupOptions')){
@@ -75,11 +75,6 @@ function wassup_action_handler($action=""){
 	}
 	if(empty($wassup_options->wassup_table)) $wassup_options=new wassupOptions;
 	//#Ajax action / no output (unless error)
-	//ACTION: export request
-	if($action=="exportSQL"){
-		export_wassup();
-		exit;
-	}
 	// ACTION: DELETE ON THE FLY FROM VISITOR DETAILS VIEW
 	if($action=="deleteID"){
 		if(!empty($_REQUEST['id'])){
@@ -115,6 +110,17 @@ function wassup_action_handler($action=""){
 		}else{
 			die(__("Error","wassup").": missing id parameter");
 		}
+		exit;
+
+	// ACTION: RETURN MESSAGE FROM AN EXPORT
+	}elseif($action=="exportmessage"){
+		$msg="";
+		$msgid='0';
+		if(isset($_REQUEST['mid'])) $msgid=$_REQUEST['mid'];
+		if(!empty($msgid)){
+			$msg=wassupDb::get_wassupmeta($msgid,'_export_msg');
+		}
+		echo $msg;
 		exit;
 	}
 	//#Ajax action with html output

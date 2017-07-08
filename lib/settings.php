@@ -1,6 +1,6 @@
 <?php
 /**
- * Displays settings form, Wassup wp_options values, and Wassup FAQ
+ * Displays settings form, Wassup wp_options values, and donate buttons
  *
  * @package WassUp Real-time Analytics
  * @subpackage settings.php
@@ -27,7 +27,6 @@ if(!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])=
  * Form to change Wassup's wp_option settings and to show plugin info.
  *  - Shows both single site and network settings where applicable
  *  - Shows server settings that may affect plugin performance
- *  - Shows plugin support FAQ
  *  - Shows ways to donate $ towards continued plugin development
  *
  * @param integer
@@ -109,7 +108,7 @@ function wassup_optionsView($tab=0) {
 ?>
 	<p><?php echo sprintf(__("You can add a sidebar Widget with some useful statistics information by activating the %s widget from the %s.","wassup"), $wwidgets,$wwidgets_link);?></p>
 	<p style="padding:10px 0 10px 0;"><?php _e('Select the options you want for WassUp plugin','wassup'); ?></p><?php
-	if(empty($tab) || (!is_numeric($tab) && $tab!="donate" && $tab!="faq")){
+	if(empty($tab) || (!is_numeric($tab) && $tab!="donate")){
 		if(isset($_POST['delete_now'])) $tab=3;
 		elseif(isset($_POST['submit-options'])) $tab=1;
 		elseif(isset($_POST['submit-options2'])) $tab=2;
@@ -119,7 +118,7 @@ function wassup_optionsView($tab=0) {
 			$tab=1;
 			if(!empty($_REQUEST['tab'])){
 				if (is_numeric($_REQUEST['tab']) && $_REQUEST['tab']>0 && $_REQUEST['tab']<7) $tab = (int)$_REQUEST['tab'];
-				elseif($_REQUEST['tab']=="donate" || $_REQUEST['tab']=="faq") $tab=$_REQUEST['tab'];
+				elseif($_REQUEST['tab']=="donate") $tab=$_REQUEST['tab'];
 			}
 		}
 	}
@@ -152,10 +151,9 @@ function wassup_optionsView($tab=0) {
 		echo "\n";?>
 		<li id="opt-tab4" class="optionstab <?php if($tab=="4")echo ' ui-tabs-active';?>"><a href="#wassup_opt_frag-4"><span><?php _e("Uninstall","wassup");?></span></a></li><?php
 	}
-	//"donate" and "faq" tabs @since v1.9
+	//"donate" tab @since v1.9 (separate faq submenu in v1.9.4)
 	echo "\n";?>
-		<li id="opt-tab-faq" class="optionstab faqtab<?php if($tab=="faq" || $tab=="5")echo ' ui-tabs-active';?>"><a href="#wassup_opt_frag-5"><span>F.A.Q.&nbsp;</span></a></li>
-		<li id="opt-tab-donate" class="optionstab donatetab<?php if($tab=="donate" || $tab=="6")echo ' ui-tabs-active';?>"><a href="#wassup_opt_frag-6"><span><?php _e("Donate","wassup");?></span></a></li>
+		<li id="opt-tab-donate" class="optionstab donatetab<?php if($tab=="donate" || $tab=="5")echo ' ui-tabs-active';?>"><a href="#wassup_opt_frag-5"><span><?php _e("Donate","wassup");?></span></a></li>
 		</ul>
 
 	<div id="wassup_opt_frag-1" class="optionspanel<?php if ($tab == "1") echo ' tabselected'; ?>"><br/><?php
@@ -193,8 +191,8 @@ function wassup_optionsView($tab=0) {
 <?php
 	if(version_compare($wp_version,'2.7','>=')){ ?>
 		<h3><?php _e('User Permissions'); ?></h3>
-		<p class="description"><?php echo __("Gives selected users read-only access to Wassup-stats dashboard submenu panels and the ability to view the dashboard widget.","wassup")." ";
-		echo __("Only administrators have full access to Wassup main admin menu and Wassup-options panels to delete data and edit plugin settings.","wassup");?></p>
+		<p class="description"><?php echo __("Gives selected users view-only access to Wassup's stats dashboard menu, some submenu panels, and the dashboard widget.","wassup")." ";
+		echo __("Only administrators can access Wassup's main menu and all it's submenu panels including the options panel to delete data and edit plugin settings.","wassup");?></p>
 		<p><strong><?php _e('Set minimum user level that can view WassUp stats','wassup'); ?></strong>:
 		<select name="wassup_userlevel">
 		<?php $wassup_options->showFieldOptions("wassup_userlevel"); ?>
@@ -230,8 +228,8 @@ function wassup_optionsView($tab=0) {
 ?>
 		<p class="indent-opt"> <input type="checkbox" name="wassup_geoip_map" value="1" <?php echo $checked; ?> />
 		<strong><?php _e('Display a GEO IP Map in the spy visitors view','wassup'); ?></strong></p>
-		<p class="checkbox-indent"><strong>Google Maps API <?php _e("key","wassup");?>:</strong> <input type="text" name="wassup_googlemaps_key" id="wassup_googlemaps_key" size="40" value=<?php echo '"'.esc_attr($api_key).'"'.$disabled;?> />  - <a href="<?php echo $GMapsAPI_signup;?>" target="_blank"><?php _e("signup for your key","wassup");?></a>
-		<br/><?php echo __('Use your own key to avoid map denial when Wassup API total usage exceeds Google!Maps limits.','wassup');?>
+		<p class="checkbox-indent"><strong>Google Maps API <?php _e("key","wassup");?>:</strong> <input type="text" name="wassup_googlemaps_key" id="wassup_googlemaps_key" size="40" value=<?php echo '"'.esc_attr($api_key).'"'.$disabled;?> />  - <a href="<?php echo $GMapsAPI_signup;?>" target="_blank"><?php _e("signup for your free key","wassup");?></a>
+		<br/><?php echo __('An API key is required to view the map.','wassup');?>
 		</p><br/>
 <?php
 	$checked='checked="CHECKED"';
@@ -337,7 +335,13 @@ function wassup_optionsView($tab=0) {
 		<input type="checkbox" name="wassup_hack" value="1" <?php if($wassup_options->wassup_hack == 1) echo $checked; ?> /> <?php _e("Record admin break-in/hacker attempts", "wassup") ?><br />
 		<input type="checkbox" name="wassup_attack" value="1" <?php if($wassup_options->wassup_attack == 1) echo $checked; ?> /> <?php echo __("Record attack/exploit attempts", "wassup").' (libwww-perl '.__("or","wassup").' xss in user-agent)';?><br />
 		</span>
+		</p>
+		<p class="opt-note" style="display:block;"><strong> &nbsp; <?php echo __('Referrer spam whitelist','wassup');?></strong><br/>
+		<span style="padding-left:15px;"><?php _e('Enter referrer domains that were incorrectly labeled as "Referrer Spam" in "Visitor Detals":','wassup');?><br/>
+		<textarea name="refspam_whitelist" rows="1" style="width:66%;margin-left:15px;"><?php if(!empty($wassup_options->refspam_whitelist)) echo esc_attr($wassup_options->refspam_whitelist); ?></textarea><br/>
+		<span style="padding-left:15px;"> &nbsp;<?php  echo __("comma separated value. Enter whole domains only. Wildcards will be ignored.","wassup")." (ex: referrer.net, referrer.domain.com). ";?></span>
 		</p><br />
+		<hr/>
 		<h3><?php _e('Recording Exceptions','wassup');?></h3>
 		<p class="description"><?php _e("You can exclude a single visitor (by IP, hostname or username) or you can exclude a specific URL request from being stored in WassUp records.","wassup");
 		echo " ".__("Note that recording exceptions lower overall statistics counts and excessive exclusions can affect page load speed on slow host servers.","wassup");?>
@@ -346,25 +350,25 @@ function wassup_optionsView($tab=0) {
 		<p style="padding-top:0;padding-bottom:0;"><strong><?php echo __('Enter source IPs to omit from recording','wassup');?></strong>:
 		<br /><span style="padding-left:10px;display:block;clear:left;">
 		<textarea name="wassup_exclude" rows="2" style="width:60%;"><?php echo esc_url($wassup_options->wassup_exclude);?></textarea></span>
-		<span class="opt-note"><?php echo __("comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...).","wassup")." ".__("A single wildcard (*) can be placed after the last '.' in the IP ('::' in IPv6) for range exclusions (ex: 10.10.100.*, 192.168.*).","wassup");?></span>
+		<span class="opt-note"> <?php echo __("comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...).","wassup")." ".__("A single wildcard (*) can be placed after the last '.' in the IP ('::' in IPv6) for range exclusions (ex: 10.10.100.*, 192.168.*).","wassup");?></span>
 		</p><br/>
 		<h3 class="indent-opt"><?php echo __("Exclude by Hostname","wassup");?></h3>
 		<p style="padding-top:0;padding-bottom:0;"><strong><?php echo __('Enter source hostnames to omit from recording','wassup');?></strong>:
 		<br /><span style="padding-left:10px;display:block;clear:left;">
 		<textarea name="wassup_exclude_host" rows="2" style="width:60%;"><?php echo esc_attr($wassup_options->wassup_exclude_host);?></textarea></span>
-		<span class="opt-note"><?php echo __("comma separated value (ex: host1.domain.com, host2.domain.net, etc...).", "wassup")." ".__("A single wildcard (*) can be placed before the first '.' for domain network exclusions (ex: *.spamdomain.com, *.hackers.malware.net).","wassup");?></span>
+		<span class="opt-note"> <?php echo __("comma separated value (ex: host1.domain.com, host2.domain.net, etc...).", "wassup")." ".__("A single wildcard (*) can be placed before the first '.' for domain network exclusions (ex: *.spamdomain.com, *.hackers.malware.net).","wassup");?></span>
 		</p><br/>
 		<h3 class="indent-opt"><?php echo __("Exclude by Username","wassup");?></h3>
 		<p style="padding-top:0;"><strong><?php echo __('Enter usernames to omit from recording','wassup');?></strong>:
 		<br /><span style="padding-left:10px;display:block;clear:left;">
 		<textarea name="wassup_exclude_user" rows="2" style="width:60%;"><?php echo esc_attr($wassup_options->wassup_exclude_user);?></textarea></span>
-		<span class="opt-note"><?php _e("comma separated value, enter a registered user's login name (ex: bobmarley, enyabrennan, etc.)", "wassup");?></span>
+		<span class="opt-note"> <?php _e("comma separated value, enter a registered user's login name (ex: bobmarley, enyabrennan, etc.)", "wassup");?></span>
 		</p><br/>
 		<h3 class="indent-opt"><?php echo __("Exclude by URL request","wassup");?></h3>
 		<p style="padding-top:0;"><strong><?php echo __('Enter URLs of page/post/feed to omit from recording','wassup');?></strong>:
 		<br /><span style="padding-left:10px;display:block;clear:left;">
 		<textarea name="wassup_exclude_url" rows="2" style="width:60%;"><?php echo esc_url($wassup_options->wassup_exclude_url);?></textarea></span>
-		<span class="opt-note"><?php _e("comma separated value, don't enter entire url, only the last path or some word to exclude (ex: /category/wordpress, 2007, etc...)", "wassup");?></span>
+		<span class="opt-note"> <?php _e("comma separated value, don't enter entire url, only the last path or some word to exclude (ex: /category/wordpress, 2007, etc...)", "wassup");?></span>
 		</p><br />
 		<p class="submit"><input type="submit" name="submit-options2" id="submit-options2" class="submit-opt button button-left button-primary" value="<?php _e('Save Settings','wassup');?>" onclick="jQuery('#submit-options2').val('Saving...');" />&nbsp;<input type="reset" name="reset" class="reset-opt button button-secondary" value="<?php _e('Reset','wassup');?>" /> - <input type="submit" name="reset-to-default" class="default-opt button button-caution wassup-button" value="<?php _e("Reset to Default", "wassup");?>" /></p>
 		<p class="opt-prev-next"><a href="<?php echo $options_link.'&tab=1';?>"><?php echo '&larr;'.__("Prev","wassup");?></a> &nbsp; &nbsp; <a href="<?php echo $options_link.'&tab=3';?>"><?php echo __("Next","wassup").'&rarr;';?></a> &nbsp; &nbsp; <a href="#wassupsettings" onclick="wScrollTop();return false;"><?php echo __("Top","wassup").'&uarr;';?></a></p><br />
@@ -389,12 +393,9 @@ function wassup_optionsView($tab=0) {
 		<?php print $alert_msg; ?>
 		<p class="indent-opt"><input type="checkbox" name="wassup_remind_flag" value="1" <?php if($wassup_options->wassup_remind_flag==1) echo $checked;?>>
 		<strong><?php _e('Alert me','wassup'); ?></strong> (<?php _e('email to','wassup'); ?>: <strong><?php print $adminemail; ?></strong>) <?php _e('when table reaches','wassup'); ?> <input type="text" name="wassup_remind_mb" size="3" value="<?php echo (int)$wassup_options->wassup_remind_mb; ?>"> Mb</p>
-		<h3 class="indent-opt"><?php _e("Delete old records","wassup");?>:</h3><?php
-		$exporturl=wp_nonce_url($options_link.'&tab=3&export=1','wassupexport-'.$current_user->ID);
-		echo "\n";?>
+		<h3 class="indent-opt"><?php _e("Delete old records","wassup");?>:</h3>
 		<p class="indent-opt description"><?php
-		echo sprintf(__("Before deleting, you can save Wassup data in SQL 'export' format onto your local computer by clicking %s below.","wassup"), '<a class="export-wassup" href="'.$exporturl.'">'.__('export table','wassup').'</a>');
-		echo " ".__("Reload this screen after export to view export messages.", "wassup");?></p>
+		echo __("Before deleting, you can backup Wassup table by clicking the \"Export SQL\" button below.","wassup");?></p>
 		<p> &nbsp;<label for="do_delete_auto"><input type="checkbox" name="do_delete_auto" id="do_delete_auto" value="1" <?php if ($wassup_options->delete_auto!="never") echo $checked;?>/> <strong><?php _e("Automatically delete","wassup");?></strong>: </label>
 		<select name="delete_filter"><?php $wassup_options->showFieldOptions("delete_filter"); ?></select> 
 		<nobr><?php _e("records older than", "wassup"); ?>
@@ -406,27 +407,43 @@ function wassup_optionsView($tab=0) {
 		<select name="delete_manual"><?php $wassup_options->showFieldOptions("delete_auto","never");?></select>&nbsp; <?php _e("once","wassup");?></nobr>
 		</p><?php
 		//Delete by record ID# - for use with export @since v1.9
+		$exporturl=wp_nonce_url($options_link.'&tab=3&export=1','wassupexport-'.$current_user->ID);
 		$last_export_id=wassupDb::get_wassupmeta($wassup_table,'_export_recid-'.$current_user->ID);
 		if (empty($last_export_id) || !is_numeric($last_export_id))
 			$last_export_id=0;?>
 		<p> &nbsp;<label for="do_delete_recid"><input type="checkbox" name="do_delete_recid" id="do_delete_recid" value="1" /> <strong><?php _e("Delete all records up to record ID#","wassup");?></strong>:</label>
-		<input type="text" name="delete_recid" id="delete_recid" value="<?php if (!empty($_POST['delete_recid']) && is_numeric($_POST['delete_recid'])) echo $_POST['delete_recid']; else echo '0';?>" /> <nobr>(<?php echo __("Last exported record ID#:","wassup")." ".$last_export_id;?>)</nobr>
+		<input type="text" name="delete_recid" id="delete_recid" value="<?php if (!empty($_POST['delete_recid']) && is_numeric($_POST['delete_recid'])) echo $_POST['delete_recid']; else echo '0';?>" /> <nobr>(<?php echo __("Last SQL export record ID#:","wassup")." ".$last_export_id;?>)</nobr>
 		</p>
 		<p class="indent-opt"> &nbsp;<label for="do_delete_empty"><input type="checkbox" name="do_delete_empty" id="do_delete_empty" value="1"/> <strong><?php _e('Empty table','wassup');?></strong></label>
  (<a class="export-wassup" href="<?php echo $exporturl;?>"><?php _e('export table in SQL format','wassup');?></a>)
 		</p>
 		<p style="margin-top:20px;">
-		<input type="button" name="delete_now" class="submit-opt button button-danger wassup-hot-button" value="<?php _e('Delete NOW','wassup'); ?>" onclick="submit();"/><br/><span>&nbsp;<nobr><?php _e("Action is NOT undoable!", "wassup");?></nobr></span>
+			<input type="button" name="delete_now" class="submit-opt button button-danger wassup-hot-button" value="<?php _e('Delete NOW','wassup'); ?>" onclick="submit();"/><br/>
+			<span>&nbsp;<nobr><?php _e("Action is NOT undoable!", "wassup");?></nobr></span>
 		</p>
 		<br/>
-		<h3><?php _e("Table Export Options","wassup");?>:</h3>
+		<h3><?php _e("Table Export","wassup");?>:</h3>
 		<p class="indent-opt description"><?php
-		echo __("By default, known spam/malware records are omitted from Wassup's export data to reduce the risk of malware code becoming active and causing damage when records are imported into other applications.","wassup");?></p>
+		echo __("Wassup can export table records in SQL or CSV format.","wassup").' ';
+		echo __("An automatic file download will start after table data is retrieved successfully.","wassup").' ';
+		echo __("By default, exported records excludes known spam/malware to prevent propagation of malware.","wassup").' ';
+		?></p>
 		<p class="indent-opt"><label for="export_spam"> <input type="checkbox" name="export_spam" value="1" <?php if(!empty($wassup_options->export_spam)) echo $checked;?>/> <strong><?php echo __("Include spam records in exported data","wassup");?></strong></label><br>
-		<span class="opt-note"><?php if(empty($wassup_options->wassup_spamcheck)) echo __("Security NOTICE: Wassup is not configured to identify spam/malware, so all records are exported, including spam.","wassup");
-		else echo __("Security NOTICE: Enabling this could expose your computer or website to malware when spam records are imported.","wassup");?></span></p><br/>
+		<span class="opt-note"><?php if(!empty($wassup_options->wassup_spamcheck)) echo __("Security NOTICE: Enabling this could expose your computer or website to malware when spam records are imported.","wassup"); //v1.9.4 bugfix
+		?></span></p><br/>
 		<p class="indent-opt"><label for="export_omit_recid"> <input type="checkbox" name="export_omit_recid" value="1" <?php if(!empty($wassup_options->export_omit_recid)) echo $checked;?>/> <strong><?php echo __("Omit record ID from exported fields","wassup");?></strong></label><br/>
-		<span class="opt-note"><?php echo __("Check this box when importing data into another Wassup table that already has records (appending data).","wassup");?></span></p>
+		<span class="opt-note"><?php echo __("Check this box when importing SQL data into another Wassup table that already has records (appending data).","wassup");?></span><br/>
+		</p>
+		<p style="margin-top:15px;margin-left:-5px;">
+			<span style="padding-top:3px;display:block;"> &nbsp;<?php 
+			echo __('IMPORTANT','wassup').':'.__("Click \"Save Settings\" to apply option changes before export.","wassup").' ';?></span><br/>
+			<a id="<?php $sqlid='sql'.sprintf('%06d',rand(1,999999));echo $sqlid;?>" class="export-link button button-secondary" href="<?php echo wp_nonce_url($options_link.'&tab=3&export=sql&mid='.$sqlid,'wassupexport-'.$current_user->ID);?>"><?php _e('Export SQL','wassup');?></a> &nbsp; 
+			<a id="<?php $csvid='csv'.sprintf('%06d',rand(1,999999));echo $csvid;?>" class="export-link button button-secondary" href="<?php echo wp_nonce_url($options_link.'&tab=3&export=csv&mid='.$csvid,'wassupexport-'.$current_user->ID);?>"><?php _e('Export CSV','wassup');?></a><br/>
+			<span style="padding-top:3px;display:block;"> &nbsp;<?php 
+			echo __("Export of large datasets may be truncated.","wassup").' ';
+			?></span><br/>
+		</p>
+		<div id="wassup-dialog" class="ui-dialog" title="WassUp <?php echo __('Export','wassup');?>"><p><?php echo __("Retrieving data for export. Download will start soon. Please wait.","wassup");?> </p></div>
 		<br/>
 		<h3><?php _e("Table Optimization","wassup");?>:</h3>
 		<input type="hidden" name="wassup_dbengine" value="<?php echo $table_engine;?>"/>
@@ -589,10 +606,10 @@ function wassup_optionsView($tab=0) {
 			echo __("no limit/unknown","wassup");
 		}?></li>
 		<li><strong>WordPress <?php 
-		$WPtimezone = get_option('timezone_string');
-		if (!empty($WPtimezone))echo __('Timezone');
-		else echo __('Time Offset','wassup');?></strong>: <?php
-		if (!empty($WPtimezone)) {
+		$WPtimezone=get_option('timezone_string');
+		if(!empty($WPtimezone)) echo __('Timezone');
+		else echo __('Time Offset','wassup');?></strong>:<?php
+		if(!empty($WPtimezone)){
 			echo $WPtimezone;
 			$wpoffset = (current_time('timestamp') - time())/3600;
 		}else{
@@ -1001,7 +1018,7 @@ function wassup_optionsView($tab=0) {
 		</ul>
 		<br />
 		</div><!-- /sysinfo -->
-		<p class="opt-prev-next"><a href="<?php echo $options_link.'&tab=2';?>"><?php echo '&larr;'.__("Prev","wassup");?></a> &nbsp; &nbsp; <a href="<?php if($has_uninstall_tab) echo $options_link.'&tab=4';else echo $options_link.'&tab=faq';?>"><?php echo __("Next","wassup").'&rarr;';?></a> &nbsp; &nbsp; <a href="#wassupsettings" onclick="wScrollTop();return false;"><?php echo __("Top","wassup").'&uarr;';?></a></p><br />
+		<p class="opt-prev-next"><a href="<?php echo $options_link.'&tab=2';?>"><?php echo '&larr;'.__("Prev","wassup");?></a> &nbsp; &nbsp; <a href="<?php if($has_uninstall_tab) echo $options_link.'&tab=4';else echo $options_link.'&tab=donate';?>"><?php echo __("Next","wassup").'&rarr;';?></a> &nbsp; &nbsp; <a href="#wassupsettings" onclick="wScrollTop();return false;"><?php echo __("Top","wassup").'&uarr;';?></a></p><br />
 	</div>
 <?php
 	if($has_uninstall_tab){?>
@@ -1017,70 +1034,11 @@ function wassup_optionsView($tab=0) {
 		<br /><p><?php echo sprintf(__("To help improve this plugin, we would appreciate your feedback at %s.","wassup"),'<a href="http://www.wpwp.org">www.wpwp.org</a>');?></p>
 		<br /><br />
 		<p class="submit"><input type="submit" name="submit-options4" id="submit-options4" class="submit-opt button button-left button-primary" value="<?php _e('Save Settings','wassup');?>" onclick="jQuery('#submit-options4').val('Saving...');"/>&nbsp;<input type="reset" name="reset" value="<?php _e('Reset','wassup');?>" class="reset-opt button button-secondary" /> - <input type="submit" name="reset-to-default" class="default-opt button button-caution wassup-button" value="<?php _e("Reset to Default", "wassup");?>" /></p>
-		<p class="opt-prev-next"><a href="<?php echo $options_link.'&tab=3';?>"><?php echo '&larr;'.__("Prev","wassup");?></a> &nbsp; &nbsp; <a href="<?php echo $options_link.'&tab=faq';?>"><?php echo __("Next","wassup").'&larr;';?></a> &nbsp; &nbsp; <a href="#wassupsettings" onclick="wScrollTop();return false;"><?php echo __("Top","wassup").'&uarr;';?></a></p><br />
+		<p class="opt-prev-next"><a href="<?php echo $options_link.'&tab=3';?>"><?php echo '&larr;'.__("Prev","wassup");?></a> &nbsp; &nbsp; <a href="<?php echo $options_link.'&tab=donate';?>"><?php echo __("Next","wassup").'&larr;';?></a> &nbsp; &nbsp; <a href="#wassupsettings" onclick="wScrollTop();return false;"><?php echo __("Top","wassup").'&uarr;';?></a></p><br />
 	</div><?php
 	} //if has_uninstall_tab
 ?>
-	<div id="wassup_opt_frag-5" class="optionspanel faqpanel<?php if($tab=="faq" || $tab=="5") echo ' tabselected';?>">
-		<h3><?php echo __("Frequently Asked Questions","wassup");?></h3>
-		<ol>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I add WassUp's chart to my admin dashboard?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Check the box for \"Enable widget/small chart in admin dashboard\" under %s tab.","wassup"),'<span class="code">WassUp >> '.__("Options","wassup").' >><nobr>['.__("General Setup","wassup").']</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I display WassUp widgets on my site?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo __("From Wordpress widgets panel, drag the \"WassUp Online\" widget or the \"Wassup Top Stats\" widget from the list of available widgets on the left into your theme's \"Sidebar\" or \"Footer\" area on the right or use the Customizer to add Wassup widgets interactively.","wassup");?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("My Wordpress theme is not widget ready. Is it possible to display WassUp widgets on my site?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo __("Yes. Insert the template tag \"wassup_sidebar()\" into your theme's \"sidebar.php\" file to display Wassup widgets as a single combined widget on your site.","wassup");?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I view the real-time visitor geolocation map in WassUp?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Check the box for \"Display a GEO IP Map in spy visitors view\" in %s tab and save, then navigate to %s panel to see the map.","wassup"),'<span class="code">WassUp >> '.__("Options","wassup").' >><nobr>['.__("General Setup","wassup").']</nobr></span>','<span class="code">WassUp >><nobr>'.__("SPY Visitors","wassup").'</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("The map has vanished and I get a message like: \"Google has disabled use of the Maps API for this application\". How do I fix this?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo __("Wassup-spy total daily map views has likely exceeded the Google!maps usage limit for Wassup plugin.","wassup").' ';
-		echo sprintf(__("To fix, sign up for a free %s for your site's sole usage and enter the key under \"Spy Visitors settings\" in %s tab.","wassup"),'<a href="'.$GMapsAPI_signup.'">Google!Maps API '.__("Key","wassup").'</a>','<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("General Setup","wassup").']</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I exclude a visitor from being recorded?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Navigate to %s tab and enter a visitor's username, IP address, or hostname into the appropriate text area for that \"Recording Exclusion\" type.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("Filters & Exclusions","wassup").']</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I stop (temporarily) WassUp from recording new visits on my site?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Uncheck the box for \"Enable statistics recording\" under %s tab.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("General Setup","wassup").']</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("In Wordpress multisite, how do I stop (temporarily) WassUp from recording new visits on all sites in the network?","wassup");?></span><br/>
-		<strong>A#1:</strong> <span class="faq-answer"><?php echo sprintf(__("If plugin is \"network activated\", login as network admin, go to the Network admin dashboard, navigate to %s tab and Uncheck the box for \"Enable Statistics Recording for network\" and save.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >>['.__("General Setup","wassup").']</span>');?></span><br/>
-		<strong>A#2:</strong> <span class="faq-answer"><?php echo sprintf(__("If plugin is NOT \"network activated\", login as network admin, go to the main site/parent domain admin dashboard, navigate to %s tab, then Uncheck the box for \"Enable Statistics Recording for network\" and save.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("General Setup","wassup").']</nobr></span>');?></span>
-		</li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("No data is being displayed; or \"Visitor Details\" panel show 0 records for the last 24 hours. How do I fix this?","wassup");?></span><br/>
-		<strong>A #1:</strong> <span class="faq-answer"><?php echo sprintf(__("Check the box for \"Enable statistics recording\" setting under %s tab and save.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("General Setup","wassup").']</nobr></span>');?></span><br/>
-		<strong>A #2:</strong> <span class="faq-answer"><?php echo sprintf(__("Click the [Reset to Default] button under %s tab.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("General Setup","wassup").']</nobr></span>');?></span><br/>
-		<strong>A #3:</strong> <span class="faq-answer"><?php echo sprintf(__("Navigate to %s tab and uncheck the \"MySQL Delayed Insert\" setting and save.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("Manage File & Data","wassup").']</nobr></span>');?></span><br/>
-		<strong>A #4:</strong> <span class="faq-answer"><?php echo __("Deactivate and Re-activate Wassup from Wordpress Plugins panel.","wassup");?></span><br/>
-		<strong>A #5:</strong> <span class="faq-answer"><?php echo sprintf(__("If you have access to MySql/phpMyAdmin on your host server, run the MySql command %s to repair and release any locks on wassup table. Note that wassup table name may be different in other Wordpress setups.","wassup"),'<code>REPAIR TABLE '.$wassup_options->wassup_table.'</code>');?></span><br/>
-		<strong>A #6:</strong> <span class="faq-answer"><?php echo __("As a last resort, uninstall WassUp cleanly (delete data and files) and reinstall it.","wassup");?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("My popular web site is hosted on a shared server with restrictive database size limits. How do I prevent WassUp's table from growing too big for my allocated quota?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Navigate to %s tab and enable the setting for \"Auto Delete\" of old records and/or check the box to receive an email alert when the table size limit is exceeded.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("Manage File & Data","wassup").']</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("WassUp visitor counts are much lower than actual for my website. Why is there a discrepancy and how do I fix it?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo __("Low visitor count is likely caused by page caching on your website. WassUp is incompatible with static page caching plugins such as WP Supercache, WP Cache, and Hyper Cache. To fix, uninstall your cache plugin or switch to a different (javascript-based) statistics plugin.","wassup");?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("Is there any caching plugin that works with WassUp?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("%s is the only caching plugin verified to work with WassUp.","wassup"),'<a href="http://wordpress.org/extend/plugins/wp-widget-cache/">WP Widget Cache</a>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How can I make Wassup run faster?","wassup");?></span><br/>
-		<strong>A #1:</strong> <span class="faq-answer"><?php echo sprintf(__("Keep Wassup table size small by setting automatic delete of old records or do manual delete periodically under %s tab.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("Manage File & Data","wassup").']</nobr></span>');?></span><br/>
-		<strong>A #2:</strong> <span class="faq-answer"><?php echo __("If using the \"Top Stats\" widget on your site, set refresh frequency to 15 minutes or higher.","wassup");?></span><br/>
-		<strong>A #3:</strong> <span class="faq-answer"><?php echo sprintf(__("Reduce the number of recording exclusions (by ip/hostname/username/url) under %s tab.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("Filters & Exclusions","wassup").']</nobr></span>');?></span><br/>
-		<strong>A #4:</strong> <span class="faq-answer"><?php 
-		$files='<span class="code"> akismet.class.php</span>';
-		echo sprintf(__("Delete the file(s) %s from the plugin subfolder 'lib' to stop Wassup from doing remote server queries for spam identification.","wassup"),$files);?></span><br/>
-		<strong>A #5:</strong> <span class="faq-answer"><?php echo sprintf(__("As a last resort, stop all spam/malware detection on new hits by unchecking \"Enable Spam and malware detection on records\" under %s tab.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("General Setup","wassup").']</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("Why does WassUp stats sometimes show more page views than actual pages clicked by a person?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo __("\"Phantom\" page views can occur when a user's browser does automatic feed retrieval, link pre-fetching, a page refresh, or automatically adds your website to it's \"Top sites\" window (Safari). WassUp tracks these because they are valid requests from the browser and are sometimes indistinguishable from user link clicks.","wassup");?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I upgrade WassUp safely when my site has frequent visitors?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("To upgrade WassUp when your site is busy, you must first disable statistics recording manually under %s tab, then do the plugin upgrade, and afterwards re-enable recording manually when the upgrade is complete and the plugin is active.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("General Setup","wassup").']</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("An unspecified error occurred during plugin upgrade. What do I do next?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo __("Wait a few minutes. Do NOT re-attempt to upgrade nor try to activate the plugin again! An activation error with no explanation is probably due to your browser timing out, not an upgrade failure. WassUp continues it's upgrade in the background and will activate automatically when it is done. After a few minutes (5-10) has passed, revisit Wordpress admin Plugins panel and verify that Wassup plugin has activated.","wassup");?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I uninstall WassUp cleanly?","wassup");?></span><br/>
-		<strong>A #1:</strong> <span class="faq-answer"><?php echo __("From a single Wordpress site: navigate to Wordpress Plugins panel and deactivate WassUp plugin. Then, on the same page, click the \"delete\" link below WassUp name. This deletes both data and files permanently.","wassup");?></span><br/>
-		<strong>A #2:</strong> <span class="faq-answer"><?php echo __("From Wordpress multisite Network admin panel: navigate to Plugins panel and deactivate WassUp plugin. If the plugin is not \"network activated\", navigate to the main site/parent domain Plugins panel and deactivate Wassup plugin there, then return to Network admin Plugins panel. Click the \"delete\" link below WassUp name. This deletes both data and files permanently from the main site/parent domain and deletes Wassup data from all the subsites in the network.","wassup");?></span><br/>
-		<strong>A #3:</strong> <span class="faq-answer"><?php echo sprintf(__("From a subsite in Wordpress multisite: navigate to %s tab and check the box for \"Permanently remove WassUp data and settings\" and save. Next, go to the subsite's Plugins panel and deactivate WassUp plugin. This deletes the subsite's data permanently. No files are deleted (not needed).","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>['.__("Uninstall","wassup").']</nobr></span>');?></span><br/>
-		<strong>A #4:</strong> <span class="faq-answer"><?php echo sprintf(__("From a Wordpress 2.x site: navigate to %s tab and check the box for \"Permanently remove WassUp data and settings\" and save. Next, go to Wordpress Plugins panel and deactivate WassUp plugin. This deletes the data permanently. To delete the plugin files from Wordpress 2.x, use an ftp client software on your PC or login to your host server's \"cpanel\" and use \"File Manager\" to delete the folder \"wassup\" from the %s directory on your host server.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >>['.__("Uninstall","wassup").']</span>','<code>/wordpress/wp-content/plugins/</code>');?></span></li>
-		</ol>
-		<p class="legend"><?php echo sprintf(__("Visit the %s to find more answers to your WassUp questions.","wassup"),'<a href="http://wordpress.org/support/plugin/wassup">'.__("Plugin Forum","wassup").'</a>');?></p>
-		<br />
-		<p class="opt-prev-next"><a href="<?php if($has_uninstall_tab) echo $options_link.'&tab=4';else echo $options_link.'&tab=3';?>"><?php echo '&larr;'.__("Prev","wassup");?></a> &nbsp; &nbsp; <a href="<?php echo $options_link.'&tab=donate';?>"><?php echo __("Next","wassup").'&rarr;';?></a> &nbsp; &nbsp; <a href="#wassupsettings" onclick="wScrollTop();return false;"><?php echo __("Top","wassup").'&uarr;';?></a></p><br />
-	</div>
-	<div id="wassup_opt_frag-6" class="optionspanel donatepanel<?php if($tab=="donate" || $tab=="6") echo ' tabselected';?>">
+	<div id="wassup_opt_frag-5" class="optionspanel donatepanel<?php if($tab=="donate" || $tab=="5") echo ' tabselected';?>">
 		<h3><?php _e("How you can donate","wassup"); ?></h3>
 		<p><?php echo __("If you like this plugin, please consider making a donation to help keep it's development active.","wassup");?></p>
 		<div class="donate-block">
@@ -1098,12 +1056,11 @@ function wassup_optionsView($tab=0) {
 		if (file_exists(WASSUPDIR."/lib/donate.php")) include_once(WASSUPDIR."/lib/donate.php");?>
 		</div>
 		<br />
-		<p class="opt-prev-next"><a href="<?php echo $options_link.'&tab=faq';?>"><?php echo '&larr;'.__("Prev","wassup");?></a> &nbsp; &nbsp; <a href="<?php echo $options_link.'&tab=1';?>"><?php echo __("Next","wassup").'&rarr;';?></a> &nbsp; &nbsp; <a href="#wassupsettings" onclick="wScrollTop();return false;"><?php echo __("Top","wassup").'&uarr;';?></a></p><br />
+		<p class="opt-prev-next"><a href="<?php if($has_uninstall_tab) echo $options_link.'&tab=4';else echo $options_link.'&tab=3';?>"><?php echo '&larr;'.__("Prev","wassup");?></a> &nbsp; &nbsp; <a href="<?php echo $options_link.'&tab=1';?>"><?php echo __("Next","wassup").'&rarr;';?></a> &nbsp; &nbsp; <a href="#wassupsettings" onclick="wScrollTop();return false;"><?php echo __("Top","wassup").'&uarr;';?></a></p><br />
 	</div>
 	</div><!-- /#tabcontainer -->
 	</form>
 	<br />
-<script type="text/javascript">jQuery("a#BCdonate").toggle(function(){jQuery('div#bc_placeholder').slideDown("slow");},function(){jQuery('div#bc_placeholder').slideUp("slow");return false;});</script>
 <?php
 	echo "\n";
 } //end wassup_optionsView

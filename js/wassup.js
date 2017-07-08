@@ -6,10 +6,12 @@ var actionparam="";		//for Wassup ajax actions
 var _countDowncontainer="0";	//for Detail/Online refresh countdown
 var _currentSeconds=0;
 var tickerID=0;
+var selftimerID=0;
 function ActivateCountDown(strContainerID, initialValue){
 	_countDowncontainer=document.getElementById(strContainerID);
 	SetCountdownText(initialValue);
 	tickerID=window.setInterval("CountDownTick()",1000);
+	selftimerID=setTimeout('wSelfRefresh()',initialValue*1000+2000);
 }
 function CountDownTick(){
 	if(_currentSeconds >0){SetCountdownText(_currentSeconds-1);}

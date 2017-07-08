@@ -3,7 +3,7 @@
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
 Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
-Version: 1.9.3.1
+Version: 1.9.4
 Author: Michele Marcucci, Helene Duncker
 Author URI: http://www.michelem.org/
 Text Domain: wassup
@@ -49,25 +49,30 @@ if((!empty($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME'])
  */
 function wassup_init($init_settings=false){
 	global $wp_version,$wassup_options,$wdebug_mode;
+
 	//define wassup globals & constants
 	if(!defined('WASSUPVERSION')){
-		define('WASSUPVERSION','1.9.3.1');
+		define('WASSUPVERSION','1.9.4');
 		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
 	}
 	//turn on debugging (global)...Use cautiously! Will display errors from all plugins, not just WassUp
 	$wdebug_mode=false;
 	if(defined('WP_DEBUG') && WP_DEBUG==true) $wdebug_mode=true;
 	if($wdebug_mode){
+		$active_plugins=maybe_serialize(get_option('active_plugins'));
 		//turn off debug mode if this is ajax action request @since v1.9.2
 		if((!empty($_REQUEST['action']) && isset($_REQUEST['wajax'])) || (defined('DOING_AJAX') && DOING_AJAX)){
 			$wdebug_mode=false;
 			@wassup_disable_errors();
+		}elseif(isset($_REQUEST['wc-ajax']) && preg_match('#/woocommerce\.php#',$active_plugins)>0){	//woocommerce ajax
+			$wdebug_mode=false;
+			@wassup_disable_errors();
 		}else{
+			wassup_enable_errors();
 			if(headers_sent()){
 				//an error was likely displayed to screen
 				echo "\n".'<!-- wassup_init start -->';
 			}
-			wassup_enable_errors();
 		}
 	}
 	//load language translation
@@ -93,7 +98,7 @@ function wassup_init($init_settings=false){
 	$is_compatible=true;
 	if(version_compare($wp_version,'4.5','<') || version_compare($php_vers,'5.2','<')){
 		include_once(WASSUPDIR.'/lib/compatibility.php');
-		$is_compatible=wassup_load_compat_modules();
+		$is_compatible=wassup_check_compatibility();
 	}
 	if($is_compatible){
 		if(!class_exists('wassupOptions')) require_once(WASSUPDIR.'/lib/wassup.class.php');
@@ -289,6 +294,7 @@ function wassup_install($network_wide=false) {
 		}
 		$wassup_options->wassup_active=$active_status;
 		$wassup_options->saveSettings();
+
 		//schedule regular cleanup of temp recs @since v1.9
 		if(!empty($active_status)) wassup_cron_startup();
 	}else{
@@ -412,7 +418,7 @@ function wassup_uninstall($network_wide=false){
 			delete_usermeta($current_user->ID,$wpdb->prefix.'_wassup_settings');
 		}
 	} //end foreach
-	//lastly, delete network settings & all user-specific settings
+	//lastly, delete network settings & users' settings
 	if($network_wide){
 		restore_current_blog();
 		delete_site_option('wassup_network_settings');
@@ -461,7 +467,7 @@ function wassup_start(){
  * Perform plugin tasks for before http headers are sent.
  *  -block obvious xss and sql injection attempts on Wassup itself
  *  -initialize new network subsite settings (via 'wassup_init'), if any
- *  -add hooks for wp_ajax, wp_login, and wp_cron actions
+ *  -setup maintenance tasks for wp-ajax/wp_cron/wp_login hook actions
  *  -start wassup tracking
  */
 function wassup_preload(){
@@ -523,7 +529,7 @@ function wassup_preload(){
 	if(function_exists('wassup_compat_preload')){
 		wassup_compat_preload();
 	}
-	//Start visitor tracking
+	//Start maintenance tasks & visitor tracking
 	if(!empty($wassup_options) && $wassup_options->is_recording_active()){
 		//add actions for wp-cron scheduled tasks - @since v1.9
 		if(!has_action('wassup_scheduled_dbtasks')) add_action('wassup_scheduled_dbtasks',array('wassupDb','scheduled_dbtask'),10,1);
@@ -535,6 +541,8 @@ function wassup_preload(){
 		if(!empty($wassup_options->delete_auto) && $wassup_options->delete_auto !="never"){
 			if(!has_action('wassup_scheduled_purge')) add_action('wassup_scheduled_purge','wassup_auto_cleanup');
 		}
+
+		//track visitors
 		wassupPrepend();
 	}
 	if($wdebug_mode && headers_sent()){
@@ -630,13 +638,14 @@ function wassup_add_scripts(){
 		}elseif($wassuppage == "wassup-options"){
 			//use Wordpress' jquery-ui.js only when current
 			if(version_compare($wp_version,'4.5','>=') || !function_exists('wassup_compat_add_scripts')){
-				wp_enqueue_script('jquery-ui-widget');
-				wp_enqueue_script('jquery-ui-tabs');
 				wp_enqueue_script('jquery-ui-dialog');
+				wp_enqueue_script('jquery-ui-tabs');
 			}
 			//never use Wordpress' jquery-ui.css
 			wp_dequeue_style('jquery-ui-tabs.css');
 			wp_dequeue_style('jquery-ui-theme.css');
+			wp_dequeue_style('jquery-ui-dialog.css');
+			wp_dequeue_style('jquery-ui-core.css');
 			wp_dequeue_style('jquery-ui.css');
 		}
 		//use Wassup's custom copy of thickbox.js always
@@ -666,6 +675,7 @@ function export_wassup(){
 	global $wpdb, $current_user, $wassup_options, $wdebug_mode;
 
 	//#1st verify that export request is valid
+	if(!isset($_REQUEST['export'])) return;
 	$exportdata=false;
 	$badrequest=false;
 	$err_msg="";
@@ -688,8 +698,7 @@ function export_wassup(){
 		if(empty($current_user->ID)){
 			wp_die($err_msg);
 		}else{
-			$wassup_user_settings['ualert_message']=$err_msg;
-			update_user_option($current_user->ID,'_wassup_settings',$wassup_user_settings);
+			wassup_log_message($err_msg);
 			wp_safe_redirect(wassupURI::get_admin_url('admin.php?page=wassup-options&tab=3'));
 		}
 		exit;
@@ -697,67 +706,79 @@ function export_wassup(){
 	$err_msg="";
 	$wassup_table=$wassup_options->wassup_table;
 	$wherecondition="";
-	//for multisite compatibility
-	$multisite_whereis="";
-	if($wassup_options->network_activated_plugin()){
-		if(!is_network_admin() && !empty($GLOBALS['current_blog']->blog_id)) $multisite_whereis = sprintf(" AND `subsite_id`=%d",(int)$GLOBALS['current_blog']->blog_id);
-	}
-	$start_recid=0;
-	if(isset($_REQUEST['startid']) && is_numeric($_REQUEST['startid'])){
-		$start_recid=(int)$_REQUEST['startid'];
-	}
-	if(!empty($start_recid)){
-		$wherecondition="WHERE `id`>".(int)$start_recid.$multisite_whereis;
-	}elseif(!empty($multisite_whereis)){
-		$wherecondition="WHERE `id`>0 ".$multisite_whereis;
-	}
 	//omit spam records from export @since v1.9.1
 	if(empty($wassup_options->export_spam)){
-		if(empty($wherecondition)) $wherecondition="WHERE `spam`='0'";
-		else $wherecondition .=" AND `spam`='0'";
+		$wherecondition =" AND `spam`='0'";
+	}
+	//for multisite compatibility
+	if($wassup_options->network_activated_plugin()){
+		if(!is_network_admin() && !empty($GLOBALS['current_blog']->blog_id)) $wherecondition .= sprintf(" AND `subsite_id`=%d",(int)$GLOBALS['current_blog']->blog_id);
+	}
+	//sorted by record id field
+	$wherecondition .= ' ORDER BY `id`';
+	$start_id=0;
+	if(isset($_REQUEST['startid']) && is_numeric($_REQUEST['startid'])){
+		$start_id=(int)$_REQUEST['startid'];
 	}
 	//# check for records before exporting...
-	$filename='wassup.'.gmdate('Y-m-d').'.sql';
 	$numrecords=0;
 	$exportdata=false;
-	$numrecords=$wpdb->get_var(sprintf("SELECT COUNT(`wassup_id`) FROM `%s` %s",esc_attr($wassup_table),$wherecondition));
+	$numrecords=$wpdb->get_var(sprintf("SELECT COUNT(`wassup_id`) FROM `%s` WHERE `id` > %d %s",esc_attr($wassup_table),$start_id,$wherecondition));
 	if(!is_numeric($numrecords)) $numrecords=0;
 	if($numrecords > 0){
-		//save "failed export" message beforehand in case of script interruption @since v1.9
-		$wassup_user_settings['ualert_message']=__("Export failed due to script interruption or timeout error!","wassup");
-		update_user_option($current_user->ID,'_wassup_settings',$wassup_user_settings);
-		if($numrecords > 10000){
+		//too big for export, abort @TODO
+		if($numrecords > 9999999){
+			$err_msg=__("Too much data for Wassup export! Use a separate MySQL Db tool instead.","wassup");
+		}else{
 			//Could take a long time, so increase script execution time-limit to 11 min
-			//TODO 'safe_mode' deprecated in PHP 5.3
-			if(!ini_get('safe_mode')){
-				$timeout=ini_get('max_execution_time');
-				if(is_numeric($timeout) && $stimeout>0 && $timeout<(11*60)) @set_time_limit(11*60);
+			$stimeout=ini_get('max_execution_time');
+			if(is_numeric($stimeout) && $stimeout>0 && $stimeout < 660){
+				$disabled_funcs=ini_get('disable_functions');
+				if((empty($disabled_funcs) || strpos($disabled_funcs,'set_time_limit')===false) && !ini_get('safe_mode')){
+					$stimeout=11*60;
+					@set_time_limit($stimeout);
+				}
+			}
+			//do the export
+			if($_REQUEST['export']=="csv"){
+				wassupDb::export_records($wassup_table,$start_id,"$wherecondition","csv");
+			}else{
+				wassupDb::export_records($wassup_table,$start_id,"$wherecondition","sql");
 			}
 		}
-		//get the data 
-		$exportdata=wassupDb::backup_table("$wassup_table","$wherecondition");
 	}else{
 		//failed export message
-		$wassup_user_settings['ualert_message']=__("ERROR: Nothing to Export.","wassup");
-		update_user_option($current_user->ID,'_wassup_settings',$wassup_user_settings);
+		$err_msg=__("ERROR: Nothing to Export.","wassup");
 	} //end if numrecords > 0
-	if (!empty($exportdata)) {
-		//TODO: use compressed file transfer when zlib available
-		header('Content-Description: File Transfer');
-		header("Content-Disposition: attachment; filename=$filename");
-		header('Content-Type: text/plain charset=' . get_option('blog_charset'), true);
-
-		echo $exportdata;
-		die(); 	//sends output and flushes buffer
-	}else{
-		//something went wrong with export, reload screen to show error message
-		//$reload_uri=preg_replace(array('/&export(?:[^&]+|$)/','/&whash=[^&]+/'),'',$_SERVER["REQUEST_URI"]);
-		$reload_uri=remove_query_arg(array('export','whash'));
-		wp_safe_redirect($reload_uri);
-		exit;
+	//if get here, something went wrong with export
+	if(!empty($err_msg)){
+		wassup_log_message($err_msg);
 	}
+	//reload screen to show error message
+	$reload_uri=remove_query_arg(array('export','whash','type','_wpnonce'));
+	wp_safe_redirect($reload_uri);
+	exit;
 } //end export_wassup
 
+/** Save summary message from export or other action in either wassup_meta or user_metadata @since v1.9.4 */
+function wassup_log_message($msg,$msgtype="",$msgkey="0"){
+	global $current_user;
+	//msgtype,msgkey parameters for wassup_meta msg
+	if(!empty($msgtype)){
+		$expire=time()+86401; //24-hour expire
+		if(empty($msgkey) && !empty($_REQUEST['mid'])){
+			$msgkey=$_REQUEST['mid'];
+		}
+		$saved=wassupDb::update_wassupmeta($msgkey,$msgtype,$msg,$expire);
+	}else{
+		if(!is_object($current_user) || empty($current_user->ID)){
+			$user=wp_get_current_user();
+		}
+		$wassup_user_settings=get_user_option('_wassup_settings',$current_user->ID);
+		$wassup_user_settings['ualert_message']=$msg;
+		update_user_option($current_user->ID,'_wassup_settings',$wassup_user_settings);
+	}
+}
 /** Turns off all error notices except fatal errors. */
 function wassup_disable_errors(){
 	ini_set('error_reporting',E_ERROR);
@@ -795,6 +816,12 @@ function wassupPrepend() {
 	if(empty($wassup_options)) $wassup_options=new wassupOptions;
 	//wassup must be active for recording to begin
 	if(empty($wassup_options) || !$wassup_options->is_recording_active()){	//do nothing
+		return;
+	}
+	//New in v1.9.4: don't track ajax requests from some plugins
+	$active_plugins=maybe_serialize(get_option('active_plugins'));
+	//don't track Woocommerce ajax requests
+	if(isset($_REQUEST['wc-ajax']) && preg_match('#/woocommerce\.php#',$active_plugins)>0){
 		return;
 	}
 	$wassup_table=$wassup_options->wassup_table;
@@ -1278,7 +1305,7 @@ function wassupAppend($req_code=0) {
 	//#4 Exclude users on exclusion list
 	if (empty($wassup_options->wassup_exclude_user) || empty($logged_user) || preg_match('/(?:^|\s*,)\s*('.preg_quote($logged_user).')\s*(?:,|$)/',$wassup_options->wassup_exclude_user)==0){
 		//'preg_match' replaces 'explode' for faster matching of users, url requests, and ip addresses @since v1.9
-		//TODO: exclude page requests by post_id
+		//@TODO: exclude page requests by post_id
 	//#5 Exclude urls on exclusion list
 	if (empty($wassup_options->wassup_exclude_url) || preg_match('#(?:^|\s*,)\s*((?:'.str_replace('#','\#',preg_quote($blogurl)).')?'.str_replace('#','\#',preg_quote($urlRequested)).')\s*(?:,|$)#i',$wassup_options->wassup_exclude_url)==0){
 		//url matching may be affected by html-encoding, url-encoding, query parameters, and labels on the url - so do those exclusions separately
@@ -1566,7 +1593,7 @@ function wassupAppend($req_code=0) {
 			}
 		}
 		//# Some spiders, such as Yahoo and MSN, don't always give a unique useragent, so test against known hostnames/IP to identify these spiders
-		$spider_hosts='/^((65\.55|207\.46)\.\d{3}.\d{1,3}|.*\.(crawl|yse)\.yahoo\.net|ycar\d+\.mobile\.[a-z0-9]{3}\.yahoo\.com|msnbot.*\.search\.msn\.com|crawl[0-9\-]+\.googlebot\.com|baiduspider[0-9\-]+\.crawl\.baidu\.com|(crawl(?:er)?|spider|robot)\-?\d*\..*)$/';
+		$spider_hosts='/^((65\.55|207\.46)\.\d{3}.\d{1,3}|.*\.(crawl|yse)\.yahoo\.net|ycar\d+\.mobile\.[a-z0-9]{3}\.yahoo\.com|msnbot.*\.search\.msn\.com|crawl[0-9\-]+\.googlebot\.com|baiduspider[0-9\-]+\.crawl\.baidu\.com|\.domaintools\.com|(crawl(?:er)?|spider|robot)\-?\d*\..*)$/';
 		//#Identify spiders from known spider domains
 		if(empty($agent) || preg_match($spider_hosts,$hostname)>0 || stristr($agent,'unknown')!==false){
 			list($spider,$spidertype,$feed) = wGetSpider($userAgent,$hostname,$browser);
@@ -1690,24 +1717,30 @@ function wassupAppend($req_code=0) {
 		//## Check for referrer spam...
 		if($wassup_options->wassup_spamcheck == 1 && $spam == 0 && !$goodbot){
 			$spamComment = New wassup_checkComment;
-			//...skip if referrer is own blog
-			if(!empty($referrer) && !$is_admin_login && stristr($referrer,$wpurl)!=$referrer && stristr($referrer,$blogurl)!=$referrer && $referrer!=$blogurl.$urlRequested){
-				if($wassup_options->wassup_refspam == 1){
-					//check if referrer is a previous comment spammer
-					if($spamComment->isRefSpam($referrer)>0){
-						$spam=2;
-					}else{
-						//check for known referer spammer
-						$isspam=wGetSpamRef($referrer,$hostname);
-						if ($isspam) $spam = 2;
-					}
+			//skip referrer check if from own blog
+			if($wassup_options->wassup_refspam == 1 && !empty($referrer) && !$is_admin_login && stristr($referrer,$wpurl)!=$referrer && stristr($referrer,$blogurl)!=$referrer && $referrer!=$blogurl.$urlRequested){
+				$refdomain=wassupURI::get_urldomain($referrer);
+				$sitedomain=wassupURI::get_urldomain();
+			//New in v1.9.4: skip referrer check if from own domain
+			if($refdomain != $sitedomain || strpos($referrer,'=')!==false){
+				//New in v1.9.4: skip referrer check if on whitelist
+			if(empty($wassup_options->refspam_whitelist) || preg_match('#(?:^|\s*,)\s*('.preg_quote($refdomain).')\s*(?:,|$)#',$wassup_options->refspam_whitelist)==0){
+				//check if referrer is a previous comment spammer
+				if($spamComment->isRefSpam($referrer)>0){
+					$spam=2;
+				}else{
+					//check for known referer spammer
+					$isspam=wGetSpamRef($referrer,$hostname);
+					if ($isspam) $spam = 2;
 				}
-			}
+			} //end if refspam_whitelist
+			} //end if refdomain
+			} //end if wassup_refspam
 		//## Check for comment spammer...
 		// No spam check on spiders unless there is a comment or forum page request...
 		if ($spam == 0 && (empty($spider) || stristr($urlRequested,"comment")!== FALSE || stristr($urlRequested,"forum")!== FALSE  || !empty($comment_user))) { 
 			//check for previous spammer detected by anti-spam plugin
-			$spammerIP = $spamComment->isSpammer($IP); //TODO: IP or ipAddress?
+			$spammerIP = $spamComment->isSpammer($IP);
 			if($spammerIP > 0) $spam=1;
 			//set as spam if both URL and referrer are "comment" and browser is obsolete or Opera
 			if ($spam== 0 && $wassup_options->wassup_spam==1 && stristr($urlRequested,"comment")!== FALSE && stristr($referrer,"#comment")!==FALSE && (stristr($browser,"opera")!==FALSE || preg_match('/^(AOL|Netscape|IE)\s[1-6]$/',$browser)>0)) {
@@ -2145,7 +2178,7 @@ function wassupAppend($req_code=0) {
 			echo "\n--> \n";
 		}else{
 			$debug_output .= "<br />\n--> \n";
-			//add debug output to wp_footer output - TODO
+			//add debug output to wp_footer output - @TODO
 			$expire=time()+180;
 			$wassup_key=wassup_clientIP($_SERVER['REMOTE_ADDR']);
 			wassupDb::update_wassupmeta($wassup_key,'_debug_output',$expire,$debug_output);
@@ -2929,6 +2962,9 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			$crawler="Baiduspider";
 			$crawlertype="R";
 
+		}elseif(substr($hostname,-16)==".domaintools.com"){
+			$crawler="Whois.domaintools.com";
+			$crawlertype="R";
 		}
 	} //end if $hostname
 	$pcs=array();
@@ -2965,7 +3001,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 		}
 	}
 	//get crawler info. from a known list of bots and feedreaders that don't list their names first in UA string.
-	//Note: spaces are removed from UA string for this bot comparison
+	//Note: spaces removed from UA string for this bot comparison
 	$crawler=trim($crawler);
 	if(empty($crawler) || $crawler=="unknown_spider"){
 		$uagent=str_replace(" ","",$ua);
@@ -3395,10 +3431,9 @@ function wGetLocale($language="",$hostname="",$referrer="") {
 } //end function wGetLocale
 
 /**
- * Check referrer string and referrer host (or hostname) for referrer spam
- *
- *   -checks referer host against know list of spammer
- *   -checks referrer string for spammer content (faked referrer).
+ * Check referrer string and referrer host (or hostname) for spam
+ *   -checks referrer string for known spammer content (faked referrer).
+ *   -checks referer host against know list of spammers
  * @param string $referrer, string $hostname
  * @return boolean
  */
@@ -3416,6 +3451,7 @@ function wGetSpamRef($referrer,$hostname="") {
 		if(isset($rurl['host'])){
 			$referrer_host=$rurl['host'];
 			$thissite=parse_url(get_option('home'));
+			$thisdomain=wassupURI::get_urldomain();
 			//exclude current site as referrer
 			if(isset($thissite['host']) && $referrer_host == $thissite['host']){
 				$referrer_host="";
@@ -3429,6 +3465,8 @@ function wGetSpamRef($referrer,$hostname="") {
 				elseif(preg_match('#(\.|/)youtu.be/[0-9a-z]+#i',$ref)>0) $badhost=true;
 				//some facebook links in referrer are faked
 				elseif(preg_match('#(\.|/)facebook\.com\/ASeaOfSins$#',$ref)>0) $badhost=true;
+				//domain lookup in referrer is faked
+				elseif(preg_match('#/[0-9a-z_\-]+(?:\.php|/)(\?[a-z]+\=(?:http://)?(?:[0-9a-z_\-\.]+)?)'.preg_quote($thisdomain).'(?:[^0-9a-z_\-.]|$)#i',$ref)>0) $badhost=true;
 			}
 		} else {	//faked referrer string
 			$badhost=true;
@@ -3442,26 +3480,27 @@ function wGetSpamRef($referrer,$hostname="") {
 	} //end elseif
 	//#Assume any referrer name similar to "viagra/zanax/.." is spam and mark as such...
 	if (!$badhost && !empty($referrer_host)) {
-		$lines = array(	"allegra", "ambien", "ativan", "blackjack",
-			"bukakke", "casino","cialis","ciallis", "celebrex",
-			"cumdripping", "cumeating", "cumfilled",
-			"cumpussy", "cumsucking", "cumswapping",
-			"diazepam", "diflucan", "drippingcum", "eatingcum",
-			"enhancement", "finasteride", "fioricet",
-			"gabapentin", "gangbang", "highprofitclub",
-			"hydrocodone", "krankenversicherung", "lamisil",
-			"latinonakedgirl", "levitra", "libido", "lipitor",
-			"lortab", "melatonin", "meridia", "NetCaptor",
-			"orgy-", "phentemine", "phentermine", "propecia",
-			"proscar", "pussycum", "sildenafil", "snowballing",
-			"suckingcum", "swappingcum", "swingers",
-			"tadalafil", "tigerspice", "tramadol", "ultram-",
-			"valium", "valtrex", "viagra", "viagara","vicodin",
-			"xanax", "xenical", "xxx-",
-			"zoloft", "zovirax", "zanax"
-			);
+		$lines = array("ambien","ativan","blackjack","bukakke",
+		"casino","cialis","ciallis", "celebrex","cumdripping",
+		"cumeating","cumfilled","cumpussy","cumsucking",
+		"cumswapping","diazepam","diflucan","drippingcum",
+		"eatingcum","enhancement","finasteride","fioricet",
+		"gabapentin","gangbang","highprofitclub","hydrocodone",
+		"krankenversicherung","lamisil","latinonakedgirl",
+		"levitra", "libido", "lipitor","lortab","melatonin",
+		"meridia","NetCaptor","orgy-","phentemine",
+		"phentermine","propecia","proscar","pussycum",
+		"sildenafil","snowballing","suckingcum","swappingcum",
+		"swingers","tadalafil","tigerspice","tramadol",
+		"ultram-","valium","valtrex","viagra","viagara",
+		"vicodin","xanax","xenical","xxx-","zoloft","zovirax",
+		"zanax"
+		);
 		foreach ($lines as $badreferrer) {
-			if (strstr($referrer_host, $badreferrer)!== FALSE){
+			if (strstr($referrer_host,$badreferrer)!== FALSE){
+				$badhost=true;
+				break 1;
+			}elseif(preg_match('#([^a-z]|^)(free|orgy|penis|porn)([^a-z])#',$referrer)>0){
 				$badhost=true;
 				break 1;
 			}
@@ -3479,7 +3518,7 @@ function wGetSpamRef($referrer,$hostname="") {
 } //end wGetSpamRef
 
 /**
- * Compare a hostname (and referrer hostname) arguments against a list of known spammers.
+ * Compare a hostname (and referrer host) arguments against a list of known spammers.
  * @param string(2)
  * @return boolean
  * @since v1.9
@@ -3493,7 +3532,10 @@ function wassup_badhost_lookup($referrer_host,$hostname="") {
 	$lines = array(	'209\.29\.25\.180',
 			'78\.185\.148\.185',
 			'93\.90\.243\.63',
+			'1\-free\-share\-buttons\.com',
+			'amazon\-seo\-service\.com',
 			'amsterjob\.com',
+			'anonymizeme\.pro',
 			'burger\-imperia\.com',
 			'buttons\-for\-website\.com',
 			'canadapharm\.atwebpages\.com',
@@ -3531,6 +3573,7 @@ function wassup_badhost_lookup($referrer_host,$hostname="") {
 			'gameskillinggames\.net',
 			'gardenactivities\.webnode\.com',
 			'globalringtones\.net',
+			'gofirstrow\.eu',
 			'gossipchips\.com',
 			'gskstudio\.com',
 			'hearcam\.org',
@@ -3587,6 +3630,7 @@ function wassup_badhost_lookup($referrer_host,$hostname="") {
 			'rufights\.com',
 			'scripted\.com',
 			'seoindiawizard\.com',
+			'share\-buttons\-for\-free\.com',
 			'singlesvacationspackages\.com',
 			'sitetalk\-revolution\.com',
 			'smartforexsignal\.com',
@@ -3598,6 +3642,7 @@ function wassup_badhost_lookup($referrer_host,$hostname="") {
 			'thebestweddingparty\.com',
 			'thik\-chik\.com',
 			'thisweekendsmovies\.com',
+			'top10\-way\.com',
 			'uggbootsnewest\.net',
 			'uggsmencheap\.com',
 			'uggsnewest\.com',
@@ -3608,6 +3653,7 @@ function wassup_badhost_lookup($referrer_host,$hostname="") {
 			'[a-z\-\.]+vigra\-buy\.info',
 			'vitamin\-d\-deficiency\-symptoms\.com',
 			'vpn\-privacy\.org',
+			'w3data\.co',
 			'watchstock\.com',
 			'web\-promotion\-services\.net',
 			'wh\-tech\.com',
@@ -3689,161 +3735,29 @@ function wassup_urlshortener_lookup($urlhost){
  * @return string
  */
 function wassup_get_clientAddr($ipAddress=""){
-	$proxy="";
-	$hostname="";
-	$IP="";
-	//Get the visitor IP from Http_header
-	if(empty($ipAddress)){
-		$ipAddress=(isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:"");
-	}
-	$IPlist=$ipAddress;
-	$proxylist=$ipAddress;
-	$serverAddr=(isset($_SERVER['SERVER_ADDR'])?$_SERVER['SERVER_ADDR']:"");
-	//for computers behind proxy servers:
-	//if(!empty($_SERVER['HTTP_X_FORWARDED_HOST'])) $serverAddr=$_SERVER['HTTP_X_FORWARDED_HOST'];
-	//elseif(!empty($_SERVER['HTTP_X_FORWARDED_SERVER'])) $serverAddr=$_SERVER['HTTP_X_FORWARDED_SERVER'];
-	//
-	//check that the client IP is not equal to the host server IP
-	if(isset($_SERVER['HTTP_CLIENT_IP']) && $serverAddr!=$_SERVER['HTTP_CLIENT_IP'] && $ipAddress!=$_SERVER['HTTP_CLIENT_IP']){
-		if(strpos($proxylist,$_SERVER["HTTP_CLIENT_IP"])===false){
-			$IPlist=$_SERVER['HTTP_CLIENT_IP'].",".$proxylist;
-			$proxylist=$IPlist;
-		}
-		$ipAddress=$_SERVER['HTTP_CLIENT_IP'];
-	}
-	if(isset($_SERVER['HTTP_X_REAL_IP']) && $serverAddr!=$_SERVER['HTTP_X_REAL_IP'] && $ipAddress!=$_SERVER['HTTP_X_REAL_IP']){
-		if(strpos($proxylist,$_SERVER["HTTP_X_REAL_IP"])===false){
-			$IPlist=$_SERVER['HTTP_X_REAL_IP'].",".$proxylist;
-			$proxylist=$IPlist;
-		}
-		$ipAddress=$_SERVER['HTTP_X_REAL_IP'];
-	}
-	//check for IP addresses from Cloudflare CDN-hosted sites
-	if(isset($_SERVER['HTTP_CF_CONNECTING_IP']) && $serverAddr!=$_SERVER['HTTP_CF_CONNECTING_IP'] && $ipAddress!=$_SERVER['HTTP_CF_CONNECTING_IP']){
-		if(strpos($proxylist,$_SERVER["HTTP_CF_CONNECTING_IP"])===false){
-			$IPlist=$_SERVER['HTTP_CF_CONNECTING_IP'].",".$proxylist;
-			$proxylist=$IPlist;
-		}
-		$ipAddress=$_SERVER['HTTP_CF_CONNECTING_IP'];
-	}
-	//check for proxy addresses
-	if(!empty($_SERVER["HTTP_X_FORWARDED_FOR"]) && $serverAddr!=$_SERVER['HTTP_X_FORWARDED_FOR'] && $ipAddress!=$_SERVER['HTTP_X_FORWARDED_FOR']){
-		if(strpos($proxylist,$_SERVER['HTTP_X_FORWARDED_FOR'])===false){
-			$IPlist=$_SERVER['HTTP_X_FORWARDED_FOR'].",".$proxylist;
-			$proxylist=$IPlist;
-		}
-		$ipAddress=$_SERVER['HTTP_X_FORWARDED_FOR'];
-	}
-	if(!empty($_SERVER["HTTP_X_FORWARDED"]) && $serverAddr!=$_SERVER["HTTP_X_FORWARDED"] && $ipAddress!=$_SERVER['HTTP_X_FORWARDED']){
-		if(strpos($proxylist,$_SERVER['HTTP_X_FORWARDED'])===false){
-			$IPlist=$_SERVER['HTTP_X_FORWARDED'].",".$proxylist;
-			$proxylist=$IPlist;
-		}
-		$ipAddress=$_SERVER['HTTP_X_FORWARDED'];
-	}
-	//try get valid IP
-	$IP = wValidIP($ipAddress);
-	if(empty($IP) && $ipAddress!=$proxylist){
-		$proxylist=preg_replace('/(^|[^0-9\.])'.preg_quote($ipAddress).'($|[^0-9\.])/','',$IPlist);
-		$IP=wValidIP($proxylist);
-	}
-	if(!empty($IP)){
-		$p=strpos($IPlist,$IP)+strlen($IP)+1;
-		if($p < strlen($IPlist)) $proxylist=substr($IPlist,$p);
-		else $proxylist="";
-	}
-	//check client hostname for known proxy gateways
-	if(!empty($IP)){
-		$hostname=wassup_get_hostname($IP);
-		if(preg_match('/(cloudflare\.|cache|gateway|proxy|unknown$|localhost$|\.local(?:domain)?$)/',$hostname)>0){
-			$ip1=$IP;
-			if(!empty($proxylist)) $IP=wValidIP($proxylist);
-			if(!empty($IP)){
-				$p=strpos($IPlist,$IP)+strlen($IP)+1;
-				if($p < strlen($IPlist)) $proxylist=substr($IPlist,$p);
-				else $proxylist="";
-			}else{
-				$IP=$ip1;
-			}
-		}
-		if(!empty($proxylist)) $proxy=wValidIP($proxylist);
-		if(!empty($proxy)) $ipAddress=$proxy.','.$IP;
-		else $ipAddress=$IP;
-	}
-	return $ipAddress;
+	return wassupIP::get_clientAddr($ipAddress);
 } //end wassup_get_clientAddr
 
 // lookup the hostname from an ip address via cache or via gethostbyaddr command @since v1.9
 function wassup_get_hostname($IP=""){
-	if(empty($IP)) $IP=wassup_clientIP($_SERVER['REMOTE_ADDR']);
-	//first check for cached hostname
-	$hostname=wassupDb::get_wassupmeta($IP,'hostname');
-	if(empty($hostname)){
-		if($IP=="127.0.0.1" || $IP=='::1' || $IP=='0:0:0:0:0:0:0:1'){
-			$hostname="localhost";
-		}elseif($IP=="0.0.0.0" || $IP=='::' || $IP=='0:0:0:0:0:0:0:0'){
-			$hostname="unknown";
-		}else{
-			$hostname=@gethostbyaddr($IP);
-			if(!empty($hostname) && $hostname!=$IP && $hostname!="localhost" && $hostname!="unknown"){
-				$meta_key='hostname';
-				$meta_value=$hostname;
-				$expire=time()+48*3600; //cache for 2 days
-				$cache_id=wassupDb::update_wassupmeta($IP,$meta_key,$meta_value,$expire);
-			}
-		}
-	}
-	return $hostname;
+	return wassupIP::get_hostname($IP);
 } //end wassup_get_hostname
 
 // Return a single ip (the client IP) from a comma-separated IP address with no ip validation. @since v1.9
 function wassup_clientIP($ipAddress){
-	$IP=false;
-	if(!empty($ipAddress)){
-		$ip_proxy=strpos($ipAddress,",");
-		//if proxy, get 2nd ip...
-		if($ip_proxy!==false){
-			$IP=substr($ipAddress,(int)$ip_proxy+1);
-		}else{
-			$IP=$ipAddress;
-		}
-	}
-	return $IP;
+	if(!empty($ipAddress)) return wassupIP::clientIP($ipAddress);
+	return false;
 }
 
 //return 1st valid IP address in a comma-separated list of IP addresses -Helene D. 2009-03-01
 function wValidIP($multiIP) {
-	//in case of multiple forwarding
-	$ips=explode(",",$multiIP);
-	$goodIP=false;
-	//look through forwarded list for a good IP
-	foreach ($ips as $ipa) {
-		$IP=trim(strtolower($ipa));
-		//exclude badly formatted ip's @since v1.9.3
-		if(!empty($IP)){
-			//exclude dummy IPv4 addresses
-			if(preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/',$IP)>0){
-				if($IP!="0.0.0.0" && $IP!="127.0.0.1" && substr($IP,0,8)!="192.168." && substr($IP,0,3)!="10." && substr($IP,0,4)!="172." && substr($IP,0,7)!='192.18.' && substr($IP,0,4)!='255.' && substr($IP,-4)!='.255'){
-					$goodIP=$IP;
-				}elseif(substr($IP,0,4)=="172." && preg_match('/172\.(1[6-9]|2[0-9]|3[0-1])\./',$IP)===false){
-					$goodIP=$IP;
-				}
-			//exclude dummy IPv6 addresses 
-			}elseif(preg_match('/^(?:((?:[0-9a-f]{1,4}\:){1,}(?:\:?[0-9a-f]{1,4}){1,})|(\:\:(?:[0-9a-f]{1,4})?))$/i',$IP)>0){
-				$ipv6=str_replace("0000","0",$IP);
-				if($ipv6!='::' && $ipv6!='0:0:0:0:0:0:0:0' && $ipv6!='::1' && $ipv6!='0:0:0:0:0:0:0:1' && substr($ipv6,0,2)!='fd' && substr($ipv6,0,5)!='ff01:' && substr($ipv6,0,5)!='ff02:' && substr($ipv6,0,5)!='2001:'){
-					$goodIP=$IP;
-				}
-			}
-			if(!empty($goodIP)) break;
-		}
-	}
-	return $goodIP;
+	if(!empty($multiIP)) return wassupIP::validIP($multiIP);
+	return false;
 } //end function wValidIP
 
 /**
  * Add Wassup meta tag and javascripts to html document head
- * -add screen resolution javascript for non-IE browsers
+ * -add javascript function to retrieve screen resolution
  */
 function wassup_head() {
 	global $wassup_options, $wscreen_res;
@@ -3864,19 +3778,13 @@ function wassup_head() {
 		echo "\n";?>
 <script type="text/javascript">
 //<![CDATA[
-	var screen_res=screen.width+" x "+screen.height;
+function wassup_get_screenres(){
+	var screen_res = screen.width + " x " + screen.height;
 	if(screen_res==" x ") screen_res=window.screen.width+" x "+window.screen.height;
 	if(screen_res==" x ") screen_res=screen.availWidth+" x "+screen.availHeight;
-	if(screen_res!=" x "){<?php
-		if(defined('COOKIE_DOMAIN')){
-			$cookiedomain=COOKIE_DOMAIN;
-			if(defined('COOKIEPATH'))$cookiepath=COOKIEPATH;
-			else $cookiepath="/";
-		}else{
-			$curl=parse_url(get_option('home'));
-			$cookiedomain=preg_replace('/^www\./','',$curl['host']);
-			$cookiepath=$curl['path'];
-		}?>document.cookie = "wassup_screen_res<?php echo $sessionhash;?>=" + encodeURIComponent(screen_res)+ "; path=<?php echo $cookiepath.'; domain='.$cookiedomain;?>";}
+	if (screen_res!=" x "){document.cookie = "wassup_screen_res<?php echo $sessionhash;?>=" + encodeURIComponent(screen_res)+ "; path=/; domain=" + document.domain;}
+}
+wassup_get_screenres();
 //]]>
 </script><?php
 	}
@@ -3884,24 +3792,19 @@ function wassup_head() {
 
 /**
  * Output Wassup tag and javascripts in html document footer.
- * -add screen resolution javascript for IE users 
+ * -call screen resolution javascript function for IE users 
  * -put a timestamp in page footer as page caching test
  * -output any stored debug data
  */
 function wassup_foot() {
 	global $wassup_options, $wscreen_res, $wdebug_mode;
-	//add separate 'wassup_screen_res' cookie in footer for IE and Edge users because Microsoft browsers do not report screen height or width until after document body starts rendering. @since v1.8.2
+	//'screen_res' javascript function called in footer because Microsoft browsers (IE/Edge) do not report screen height or width until after document body starts rendering. @since v1.8.2
 	$sessionhash=$wassup_options->whash;
 	if(empty($wscreen_res) && !isset($_COOKIE['wassup_screen_res'.$sessionhash])){
 		$ua=(!empty($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:"");
 		if(strpos($ua,'MSIE')>0 || strpos($ua,'rv:11')>0 || strpos($ua,'Edge/')>0 || stristr($_SERVER['REQUEST_URI'],'login.php')!==false){
 			echo "\n";?>
-<script language=javascript>
-//<![CDATA[
-	var screen_res = screen.width + " x " + screen.height;
-	if (screen_res!=" x "){document.cookie = "wassup_screen_res<?php echo $sessionhash;?>=" + encodeURIComponent(screen_res)+ "; path=/; domain=" + document.domain;}
-//]]>
-</script>
+<script type="text/javascript">wassup_get_screenres();</script>
 <?php
 		} //end if MSIE
 	} //end if 'wscreen_res'

@@ -61,13 +61,14 @@ class Wassup_Widget{
 		else $this->id_base=strtolower($id_base);
 		$this->name=$name;
 		$this->option_name='widget_'.$this->id_base;
+		$default_widget_opts=array(
+			'widget_description'=>"WassUp ".__("base widget","wassup"),
+			'classname'=>"wassup-widget",
+		);
 		$default_control_opts=array(
 			'width'=>260,
 			'height'=>450,
 			'id_base'=>$this->id_base,
-		);
-		$default_widget_opts=array(
-			'classname'=>$this->option_name,
 		);
 		$this->wassup_default_opts=array(
 			'title'=>"",
@@ -157,10 +158,10 @@ class Wassup_Widget{
 		}
 	} //end widget
 
-	/* Do NOT Override the methods below --------------------- */
+	/* Do NOT Override the methods below */
 	/** adds head style tag for widget/widget-form display */
 	function wassup_add_css(){
-		//widget css
+		//widget css - one style tag for multiple widgets
 		if(!is_admin()){
 			//styles for widget display
 			add_action('wp_head','wassup_widget_css');
@@ -172,8 +173,12 @@ class Wassup_Widget{
 	}
 	/** create a unique id for caching Wassup widgets html */
 	function wassup_get_widget_id($instance=array()){
+		global $wassup_options;
 		if(empty($instance)) $instance=$this->get_settings();
-		$instance['wassup_widget_id']=$this->option_name."-".$this->number;
+		$wassup_widget_id=$this->option_name."-".$this->number;
+		//add blog_id for unique ids in network activation
+		if(is_multisite() && $wassup_options->network_activated_plugin() && !empty($GLOBALS['current_blog']->blog_id)) $wassup_widget_id .="-b".(int)$GLOBALS['current_blog']->blog_id;
+		$instance['wassup_widget_id']=$wassup_widget_id;
 		return $instance;
 	}
 	/** update for new widget settings, add new default values */

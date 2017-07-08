@@ -37,7 +37,6 @@ if(!class_exists('Wassup_Widget')){
  *  - sets common default options for all child widgets
  *  - adds wassup-widget.css to page header
  *  - generate a unique 'wassup_widget_id' for widget caching
- *  - backward compatibility code for widget display in WP 2.2 - 2.8
  *
  * Wassup_Widget API:
  *  - Extensions of Wassup_Widget must use the prefix 'wassup_' in the widget class name
@@ -524,14 +523,14 @@ class wassup_topstatsWidget extends Wassup_Widget{
 			echo "\n -->";
 		}
 		//get widget head and foot content
-		$ulclass="";
+		$ulclass=' class="topstats"';
 		$widget_head="";
 		$widget_foot='';
 		if(!empty($instance['title'])){
 			$widget_head=$widget_opt['before_title'].esc_attr($instance['title']).$widget_opt['after_title'];
 		}
 		if(!empty($instance['ulclass'])){
-			$ulclass=' class="'.$instance['ulclass'].'"';
+			$ulclass=' class="topstats '.$instance['ulclass'].'"';
 		}
 		//get widget main content
 		$widget_html="";
@@ -573,7 +572,7 @@ class wassup_topstatsWidget extends Wassup_Widget{
 				if(!empty($html)){
 					$title="";
 					if(empty($widget_head)){
-						if($instance['stat_timeframe']>0 && $instance['stat_timeframe']<1) $item_heading = __("Trending","wassup");
+						if($instance['stat_timeframe']>0 && $instance['stat_timeframe']<1) $item_heading = __("Latest","wassup");
 						else $item_heading = __("Top","wassup");
 						$title=$widget_opt['before_title'].wassup_widget_stat_gettext($item,$item_heading).$widget_opt['after_title'];
 					}else{
