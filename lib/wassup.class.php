@@ -2084,12 +2084,12 @@ class wassupDb{
 			if(empty($result[0][1]) || is_wp_error($result)){
 				$err_msg=sprintf(__('Error with "SHOW CREATE TABLE" for %s.','wassup'), esc_attr($table));
 				wassup_log_message($err_msg);
-				break;
+			} else {
+				$table_create=$result[0][1];
+				$sql_header="#\n# " . sprintf(__('Table structure of table %s','wassup'),esc_attr($table))."\n#\n";
+				$sql_header .= preg_replace(array('/^CREATE\sTABLE\s(IF\sNOT\sEXISTS\s)?/i', '/AUTO_INCREMENT\=\d+\s/i'),array('CREATE TABLE IF NOT EXISTS ',''),$table_create).' ;';
+				$sql_header .= "\n#\n# ".sprintf(__('Data contents of table %s','wassup'),esc_attr($table))."\n#\n";
 			}
-			$table_create=$result[0][1];
-			$sql_header="#\n# " . sprintf(__('Table structure of table %s','wassup'),esc_attr($table))."\n#\n";
-			$sql_header .= preg_replace(array('/^CREATE\sTABLE\s(IF\sNOT\sEXISTS\s)?/i', '/AUTO_INCREMENT\=\d+\s/i'),array('CREATE TABLE IF NOT EXISTS ',''),$table_create).' ;';
-			$sql_header .= "\n#\n# ".sprintf(__('Data contents of table %s','wassup'),esc_attr($table))."\n#\n";
 		}
 		//set starting rec id of export query
 		if(empty($start_id) || !is_numeric($start_id)){
