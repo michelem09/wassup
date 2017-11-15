@@ -2535,10 +2535,10 @@ class wassupURI {
 	 */
 	static function get_menu_arg(){
 		$menuarg="wassup";
-		if(isset($_GET['page'])) $menuarg=$_GET['page'];
+		if(isset($_GET['page'])) $menuarg=htmlspecialchars($_GET['page']);
 		if(stristr($menuarg,"wassup")!==false){
 			if(isset($_GET['ml'])){
-				$menuarg=$_GET['ml'];
+				$menuarg=htmlspecialchars($_GET['ml']);
 			}else{
 				$wassupfolder=basename(WASSUPDIR);
 				if($menuarg=="wassup-stats"){
