@@ -1,12 +1,12 @@
 === WassUp Real Time Analytics ===
-Contributors: michelem, helened  
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8  
-Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
-Requires at least: 4.0  
-Tested up to: 4.8 
-Stable tag: 1.9.4 
-License: GPLv2 or later  
-License URI: http://www.gnu.org/licenses/gpl-2.0.html  
+Contributors: michelem, helened
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8
+Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web
+Requires at least: 4.0
+Tested up to: 4.8
+Stable tag: 1.9.4.2
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more.
 
@@ -24,9 +24,9 @@ DISCLAIMER: Use at your own risk. No warranty expressed or implied is provided.
 
 = WassUp comes with 4 admin screen panels for viewing your visitors' activities and for customizing those views =
 * There is a fancy "Visitors Details" screen that lets you to see almost everything about your visitors and what they do on your site and that includes search capability, view filters, plus a chart and top stats summary.
-* There is an ajax "Spy View" screen (like Digg Spy) that lets you monitor your visitors live, with optional geolocation on a Google!maps world map. 
+* There is an ajax "Spy View" screen (like Digg Spy) that lets you monitor your visitors live, with optional geolocation on a Google!maps world map.
 * There is a "Current Visitors Online" screen that shows a summary of your online visitors in real-time.
-* There is an "Options" panel with lots of customizable settings for WassUp. 
+* There is an "Options" panel with lots of customizable settings for WassUp.
 
 There is a nice Dashboard widget that shows a line chart of hits over time (24 hours default) and a count of current visitors online and their latest activities.
 
@@ -35,7 +35,7 @@ There is a nice Dashboard widget that shows a line chart of hits over time (24 h
 * The "Top Stats" widgets lets you display trending or timed top items about your site based on the latest stats. You can list top search engine keywords, top external referrers, top url requests, top articles, top browsers, top OSes, and more.
 * The widgets are fully customizable.
 
-= WassUp's advanced tracking features can: = 
+= WassUp's advanced tracking features can: =
 * Distinguish registered users from anonymous visitors, and administrators from other registered users.
 * Identify and label new browsers, robots, and feed readers, heuristically.
 * Track page requests that generate 404 (not found) redirects.
@@ -46,7 +46,7 @@ WassUp works with two anti-spam functions to detect and omit (if you want) refer
 
 For people with database size limitations, WassUp has a few options to manage the database table growth: you can empty it; you can delete old records automatically; and you can set a warning notice for when it exceeds a preset size limit.
 
-= WassUp gives a detailed chronology of your hits with a lot of information for each single user session: = 
+= WassUp gives a detailed chronology of your hits with a lot of information for each single user session: =
 * ip / hostname
 * referrer
 * spider
@@ -73,7 +73,7 @@ For people with database size limitations, WassUp has a few options to manage th
 * Enable/Disable recording (tracking)
 * Screen refresh frequency (minutes)
 * Screen resolution (browser width)
-* User permission levels 
+* User permission levels
 * Top stats selections
 * Record or not logged-in users
 * Record or not spiders and bots
@@ -93,7 +93,7 @@ For people with database size limitations, WassUp has a few options to manage th
 
 = _____________________________________ =
 = IMPORTANT NOTICES =
-* Wassup is compatible with Wordpress 4.0+ and PHP 5.2+ 
+* Wassup is compatible with Wordpress 4.0+ and PHP 5.2+
 * To run Wassup with Wordpress 2.2 - 3.9 or with PHP 4.3 - 5.1, you must install the full copy of Wassup with backward-compatibility feature available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)
 * WassUp is incompatible with static html caching plugins such as "WP Super-Cache"
 * WassUp is NOT a security plugin. It does not block unwanted visitors nor protect your site from malware attempts. You need a separate security plugin for that
@@ -106,7 +106,7 @@ Check the box for "Enable widget/small chart in admin dashboard" under WassUp >>
 = How do I display WassUp widgets on my site? =
 From the Wordpress widgets panel, drag the "WassUp Online" widget or the "Wassup Top Stats" widget from the list of available widgets on the left into your theme's "Sidebar" or "Footer" area on the right.
 
-= How do I view the real-time visitor geolocation map in WassUp? = 
+= How do I view the real-time visitor geolocation map in WassUp? =
 Check the box for "Display a GEO IP Map in spy visitors view" under WassUp >>Options >>[General Setup] and save, then navigate to WassUp >>SPY Visitors panel to see the map.
 
 = The map has vanished and I get a message like: "Oops, something went wrong" or "Google has disabled use of the Maps API for this application". How do I fix this?" =
@@ -159,14 +159,14 @@ A. If your Wordpress setup is up-to-date, you can install this plugin automatica
    3. Locate "Wassup Real-Time Analytics" and click `Install Now`
    4. Activate it and you are done!
 
-B. If you prefer to install the plugin manually or you are running an older version of Wordpress, download the latest full release of WassUp (Real-Time Analytics) plugin directly from [gitHub.com/michelem09/wassup/releases/](https://github.com/michelem09/wassup/releases/) and save onto your local computer  
+B. If you prefer to install the plugin manually or you are running an older version of Wordpress, download the latest full release of WassUp (Real-Time Analytics) plugin directly from [gitHub.com/michelem09/wassup/releases/](https://github.com/michelem09/wassup/releases/) and save onto your local computer
 
-   * If available, use Wordpress' `Upload Plugin` option in the plugins panel to complete your install:  
+   * If available, use Wordpress' `Upload Plugin` option in the plugins panel to complete your install:
 
      1. Navigate to Plugins panel >> `Add New` >> `Upload Plugin`
      2. Click `Browse`, then find and select the plugin zip file that you downloaded
      3. Click `Install Now`
-     4. Activate WassUp plugin and you are done!  
+     4. Activate WassUp plugin and you are done!
 
    * Otherwise, unpack the plugin's zip or gz file with your preferred unzip/untar program or use the command line: `tar xzvf wassup.tar.gz` (linux), then follow these steps to complete your install:
 
@@ -194,7 +194,7 @@ B. If you prefer to manually upgrade OR you are running an older version of Word
 = **IMPORTANT Safe Upgrade Instructions =
 
 To safely upgrade WassUp when your site is busy, you must manually stop visitor recording beforehand, do the upgrade, then manually resume recording afterwards:
- 
+
 1. In WordPress admin panel, navigate to WassUp >>Options >>[Genernal Setup] tab. Uncheck the box for "Enable statistics recording" and save.
 1. Navigate to Plugins page and click the "Update Now" link under "WassUp" plugin name or follow the manual upgrade instructions above
 1. After the upgrade is done, go back to WassUp >>Options >>[General Setup] tab, and check the box for "Enable statistics recording" and save.
@@ -203,7 +203,7 @@ To safely upgrade WassUp when your site is busy, you must manually stop visitor 
 When you activate this plugin (as described in "Installation"), it works "as is". You don't have anything to do. Wait for visitors to hit your site and start seeing details (click the dashboard and go to WassUp page)
 
 = Compatibility Notice =
-* WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache. 
+* WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache.
 
 == Upgrade Notice ==
 = 1.9.4 =
@@ -211,7 +211,7 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 
 == Changelog ==
 = v1.9.4 =
-= Important feature improvement & bugfix upgrade = 
+= Important feature improvement & bugfix upgrade =
 * new option to whitelist referrers that are mislabeled as spam in WassUp (ex: Rx or sexy words in domain name)
 * new option to export data in Excel-compatible CSV format
 * improved export speed and added a dialog window
@@ -223,30 +223,30 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * fixed a compatibility issue with Woocommerce plugin AJAX requests
 * fixed a search field validation issue with URL special characters
 * fixed a bug in "stringShortener" function that caused empty results
-* fixed a bug in Top Stats widget that caused blank lines to display 
+* fixed a bug in Top Stats widget that caused blank lines to display
 * fixed some Top Stats widget translations
 * removed Google!maps API key from Wassup source due to Google's TOS limitations
 * miscellaneous minor bugfixes
 
 = v1.9.3.1 =
-= Important bugfix upgrade = 
+= Important bugfix upgrade =
 * fixed various preg_match regexes to improve matching
 * fixed a parenthesis error in tracking/exclusion code for 404 hits
 * fixed bug that caused duplicate country code in searchengine name
 * minor code changes.
 
 = v1.9.3 =
-= Important bugfix upgrade = 
+= Important bugfix upgrade =
 * fixed an 'unknown modifier' preg_match error in 'wassup.php' module.
 * fixed an IP validation loophole that could cause invalid/malformed forwarding IPs in client's http_header to be stored as client IP.
 * fixed code to stop recording of front-end ajax requests ('/wp-admin/admin-ajax.php' url) as "possible spam/malware" hits.
-* updated code to restore 'shutdown' hook as the primary hook for 'wassupAppend' function.  
+* updated code to restore 'shutdown' hook as the primary hook for 'wassupAppend' function.
 * updated translation script to re-attempt language load with "language x2" as filename whenever the initial load (with "locale") fails.
-* updated translation template and language files to v1.9.2  
-* miscellaneous minor changes.  
+* updated translation template and language files to v1.9.2
+* miscellaneous minor changes.
 
 = v1.9.2 =
-= Urgent bugfix upgrade = 
+= Urgent bugfix upgrade =
 * fixed fatal error on `wassup_options::is_recording_active` that occurred in some configurations
 * fixed erroneous 'hack attempt' labels that occurred on sites without permalinks
 * fixed a refresh timer bug that disabled dropdown selections in Visitor Details when refresh setting is 0.
@@ -266,7 +266,7 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * new module, 'wassupadmin.php' for WassUp admin panels and dashboard widget
 * new module, 'compatibility.php' to check for Wordpress and PHP compatibility and to load compatibility modules from `/lib/compat-lib/` subfolder when available
 * removed backward compatibility modules ('/lib/compat-lib/') and features from Wordpress repository.
-  Wassup's backward-compatibility feature remains in the full copy of Wassup available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)  
+  Wassup's backward-compatibility feature remains in the full copy of Wassup available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)
 * deleted obsolete files ('badhosts.txt','badhosts-intl.txt') and javascripts
 * updated Google!Maps API link to use a common API key for Wassup-Spy (required by Google since 2016-06-22).
 * updated WassUp 'wp-cron' scheduled tasks to terminate (and restart) at reset-to-default, recording stop/start, and at plugin deactivate/reactivate events.
@@ -320,7 +320,7 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 
 = v1.8.1 =
 * bugfix and minor changes.
- 
+
 = 1.8 =
 = Important feature improvement upgrade =
 * new table `wassup_meta` for caching and stats collection.

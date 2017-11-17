@@ -3,7 +3,7 @@
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
 Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
-Version: 1.9.4
+Version: 1.9.4.2
 Author: Michele Marcucci, Helene Duncker
 Author URI: http://www.michelem.org/
 Text Domain: wassup
@@ -11,12 +11,12 @@ Domain Path: /language
 License: GPL2
 
 Copyright (c) 2007-2016 Michele Marcucci
-Released under the GNU General Public License GPLv2 or later 
+Released under the GNU General Public License GPLv2 or later
 http://www.gnu.org/licenses/gpl-2.0.html
 
 Disclaimer:
   This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of 
+  WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the GNU General Public License for more details.
 */
@@ -52,8 +52,8 @@ function wassup_init($init_settings=false){
 
 	//define wassup globals & constants
 	if(!defined('WASSUPVERSION')){
-		define('WASSUPVERSION','1.9.4');
-		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
+		define('WASSUPVERSION','1.9.4.2');
+		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__)));
 	}
 	//turn on debugging (global)...Use cautiously! Will display errors from all plugins, not just WassUp
 	$wdebug_mode=false;
@@ -148,7 +148,7 @@ function wassup_init($init_settings=false){
 /**
  * Install or upgrade Wassup plugin.
  *  - check wordpress compatibility
- *  - set initial plugin settings 
+ *  - set initial plugin settings
  *  - check for multisite and set initial wassup network settings
  *  - create/upgrade Wassup tables.
  *  - save wassup settings and wassup network settings.
@@ -306,7 +306,7 @@ function wassup_install($network_wide=false) {
 	}
 } //end wassup_install
 
-/** 
+/**
  * Completely remove all wassup tables and options from Wordpress and deactivate plugin, if needed.
  *
  * NOTES:
@@ -314,7 +314,7 @@ function wassup_install($network_wide=false) {
  *  - no compatibility functions are loaded, so use 'function_exists' check for functions after Wordpress 2.2
  * @param boolean (for multisite uninstall)
  * @return void
- */ 
+ */
 function wassup_uninstall($network_wide=false){
 	global $wpdb,$wp_version,$current_user;
 	$wassup_network_settings=array();
@@ -597,7 +597,7 @@ function wassup_admin_preload() {
 		else $is_compatible=wassup_init();
 		if(!$is_compatible) return;	//nothing to do
 	}
-	//uninstall on deactivation when 'wassup_uninstall' option is set...applies to multisite subdomains and Wordpress 2.x setups only 
+	//uninstall on deactivation when 'wassup_uninstall' option is set...applies to multisite subdomains and Wordpress 2.x setups only
 	if(!empty($wassup_options->wassup_uninstall)){
 		register_deactivation_hook(__FILE__,'wassup_uninstall');
 	}else{
@@ -872,7 +872,7 @@ function wassupPrepend() {
 	if (empty($wscreen_res) && isset($_COOKIE['wassup_screen_res'.$sessionhash])) {
 		$wscreen_res = esc_attr(trim($_COOKIE['wassup_screen_res'.$sessionhash]));
 		if ($wscreen_res == "x") $wscreen_res="";
-	} 
+	}
 	if (empty($wscreen_res) && isset($_SERVER['HTTP_UA_PIXELS'])) {
 		//resolution in IE/IEMobile header sometimes
 		$wscreen_res = str_replace('X',' x ',$_SERVER['HTTP_UA_PIXELS']);
@@ -999,7 +999,7 @@ function wassupAppend($req_code=0) {
 	$debug_output="";
 	if($wdebug_mode){
 		if($is_media || is_feed() || (!is_page() && !is_home() && !is_single() && !is_archive())){
-			//turn off error display for media, feed, and any non-html requests 
+			//turn off error display for media, feed, and any non-html requests
 			$wdebug_mode=false;
 			@wassup_disable_errors();
 		}else{
@@ -1072,7 +1072,7 @@ function wassupAppend($req_code=0) {
 	if(!empty($ua->name)){
 		if($ua->agenttype == "B"){
 			$browser = $ua->name;
-			if(!empty($ua->version)){ 
+			if(!empty($ua->version)){
 				$browser .= " ".wMajorVersion($ua->version);
 				if (strstr($ua->version,"Mobile")!==false){
 					$browser .= " Mobile";
@@ -1187,7 +1187,7 @@ function wassupAppend($req_code=0) {
 		if(isset($_COOKIE['wassup_screen_res'.$sessionhash])) {
 			$wscreen_res=esc_attr(trim($_COOKIE['wassup_screen_res'.$sessionhash]));
 			if($wscreen_res == "x") $wscreen_res = "";
-		} 
+		}
 		if(empty($wscreen_res) && isset($_SERVER['HTTP_UA_PIXELS'])) {
 			//resolution in IE/IEMobile header sometimes
 			$wscreen_res=str_replace('X',' x ',esc_attr($_SERVER['HTTP_UA_PIXELS']));
@@ -1330,7 +1330,7 @@ function wassupAppend($req_code=0) {
 			}
 			}//end foreach
 		}
-	//#6 Exclude IPs on exclusion list... 
+	//#6 Exclude IPs on exclusion list...
 	if ((empty($wassup_options->wassup_exclude) || preg_match('#(?:^|\s*,)\s*('.preg_quote($IP).')\s*(?:,|$)#',$wassup_options->wassup_exclude)==0) && !$exclude_visit){
 		//match for wildcards in exclude list @since v1.9
 		if(strpos($wassup_options->wassup_exclude,'*')!= 0){
@@ -1374,7 +1374,7 @@ function wassupAppend($req_code=0) {
 		}
 	//#11 Exclude for wassup_attack (via libwww-perl or xss in user agent)
 	if ($wassup_options->wassup_attack==1 || (stristr($userAgent,"libwww-perl")===FALSE && $spam==0)) {
-		// Check for duplicates, previous spam check, and screen resolution and get previous settings to prevent redundant checks on same visitor. 
+		// Check for duplicates, previous spam check, and screen resolution and get previous settings to prevent redundant checks on same visitor.
 		// Dup==same wassup_id and URL, and timestamp<180 secs
 		$wpageviews=0;
 		$spamresult=0;
@@ -1610,7 +1610,7 @@ function wassupAppend($req_code=0) {
 				}
 			}
 			//it's a browser
-			if($spidertype == "B" && $urlRequested != "/robots.txt"){ 
+			if($spidertype == "B" && $urlRequested != "/robots.txt"){
 				if (empty($browser)) $browser = $spider;
 				$spider = "";
 				$feed = "";
@@ -1650,7 +1650,7 @@ function wassupAppend($req_code=0) {
 				}
 				//it's a browser
 				if(!empty($spider)){
-				if($spidertype == "B" && $urlRequested != "/robots.txt"){ 
+				if($spidertype == "B" && $urlRequested != "/robots.txt"){
 					if(empty($browser)) $browser=$spider;
 					$spider="";
 					$feed="";
@@ -1696,7 +1696,7 @@ function wassupAppend($req_code=0) {
 				} //end if timestamp
 			} //end if wpageviews >7
 		} //end if empty($spider)
-		//identify spoofers of Google/Yahoo 
+		//identify spoofers of Google/Yahoo
 		if(!empty($spider)){
 			if(!empty($hostname) && preg_match('/^(googlebot|yahoo\!\sslurp)/i',$spider)>0 && preg_match('/\.(googlebot|yahoo)\./i',$hostname)==0){
 				$spider= __("Spoofer bot","wassup");
@@ -1738,7 +1738,7 @@ function wassupAppend($req_code=0) {
 			} //end if wassup_refspam
 		//## Check for comment spammer...
 		// No spam check on spiders unless there is a comment or forum page request...
-		if ($spam == 0 && (empty($spider) || stristr($urlRequested,"comment")!== FALSE || stristr($urlRequested,"forum")!== FALSE  || !empty($comment_user))) { 
+		if ($spam == 0 && (empty($spider) || stristr($urlRequested,"comment")!== FALSE || stristr($urlRequested,"forum")!== FALSE  || !empty($comment_user))) {
 			//check for previous spammer detected by anti-spam plugin
 			$spammerIP = $spamComment->isSpammer($IP);
 			if($spammerIP > 0) $spam=1;
@@ -1752,7 +1752,7 @@ function wassupAppend($req_code=0) {
 				$akismet_class = WASSUPDIR.'/lib/akismet.class.php';
 				if (!empty($akismet_key) && is_readable($akismet_class)) {
 					include_once($akismet_class);
-					// load array with comment data 
+					// load array with comment data
 					$comment_user_email = (!empty($_COOKIE['comment_author_email_'.COOKIEHASH])? utf8_encode($_COOKIE['comment_author_email_'.COOKIEHASH]):"");
 					$comment_user_url = (!empty($_COOKIE['comment_author_url_'.COOKIEHASH])? utf8_encode($_COOKIE['comment_author_url_'.COOKIEHASH]):"");
 					$Acomment = array(
@@ -1907,25 +1907,25 @@ function wassupAppend($req_code=0) {
 		//tag 404 requests in table
 		if($req_code==404) $urlRequested="[404] ".$_SERVER['REQUEST_URI'];
 		// #Record visit in wassup tables...
-		// #create record to add to wassup tables...	
-		$wassup_rec = array('wassup_id'=>$wassup_id, 
-				'timestamp'=>$timenow, 
-				'ip'=>$ipAddress, 
-				'hostname'=>$hostname, 
+		// #create record to add to wassup tables...
+		$wassup_rec = array('wassup_id'=>$wassup_id,
+				'timestamp'=>$timenow,
+				'ip'=>$ipAddress,
+				'hostname'=>$hostname,
 				'urlrequested'=>wassupDb::xescape($urlRequested),
 				'agent'=>wassupDb::xescape($userAgent),
-				'referrer'=>wassupDb::xescape($referrer), 
+				'referrer'=>wassupDb::xescape($referrer),
 				'search'=>$search_phrase,
 				'searchpage'=>$searchpage,
 				'searchengine'=>$searchengine,
-				'os'=>$os, 
-				'browser'=>$browser, 
-				'language'=>$language, 
-				'screen_res'=>$wscreen_res, 
-				'spider'=>$spider, 
-				'feed'=>$feed, 
-				'username'=>$logged_user, 
-				'comment_author'=>$comment_user, 
+				'os'=>$os,
+				'browser'=>$browser,
+				'language'=>$language,
+				'screen_res'=>$wscreen_res,
+				'spider'=>$spider,
+				'feed'=>$feed,
+				'username'=>$logged_user,
+				'comment_author'=>$comment_user,
 				'spam'=>$spam,
 				'url_wpid'=>$article_id,
 				'subsite_id'=>$subsite_id,
@@ -1940,7 +1940,7 @@ function wassupAppend($req_code=0) {
 			if(!empty($wassup_recid) && is_wp_error($wassup_recid)){
 				$errno=$wassup_recid->get_error_code();
 				if(!empty($errno)) $error_msg="\nError saving record: $errno: ".$wassup_recid->get_error_message()."\n";
-				
+
 				$wassup_recid=false;
 			}elseif(empty($wassup_recid) || !is_numeric($wassup_recid)){
 				if(!empty($wpdb->insert_id)){
@@ -2056,7 +2056,7 @@ function wassupAppend($req_code=0) {
 			if(headers_sent()) echo "\nin_temp=".$result;
 			else $debug_output .="\nin_temp=".$result;
 		}
-		//add new temp record 
+		//add new temp record
 		if($in_temp==0){
 		if(empty($wassup_rec)){
 			$pcs=array();
@@ -2070,24 +2070,24 @@ function wassupAppend($req_code=0) {
 				$urlRequested="[404] ".$_SERVER['REQUEST_URI'];
 			}
 			// #Record visit in wassup tables...
-			$wassup_rec = array('wassup_id'=>$wassup_id, 
-				'timestamp'=>$timenow, 
-				'ip'=>$ipAddress, 
-				'hostname'=>$hostname, 
+			$wassup_rec = array('wassup_id'=>$wassup_id,
+				'timestamp'=>$timenow,
+				'ip'=>$ipAddress,
+				'hostname'=>$hostname,
 				'urlrequested'=>wassupDb::xescape($urlRequested),
 				'agent'=>wassupDb::xescape($userAgent),
 				'referrer'=>wassupDb::xescape($referrer),
 				'search'=>$search_phrase,
 				'searchpage'=>$searchpage,
 				'searchengine'=>$searchengine,
-				'os'=>$os, 
-				'browser'=>$browser, 
-				'language'=>$language, 
-				'screen_res'=>$wscreen_res, 
-				'spider'=>$spider, 
-				'feed'=>$feed, 
-				'username'=>$logged_user, 
-				'comment_author'=>$comment_user, 
+				'os'=>$os,
+				'browser'=>$browser,
+				'language'=>$language,
+				'screen_res'=>$wscreen_res,
+				'spider'=>$spider,
+				'feed'=>$feed,
+				'username'=>$logged_user,
+				'comment_author'=>$comment_user,
 				'spam'=>$spam,
 				'url_wpid'=>$article_id,
 				'subsite_id'=>$subsite_id,
@@ -2110,7 +2110,7 @@ function wassupAppend($req_code=0) {
 			//db size = db records + db index
 			$data_lenght=$fstatus->Data_length+$fstatus->Index_length;
 			$tusage = ($data_lenght/1024/1024);
-		} 
+		}
 		if($tusage >0 && $tusage > $wassup_options->wassup_remind_mb){
 			if(!empty($network_settings['wassup_table']) && $network_settings['wassup_table']==$wassup_table){
 				$recipient = get_site_option('admin_email');
@@ -2128,7 +2128,7 @@ function wassupAppend($req_code=0) {
 		}
 	} //if wassup_remind_flag
 	} //if timestamp%139
-	
+
 	//# schedule purge of temporary records - also done hourly in wp-cron
 	if(((int)$timestamp)%11 == 0){
 		$starttime=0;
@@ -2137,7 +2137,7 @@ function wassupAppend($req_code=0) {
 			//keep logged-in user records in temp for up to 10 minutes, anonymous user records for up to 3 minutes, and spider records for only 1 minute @since v1.9
 			$wassup_dbtask[]=sprintf("DELETE FROM `$wassup_tmp_table` WHERE `timestamp`<'%d' OR (`timestamp`<'%d' AND `username`='') OR (`timestamp`<'%d' AND `spider`!='')",(int)($timestamp - 10*60),(int)($timestamp - 3*60),(int)($timestamp - 60));
 			if(((int)$timestamp)%5 == 0){
-				//Purge expired cache data from wassup_meta 
+				//Purge expired cache data from wassup_meta
 				$result=$wpdb->query(sprintf("DELETE FROM `$wassup_meta_table` WHERE `meta_expire`>'0' AND `meta_expire`<'%d'",$now - 3600));
 			}
 		}
@@ -2158,7 +2158,7 @@ function wassupAppend($req_code=0) {
 			$wassup_options->saveSettings();
 		}
 	}
-	//# Lastly, perform scheduled database tasks 
+	//# Lastly, perform scheduled database tasks
 	if(count($wassup_dbtask)>0){
 		$args=array('dbtasks'=>$wassup_dbtask);
 		if(is_admin() || version_compare($wp_version,'3.0','<')){
@@ -2173,7 +2173,7 @@ function wassupAppend($req_code=0) {
 			}
 		}
 	}
-	if($wdebug_mode){ //close comment tag to hide debug data from visitors 
+	if($wdebug_mode){ //close comment tag to hide debug data from visitors
 		if(headers_sent()){
 			echo "\n--> \n";
 		}else{
@@ -2230,7 +2230,7 @@ function wassup_insert_rec($wTable,$wassup_rec,$delayed=false){
 }//end wassup_insert_rec
 /**
  * Assign an id for current visitor session from a combination of date/hour/min/ip/loggeduser/useragent/hostname.
- * This is not unique so that multiple visits from the same ip/userAgent within a 30 minute-period, can be tracked, even when session/cookies is disabled. 
+ * This is not unique so that multiple visits from the same ip/userAgent within a 30 minute-period, can be tracked, even when session/cookies is disabled.
  * @since v1.9
  * @param args (array)
  * @return string
@@ -2285,13 +2285,13 @@ function wassup_get_sessionid($args=array()){
 			$sessiontime=intval(gmdate('i',$timestamp)/30);
 			$temp_id=sprintf("%-040.40s",gmdate('YmdH',$timestamp).$sessiontime.str_replace(array('.',':','-'),'',substr(strrev($ipAddress),2).strrev($tempUA).$sessiontime.gmdate('HdmY',$timestamp).strrev($hostname)).$templen.rand());
 		}
-		//#assign new wassup id from "temp_id" 
+		//#assign new wassup id from "temp_id"
 		$session_id= (int)$subsite_id.'b_'.md5($temp_id);
 	}
 	return $session_id;
 } //end wassup_get_sessionid
 
-/** 
+/**
  * Retrieve a hash value to assign to a session cookie
  * - replaces 'COOKIEHASH' which breaks up a continuous session with user login/reauthorization
  */
@@ -2361,9 +2361,9 @@ function wSeReferer($ref = false) {
 	//Check against Google, Yahoo, MSN, Ask and others
 	if(preg_match('#^https?://([^/]+).*[&\?](prev|q|p|s|search|searchfor|as_q|as_epq|query|keywords|term|encquery)=([^&]+)#i',$SeReferer,$pcs) > 0){
 		$SeDomain = trim(strtolower($pcs[1]));
-		if ($pcs[2] == "encquery") { 
+		if ($pcs[2] == "encquery") {
 			$SeQuery = " *".__("encrypted search","wassup")."* ";
-		} else { 
+		} else {
 			$SeQuery = $pcs[3];
 		}
 
@@ -2384,7 +2384,7 @@ function wSeReferer($ref = false) {
 	}
 	unset ($pcs);
 	//-- We have a query
-	if(isset($SeQuery)){ 
+	if(isset($SeQuery)){
 		// Multiple URLDecode Trick to fix DogPile %XXXX Encodes
 		if (strstr($SeQuery,'%')) {
 			$OldQ=$SeQuery;
@@ -2394,7 +2394,7 @@ function wSeReferer($ref = false) {
 				$SeQuery=urldecode($SeQuery);
 			}
 		}
-		if (!isset($SePos)) { 
+		if (!isset($SePos)) {
 			if(preg_match('#[&\?](start|startpage|b|cd|first|stq|pi|page)[=/](\d+)#i',$SeReferer,$pcs)) {
 				$SePos = $pcs[2];
 			} else {
@@ -2427,7 +2427,7 @@ function wGetSE($referrer = null){
 	$searchlang="";
 	$selocale="";
 	$blogurl = preg_replace('#(https?\://)?(www\.)?#','',strtolower(get_option('home')));
-	//list of well known search engines. 
+	//list of well known search engines.
 	//  Structure: "SE Name|SE Domain(partial+unique)|query_key|page_key|language_key|locale|charset|"
 	$lines = array(
 		"360search|so.360.com|q|||cn|utf8|",
@@ -2464,20 +2464,20 @@ function wGetSE($referrer = null){
 		"Austronaut|.austronaut.at|q|||at||",
 		"avg.com|search.avg.com|q|cd|hl|||",
 		"Babylon|search.babylon.com|q|||||",
-		"Baidu|.baidu.com|wd|||cn|utf8|", 
-		"Baidu|.baidu.com|word|||cn|utf8|", 
+		"Baidu|.baidu.com|wd|||cn|utf8|",
+		"Baidu|.baidu.com|word|||cn|utf8|",
 		"Baidu|.baidu.com|kw|||cn|utf8|",
 		"Biglobe Images|images.search.biglobe.ne.jp|q|||jp||",
 		"Biglobe|.search.biglobe.ne.jp|q|||jp||",
-		"Bing Images|.bing.com/images/|q|first||||", 
-		"Bing Images|.bing.com/images/|Q|first||||", 
-		"Bing|.bing.com|q|first||||", 
-		"Bing|.bing.com|Q|first||||", 
-		"Bing|search.msn.|q|first|||", 
-		"Bing|.it.msn.com|q|first||it||", 
-		"Bing|msnbc.msn.com|q|first||||", 
-		"Bing Cache|cc.bingj.com|q|first||||", 
-		"Bing Cache|cc.bingj.com|Q|first||||", 
+		"Bing Images|.bing.com/images/|q|first||||",
+		"Bing Images|.bing.com/images/|Q|first||||",
+		"Bing|.bing.com|q|first||||",
+		"Bing|.bing.com|Q|first||||",
+		"Bing|search.msn.|q|first|||",
+		"Bing|.it.msn.com|q|first||it||",
+		"Bing|msnbc.msn.com|q|first||||",
+		"Bing Cache|cc.bingj.com|q|first||||",
+		"Bing Cache|cc.bingj.com|Q|first||||",
 		"Blogdigger|.blogdigger.com|q|||||",
 		"Blogpulse|.blogpulse.com|query|||||",
 		"Bluewin|.bluewin.ch|q|||ch||",
@@ -2537,7 +2537,7 @@ function wGetSE($referrer = null){
 		"Google Blogsearch|blogsearch.google.|q|start||||",
 		"Google Custom Search|google.com/cse|q|cd|hl|||",
 		"Google Custom Search|google.com/custom|q|cd|hl|||",
-		"Google Groups|groups.google.|q|start||||", 
+		"Google Groups|groups.google.|q|start||||",
 		"Google Images|.google.com/images?|q|cd|hl|||",
 		"Google Images|images.google.|q|cd|hl|||",
 		"Google Images|/imgres?imgurl=|prev|start|hl|||", //obsolete
@@ -2555,10 +2555,10 @@ function wGetSE($referrer = null){
 		"Google Translate|translate.googleusercontent.com|q|cd|hl|||",
 		"Google Video|video.google.com|q|cd|hl|||",
 		"Google Cache|.googleusercontent.com|q|cd|hl|||",
-		"Google Cache|http://64.233.1|q|cd|hl|||", 
-		"Google Cache|http://72.14.|q|cd|hl|||", 
-		"Google Cache|http://74.125.|q|cd|hl|||", 
-		"Google Cache|http://209.85.|q|cd|hl|||", 
+		"Google Cache|http://64.233.1|q|cd|hl|||",
+		"Google Cache|http://72.14.|q|cd|hl|||",
+		"Google Cache|http://74.125.|q|cd|hl|||",
+		"Google Cache|http://209.85.|q|cd|hl|||",
 		"Google|www.google.|q|cd|hl|||",
 		"Google|www.google.|as_q|start|hl|||",
 		"Google|.google.com|q|cd|hl|||",
@@ -2582,8 +2582,8 @@ function wGetSE($referrer = null){
 		"InfoSpace|webcrawler.com|q|||||",
 		"InfoSpace|webfetch.com|q|||||",
 		"InfoSpace|search.webssearches.com|q|||||",
-		"Ixquick|ixquick.com|query|||||", 
-		"Ixquick|ixquick.de|query|||de||", 
+		"Ixquick|ixquick.com|query|||||",
+		"Ixquick|ixquick.de|query|||de||",
 		"Jyxo|jyxo.1188.cz|q|||cz||",
 		"Jumpy|.mediaset.it|searchWord|||it||",
 		"Kataweb|kataweb.it|q|||it||",
@@ -2644,7 +2644,7 @@ function wGetSE($referrer = null){
 		"RPMFind|rpmfind.net|query|||||",
 		"Road Runner|search.rr.com|q|||||",
 		"Sapo|pesquisa.sapo.pt|q|||pt||",
-		"Search.com|.search.com|q|||||", 
+		"Search.com|.search.com|q|||||",
 		"Search.ch|.search.ch|q|||ch||",
 		"Searchy|.searchy.co.uk|q|||gb||",
 		"Setooz|.setooz.com|query|||||",
@@ -2661,7 +2661,7 @@ function wGetSE($referrer = null){
 		"Sogou|.sogou.com|keyword|||cn|gb2312|",
 		"Soso|.soso.com|q|||cn|gb2312|",
 		"Sputnik|.sputnik.ru|q|||ru||",
-		"Start.no|start.no|q|||||", 
+		"Start.no|start.no|q|||||",
 		"Startpagina|.startpagina.nl|q|cd|hl|nl||",
 		"Suche.info|suche.info|Keywords|||||",
 		"Suchmaschine.com|.suchmaschine.com|suchstr|||||",
@@ -2859,7 +2859,7 @@ function wGetBrowser($agent="") {
 			$browscapbrowser="$browser";	//save just in case
 			$browser="";
 		}
-		$os=trim($os); 
+		$os=trim($os);
 		$browser=trim($browser);
 		if($wdebug_mode){
 			if(headers_sent()){
@@ -2916,7 +2916,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 	$feed="";
 	$os="";
 	$pcs=array();
-	//identify obvious script injection bots 
+	//identify obvious script injection bots
 	if(!empty($ua)){
 		//New in v1.9.3.1: check for more variations of <script> and <a> tags embedded in user agent string
 		if(stristr($ua,'location.href')!==FALSE){
@@ -3008,8 +3008,8 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 		$key=null;
 		// array format: "Spider Name|UserAgent keywords (no spaces)| Spider type (R=robot, B=Browser/downloader, F=feedreader, H=hacker, L=Link checker, M=siteMap generator, S=Spammer/email harvester, V=CSS/Html validator)
 		$lines=array(
-			"Internet Archive|archive.org_bot|R|", 
-			"Internet Archive|.archive.org|R|", 
+			"Internet Archive|archive.org_bot|R|",
+			"Internet Archive|.archive.org|R|",
 			"Baiduspider|Baiduspider/|R|",
 			"Baiduspider|.crawl.baidu.com|R|",
 			"BingBot|MSNBOT/|R|","BingBot|msnbot.|R|",
@@ -3024,12 +3024,12 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			"Yahoo!|.yse.yahoo.net|R|",
 			"Yahoo!|.crawl.yahoo.net|R|",
 			"YandexBot|YandexBot/|R|",
-			"AboutUsBot|AboutUsBot/|R|", 
-			"80bot|80legs.com|R|", 
-			"Aggrevator|Aggrevator/|F|", 
-			"AlestiFeedBot|AlestiFeedBot||", 
-			"Alexa|ia_archiver|R|", "AltaVista|Scooter-|R|", 
-			"AltaVista|Scooter/|R|", "AltaVista|Scooter_|R|", 
+			"AboutUsBot|AboutUsBot/|R|",
+			"80bot|80legs.com|R|",
+			"Aggrevator|Aggrevator/|F|",
+			"AlestiFeedBot|AlestiFeedBot||",
+			"Alexa|ia_archiver|R|", "AltaVista|Scooter-|R|",
+			"AltaVista|Scooter/|R|", "AltaVista|Scooter_|R|",
 			"AMZNKAssocBot|AMZNKAssocBot/|R|",
 			"AppleSyndication|AppleSyndication/|F|",
 			"Apple-PubSub|Apple-PubSub/|F|",
@@ -3041,39 +3041,39 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			"BlogsNowBot|BlogsNowBot|F|",
 			"BlogPulseLive|BlogPulseLive|F|",
 			"IceRocket BlogSearch|icerocket.com|F|",
-			"Charlotte|Charlotte/|R|", 
+			"Charlotte|Charlotte/|R|",
 			"Xyleme|cosmos/0.|R|", "cURL|curl/|R|",
 			"Daumoa|Daumoa-feedfetcher|F|",
 			"Daumoa|DAUMOA|R|",
 			"Daumoa|.daum.net|R|",
-			"Die|die-kraehe.de|R|", 
-			"Diggit!|Digger/|R|", 
+			"Die|die-kraehe.de|R|",
+			"Diggit!|Digger/|R|",
 			"disco/Nutch|disco/Nutch|R|",
 			"DotBot|DotBot/|R|",
-			"Emacs-w3|Emacs-w3/v||", 
-			"ananzi|EMC||", 
-			"EnaBot|EnaBot||", 
-			"esculapio|esculapio/||", "Esther|esther||", 
-			"everyfeed-spider|everyfeed-spider|F|", 
-			"Evliya|Evliya||", "nzexplorer|explorersearch||", 
+			"Emacs-w3|Emacs-w3/v||",
+			"ananzi|EMC||",
+			"EnaBot|EnaBot||",
+			"esculapio|esculapio/||", "Esther|esther||",
+			"everyfeed-spider|everyfeed-spider|F|",
+			"Evliya|Evliya||", "nzexplorer|explorersearch||",
 			"eZ publish Validator|eZpublishLinkValidator||",
 			"FacebookExternalHit|facebook.com/externalhit|R|",
-			"FastCrawler|FastCrawler|R|", 
-			"FDSE|FDSErobot|R|", 
+			"FastCrawler|FastCrawler|R|",
+			"FDSE|FDSErobot|R|",
 			"Feed::Find|Feed::Find||",
 			"FeedBurner|FeedBurner|F|",
 			"FeedDemon|FeedDemon/|F|",
-			"FeedHub FeedFetcher|FeedHub|F|", 
-			"Feedreader|Feedreader|F|", 
-			"Feedshow|Feedshow|F|", 
+			"FeedHub FeedFetcher|FeedHub|F|",
+			"Feedreader|Feedreader|F|",
+			"Feedshow|Feedshow|F|",
 			"Feedster|Feedster|F|",
 			"FeedTools|feedtools|F|",
-			"Feedfetcher-Google|Feedfetcher-google|F|", 
-			"Felix|FelixIDE/||", 
-			"FetchRover|ESIRover||", 
-			"fido|fido/||", 
-			"Fish|Fish-Search-Robot||", "Fouineur|Fouineur||", 
-			"Freecrawl|Freecrawl|R|", 
+			"Feedfetcher-Google|Feedfetcher-google|F|",
+			"Felix|FelixIDE/||",
+			"FetchRover|ESIRover||",
+			"fido|fido/||",
+			"Fish|Fish-Search-Robot||", "Fouineur|Fouineur||",
+			"Freecrawl|Freecrawl|R|",
 			"FriendFeedBot|FriendFeedBot/|F|",
 			"FunnelWeb|FunnelWeb-||",
 			"gammaSpider|gammaSpider||","gazz|gazz/||",
@@ -3083,13 +3083,13 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			"Google Favicon|GoogleFavicon|R|",
 			"GreatNews|GreatNews|F|",
 			"Gregarius|Gregarius/|F|",
-			"Gromit|Gromit/||", 
-			"gsinfobot|gsinfobot||", 
-			"Gulliver|Gulliver/||", "Gulper|Gulper||", 
-			"GurujiBot|GurujiBot||", 
+			"Gromit|Gromit/||",
+			"gsinfobot|gsinfobot||",
+			"Gulliver|Gulliver/||", "Gulper|Gulper||",
+			"GurujiBot|GurujiBot||",
 			"havIndex|havIndex/||",
 			"heritrix|heritrix/||", "HI|AITCSRobot/||",
-			"HKU|HKU||", "Hometown|Hometown||", 
+			"HKU|HKU||", "Hometown|Hometown||",
 			"HostTracker|host-tracker.com/|R|",
 			"ht://Dig|htdig/|R|","HTMLgobble|HTMLgobble||",
 			"Hyper-Decontextualizer|Hyper||",
@@ -3107,21 +3107,21 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			"ISC Systems iRc Search|ISCSystemsiRcSearch||",
 			"Israeli-search|IsraeliSearch/||",
 			"IRLIRLbot/|IRLIRLbot||",
-			"Italian Blog Rankings|blogbabel|F|", 
-			"Jakarta|Jakarta||", "Java|Java/||", 
-			"JBot|JBot||", 
-			"JCrawler|JCrawler/||", 
-			"JoBo|JoBo||", "Jobot|Jobot/||", 
+			"Italian Blog Rankings|blogbabel|F|",
+			"Jakarta|Jakarta||", "Java|Java/||",
+			"JBot|JBot||",
+			"JCrawler|JCrawler/||",
+			"JoBo|JoBo||", "Jobot|Jobot/||",
 			"JoeBot|JoeBot/||",
-			"JumpStation|jumpstation||", 
-			"image.kapsi.net|image.kapsi.net/|R|", 
-			"kalooga/kalooga|kalooga/kalooga||", 
-			"Katipo|Katipo/||", 
-			"KDD-Explorer|KDD-Explorer/||", 
-			"KIT-Fireball|KIT-Fireball/||", 
-			"KindOpener|KindOpener||", "kinjabot|kinjabot||", 
-			"KO_Yappo_Robot|yappo.com/info/robot.html||", 
-			"Krugle|Krugle||", 
+			"JumpStation|jumpstation||",
+			"image.kapsi.net|image.kapsi.net/|R|",
+			"kalooga/kalooga|kalooga/kalooga||",
+			"Katipo|Katipo/||",
+			"KDD-Explorer|KDD-Explorer/||",
+			"KIT-Fireball|KIT-Fireball/||",
+			"KindOpener|KindOpener||", "kinjabot|kinjabot||",
+			"KO_Yappo_Robot|yappo.com/info/robot.html||",
+			"Krugle|Krugle||",
 			"LabelGrabber|LabelGrab/||",
 			"Larbin|larbin_||",
 			"libwww-perl|libwww-perl||",
@@ -3149,12 +3149,12 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			"MyBlogLog|Yahoo!MyBlogLogAPIClient|F|",
 			"Naver|NaverBot||",
 			"Naver|Cowbot||",
-			"NDSpider|NDSpider/||", 
-			"Nederland.zoek|Nederland.zoek||", 
-			"NetCarta|NetCarta||", 
-			"NetMechanic|NetMechanic||", 
-			"NetScoop|NetScoop/||", 
-			"NetNewsWire|NetNewsWire||", 
+			"NDSpider|NDSpider/||",
+			"Nederland.zoek|Nederland.zoek||",
+			"NetCarta|NetCarta||",
+			"NetMechanic|NetMechanic||",
+			"NetScoop|NetScoop/||",
+			"NetNewsWire|NetNewsWire||",
 			"NewsAlloy|NewsAlloy||",
 			"newscan-online|newscan-online/||",
 			"NewsGatorOnline|NewsGatorOnline||",
@@ -3186,47 +3186,47 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			"radianrss|RadianRSS||",
 			"Raven|Raven-v||",
 			"relevantNOISE|relevantnoise.com||",
-			"Resume|Resume||", "RoadHouse|RHCS/||", 
+			"Resume|Resume||", "RoadHouse|RHCS/||",
 			"RixBot|RixBot||",
-			"Robbie|Robbie/||", "RoboCrawl|RoboCrawl||", 
+			"Robbie|Robbie/||", "RoboCrawl|RoboCrawl||",
 			"RoboFox|Robofox||",
-			"Robozilla|Robozilla/||", 
-			"Rojo|rojo1|F|", 
-			"Roverbot|Roverbot||", 
-			"RssBandit|RssBandit||", 
+			"Robozilla|Robozilla/||",
+			"Rojo|rojo1|F|",
+			"Roverbot|Roverbot||",
+			"RssBandit|RssBandit||",
 			"RSSMicro|RSSMicro.com|F|",
-			"Ruby|Rfeedfinder||", 
-			"RuLeS|RuLeS/||", 
-			"Runnk RSS aggregator|Runnk||", 
-			"SafetyNet|SafetyNet||", 
+			"Ruby|Rfeedfinder||",
+			"RuLeS|RuLeS/||",
+			"Runnk RSS aggregator|Runnk||",
+			"SafetyNet|SafetyNet||",
 			"Sage|(Sage)|F|",
-			"SBIder|sitesell.com|R|", 
-			"Scooter|Scooter/||", 
+			"SBIder|sitesell.com|R|",
+			"Scooter|Scooter/||",
 			"ScoutJet|ScoutJet||",
 			"Screaming Frog SEO Spider|ScreamingFrogSEOSpider/|L|",
 			"SearchProcess|searchprocess/||",
-			"Seekbot|seekbot.net|R|", 
-			"SimplePie|SimplePie/|F|", 
-			"Sitemap Generator|SitemapGenerator||", 
-			"Senrigan|Senrigan/||", 
+			"Seekbot|seekbot.net|R|",
+			"SimplePie|SimplePie/|F|",
+			"Sitemap Generator|SitemapGenerator||",
+			"Senrigan|Senrigan/||",
 			"SeznamBot|SeznamBot/|R|",
 			"SeznamScreenshotator|SeznamScreenshotator/|R|",
-			"SG-Scout|SG-Scout||", "Shai'Hulud|Shai'Hulud||", 
-			"Simmany|SimBot/||", 
-			"SiteTech-Rover|SiteTech-Rover||", 
-			"shelob|shelob||", 
-			"Sleek|Sleek||", 
+			"SG-Scout|SG-Scout||", "Shai'Hulud|Shai'Hulud||",
+			"Simmany|SimBot/||",
+			"SiteTech-Rover|SiteTech-Rover||",
+			"shelob|shelob||",
+			"Sleek|Sleek||",
 			"Slurp|.inktomi.com/slurp.html|R|",
-			"Snapbot|.snap.com|R|", 
+			"Snapbot|.snap.com|R|",
 			"SnapPreviewBot|SnapPreviewBot|R|",
-			"Smart|ESISmartSpider/||", 
-			"Snooper|Snooper/b97_01||", "Solbot|Solbot/||", 
+			"Smart|ESISmartSpider/||",
+			"Snooper|Snooper/b97_01||", "Solbot|Solbot/||",
 			"Sphere Scout|SphereScout|R|",
 			"Sphere|sphere.com|R|",
 			"spider_monkey|mouse.house/||",
-			"SpiderBot|SpiderBot/||", 
+			"SpiderBot|SpiderBot/||",
 			"Spiderline|spiderline/||",
-			"SpiderView(tm)|SpiderView||", 
+			"SpiderView(tm)|SpiderView||",
 			"SragentRssCrawler|SragentRssCrawler|F|",
 			"Site|ssearcher100||",
 			"StackRambler|StackRambler||",
@@ -3245,44 +3245,44 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			"Twiceler|.cuill.com/twiceler/|R|",
 			"Twingly|twingly.com|R|",
 			"UCSD|UCSD-Crawler||", "UdmSearch|UdmSearch/||",
-			"UniversalFeedParser|UniversalFeedParser|F|", 
-			"UptimeBot|uptimebot||", 
-			"URL_Spider|URL_Spider_Pro/|R|", 
-			"VadixBot|VadixBot||", "Valkyrie|Valkyrie/||", 
-			"Verticrawl|Verticrawlbot||", 
-			"Victoria|Victoria/||", 
-			"vision-search|vision-search/||", 
+			"UniversalFeedParser|UniversalFeedParser|F|",
+			"UptimeBot|uptimebot||",
+			"URL_Spider|URL_Spider_Pro/|R|",
+			"VadixBot|VadixBot||", "Valkyrie|Valkyrie/||",
+			"Verticrawl|Verticrawlbot||",
+			"Victoria|Victoria/||",
+			"vision-search|vision-search/||",
 			"void-bot|void-bot/||", "Voila|VoilaBot||",
 			"Voyager|.kosmix.com/html/crawler|R|",
-			"VWbot|VWbot_K/||", 
+			"VWbot|VWbot_K/||",
 			"W3C_Validator|W3C_Validator/|V|",
-			"w3m|w3m/|B|", "W3M2|W3M2/||", "w3mir|w3mir/||", 
-			"w@pSpider|w@pSpider/||", 
+			"w3m|w3m/|B|", "W3M2|W3M2/||", "w3mir|w3mir/||",
+			"w@pSpider|w@pSpider/||",
 			"WallPaper|CrawlPaper/||",
-			"WebCatcher|WebCatcher/||", 
-			"webCollage|webcollage/|R|", 
-			"webCollage|collage.cgi/|R|", 
+			"WebCatcher|WebCatcher/||",
+			"webCollage|webcollage/|R|",
+			"webCollage|collage.cgi/|R|",
 			"WebCopier|WebCopierv|R|",
-			"WebFetch|WebFetch|R|", "WebFetch|webfetch/|R|", 
-			"WebMirror|webmirror/||", 
-			"webLyzard|webLyzard||", "Weblog|wlm-||", 
-			"WebReaper|webreaper.net|R|", 
-			"WebVac|webvac/||", "webwalk|webwalk||", 
-			"WebWalker|WebWalker/||", 
-			"WebWatch|WebWatch||", 
-			"WebStolperer|WOLP/||", 
-			"WebThumb|WebThumb/|R|", 
-			"Wells Search II|WellsSearchII||", 
+			"WebFetch|WebFetch|R|", "WebFetch|webfetch/|R|",
+			"WebMirror|webmirror/||",
+			"webLyzard|webLyzard||", "Weblog|wlm-||",
+			"WebReaper|webreaper.net|R|",
+			"WebVac|webvac/||", "webwalk|webwalk||",
+			"WebWalker|WebWalker/||",
+			"WebWatch|WebWatch||",
+			"WebStolperer|WOLP/||",
+			"WebThumb|WebThumb/|R|",
+			"Wells Search II|WellsSearchII||",
 			"Wget|Wget/||",
-			"whatUseek|whatUseek_winona/||", 
+			"whatUseek|whatUseek_winona/||",
 			"whiteiexpres/Nutch|whiteiexpres/Nutch||",
-			"wikioblogs|wikioblogs||", 
-			"WikioFeedBot|WikioFeedBot||", 
+			"wikioblogs|wikioblogs||",
+			"WikioFeedBot|WikioFeedBot||",
 			"WikioPxyFeedBo|WikioPxyFeedBo||",
-			"Wild|Hazel's||", 
-			"Wired|wired-digital-newsbot/||", 
+			"Wild|Hazel's||",
+			"Wired|wired-digital-newsbot/||",
 			"Wordpress Pingback/Trackback|Wordpress/||",
-			"WWWC|WWWC/||", 
+			"WWWC|WWWC/||",
 			"XGET|XGET/||",
 			"Xenu Link Sleuth|XenuLinkSleuth/|L|",
 			"yacybot|yacybot||",
@@ -3292,7 +3292,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			"Yahoo!SearchMonkey|Yahoo!SearchMonkey|R|",
 			"YahooSeeker|YahooSeeker/|R|",
 			"Yandex|.yandex.com|R|",
-			"YoudaoBot|YoudaoBot|R|", 
+			"YoudaoBot|YoudaoBot|R|",
 			"Tailrank|spinn3r.com/robot|R|",
 			"Tailrank|tailrank.com/robot|R|",
 			"Yesup|yesup||",
@@ -3301,7 +3301,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 		foreach($lines as $line_num => $spider) {
 			list($nome,$key,$crawlertype)=explode("|",$spider);
 			if($key !=""){
-				if(strpos($uagent,$key)!==false || (strpos($hostname,$key)!==false && strlen($key)>6)){ 
+				if(strpos($uagent,$key)!==false || (strpos($hostname,$key)!==false && strlen($key)>6)){
 					$crawler=trim($nome);
 					if(!empty($crawlertype) && $crawlertype == "F") $feed=$crawler;
 					break 1;
@@ -3314,7 +3314,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 		$pcs=array();
 		//Assume first word in useragent is crawler name
 		if(preg_match('/^(\w+)[\/ \-\:_\.;]/',$ua,$pcs) > 0){
-			if(strlen($pcs[1])>1 && $pcs[1]!="Mozilla"){ 
+			if(strlen($pcs[1])>1 && $pcs[1]!="Mozilla"){
 				$crawler=$pcs[1];
 			}
 		}
@@ -3330,7 +3330,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 			$crawlertype="F";
 		}
 	}elseif(empty($feed) && (is_feed() || preg_match("/(feed|rss)/i",$ua)>0)){
-		if(!empty($crawler)){ 
+		if(!empty($crawler)){
 			$feed=$crawler;
 		}elseif(empty($browser)){
 			$crawler=__("Feed Reader","wassup");
@@ -3792,7 +3792,7 @@ wassup_get_screenres();
 
 /**
  * Output Wassup tag and javascripts in html document footer.
- * -call screen resolution javascript function for IE users 
+ * -call screen resolution javascript function for IE users
  * -put a timestamp in page footer as page caching test
  * -output any stored debug data
  */
@@ -3969,8 +3969,8 @@ function wassup_widget_init(){
 	}
 }
 
-/** 
- * TEMPLATE TAG: wassup_sidebar 
+/**
+ * TEMPLATE TAG: wassup_sidebar
  * Displays Wassup Current Visitors Online widget directly from "sidebar.php" template or from a page template
  * Usage: wassup_sidebar('1:before_widget_tag','2:after_widget_tag','3:before_title_tag','4:after_title_tag','5:title','6:list css-class','7:max-width in chars','8:top_searches_limit, 9:top_referrers_limit, 10:top_browsers_limit, 11:top_os_limit)
  */
@@ -4076,7 +4076,7 @@ function wassup_sidebar($before_widget='',$after_widget='',$before_title='',$aft
 //-------------------------------------------------
 //## Add essential hooks after functions have been defined
 //uninstall hook for complete plugin removal from WordPress
-register_activation_hook($wassupfile,'wassup_install'); 
+register_activation_hook($wassupfile,'wassup_install');
 if(function_exists('register_uninstall_hook')){
 	register_uninstall_hook($wassupfile,'wassup_uninstall');
 }
