@@ -1,12 +1,12 @@
 <?php
 /**
  * Class for in-depth user agent detection.
- * Updated: 2016-09-04
- * @version 0.9.2
+ * Updated: 2017-09-04
+ * @version 0.9.3
  * @author helened
  * Author URI: http://helenesit.com
  *
- * @copyright Copyright (c) 2009-2016 Helene Duncker
+ * @copyright Copyright (c) 2009-2018 Helene Duncker
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License
  *
  *  This program is distributed in the hope that it will be useful,
@@ -68,11 +68,11 @@ class UADetector {
 	//var $is_active_agent=false;	//private 
 
 /**
- * PHP4 compatible constructor
+ * constructor
  * @param 	string $ua (optional)
  * @return	object(16)
  */
-function uadetector($ua=""){
+function __construct($ua=""){
 	$this->is_browser=false;
 	$this->is_mobile=false;
 	$this->is_robot=false;
@@ -116,6 +116,8 @@ function uadetector($ua=""){
 	unset($this->_done_browsers,$this->_done_spiders,$this->is_active_agent);
 	return;
 } //end function __construct
+/** PHP4-compatible constructor */
+function uadetector($ua=""){$this->__construct($ua);}
 	
 /**
  * Check user agent against a known list of top user agents

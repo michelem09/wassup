@@ -3,15 +3,15 @@
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
 Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
-Version: 1.9.4.2
+Version: 1.9.4.3
 Author: Michele Marcucci, Helene Duncker
 Author URI: http://www.michelem.org/
 Text Domain: wassup
 Domain Path: /language
 License: GPL2
 
-Copyright (c) 2007-2016 Michele Marcucci
-Released under the GNU General Public License GPLv2 or later
+Copyright (c) 2007-2018 Michele Marcucci
+Released under the GNU General Public License GPLv2 or later 
 http://www.gnu.org/licenses/gpl-2.0.html
 
 Disclaimer:
@@ -52,8 +52,8 @@ function wassup_init($init_settings=false){
 
 	//define wassup globals & constants
 	if(!defined('WASSUPVERSION')){
-		define('WASSUPVERSION','1.9.4.2');
-		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__)));
+		define('WASSUPVERSION','1.9.4.3');
+		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
 	}
 	//turn on debugging (global)...Use cautiously! Will display errors from all plugins, not just WassUp
 	$wdebug_mode=false;
@@ -818,7 +818,7 @@ function wassupPrepend() {
 	if(empty($wassup_options) || !$wassup_options->is_recording_active()){	//do nothing
 		return;
 	}
-	//New in v1.9.4: don't track ajax requests from some plugins
+	//don't track ajax requests from some plugins @since v1.9.4
 	$active_plugins=maybe_serialize(get_option('active_plugins'));
 	//don't track Woocommerce ajax requests
 	if(isset($_REQUEST['wc-ajax']) && preg_match('#/woocommerce\.php#',$active_plugins)>0){
@@ -1721,9 +1721,9 @@ function wassupAppend($req_code=0) {
 			if($wassup_options->wassup_refspam == 1 && !empty($referrer) && !$is_admin_login && stristr($referrer,$wpurl)!=$referrer && stristr($referrer,$blogurl)!=$referrer && $referrer!=$blogurl.$urlRequested){
 				$refdomain=wassupURI::get_urldomain($referrer);
 				$sitedomain=wassupURI::get_urldomain();
-			//New in v1.9.4: skip referrer check if from own domain
+			//skip referrer check if from own domain @since v1.9.4
 			if($refdomain != $sitedomain || strpos($referrer,'=')!==false){
-				//New in v1.9.4: skip referrer check if on whitelist
+				//skip referrer check if on whitelist @since v1.9.4
 			if(empty($wassup_options->refspam_whitelist) || preg_match('#(?:^|\s*,)\s*('.preg_quote($refdomain).')\s*(?:,|$)#',$wassup_options->refspam_whitelist)==0){
 				//check if referrer is a previous comment spammer
 				if($spamComment->isRefSpam($referrer)>0){
@@ -2918,7 +2918,7 @@ function wGetSpider($agent="",$hostname="", $browser=""){
 	$pcs=array();
 	//identify obvious script injection bots
 	if(!empty($ua)){
-		//New in v1.9.3.1: check for more variations of <script> and <a> tags embedded in user agent string
+		//check for more variations of <script> and <a> tags embedded in user agent string @since v1.9.3.1
 		if(stristr($ua,'location.href')!==FALSE){
 			$crawlertype="H";
 			$crawler="Script Injection bot";

@@ -34,7 +34,7 @@ if(!function_exists('wassup_widget_clear_cache')) require_once(WASSUPDIR.'/widge
 if(!class_exists('Wassup_Widget')){
 /**
  * Base class for building Wassup aside widgets
- *  - sets common default options for all child widgets
+ *  - sets default options for all child widgets
  *  - adds wassup-widget.css to page header
  *  - generate a unique 'wassup_widget_id' for widget caching
  *
@@ -49,8 +49,8 @@ if(!class_exists('Wassup_Widget')){
  *      ::widget - displays the widget.
  */
 class Wassup_Widget extends WP_Widget{
-	/** __construct */
-	function wassup_widget($id="wassup_widget",$name="Wassup Widget",$widget_opts=array(),$control_opts=array()){
+	/** constructor */
+	public function __construct($id="wassup_widget",$name="Wassup Widget",$widget_opts=array(),$control_opts=array()){
 		global $wp_version;
 		$default_widget_opts=array(
 			'widget_description'=>"WassUp ".__("base widget","wassup"),
@@ -80,7 +80,7 @@ class Wassup_Widget extends WP_Widget{
 		$this->wassup_add_css();
 	}
 	/** Widget control form - for widget options */
-	function form($old_instance){
+	public function form($old_instance){
 		$defaults=array( 
 			'title'=>"",
 			'chars'=>0,
@@ -112,7 +112,7 @@ class Wassup_Widget extends WP_Widget{
 	} //end form
 
 	/** saves widget options */
-	function update($new_instance=array(),$old_instance=array()){
+	public function update($new_instance=array(),$old_instance=array()){
 		global $wassup_options;
 		$instance=false;
 		$instance['title']=(isset($new_instance['title'])?$wassup_options->cleanFormText($new_instance['title']):"");
@@ -125,7 +125,7 @@ class Wassup_Widget extends WP_Widget{
 	} //end update
 
 	/** displays widget content on web site */
-	function widget($wargs,$instance=array()){
+	public function widget($wargs,$instance=array()){
 		global $wassup_options,$wdebug_mode;
 		$widget_opt=$wargs;
 		if(empty($instance['wassup_widget_id'])) $instance=$this->wassup_get_widget_id($instance);
@@ -151,7 +151,7 @@ class Wassup_Widget extends WP_Widget{
 
 	/* Do NOT Override the methods below */
 	/** adds head style tag for widget/widget-form display */
-	function wassup_add_css(){
+	public function wassup_add_css(){
 		//widget css - one style tag for multiple widgets
 		if(!is_admin()){
 			//styles for widget display
@@ -167,7 +167,7 @@ class Wassup_Widget extends WP_Widget{
 		}
 	}
 	/** create a unique id for caching Wassup widgets html */
-	function wassup_get_widget_id($instance){
+	public function wassup_get_widget_id($instance){
 		global $wassup_options;
 		$wassup_widget_id=$this->option_name."-".$this->number;
 		//add blog_id for unique ids in network activation
@@ -176,7 +176,7 @@ class Wassup_Widget extends WP_Widget{
 		return $instance;
 	}
 	/** update for new widget settings, add new default values */
-	function wassup_parse_args($old_instance,$defaults){
+	public function wassup_parse_args($old_instance,$defaults){
 		$all_defaults=wp_parse_args($defaults,$this->wassup_default_opts);
 		if(empty($old_instance['wassup_widget_id'])){
 			$instance=$this->wassup_get_widget_id($all_defaults);
@@ -194,19 +194,19 @@ class Wassup_Widget extends WP_Widget{
  * - Show counts of visitors currently browsing your site.
  */
 class wassup_onlineWidget extends Wassup_Widget{
-	/** PHP4-compatible __construct */
-	function wassup_onlinewidget(){
+	/** constructor */
+	public function __construct(){
 		$widget_id="wassup_online";
 		$widget_name='WassUp '.__("Online","wassup");
 		$widget_description= __("Show counts of your site's visitors who are currently online.","wassup");
 		$widget_opts=array('description'=>$widget_description,'classname'=>"wassup-widget");
 		$control_opts=array('description'=>$widget_description);
 		//instantiate parent
-		parent::wassup_widget($widget_id,$widget_name,$widget_opts,$control_opts);
+		parent::__construct($widget_id,$widget_name,$widget_opts,$control_opts);
 	} //end __construct
 
 	/** Widget control form - for widget options */
-	function form($old_instance=array()){
+	public function form($old_instance=array()){
 		$defaults=array( 
 			'online_title'=>__("Online Now","wassup"),
 			'online_total'=>1,
@@ -264,7 +264,7 @@ class wassup_onlineWidget extends Wassup_Widget{
 	} //end form
 
 	/** saves widget options */
-	function update($new_instance=array(),$old_instance=array()){
+	public function update($new_instance=array(),$old_instance=array()){
 		global $wassup_options;
 		$instance=false;
 		if(!empty($new_instance['wassup_widget_id'])){
@@ -286,7 +286,7 @@ class wassup_onlineWidget extends Wassup_Widget{
 	} //end update
 
 	/** displays widget content on web site */
-	function widget($wargs,$instance=array()){
+	public function widget($wargs,$instance=array()){
 		global $wp_version,$wassup_options,$wdebug_mode;
 		$widget_opt=$wargs;
 		if(empty($instance['wassup_widget_id'])) $instance=$this->wassup_get_widget_id($instance);
@@ -362,8 +362,8 @@ class wassup_onlineWidget extends Wassup_Widget{
  * - Lists top stats or trending stats on your site, depending on statistics timeframe used.
  */
 class wassup_topstatsWidget extends Wassup_Widget{
-	/** PHP4-compatible __construct */
-	function wassup_topstatswidget(){
+	/** constructor */
+	public function __construct(){
 		global $wp_version;
 		$widget_id="wassup_topstats";
 		$widget_name='WassUp '.__("Top Stats","wassup");
@@ -371,11 +371,11 @@ class wassup_topstatsWidget extends Wassup_Widget{
 		$widget_opts=array('description'=>$widget_description);
 		$control_opts=array('height'=>700,'description'=>$widget_description);
 		//instantiate parent
-		parent::wassup_widget($widget_id,$widget_name,$widget_opts,$control_opts);	//parent::__construct()
+		parent::__construct($widget_id,$widget_name,$widget_opts,$control_opts);
 	} //end __construct
 
 	/** Widget control form - for widget options */
-	function form($old_instance=array()){
+	public function form($old_instance=array()){
 		global $wp_version,$wassup_options;
 		$defaults=array( 
 			'title'=>"",
@@ -477,7 +477,7 @@ class wassup_topstatsWidget extends Wassup_Widget{
 	} //end form
 
 	/** saves widget options */
-	function update($new_instance=array(),$old_instance=array()){
+	public function update($new_instance=array(),$old_instance=array()){
 		global $wp_version,$wassup_options;
 		$instance=false;
 		if(!empty($new_instance['wassup_widget_id'])){
@@ -512,7 +512,7 @@ class wassup_topstatsWidget extends Wassup_Widget{
 	} //end update
 
 	/** displays widget content on web site */
-	function widget($wargs,$instance=array()){
+	public function widget($wargs,$instance=array()){
 		global $wp_version,$wassup_options,$wdebug_mode;
 		$widget_opt=$wargs;
 		if(empty($instance['wassup_widget_id'])) $instance=$this->wassup_get_widget_id($instance);

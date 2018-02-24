@@ -42,8 +42,7 @@ class wassup_pagination{
 	var $urlF;
 	var $calculate;
 	var $pagination;
-	//PHP4 constructor
-	function wassup_pagination(){
+	function __construct(){
 		$this->total_pages=null;
 		$this->limit=null;
 		$this->target="";
@@ -61,6 +60,8 @@ class wassup_pagination{
 		$this->calculate=false;
 		$this->pagination="";
 	}
+	//PHP4 constructor
+	function wassup_pagination(){$this->__construct();}
 	function items($value){$this->total_pages=intval($value);}
 	function limit($value){$this->limit=intval($value);}
 	function target($value){$this->target=$value;}
@@ -182,11 +183,13 @@ class wDetector{
 	var $os_version;
 	var $os;
 	var $useragent;
-	function wdetector($ip="",$ua=""){
+	function __construct($ip="",$ua=""){
 		$this->useragent=$ua;
 		$this->check_os($ua);
 		$this->check_browser($ua);
 	}
+	//PHP4 constructor
+	function wdetector($ip="",$ua=""){$this->__construct($ip,$ua);}
 	function check_os($useragent){
 		$os=""; 
 		$version="";
@@ -1490,7 +1493,7 @@ class WassupItems {
         var $Last;
 	var $WpUrl;
 	var $totrecords=0;
-	function wassupitems($table_name,$date_from,$date_to,$whereis=null,$limit=null) {
+	function __construct($table_name,$date_from,$date_to,$whereis=null,$limit=null) {
 		global $wpdb,$wassup_options,$wdebug_mode;
 		if (empty($wassup_options->wassup_table)) $wassup_options = new wassupOptions;
 		$wassup_table = $wassup_options->wassup_table;
@@ -1582,10 +1585,14 @@ class WassupItems {
 			echo "\n -->";
 		}
 	}
+	// PHP4 constructor 
+	function wassupitems($table_name,$date_from,$date_to,$whereis=null,$limit=null) {
+		$this->__construct($table_name,$date_from,$date_to,$whereis,$limit);
+	}
 	// Function to show main query and count items
 	function calc_tot($Type,$Search="",$specific_where_clause=null,$distinct_type=null){
 		global $wpdb,$current_user,$wdebug_mode;
-		//get/set user-specific wassup_settings
+		// get/set user-specific wassup_settings
 		if(!is_object($current_user) || empty($current_user->ID)) wp_get_current_user();
 		$wassup_user_settings=get_user_option('_wassup_settings',$current_user->ID);
 		$this->ItemsType=$Type;
@@ -1607,7 +1614,7 @@ class WassupItems {
 		switch ($Type) {
 		// This is the MAIN query to show the chronology
 		case "main":
-			//New in v1.9.4: use temporary table to help speed up retrieval of large datasets
+			//use temporary table to help speed up retrieval of large datasets @since v1.9.4
 			$bigdata=false;
 			$totrecords=$wpdb->get_var("SELECT COUNT(*) FROM $this->tableName");
 			if($totrecords >50000) $bigdata=true;
@@ -1706,7 +1713,7 @@ class WassupItems {
 			if(!empty($wip)&& $Search==$wip){
 				//for IP-only search
 				$ss=sprintf(" AND `ip`='%s'",$searchParam);
-			//New in v1.9.4: separate url searches
+			//separate url searches @since v1.9.4
 			}elseif(strpos($Search,'/')!==FALSE){
 				$ss = sprintf(" AND (`urlrequested` LIKE '%%%s%%' OR `agent` LIKE '%%%s%%' OR `referrer` LIKE '%%%s%%')",
 				$searchParam,

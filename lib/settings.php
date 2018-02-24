@@ -164,7 +164,14 @@ function wassup_optionsView($tab=0) {
 		<p class="noindent-opt"><?php echo __("Multisite settings that applies to all subsites in the network.","wassup");?></p>
 		<input type="hidden" name="_network_settings" value="1"/>
 		<h3><?php _e("Network Statistics Recording","wassup");?></h3>
-		<p class="description"><?php echo __("Enables Wassup visitor tracking on all subsites in network. Do NOT disable unless upgrading plugin.","wassup");?></p>
+		<p class="description"><?php 
+		if($wassup_options->network_activated_plugin()){
+			echo __("Enables visitor tracking on all subsites in network.","wassup");
+		}else{
+			echo __("Enables visitor tracking on the network subsites where plugin is activated.","wassup");
+		}
+		echo " ".__("Do NOT disable unless upgrading plugin.","wassup");
+		?></p>
 		<p><input type="checkbox" name="network_active" value="1" <?php if(!empty($wassup_network_settings['wassup_active'])) echo $checked;?> /> <strong><?php _e('Enable Statistics Recording for network.','wassup');?></strong><br/>
 		<span class="opt-note"><?php echo " ".__("Can be overridden on individual subsites to disable statistics recording.","wassup");?></span><?php
 		if(!empty($wassup_network_settings['wassup_table'])){?><br/>
