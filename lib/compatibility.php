@@ -81,6 +81,9 @@ function wassup_load_compat_modules(){
 			if(!class_exists('wassupOptions')){
 				include_once($wassup_compatlib.'/compat_wassup.class.php');
 			}
+			if(!class_exists('Wassup_Widget')){
+				include_once($wassup_compatlib.'/compat_widget.php');
+			}
 		}
 	}
 	return $is_compatible;

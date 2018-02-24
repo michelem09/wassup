@@ -697,7 +697,7 @@ function wassup_updateTable($wtable=""){
 	} //end if 1.9
 
 	//For all upgrades: 
-	// New in v1.9.4: get a new api key
+	// get a new api key @since v1.9.4
 	if(empty($wassup_options->wassup_googlemaps_key)){
 		if(!empty($low_priority)){
 			wp_schedule_single_event(time()+600,'wassup_scheduled_api_upg');
