@@ -1,12 +1,12 @@
 === WassUp Real Time Analytics ===
-Contributors: michelem, helened
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8
-Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web
-Requires at least: 4.0
-Tested up to: 4.8
-Stable tag: 1.9.4.2
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors: michelem, helened  
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8  
+Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
+Requires at least: 4.0  
+Tested up to: 4.8 
+Stable tag: 1.9.4.3 
+License: GPLv2 or later  
+License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
 Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more.
 
@@ -110,7 +110,7 @@ From the Wordpress widgets panel, drag the "WassUp Online" widget or the "Wassup
 Check the box for "Display a GEO IP Map in spy visitors view" under WassUp >>Options >>[General Setup] and save, then navigate to WassUp >>SPY Visitors panel to see the map.
 
 = The map has vanished and I get a message like: "Oops, something went wrong" or "Google has disabled use of the Maps API for this application". How do I fix this?" =
-Try upgrading to the latest version of Wassup, or go to Wassup-Options and click the Reset-to-Default button if you have already upgraded, or sign up for your own Google!Maps API key at https://developers.google.com/maps/documentation/javascript/get-api-key#key then enter the key under \"Spy Visitors settings\" in Wassup >>Options >>General Settings tab.
+Try upgrading to the latest version of Wassup, or go to Wassup-Options and click the Reset-to-Default button if you have already upgraded, or sign up for your own Google!Maps API key from [Google's API console](https://developers.google.com/maps/documentation/javascript/get-api-key#key) then enter the key in the indicated field under Wassup >>Options >>General Settings tab.
 
 = How do I exclude a visitor from being recorded? =
 Navigate to WassUp >>Options >>[Filters & Exclusions] tab and enter a visitor's username, IP address, or hostname into the appropriate field and save.
@@ -206,10 +206,20 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache.
 
 == Upgrade Notice ==
-= 1.9.4 =
-* Important feature & bugfix upgrade. DO NOT upgrade when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
+= 1.9.4.3 =
+* Important compatibility upgrade. DO NOT upgrade when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
 
 == Changelog ==
+= v1.9.4.3 =
+* merged PHP7 compatibility updates (from v1.9.4.1) into master
+* minor text changes
+
+= v1.9.4.2 =
+* Important security bugfix. Thanks to Dimopoulos Elias for finding this bug.
+
+= v1.9.4.1 =
+* updated classes for PHP7-compatible class constructors (not released)
+
 = v1.9.4 =
 = Important feature improvement & bugfix upgrade =
 * new option to whitelist referrers that are mislabeled as spam in WassUp (ex: Rx or sexy words in domain name)
@@ -259,7 +269,7 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 
 = v1.9.1 =
 = Critical security, compatibility, and bugfix upgrade =
-* patched security loopholes (xss vulnerability) in the 'Top stats' widget and in `wassupURI::add_siteurl` method (in Visitor Details/Online)
+* patched security loopholes (xss vulnerability) in the 'Top stats' widget and in `wassupURI::add_siteurl` method
 * improved security against xss attacks on interface and widgets.
 * improved compliance with the latest Wordpress.org plugin repository guidelines.
 * improved browser/os detection.
@@ -358,4 +368,3 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * [Jquery](http://www.jquery.com) for the amazing Ajax framework
 * [FAMFAMFAM](http://www.famfamfam.com/) for the flags icons
 * Thanks to [@AlexandreFiori](http://twitter.com/alexandrefiori) for access to his GeoIP API at [freegeoip.net](http://freegeoip.net)
-* A big thanks to [Helene D.](http://helenesit.com/) for her help to improve WassUp!

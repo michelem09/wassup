@@ -63,7 +63,7 @@ class wassupOptions {
 	var $wassup_refspam = "1";
 	var $wassup_attack = "1";
 	var $wassup_hack = "1";	
-	var $refspam_whitelist="";	//new in v1.9.4: for incorrectly labeled referrer spam
+	var $refspam_whitelist="";	//for incorrectly labeled referrer spam @since v1.9.4
 
 	/* table/file management settings */
 	var $wassup_table;
@@ -92,16 +92,16 @@ class wassupOptions {
 	var $wassup_upgraded = 0;	//upgrade timestamp @since v1.9
 
 	/**
-	 * PHP4 constructor.
-	 *
+	 * constructor.
 	 * optional argument to set default values for new/empty class vars @since v1.9
 	 * @param boolean $add_defaults 
-	 * @return void
-	 *
 	 */
-	public function wassupoptions($add_defaults=false){
+	public function __construct($add_defaults=false){
 		if($add_defaults)$this->_initSettings();
 		else $this->loadSettings();
+	}
+	public function wassupoptions($add_defaults=false){
+        	self::__construct($add_defaults);
 	}
 	/** loads current settings/initializes empty class vars. */
 	private function _initSettings(){
@@ -639,7 +639,7 @@ class wassupOptions {
 		else $text=strip_tags(html_entity_decode(wp_kses($input,array())));
 		//only alphanumeric chars allowed with few exceptions
 		//since v1.9.3 allow '@' char for email searches
-		//v1.9.4 bugfix: allow '/?&=' chars for url searches
+		//since v1.9.4 allow '/?&=' chars for url searches
 		$cleantext=preg_replace('#([^0-9a-z\-_\.,\:\*\#/&\?=@\'" ]+)#i','',$text);
 		return $cleantext;
 	}
@@ -2088,8 +2088,8 @@ class wassupDb{
 				$table_create=$result[0][1];
 				$sql_header="#\n# " . sprintf(__('Table structure of table %s','wassup'),esc_attr($table))."\n#\n";
 				$sql_header .= preg_replace(array('/^CREATE\sTABLE\s(IF\sNOT\sEXISTS\s)?/i', '/AUTO_INCREMENT\=\d+\s/i'),array('CREATE TABLE IF NOT EXISTS ',''),$table_create).' ;';
-				$sql_header .= "\n#\n# ".sprintf(__('Data contents of table %s','wassup'),esc_attr($table))."\n#\n";
 			}
+			$sql_header .= "\n#\n# ".sprintf(__('Data contents of table %s','wassup'),esc_attr($table))."\n#\n";
 		}
 		//set starting rec id of export query
 		if(empty($start_id) || !is_numeric($start_id)){
@@ -2163,7 +2163,7 @@ class wassupDb{
 					//write sql header
 					fwrite($output,$sql_header);
 					$i=0;
-					//field list for sql-insert 
+					//make a field list for sql-insert statement in output below
 					$sql_fields="INSERT INTO `".esc_attr($table).'` (';
 					foreach($fields AS $col){
 						if(empty($wassup_options->export_omit_recid) || $col != 'id'){

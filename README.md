@@ -3,8 +3,8 @@ Contributors: michelem, helened
 Donate link:  [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8)   
 Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
 Requires at least: WordPress 2.2  
-Tested up to: 4.8
-Stable tag: 1.9.4.2
+Tested up to: 4.8 
+Stable tag: 1.9.4.3 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -154,14 +154,21 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache.
 
 ## Upgrade Notice
-### 1.9.4.2: Security bugfix
-* Important security bugfix.
+### 1.9.4.3
+* Important PHP7 compatibility upgrade.
 * DO NOT UPGRADE when your site busy!
 * Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
 
 ## Changelog
-### 1.9.4.1
-* Important feature & bugfix upgrade.
+### v1.9.4.3 
+* merged PHP7 compatibility update (from v1.9.4.1) into master
+* minor text changes
+
+### v1.9.4.2 
+* Important security bugfix. Thanks to Dimopoulos Elias for finding this bug.
+
+### v1.9.4.1 
+* updated classes for PHP7-compatible class constructors (not released)
 
 ### v1.9.4: Important feature & bugfix upgrade
 * new option to whitelist referrers that are mislabeled as spam in WassUp (ex: Rx or sexy words in domain name)
@@ -177,7 +184,7 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * fixed a bug in "stringShortener" function that caused empty results
 * fixed a bug in Top Stats widget that caused blank lines to display
 * fixed some Top Stats widget translations
-* removed Google!maps API key from Wassup source due to Google TOS limitations
+* removed Google!maps API key from Wassup source due to Google's TOS limitations
 * miscellaneous minor bugfixes
 
 ### v1.9.3.1: Important bugfix upgrade
@@ -303,4 +310,3 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * [Jquery](http://www.jquery.com) for the amazing Ajax framework
 * [FAMFAMFAM](http://www.famfamfam.com/) for the flags icons
 * Thanks to [@AlexandreFiori](http://twitter.com/alexandrefiori) for access to his GeoIP API at [freegeoip.net](http://freegeoip.net)
-* A big thanks to [Helene D.](http://helenesit.com/) for her help to improve WassUp!

@@ -88,11 +88,15 @@ class wassup_AkismetHttpClient extends wassup_AkismetObject {
 	var $errors=array();
 	
 	/** Constructor */
-	function wassup_AkismetHttpClient($host,$blogUrl,$apiKey,$port=80){
+	function __construct($host,$blogUrl,$apiKey,$port=80){
 		$this->host=$host;
 		$this->port=$port;
 		$this->blogUrl=$blogUrl;
 		$this->apiKey=$apiKey;
+	}
+	/** PHP4 constructor for backward compatibility */
+	function wassup_AkismetHttpClient($host,$blogUrl,$apiKey,$port=80){
+		$this->__construct($host,$blogUrl,$apiKey,$port);
 	}
 	/** Use the connection active in $con to get a response from the server and return that response */
 	function getResponse($request,$path,$type="post",$responseLength=1160){
@@ -173,7 +177,7 @@ class wassup_Akismet extends wassup_AkismetObject {
 	 * @param  String[] $comment	- A formatted comment array to be examined by the Akismet service
 	 * @return Akismet
 	 */
-	function wassup_Akismet($blogUrl,$apiKey,$comment=array()) {
+	function __construct($blogUrl,$apiKey,$comment=array()) {
 		$this->blogUrl=$blogUrl;
 		$this->apiKey =$apiKey;
 		$this->setComment($comment);
@@ -186,6 +190,10 @@ class wassup_Akismet extends wassup_AkismetObject {
 		if(!$this->_isValidApiKey($apiKey)){
 			$this->setError(WASSUP_AKISMET_INVALID_KEY,__("Your Akismet API key is not valid.","wassup"));
 		}
+	}
+	/** PHP4 constructor for backward compatibility */
+	function wassup_Akismet($blogUrl,$apiKey,$comment=array()) {
+		$this->__construct($blogUrl,$apiKey,$comment);
 	}
 	/** Query Akismet server to check if comment is spam or not */
 	function isSpam() {

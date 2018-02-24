@@ -259,7 +259,7 @@ function wassup_embeded_scripts($wassuppage="") {
 <script type="text/javascript">
 //<![CDATA[
 <?php
-	//New in v1.9.4: ajax script to check download status of dynamically generated export file
+	//ajax script to check download status of dynamically generated export file @since v1.9.4
 ?>
 var exportID="";
 var exportTimerCount=0;
@@ -324,7 +324,7 @@ jQuery(document).ready(function($) {
 	$('.default-opt').click(function(){$(this).css("background-color","#d71");});
 	$("a#BCdonate").toggle(function(){$('div#bc_placeholder').slideDown("slow");},function(){$('div#bc_placeholder').slideUp("slow");return false;});
 <?php
-	//new in v1.9.4: dialog and javascripts for export action
+	//dialog and javascripts for export action @since v1.9.4
 ?>
 	$('#wassup-dialog').dialog({
 		modal:true,
@@ -863,7 +863,7 @@ function WassUp() {
 			$admin_message = __("Wassup options reset successfully","wassup")."." ;
 			$wassup_user_settings=$wassup_options->resetUserSettings();
 			if($wassup_options->is_recording_active()) wassup_cron_startup(); //restart wp-cron
-			//New in v1.9.4: reset-to-default updates Wassup's map apikey
+			//reset-to-default updates Wassup's map apikey @since v1.9.4
 			if(empty($wassup_options->wassup_googlemaps_key)){
 				$key=$wassup_options->lookup_apikey();
 			}
@@ -1001,7 +1001,7 @@ function WassUp() {
 		</small></p>
 	</div>	<!-- end wassup-wrap --><?php
 
-	//New in v1.9.4: start the refresh timer at end of page render
+	//start the refresh timer at end of page render @since v1.9.4
 	if($wassuppage == "wassup"){
 		$wrefresh = (int)$wassup_options->wassup_refresh;
 		if($wrefresh >0){
@@ -1656,7 +1656,7 @@ function wassup_page_contents($args=array()){
 		}?> <span class="separator">|</span>
 		<?php
 		//Top Stats window/popup params
-		//v1.9.4 bugfix: topstats from_date cannot be "0"
+		//topstats from_date cannot be "0"
 		if($from_date==0 && $wlast==0){
 			$from_date=$wpdb->get_var(sprintf("SELECT MIN(`timestamp`) FROM `$wassup_table` WHERE `timestamp` < '%d'",$to_date));
 		}
