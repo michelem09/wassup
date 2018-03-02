@@ -32,7 +32,7 @@ if(version_compare($GLOBALS['wp_version'],'3.1','>')){
 	return;
 }
 //define Wordpress 2.3 - 2.6 functions used in Wassup
-if(version_compare($GLOBALS['wp_version'],'2.6','<')){
+if(version_compare($GLOBALS['wp_version'],'2.8','<')){
 if(!function_exists('wp_safe_redirect')){ //added in Wordpress 2.3
 	//just use wp_redirect in old Wordpress versions
 	function wp_safe_redirect($location,$status="302"){
@@ -96,6 +96,16 @@ if(!function_exists('has_action')){	//added in Wordpress 2.5
 		return has_filter($tag,$function_to_check);
 	}
 }
+if(!function_exists('add_thickbox')){	//added in Wordpress 2.5
+	function add_thickbox(){
+		$compatlib=dirname(preg_replace('/\\\\/','/',__FILE__));
+		//register Wassup's thickbox.js
+		if(file_exists($compatlib.'/js/thickbox/thickbox.js')){
+			wp_enqueue_script('thickbox',$compatlib.'/js/thickbox/thickbox.js',array('jquery'),'3.1');
+		}
+		//thickbox style handled in 'compat_functions.php' module
+	}
+}
 if(!function_exists('wp_enqueue_style')){	//added in Wordpress 2.6
 	function wp_enqueue_style($name,$file="",$dep=array(),$vers=0){
 		//do nothing...handled in 'compat_functions.php' module
@@ -145,10 +155,10 @@ if(!function_exists('site_url')){	//added in Wordpress 2.6
 		return $url;
 	}
 }
-} //end if Wordpress < 2.6
+} //end if Wordpress < 2.8
 //-------------------------------------------------
-//define Wordpress 2.8+ functions used in Wassup
-if(version_compare($GLOBALS['wp_version'],'2.8','<')){
+//define Wordpress 2.8 - 3.0 functions used in Wassup
+if(version_compare($GLOBALS['wp_version'],'3.0','<')){
 if(!function_exists('get_user_by')){	//added in Wordpress 2.8
 	function get_user_by($ufield,$uvalue){
 		$user=false;
@@ -181,10 +191,6 @@ if(!function_exists('esc_attr')){	//added in Wordpress 2.8
 		else return mysqli_real_escape_string();
 	}
 }
-} //end if Wordpress < 2.8
-//-------------------------------------------------
-//define Wordpress 3.0 functions used in Wassup
-if(version_compare($GLOBALS['wp_version'],'3.0','<')){
 if(!function_exists('delete_user_option')){	//added in Wordpress 3.0
 	function delete_user_option($user_id,$option_name,$option_value=''){
 		if(function_exists('delete_user_meta')) return delete_user_meta($user_id,$option_name);

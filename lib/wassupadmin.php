@@ -38,7 +38,7 @@ unset($wfile);	//to free memory
  * @since v1.9
  */
 function wassup_admin_load(){
-	global $current_user, $wassup_options;
+	global $current_user,$wp_version,$wassup_options;
 	if(!defined('WASSUPURL')){
 		if(!wassup_init()) return;	//nothing to do
 	}
@@ -58,9 +58,6 @@ function wassup_admin_load(){
 		//show user-specific messages in all admin panels
 		add_action('admin_notices',array(&$wassup_options,'showMessage'));
 	}
-	//for embed of javascripts and css tags in admin head
-	add_action('admin_head','wassup_embeded_scripts',11);
-	add_action('admin_head','wassup_add_css',11);
 	//for admin menu and dashboard submenu
 	if($wassup_options->network_activated_plugin() && is_network_admin()){
 		add_action('network_admin_menu','wassup_add_pages');
@@ -79,6 +76,8 @@ function wassup_admin_load(){
 		}
 	}
 	if(!empty($_GET['page']) && stristr($_GET['page'],'wassup')!==FALSE){
+		add_action('admin_head','wassup_embeded_scripts',11);
+		add_action('admin_head','wassup_add_css',11);
 		//initialize user settings for Wassup, as needed
 		if(empty($wassup_user_settings)) {
 			$wassup_user_settings=$wassup_options->defaultSettings('wassup_user_settings');
@@ -86,6 +85,9 @@ function wassup_admin_load(){
 		}
 		//for display of Wassup page contents...only add-on modules need do this
 		//add_action('wassup_page_content','wassup_page_contents',10,1);
+	}elseif(version_compare($wp_version,'3.8','<') && strpos($_SERVER['REQUEST_URI'],'/plugin-install.php?')===false && strpos($_SERVER['REQUEST_URI'],'/plugins.php')===false){
+		//ignore css for plugins.php
+		add_action('admin_head','wassup_add_css',11);
 	}
 } //end wassup_admin_load
 
@@ -409,11 +411,7 @@ function showMarkerinfo(mmap,mlat,mlon,marker,markerwin){
 //]]>
 </script><?php
 		echo "\n";
-	}else{ //end if wassuppage == "wassup-spia"
-	}
-?>
-<script type='text/javascript'>var tb_pathToImage="<?php echo WASSUPURL.'/js/thickbox/loadingAnimation.gif';?>";</script>
-<?php
+	} //end if wassuppage == "wassup-spia"
 	} //end if _GET['page']
 } //end wassup_embeded_scripts
 
@@ -440,11 +438,7 @@ function wassup_add_css() {
 				echo '<link href="'.WASSUPURL.'/css/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />'."\n";
 			}
 		}
-		//always use Wassup's thickbox.css in Wassup panels
-		if($wassuppage=="wassup" || $wassuppage=="wassup-online"){?>
-<link rel="stylesheet" href="<?php echo WASSUPURL.'/js/thickbox/thickbox.css';?>" type="text/css" /><?php
-			echo "\n";
-		}
+		//bugfix in v1.9.4.4: removed Wassup's thickbox css due to conflict in Wordpress admin panel
 		// Override some Wordpress css and Wassup default css settings on Wassup pages
 ?>
 <style type="text/css">
@@ -676,10 +670,11 @@ function WassUp() {
 	$starttime=microtime_float();	//start script runtime
 	//extend php script timeout..to 3 minutes
 	$stimeout=ini_get('max_execution_time');
-	if(is_numeric($stimeout) && $stimeout>0 && $stimeout<180){
+	if(!is_numeric($stimeout) || ($stimeout>0 && $stimeout<180)){
+		//set_time_limit is disabled on some hosts
 		$disabled_funcs=ini_get('disable_functions');
-		if((empty($disabled_funcs) || strpos($disabled_funcs,'set_time_limit')===false) && !ini_get('safe_mode')){
-			@set_time_limit(180+1);
+		if((empty($disabled_funcs) || strpos($disabled_funcs,'set_time_limit')===false)){
+			$result=@set_time_limit(180+1);
 		}
 	}
 	$wassupfolder=basename(WASSUPDIR);
@@ -1042,11 +1037,13 @@ function wassup_page_contents($args=array()){
 	//extend php script timeout length for large datasets
 	$stimeout=ini_get("max_execution_time");
 	$can_set_timelimit=true;
-	if(is_numeric($stimeout) && $stimeout>0 && $stimeout <180){
+	if(!is_numeric($stimeout) || ($stimeout>0 && $stimeout <180)){
+		//set_time_limit is disabled on some hosts
 		$disabled_funcs=ini_get('disable_functions');
-		if((empty($disabled_funcs) || strpos($disabled_funcs,'set_time_limit')===false) && !ini_get('safe_mode')){
+		if((empty($disabled_funcs) || strpos($disabled_funcs,'set_time_limit')===false)){
 			$result=@set_time_limit(180);
-			if($result) $stimeout=180;
+			if($result !==false) $stimeout=180;
+			else $can_set_timelimit=false;
 		}else{
 			$can_set_timelimit=false;
 		}
@@ -1742,7 +1739,7 @@ function wassup_page_contents($args=array()){
 	foreach($wmain as $rk){
 		//monitor for script timeout limit and extend, if needed @since v1.9
 		$time_passed=time() - $stimer_start;
-		if($time_passed > ($stimeout-10)){
+		if($time_passed > ($stimeout - 10)){
 			if($rkcount>0){
 				//report is hung, so terminate here
 				$data_error=__("Records display interrupted.","wassup")." - script timeout/partial data.";
@@ -2040,7 +2037,7 @@ function wassup_page_contents($args=array()){
 		$html='<p style="padding-top:10px;">'.__("Too few records to print chart","wassup").'...</p>';
 		if ($wpagestot > 12) {
 			//extend script timeout for chart
-			if($can_set_timelimit && (time()-$stimer_start)>$stimeout-30){
+			if($can_set_timelimit && (time() - $stimer_start)>$stimeout-30){
 				@set_time_limit($stimeout);
 				$stimer_start=time();
 			}

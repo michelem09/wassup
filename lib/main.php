@@ -356,11 +356,11 @@ function stringShortener($input,$max=0,$sep='(...)',$exceedFromEnd=0){
 	//check for valid input
 	$strng=rtrim($input);
 	if(empty($strng) || !is_string($input)){
-		return esc_attr($input);	//v1.9.4 bugfix
+		return esc_attr($input); //v1.9.4 bugfix
 	}
 	//temporarily replace all %-hex chars with literals and trim the input string of whitespaces...re-encoded after truncation
 	$instring=rtrim(stripslashes(rawurldecode(html_entity_decode(wassupURI::disarm_attack($input))))," +\t");
-	if(empty($instring)) $instring=$input;	//v1.9.4 bugfix
+	if(empty($instring)) $instring=$input;
 	$inputlen=strlen($instring);
 	$max=(is_numeric($max))?(integer)$max:$inputlen;
 	if($max <$inputlen){
@@ -384,12 +384,12 @@ function stringShortener($input,$max=0,$sep='(...)',$exceedFromEnd=0){
 		if(strlen($outstring) >= $inputlen){  //Because "Fir(...)fox" is longer than "Firefox"
 			$outstring=$instring;
 		}
-		// uses 'esc_attr' and 'esc_html' to make malicious code harmless when echoed to the screen
-		$outstring=esc_attr(esc_html($outstring,ENT_QUOTES));
+		//try neutralize malicious code
+		$outstring=esc_html($outstring,ENT_QUOTES);
 	} else {
-		$outstring=esc_attr(esc_html($instring,ENT_QUOTES));
+		$outstring=esc_html($instring,ENT_QUOTES);
 	}
-	return $outstring;
+	return wassupURI::disarm_attack($outstring);
 } //end function stringShortener
 
 /**
@@ -451,8 +451,8 @@ function wassup_rawdataView($args=array()){
 		if(!empty($rk->url_wpid) && is_numeric($rk->url_wpid)){
 			$result=$wpdb->get_var(sprintf("SELECT `post_title` from {$wpdb->prefix}posts WHERE `ID`=%d",(int)$rk->url_wpid));
 			if(empty($result) || is_wp_error($result)) $p_title=" ** ". __("none or deleted post","wassup")." ** ";
-			else $p_title=$result;
-			if(!empty($p_title)) echo '</span><nobr> &nbsp; &nbsp; '.__("Title","wassup").': </nobr><span class="raw">'.esc_attr($p_title);
+			else $p_title=get_the_title($rk->url_wpid);  //let Wordpress escape the title
+			if(!empty($p_title)) echo '</span><nobr> &nbsp; &nbsp; '.__("Title","wassup").': </nobr><span class="raw">'.$p_title;
 		}?></span></li>
 		<li><span class="field"><?php echo __("Referrer","wassup");?>:</span><span class="raw"><?php echo wassupURI::cleanURL($rk->referrer);?></span></li><?php
 		if(!empty($rk->search) || !empty($rk->searchengine) || !empty($rk->searchpage)){
@@ -1068,7 +1068,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 		<li class="wassup-nowrap"><nobr><?php
 			if ($top10->top_item=="_notprovided_") $top_string='('.__("not provided","wassup").')';
 			else $top_string=stringShortener(preg_replace('/'.preg_quote($blogurl,'/').'/i','',$top10->top_item),$char_len);
-			echo wPadNum($top10->top_count,$ndigits).' <a href="'.wassupURI::cleanURL($top10->top_link).'" target="_BLANK" title="'.substr($top10->top_item,0,$wassup_options->wassup_screen_res-100).'">'.$top_string.'</a>';?></nobr></li><?php
+			echo wPadNum($top10->top_count,$ndigits).' <a href="'.wassupURI::cleanURL($top10->top_link).'" target="_BLANK" title="'.esc_attr(substr($top10->top_item,0,$wassup_options->wassup_screen_res-100)).'">'.esc_attr($top_string).'</a>';?></nobr></li><?php
 			$i++;
 		}
 		}
@@ -1180,7 +1180,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 		foreach ($top_results as $top10) {
 			echo "\n"; ?>
 			<li class="wassup-nowrap"><nobr><?php echo wPadNum($top10->top_count,$ndigits);
-			echo ' <span class="top10" title="'.esc_attr($top10->top_item).'">'.stringShortener($top10->top_item, $char_len).'</span>'; ?></nobr></li><?php
+			echo ' <span class="top10" title="'.esc_attr($top10->top_item).'">'.esc_attr(stringShortener($top10->top_item, $char_len)).'</span>'; ?></nobr></li><?php
 			$i++;
 		}
 		}
@@ -1212,7 +1212,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 			$ndigits = strlen("{$top_results[0]->top_count}");
 		foreach ($top_results as $top10) {
 			echo "\n"; ?>
-			<li class="wassup-nowrap"><nobr><?php echo wPadNum($top10->top_count,$ndigits); ?> <span class="top10" title="<?php echo esc_attr($top10->top_item);?>"><?php echo stringShortener($top10->top_item, $char_len); ?></span></nobr></li><?php
+			<li class="wassup-nowrap"><nobr><?php echo wPadNum($top10->top_count,$ndigits); ?> <span class="top10" title="<?php echo esc_attr($top10->top_item);?>"><?php echo esc_attr(stringShortener($top10->top_item, $char_len)); ?></span></nobr></li><?php
 			$i++;
 		}
 		}
@@ -1246,7 +1246,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 			echo "\n";?>
 			<li class="wassup-nowrap"><nobr><?php echo wPadNum($top10->top_count,$ndigits);
 			echo ' <img src="'.WASSUPURL.'/img/flags/'.strtolower(esc_attr($top10->top_item)).'.png" alt="" />';?>
-			<span class="top10" title="<?php echo $top10->top_item;?>"><?php echo esc_attr($top10->top_item);?></span></nobr></li><?php
+			<span class="top10" title="<?php echo esc_attr($top10->top_item);?>"><?php echo esc_attr($top10->top_item);?></span></nobr></li><?php
 			$i++;
 		}
 		}
@@ -1284,7 +1284,7 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 			else
 				$uclass="";
 			echo "\n"; ?>
-			<li class="wassup-nowrap"><nobr><?php echo wPadNum($top10->top_count,$ndigits).' <span class="top10'.$uclass.'" title="'.esc_attr($top10->top_item).'">'.stringShortener($top10->top_item, $char_len).'</span>'; ?></nobr></li><?php
+			<li class="wassup-nowrap"><nobr><?php echo wPadNum($top10->top_count,$ndigits).' <span class="top10'.$uclass.'" title="'.esc_attr($top10->top_item).'">'.esc_attr(stringShortener($top10->top_item, $char_len)).'</span>'; ?></nobr></li><?php
 			$i++;
 		} //end loop
 		}
@@ -1317,7 +1317,16 @@ function wassup_top10view ($from_date="",$to_date="",$res="",$top_limit=0,$title
 		foreach ($top_results as $top10) {
 			echo "\n"; ?>
 			<li class="wassup-nowrap"><nobr><?php echo wPadNum($top10->top_count,$ndigits);
-			echo ' <a href="'.wassupURI::add_siteurl($top10->top_link).'" target="_BLANK" title="'.$top10->top_item.'">'.stringShortener($top10->top_item,$char_len).'</a>'; ?> </nobr></li><?php
+			if(!empty($top10->top_group) && is_numeric($top10->top_group)){
+				//let Wordpress escape title
+				$p_title=get_the_title($top10->top_group);
+				if(empty($p_title) && !empty($top10->top_item)){
+					$p_title=esc_attr($top10->top_item);
+				}
+			}else{
+				$p_title=esc_attr($top10->top_item);
+			}
+			echo ' <a href="'.wassupURI::add_siteurl($top10->top_link).'" target="_BLANK" title="'.$p_title.'">'.stringShortener($p_title,$char_len).'</a>'; ?> </nobr></li><?php
 			$i++;
 		}
 		}

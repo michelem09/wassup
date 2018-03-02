@@ -339,7 +339,25 @@ function wassup_widget_get_topstat($item,$limit,$chars,$from_date,$show_counts=0
 					$html .='<nobr>'.$top_count.'<span class="top-item">'.wassupURI::disarm_attack($wtop->top_item).'</span></nobr>';
 				}
 				$html .='</li>';
-			}elseif($scol == "url_wpid" || $scol == "search"){
+			}elseif($scol == "url_wpid"){
+				$html .='
+	<li'.$liclass.'>';
+				//let Wordpress escape title
+				if(!empty($wtop->top_group) && is_numeric($wtop->top_group)){
+					$p_title=get_the_title($wtop->top_group);
+					if(empty($p_title) && !empty($wtop->top_item)){
+						$p_title=esc_attr($wtop->top_item);
+					}
+				}else{
+					$p_title=esc_attr($wtop->top_item);
+				}
+				if(!empty($wtop->top_link)){
+					$html .=$top_count.'<span class="top-item"><a href="'.wassupURI::cleanURL($wtop->top_link).'" title="'.$p_title.'">'.$p_title.'</a></span>';
+				}else{
+					$html .=$top_count.'<span class="top-item">'.$p_title.'</span>';
+				}
+				$html .='</li>';
+			}elseif($scol == "search"){
 				$html .='
 	<li'.$liclass.'>';
 				if(!empty($wtop->top_link)){

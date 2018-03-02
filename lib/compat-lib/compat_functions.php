@@ -91,9 +91,17 @@ if(version_compare($GLOBALS['wp_version'],'4.5','<')){
 		if(version_compare($wp_version,'2.8','<')){
 			echo '<link rel="stylesheet" href="'.$wassupurl.'/css/wassup.css?ver='.$vers.'" type="text/css" />'."\n";
 			//override some default css settings for old WP versions
-			echo '<style type="text/css">
+			if(version_compare($wp_version,'2.6','>=')){
+				echo '<style type="text/css">
 .wassup-wp-legacy #wassup-message{padding-left:35px;}
 </style>';
+			}
+		}elseif(version_compare($wp_version,'3.1','<')){
+			//always use Wassup's thickbox.css in Wassup panels
+			if(!empty($_GET['page']) && stristr($_GET['page'],'wassup')!== FALSE){
+				echo '<link rel="stylesheet" href="'.$wassupurl.'/lib/compat-lib/js/thickbox/thickbox.css" type="text/css" />';
+				echo "\n";
+			} 
 		}elseif(version_compare($wp_version,'4.2','<') && version_compare($wp_version,'3.3','>')){
 			echo '
 <style type="text/css">
@@ -108,6 +116,8 @@ if(version_compare($GLOBALS['wp_version'],'3.0','<')){
 	/** add an 'ajaxurl' definition to Wassup javascripts */
 	function wassup_compat_embed_scripts(){
 		global $wp_version;
+		$compatlib=dirname(preg_replace('/\\\\/','/',__FILE__));
+		$wassupurl=plugins_url(basename(dirname(dirname($compatlib))));
 		if(version_compare($wp_version,'2.7','<')){
 			$wassupfolder=basename(dirname(dirname(dirname(__FILE__))));
 			$ajaxurl=admin_url('admin.php?page='.$wassupfolder);
@@ -115,6 +125,9 @@ if(version_compare($GLOBALS['wp_version'],'3.0','<')){
 			$ajaxurl=admin_url('index.php?page=wassup-stats');
 		}
 		echo "\n".'<script type="text/javascript">var ajaxurl="'.$ajaxurl.'";</script>'."\n";
+		if(!empty($_GET['page']) && stristr($_GET['page'],'wassup')!== FALSE){
+			echo '<script type="text/javascript">var tb_pathToImage="'.$wassupurl.'/lib/compat-lib/js/thickbox/loadingAnimation.gif'.'";</script>';
+		}
 	}
 	add_action('admin_head','wassup_compat_embed_scripts',11);
 } //end if wp_version < 3.0

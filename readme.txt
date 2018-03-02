@@ -1,12 +1,12 @@
 === WassUp Real Time Analytics ===
-Contributors: michelem, helened  
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8  
-Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
-Requires at least: 4.0  
-Tested up to: 4.8 
-Stable tag: 1.9.4.3 
-License: GPLv2 or later  
-License URI: http://www.gnu.org/licenses/gpl-2.0.html  
+Contributors: michelem, helened
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8
+Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web
+Requires at least: 4.0
+Tested up to: 4.9.4
+Stable tag: 1.9.4.4 
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more.
 
@@ -206,10 +206,17 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache.
 
 == Upgrade Notice ==
-= 1.9.4.3 =
-* Important compatibility upgrade. DO NOT upgrade when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
+= 1.9.4.4 =
+* Important bugfix update. DO NOT UPGRADE when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
 
 == Changelog ==
+= v1.9.4.4 =
+* fixed a bug that affected Wassup's tabbed submenu navigation. Thanks to @simonothen for finding this bug
+* fixed a lightbox conflict caused by Wassup's thickbox.js
+* fixed a bug that caused notices to display to visitors when in debug mode
+* fixed a security vulnerability in Topstats (top10 and widget). Thanks to Anton Q. for finding this.
+* minor code changes
+
 = v1.9.4.3 =
 * merged PHP7 compatibility updates (from v1.9.4.1) into master
 * minor text changes
