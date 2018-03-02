@@ -3,7 +3,7 @@
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
 Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
-Version: 1.9.4.3
+Version: 1.9.4.4
 Author: Michele Marcucci, Helene Duncker
 Author URI: http://www.michelem.org/
 Text Domain: wassup
@@ -52,10 +52,10 @@ function wassup_init($init_settings=false){
 
 	//define wassup globals & constants
 	if(!defined('WASSUPVERSION')){
-		define('WASSUPVERSION','1.9.4.3');
+		define('WASSUPVERSION','1.9.4.4');
 		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
 	}
-	//turn on debugging (global)...Use cautiously! Will display errors from all plugins, not just WassUp
+	//turn on debugging in Wassup (global)...Use cautiously! May display errors from other plugins, not just WassUp
 	$wdebug_mode=false;
 	if(defined('WP_DEBUG') && WP_DEBUG==true) $wdebug_mode=true;
 	if($wdebug_mode){
@@ -68,7 +68,10 @@ function wassup_init($init_settings=false){
 			$wdebug_mode=false;
 			@wassup_disable_errors();
 		}else{
-			wassup_enable_errors();
+			//Bugfix in v1.9.4.4: set error_reporting in "init" only when WP_DEBUG is not set
+			if(!defined("WP_DEBUG") || WP_DEBUG===false){
+				@wassup_enable_errors();
+			}
 			if(headers_sent()){
 				//an error was likely displayed to screen
 				echo "\n".'<!-- wassup_init start -->';
@@ -140,7 +143,7 @@ function wassup_init($init_settings=false){
 	}
 	if($wdebug_mode && headers_sent()){
 		//an error message was likely displayed to screen
-		echo "\n".'<!-- wassup_init end -->'."\n";
+		echo "\n"."<!-- is_compatible=$is_compatible \ncurrent_local=$current_locale \ninit_settings=$init_settings \nwassup_init end -->"."\n";
 	}
 	return $is_compatible;
 } //end wassup_init
@@ -157,7 +160,7 @@ function wassup_init($init_settings=false){
  * @return void
  */
 function wassup_install($network_wide=false) {
-	global $wpdb,$wp_version,$wassup_options;
+	global $wpdb,$wp_version,$wassup_options,$wdebug_mode; //Bugfix in v1.9.4.4: add wdebug_mode to globals
 
 	$wassup_settings=get_option('wassup_settings'); //save old settings
 	$wassup_network_settings=array();
@@ -623,7 +626,7 @@ function wassup_admin_preload() {
 /**
  * Loads javascript and css files for Wassup admin pages.
  * - Enqueues "spia.js", "jquery-ui.js" (various), "jquery-migrate.js" (also queues "jquery.js")
- * - Resets "thickbox.js" to Wassup's internal copy and enqueues it.
+ * - adds "thickbox.js" 
  * - Enqueues "wassup.js" and "wassup.css" for Wassup panels
  */
 function wassup_add_scripts(){
@@ -648,17 +651,12 @@ function wassup_add_scripts(){
 			wp_dequeue_style('jquery-ui-core.css');
 			wp_dequeue_style('jquery-ui.css');
 		}
-		//use Wassup's custom copy of thickbox.js always
-		if(file_exists(WASSUPDIR.'/js/thickbox/thickbox.js')){
-			wp_deregister_script('thickbox');
-			wp_dequeue_style('thickbox.css');
-			//register Wassup's thickbox.js
-			wp_enqueue_script('thickbox',WASSUPURL.'/js/thickbox/thickbox.js',array('jquery'),'3');
-		}
+		//bugfix in v1.9.4.4 - removed Wassup's copy of Thickbox due to conflict with Wordpress admin
+		add_thickbox();	 //Wordpress 2.5+ built-in function to add thickbox
 		//enqueue jquery-migrate.js (and 'jquery.js')
 		wp_enqueue_script('jquery-migrate');
-		wp_enqueue_script('wassup');	//wassup.js @since v1.9
-		//queue wassup stylesheet link tag
+		wp_enqueue_script('wassup');
+		//queue wassup stylesheet
 		wp_enqueue_style('wassup', WASSUPURL.'/css/wassup.css',array(),$vers);
 	}elseif(strpos($_SERVER['REQUEST_URI'],'/widgets.php')!==false || strpos($_SERVER['REQUEST_URI'],'/customize.php')!==false){
 		//customizer css for wassup-widget control style
@@ -781,24 +779,33 @@ function wassup_log_message($msg,$msgtype="",$msgkey="0"){
 }
 /** Turns off all error notices except fatal errors. */
 function wassup_disable_errors(){
-	ini_set('error_reporting',E_ERROR);
-	//error_reporting(0);	//same as above
+	error_reporting(E_ERROR);
 	ini_set('display_errors','Off');
 }
 /** Turns on all error notices */
 function wassup_enable_errors(){
-	global $wp_version;
-	ini_set('display_errors','On');
+	global $wp_version, $wdebug_mode;
 	//don't use 'strict standards' in old Wordpress versions (part of E_ALL since PHP 5.4)
 	$php_vers=phpversion();
-	if(version_compare($php_vers,'5.0','>=')){
-		if(version_compare($wp_version,'4.0','>=')){
-			ini_set('error_reporting',E_ALL);
+	if(version_compare($php_vers,'5.4','>=')){
+		//turn off deprecated notices in PHP7
+		if(version_compare($php_vers,'7.0','>=')){
+			error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED );
+		}elseif(version_compare($wp_version,'4.0','<')){
+			error_reporting(E_ALL & ~E_STRICT);
 		}else{
-			ini_set('error_reporting',E_ALL & ~E_STRICT & ~E_DEPRECATED);
+			error_reporting(E_ALL);
 		}
+	}elseif(version_compare($wp_version,'4.0','<')){
+		error_reporting(E_ALL & ~E_STRICT);
 	}else{
-		ini_set('error_reporting',E_ALL);
+		error_reporting(E_ALL);
+	}
+	if(!empty($wdebug_mode)){ 
+		//Bugfix in v1.9.4.4: don't set display_errors unless WP_DEBUG is not set
+		if(!defined('WP_DEBUG') || !defined("WP_DEBUG_DISPLAY")){
+			ini_set('display_errors','On');
+		}
 	}
 } //end wassup_enable_errors
 
@@ -824,6 +831,13 @@ function wassupPrepend() {
 	if(isset($_REQUEST['wc-ajax']) && preg_match('#/woocommerce\.php#',$active_plugins)>0){
 		return;
 	}
+	//Bugfix in v1.9.4.4: suppress php7 deprecated notices
+	if(!$wdebug_mode){
+		$errmode_reset=error_reporting();
+		$errdisplay_reset=ini_get('display_errors');
+		wassup_disable_errors();
+	}
+
 	$wassup_table=$wassup_options->wassup_table;
 	$wassup_tmp_table=$wassup_table."_tmp";
 	$wscreen_res="";
@@ -965,6 +979,11 @@ function wassupPrepend() {
 		$args=array('dbtasks'=>$wassup_dbtask);
 		wassupDb::scheduled_dbtask($args);
 	}
+	//restore default error_reporting @since v1.9.4.4
+	if(!$wdebug_mode && isset($errmode_reset)){
+		error_reporting($errmode_reset);
+		@ini_set('display_errors',$errdisplay_reset);
+	}
 } //end wassupPrepend
 
 /**
@@ -1001,7 +1020,6 @@ function wassupAppend($req_code=0) {
 		if($is_media || is_feed() || (!is_page() && !is_home() && !is_single() && !is_archive())){
 			//turn off error display for media, feed, and any non-html requests
 			$wdebug_mode=false;
-			@wassup_disable_errors();
 		}else{
 			if(is_admin() || headers_sent()){
 				echo "\n".'<!-- *WassUp DEBUG On '."\n";   //hide errors
@@ -1012,6 +1030,11 @@ function wassupAppend($req_code=0) {
 			}
 			wassup_enable_errors();
 		}
+	}else{
+		//Bugfix in v1.9.4.4: suppress PHP7 deprecated notices
+		$errmode_reset=error_reporting();
+		$errdisplay_reset=ini_get('display_errors');
+		@wassup_disable_errors();
 	} //end if $wdebug_mode
 	$error_msg="";
 	$wassup_table = $wassup_options->wassup_table;
@@ -1798,7 +1821,7 @@ function wassupAppend($req_code=0) {
 		// get search engine and search keywords from referrer
 		$searchengine="";
 		$search_phrase="";
-		$searchpage="";
+		$searchpage="0";
 		$searchlocale="";
 		//don't check own blog for search engine data
 		if (!empty($referrer) && $spam == "0" && stristr($referrer,$blogurl)!=$referrer && !$wdebug_mode) {
@@ -1826,7 +1849,7 @@ function wassupAppend($req_code=0) {
 				if(is_array($se) && !empty($se['searchengine'])){
 					$searchengine=$se['searchengine'];
 					$search_phrase=$se['keywords'];
-					$searchpage=$se['page'];
+					$searchpage=(int)$se['page'];
 					$searchlang=$se['language'];
 					$searchlocale=$se['locale'];
 				}
@@ -1840,7 +1863,7 @@ function wassupAppend($req_code=0) {
 				$se=wSeReferer($ref);
 				if (!empty($se['Query']))  {
 					$search_phrase = $se['Query'];
-					$searchpage = $se['Pos'];
+					$searchpage = (int)$se['Pos'];
 					$searchdomain = $se['Se'];
 				//check for empty secure searches
 				} elseif(strpos($ref,'https://www.bing.')!==false || strpos($ref,'https://www.yahoo.')!==false || strpos($ref,'https://www.google.')!==false) {
@@ -1859,9 +1882,11 @@ function wassupAppend($req_code=0) {
 					if ($searchpage != $pcs[1]) {
 						$searchpage = $pcs[1];
 					}
-				} else {
+				} elseif(!empty($searchpage)) {
 				// NOTE: Position retrieved in Google Images is the position number of image NOT page rank position like web search
 					$searchpage=(int)($searchpage/10)+1;
+				}else{
+					$searchpage=1;
 				}
 				}
 				//append country code to search engine name
@@ -2183,8 +2208,11 @@ function wassupAppend($req_code=0) {
 			$wassup_key=wassup_clientIP($_SERVER['REMOTE_ADDR']);
 			wassupDb::update_wassupmeta($wassup_key,'_debug_output',$expire,$debug_output);
 		}
-		//restore normal mode
-		@ini_set('display_errors',$mode_reset);
+	}elseif(isset($errmode_reset)){ 
+		//Bugfix in v1.9.4.4: reset error mode only if set 
+		//restore normal error mode
+		error_reporting($errmode_reset);
+		@ini_set('display_errors',$errdisplay_reset);
 	} //end if wdebug_mode
 } //end wassupAppend
 
@@ -3953,6 +3981,7 @@ function wIsAttack($http_target="") {
 //### Website content functions
 // START initializing Widget
 function wassup_widget_init(){
+	global $wdebug_mode;
 	if(!defined('WASSUPURL')){
 		if(!wassup_init()) return;	//nothing to do
 	}
@@ -3960,12 +3989,22 @@ function wassup_widget_init(){
 		'wassup_onlineWidget',
 		'wassup_topstatsWidget',
 	);
+	//Bugfix in v1.9.4.4: turn off PHP7 deprecated warnings
+	if(!$wdebug_mode){
+		$errmode_reset=error_reporting();
+		$errdisplay_reset=ini_get('display_errors');
+		@wassup_disable_errors();
+	}
 	if(!class_exists('wassup_onlineWidget')) include_once(WASSUPDIR.'/widgets/widgets.php');
 	foreach($wassup_widget_classes as $wwidget){
 		if(!empty($wwidget) && class_exists($wwidget)){
 			if(function_exists('register_widget')) register_widget($wwidget);
 			elseif(function_exists('wassup_compat_register_widget')) wassup_compat_register_widget($wwidget);	//compatibility function
 		}
+	}
+	if(!$wdebug_mode && isset($errmode_reset)){
+		error_reporting($errmode_reset);
+		@ini_set('display_errors',$errdisplay_reset);
 	}
 }
 
@@ -4007,7 +4046,7 @@ function wassup_sidebar($before_widget='',$after_widget='',$before_title='',$aft
 		//base widget info
 		$widget_html="\n".$before_widget;
 		if(!empty($title)) $widget_html.='
-	'.$before_title.$title.$after_title;
+	'.$before_title.esc_attr($title).$after_title;
 		$widget_html .='
 	<p class="small">'.__("No Data","wassup").'</p>'.wassup_widget_foot_meta().$after_widget;
 		//calculate widget users online and top stats data
@@ -4032,7 +4071,7 @@ function wassup_sidebar($before_widget='',$after_widget='',$before_title='',$aft
 		if(!empty($html)){
 			$online_html= "\n".$before_widget;
 			if(!empty($title)) $online_html.='
-	'.$before_title.$title.$after_title;
+	'.$before_title.esc_attr($title).$after_title;
 			$online_html .='
 	<ul'.$ulclass.'>
 	'.$html.'

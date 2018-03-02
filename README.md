@@ -3,8 +3,8 @@ Contributors: michelem, helened
 Donate link:  [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8)   
 Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
 Requires at least: WordPress 2.2  
-Tested up to: 4.8 
-Stable tag: 1.9.4.3 
+Tested up to: 4.9.4 
+Stable tag: 1.9.4.4 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -154,12 +154,19 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache.
 
 ## Upgrade Notice
-### 1.9.4.3
-* Important PHP7 compatibility upgrade.
+### 1.9.4.4
+* Important bugfix update.
 * DO NOT UPGRADE when your site busy!
 * Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
 
 ## Changelog
+### v1.9.4.4: Important bugfix update
+* fixed a bug that affected Wassup's tabbed submenu navigation. Thanks to @simonothen for finding this bug
+* fixed a lightbox conflict caused by Wassup's thickbox.js
+* fixed a bug that caused notices to display to visitors when in debug mode
+* fixed a security vulnerability in Topstats (top10 and widget). Thanks to Anton Q. for finding this.
+* minor code changes
+
 ### v1.9.4.3 
 * merged PHP7 compatibility update (from v1.9.4.1) into master
 * minor text changes

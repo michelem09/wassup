@@ -2534,24 +2534,25 @@ class wassupURI {
 	 * @return string
 	 */
 	static function get_menu_arg(){
-		$menuarg="wassup";
-		if(isset($_GET['page'])) $menuarg=htmlspecialchars($_GET['page']);
-		if(stristr($menuarg,"wassup")!==false){
+		$menuarg="";	//bugfix in v1.9.4.4 - thanks to @simonothen for finding this bug
+		//return only wassup page
+		if(isset($_GET['page']) && stristr($_GET['page'],'wassup')!==FALSE){
 			if(isset($_GET['ml'])){
-				$menuarg=htmlspecialchars($_GET['ml']);
+				$menuarg=htmlspecialchars($_GET['ml']);  //security fix @since v1.9.4.2 - thanks to Dimopoulos Elias for finding this bug
 			}else{
-				$wassupfolder=basename(WASSUPDIR);
-				if($menuarg=="wassup-stats"){
-					$menuarg="wassup";
-				}elseif($menuarg=="wassup-spia"){
-					$menuarg="wassup-spy";
-				}elseif($menuarg==$wassupfolder){
-					$menuarg="wassup";
-				}elseif($menuarg=="wassup-options"){
-					if(isset($_GET['tab'])){
-						if($_GET['tab']=="donate") $menuarg="wassup-donate";
-						elseif($_GET['tab']=="faq") $menuarg="wassup-faq";
-					}
+				$menuarg=htmlspecialchars($_GET['page']);
+			}
+			$wassupfolder=basename(WASSUPDIR);
+			if($menuarg=="wassup-stats"){
+				$menuarg="wassup";
+			}elseif($menuarg=="wassup-spia"){
+				$menuarg="wassup-spy";
+			}elseif($menuarg==$wassupfolder){
+				$menuarg="wassup";
+			}elseif($menuarg=="wassup-options"){
+				if(isset($_GET['tab'])){
+					if($_GET['tab']=="donate") $menuarg="wassup-donate";
+					elseif($_GET['tab']=="faq") $menuarg="wassup-faq";
 				}
 			}
 		}
