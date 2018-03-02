@@ -744,10 +744,12 @@ function wassup_optionsView($tab=0) {
 						echo (int)$max_execute." ".__("seconds","wassup");
 					}
 				}elseif($max_execute==0){
-					echo $max_execute." (".__("unlimited","wassup").")";
+					echo $max_execute.' ('.__("unlimited","wassup").')';
 				}else{
-					_e("unknown","wassup");
+					echo $max_execute.' ('.__("unknown","wassup").')';
 				}
+			}elseif(is_string($max_execute)){
+				echo htmlspecialchars($max_execute);
 			}else{
 				_e("unknown","wassup");
 			}
