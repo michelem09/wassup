@@ -1314,7 +1314,7 @@ function wassupAppend($req_code=0) {
 	@ignore_user_abort(1); // finish script in background if visitor aborts
 	//## Start Exclusion controls:
 	//#1 First exclusion control is for admin user
-	if($wassup_options->wassup_admin=="1" || !$is_admin_login || (strpos($urlRequested,'wp-login.php')>0 && strpos($urlrequested,'loggedout')===false)){
+	if($wassup_options->wassup_admin=="1" || !$is_admin_login || (strpos($urlRequested,'wp-login.php')>0 && strpos($urlRequested,'loggedout')===false)){	//typo bugfix @since v1.9.4.5
 	//#2 Exclude wp-cron utility hits...unless external host
 	if (stristr($urlRequested,"/wp-cron.php?doing_wp_cron")===false || empty($_SERVER['SERVER_ADDR']) || $IP!=$_SERVER['SERVER_ADDR']){
 	//#3 Exclude wp-admin visits unless possible malware attempt
