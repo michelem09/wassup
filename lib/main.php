@@ -785,7 +785,7 @@ function wGeolocateIP($ip) {
 			if(!is_array($geodata) || empty($geodata['city'])) $geodata=false;
 		}
 		//3rd: remote lookups of geoip (web service api)
-		//..uses Wordpress 'wp_remote_get' or 'cURL' for geoip
+		//..uses Wordpress 'wp_remote_get' for geoip
 		if(empty($geodata)){
 			$geodata=wFetchAPIData($geourl);
 			if(!empty($geodata) && !is_wp_error($geodata)){
@@ -2048,52 +2048,7 @@ class WassupItems {
 	} //end theChart
 } //end class WassupItems
 
-/** 
- * A class for wassup CURL operations.
- * @since v1.8
- */
-class wcURL {
-	var $data = array();
-	function doRequest($method, $url, $vars) {
-		if (function_exists('curl_init')) {
-			$wassup_agent = apply_filters('http_headers_useragent',"WassUp/".WASSUPVERSION." - www.wpwp.org");
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_HEADER, false); //data only
-			curl_setopt($ch, CURLOPT_USERAGENT, $wassup_agent);
-  			curl_setopt($ch, CURLOPT_ENCODING, "");
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-			curl_setopt($ch, CURLOPT_LOW_SPEED_TIME, 10);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 7); //don't wait for slow responses
-			if (ini_get('open_basedir')=="") { //causes error
-				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-			}
-			if ($method == 'POST') {
-				curl_setopt($ch, CURLOPT_POST, true);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $vars);
-			}
-			$data = curl_exec($ch);
-			$this->data = curl_getinfo($ch);
-			$this->data['content'] = $data;
-			$this->data['error'] = curl_error($ch);
-			curl_close($ch);
-			if (($this->data['error'] == '') && ($this->data['http_code'] < 400)) return true;
-			else return false;
-		} else {
-			return false;
-		}
-	} //end doRequest
-	function get($url){return $this->doRequest('GET',$url,'NULL');}
-	// vars is urlencoded string of field/value pairs, eg:field1=value1&field2=value2
-	function post($url,$vars){return $this->doRequest('POST', $url, $vars);}
-	function getInfo($field){
-		if (isset($this->data[$field])) return $this->data[$field];
-		else return null;
-	}
-	function getData(){return $this->data['content'];}
-} //end class wcURL
+//Security fix: deleted wCURL class due to a TLS validation vulnerability in cURL @since v1.9.4.5
 
 /**
  * Retrieve data from a web service API via a url query
@@ -2106,7 +2061,7 @@ function wFetchAPIData($api_url) {
 	global $wdebug_mode;
 	$wassup_agent=apply_filters('http_headers_useragent',"WassUp/".WASSUPVERSION." - www.wpwp.org");
 	$apidata=array();
-	//timeout now set in http/curl settings, not via 'set_time_limit' which does not apply to remote requests @since v1.9.1
+	//timeout now set in http settings, not via 'set_time_limit' which does not apply to remote requests @since v1.9.1
 	//try Wordpress 'wp_remote_get' for api results
 	if(function_exists('wp_remote_get')){
 		$opts=array('user-agent'=>"$wassup_agent",'timeout'=>5);
@@ -2117,14 +2072,7 @@ function wFetchAPIData($api_url) {
 		}
 		$api_method='wp_remote_get';	//debug
 	}
-	//try cURL extension to get api results
-	if (empty($apidata)) {
-		$curl = new wcURL;
-		if ($curl->get($api_url)) {
-			$apidata = $curl->getData();
-		}
-		$api_method='wcURL';	//debug
-	} 
+	//Security fix: removed wCURL as a fallback api retrieval method due to a TLS validation vulnerability in cURL @since v1.9.4.5
 	// try 'file_get_contents' to get api results
 	if(empty($apidata) && ini_get('allow_url_fopen')){
 		// context stream compatible with PHP 5.0.0+
