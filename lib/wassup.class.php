@@ -997,7 +997,7 @@ class wassupOptions {
 			$ip=wassupIP::clientIP($ipAddress);
 		}
 		//do lookup
-		$api_url="http://helenesit.com/utils/wassup-webservice/?ws=mk&ip=".$ip;
+		$api_url="https://helenesit.com/utils/wassup-webservice/?ws=mk&ip=".$ip;
 		if($wdebug_mode) $api_url .='&debug_mode=1';
 		if(!function_exists('wFetchAPIData')){
 			include_once(WASSUPDIR."/lib/main.php");
@@ -2437,7 +2437,7 @@ class wassupURI {
 				}else{
 					$rurl=parse_url($referer);
 					if(!empty($rurl['host']) && preg_match('/\.[a-z]{2,4}$/',$rurl['host'])>0){
-						$favicon_img='<img src="http://www.google.com/s2/favicons?domain='.$rurl['host'].'" class="favicon"> ';
+						$favicon_img='<img src="https://www.google.com/s2/favicons?domain='.$rurl['host'].'" class="favicon"> ';
 					}
 					$referrerlink=$favicon_img.'<a href="'.self::cleanURL($referer).'" target=_"BLANK"'.$tooltip.'>'.$cleaned_uri.'</a>';
 				}
