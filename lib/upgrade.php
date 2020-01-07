@@ -463,7 +463,7 @@ function wassup_updateTable($wtable=""){
 	if(empty($stimeout)) $stimeout=58; //use default timeout minus 2 secs
 	//get wait timeout length and size of wassup_table in mysql
 	$mtimeout=$wpdb->get_var("SELECT @@session.wait_timeout FROM dual");
-	$rows=$wpdb->get_var("SELECT COUNT(*) AS rows FROM `$wassup_table`");
+	$rows=$wpdb->get_var("SELECT COUNT(*) FROM `$wassup_table`");	//fix for activation error in MariaDb @since v1.9.4.5
 	$error_msg="";
 	$error_count=0;
 	//wassup_version must be valid version#, so reset if needed
