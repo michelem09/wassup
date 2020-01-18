@@ -482,9 +482,7 @@ function wassup_updateTable($wtable=""){
 	if(version_compare($wp_version,'3.0','>')){
 		$low_priority="LOW_PRIORITY";
 		add_action('wassup_upgrade_dbtasks',array('wassupDb','scheduled_dbtask'),10,1);
-		if(empty($wassup_options->wassup_googlemaps_key)){
-			add_action('wassup_scheduled_api_upg',array('wassupOptions','lookup_apikey'),10,1);
-		}
+		//scheduled api upgrade unnecessary here...removed @since v1.9.4.5
 	}
 	//Since Wordpress 3.1, 'wassup_createTable' no longer upgrades "wp_wassup" table structure because of an ALTER TABLE error in the "dbDelta" function. @since v1.8.3
 	//Do table structure upgrades
@@ -697,14 +695,7 @@ function wassup_updateTable($wtable=""){
 	} //end if 1.9
 
 	//For all upgrades: 
-	// get a new api key @since v1.9.4
-	if(empty($wassup_options->wassup_googlemaps_key)){
-		if(!empty($low_priority)){
-			wp_schedule_single_event(time()+600,'wassup_scheduled_api_upg');
-		}else{
-			$key=wassupOptions::lookup_apikey();
-		}
-	}
+	// removed scheduled lookup of new api key @since v1.9.4.5`
 	//Queue the retroactive updates
 	//schedule retroactive updates via cron so it dosen't slow down activation
 	if(count($dbtasks)>0){
