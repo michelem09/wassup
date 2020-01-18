@@ -1004,6 +1004,12 @@ function wassupAppend($req_code=0) {
 	if(!class_exists('UADetector')) include_once(WASSUPDIR.'/lib/uadetector.class.php');
 	$wpurl=wassupURI::get_wphome();
 	$blogurl=wassupURI::get_sitehome();
+	//path to wordpress install, when different from home
+	$wppath="";
+	if($wpurl !== $blogurl){
+		$url=parse_url($wpurl);
+		if(!empty($url['path'])) $wppath=rtrim($url['path'],'/');
+	}
 	$network_settings=array();
 	if(is_multisite()){
 		$network_settings=get_site_option('wassup_network_settings');
@@ -1491,9 +1497,10 @@ function wassupAppend($req_code=0) {
 			}
 		}
 	//#14 Exclude 404 hits unless 1st visit or malware attempt
-	if($req_code == 200 || empty($recent_hit) || ($hackercheck && ($spam!=0 || stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){ //v1.9.3.1 bugfix: parenthesis correction
-		//omit 'admin-ajax.php' and 'wp-login.php' from malware checks @since v1.9.3
-		if($hackercheck && $spam==0 && $urlRequested !='/wp-login.php' && $urlRequested !='/wp-admin/admin-ajax.php'){
+	if($req_code == 200 || empty($recent_hit) || ($hackercheck && ($spam!=0 || stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){
+		//omit 'admin-ajax.php', 'ads.txt','assetslinks.json',index.php','license.php','robots.txt','security.txt','sitemap.xml', and 'wp-login.php', from malware checks
+		$good_urls_regex='#^(/index\.php|/license\.php|/ads\.txt|/robots\.txt|/security\.txt|/sitemap\.xml|/\.well\-known/(?:assetlinks\.json|security\.txt)|'.$wppath.'/wp-admin/admin\-ajax\.php|'.$wppath.'/wp\-login\.php)$#i';
+		if($hackercheck && $spam==0 && $urlRequested != '/' && preg_match($good_urls_regex,$urlRequested)==0){
 			$pcs=array();
 		//identify malware
 		//xss attempt
@@ -1512,7 +1519,8 @@ function wassupAppend($req_code=0) {
 			}
 		}
 		//visitors requesting non-existent server-side scripts are up to no good
-		if($spam==0 && preg_match('#(?:(^\/\.[0-9a-z]{3,})|(\.(?:cgi|aspx?|jsp?))|([\*\,\'"\:\(\)$`].*)|(.+\=\-1)|(\/[a-z0-9\-_]+\.php[456]?))(?:[^0-9a-z]|$)#i',$urlRequested,$pcs)>0){
+		$pcs=array();
+		if($spam==0 && preg_match('#(?:(^\/\.[0-9a-z]{3,})|(\.(?:cgi|aspx?|jsp?))|([\*\,\'"\:\(\)$`].*)|(.+\=\-1)|(\/[a-z0-9\-_]+\.php[457]?))(?:[^0-9a-z]|$)#i',$urlRequested,$pcs)>0){
 			if(!empty($pcs[3]) && preg_match('/([0-9\.\-=;]+)/',$urlRequested)>0){
 				$spam=3;
 			}elseif(empty($logged_user) && empty($cookieUser)){
@@ -1543,7 +1551,9 @@ function wassupAppend($req_code=0) {
 						}
 					}
 				}
-				if($spam==0 && preg_match('/[^a-z\-_](admin|administrator|base64|bin|code|config|cookie|delete|dll|document|drop|etc|eval|exec|exit|function|href|ini|insert|install|login|passw|root|script|select|setting|setup|table|update|upgrade|upload|wp\-|where|window)([^0-9a-z\.\-_]|$)/',$urlRequested)>0){
+				//check for admin/execution attempts on url
+				$pcs=array();
+				if($spam==0 && preg_match('#[^a-z\-_](admin|adminer(?:[\.\-][0-9a-z\-_]+)|administrator|base64|bin|code|config|cookie|delete|dev/|dll|document|drop|etc|eval|exec|exit|function|href|ini|insert|install|login|mysql\.(?:[a-z]{3})|passw|portal/|root|script|select|setting|setup|table|tmp/|update|upgrade|upload|wp/|wp\-|where|window)([^0-9a-z\.\-_]|$)#',$urlRequested)>0){
 					if($req_code==404){
 						$spam=3;
 					}elseif(!empty($pcs[2])){
@@ -1558,7 +1568,7 @@ function wassupAppend($req_code=0) {
 		//regular visitors trying to access admin area are up to no good
 		if(empty($spam) && empty($logged_user) && empty($cookieUser)){
 			$pcs=array();
-			if(preg_match('#[^0-9a-z_]wp\-admin\/.+\.php\d?([^a-z0-9_]|$)#i',$urlRequested)>0){
+			if(preg_match('#[^0-9a-z_](wp\-)?admin(/\.?[0-9a-z_\-%]+)*\.[a-z]{3,4}\d?([^a-z0-9_]|$)#i',$urlRequested)>0){
 				$spam=3;
 			}elseif(preg_match('#\/wp\-(config|load|settings)\.php#',$urlRequested)>0){
 			//regular visitor trying to access setup files is up to no good
@@ -1671,7 +1681,7 @@ function wassupAppend($req_code=0) {
 						list($spider,$spidertype,$feed)=wGetSpider($userAgent,$hostname,$browser);
 					}
 				}
-				//it's a browser
+				//it's a spider
 				if(!empty($spider)){
 				if($spidertype == "B" && $urlRequested != "/robots.txt"){
 					if(empty($browser)) $browser=$spider;
@@ -1679,13 +1689,15 @@ function wassupAppend($req_code=0) {
 					$feed="";
 				}elseif($spidertype == "H" || $spidertype == "S"){
 					if($spam == "0") $spam=3;
+				}else{
+					$browser="";
 				}
 				}
 			}
 			//if 1st request is "robots.txt" this is a bot
 			//if empty user-agent, this is a bot
 			if(empty($spider)){
-				if(strstr($urlRequested,"robots.txt")!==FALSE && empty($recent_hit)) $spider=$unknown_spider;
+				if(strstr($urlRequested,"/robots.txt")!==FALSE && empty($recent_hit)) $spider=$unknown_spider;
 				elseif(empty($browser) && empty($userAgent)) $spider=$unknown_spider;
 			}
 			//Finally, check for disguised spiders via excessive pageviews activity (threshold: 8+ views in < 16 secs)
@@ -1829,6 +1841,7 @@ function wassupAppend($req_code=0) {
 			//test for Google secure search and use generic "_notprovided_" for missing keyword @since v1.9
 			//TODO: Yahoo now has secure searching since 4/2014
 			$pcs=array();
+			$pcs2=array();
 			if (preg_match('#^https\://(www\.google(?:\.com?)?\.([a-z]{2,3}))/(url\?(?:.+[^q]+q=([^&]*)(?:&|$)))?#',$ref,$pcs)>0){
 				$searchdomain=$pcs[1];
 				$searchengine="Google";
