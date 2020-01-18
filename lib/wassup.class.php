@@ -955,32 +955,39 @@ class wassupOptions {
 		$wassuphash=wp_hash($hashkey);
 		return $wassuphash;
 	}
-	/** Retrieve or query a Google!Map API key   @since v1.9.4 */
-	public function get_apikey(){
+	/** Retrieve or query a Google!Map API key or GeoIP API key @since v1.9.4 */
+	public function get_apikey($api="googlemaps"){
 		$apikey="";
-		//try user's own api key
-		if(!empty($this->wassup_googlemaps_key)){
-			$apikey=$this->wassup_googlemaps_key;
-		}else{
-			//check for a builtin api key, if exist
+		//site domain used for db cache query
+		$wassup_key=wassupURI::get_urldomain();
+		//always lookup api keys after an upgrade @since v1.9.4.5
+		$api_timestamp=wassupDb::get_wassupmeta($wassup_key,'_api_timestamp');
+		if (empty($api_timestamp) || $this->wassup_upgraded > ($api_timestamp+900)){
+			$result=$this->lookup_apikey();
+		}
+		//get the apikey
+		if($api == "googlemaps" || empty($api)){
 			$meta_key="_googlemaps_key";
-			if(is_multisite()) $sitehome=network_home_url();
-			else $sitehome=get_option('home');
-			$homedomain=wassupURI::get_urldomain($sitehome);
-			$apikey=wassupDb::get_wassupmeta($homedomain,$meta_key);
+			//first try user's own api key
+			if(!empty($this->wassup_googlemaps_key)){
+				$apikey=$this->wassup_googlemaps_key;
+			}else{
+				$apikey=wassupDb::get_wassupmeta($wassup_key,$meta_key);
+			}
+		//separate Geo IP API key @since v1.9.4.5
+		}elseif($api=="geoip"){
+			$meta_key="_geoip_apikey";
+			$apikey=wassupDb::get_wassupmeta($wassup_key,$meta_key);
 		}
 		return $apikey;
 	}
 	/** Do a remote lookup of Google!Map API key  @since v1.9.4 */
-	static function lookup_apikey(){
+	public function lookup_apikey(){
 		global $wdebug_mode;
 		$error_msg="";
 		$apikey=false;
-		//no lookup key if key is already in settings
-		$wassup_settings=get_option('wassup_settings');
-		if(!empty($wassup_settings['wassup_googlemaps_key'])){
-			return;
-		}
+		//always lookup api key even when user has own googlemap! key @since v1.9.4.5
+		//retrieve 'ip' lookup parameter
 		$ip=0;
 		//for computers behind proxy servers:
 		if(isset($_SERVER['SERVER_ADDR'])){
@@ -1023,11 +1030,17 @@ class wassupOptions {
 		}
 		//save apikey
 		if(!empty($apikey)){
+			//save google!maps key
 			$meta_key="_googlemaps_key";
-			if(is_multisite()) $sitehome=network_home_url();
-			else $sitehome=get_option('home');
-			$homedomain=wassupURI::get_urldomain($sitehome);
-			$updated=wassupDb::update_wassupmeta($homedomain,$meta_key,$apikey,0);
+			//site domain used for db cache save
+			$wassup_key=wassupURI::get_urldomain();
+			$updated=wassupDb::update_wassupmeta($wassup_key,$meta_key,$this->cleanFormText($apikey),0);
+			//save geoip api key @since v1.9.4.5
+			if (!empty($apidata['wassup_geoip_key'])){
+				$meta_key="_geoip_apikey";
+				$updated=wassupDb::update_wassupmeta($wassup_key,$meta_key,$this->cleanFormText($apidata['wassup_geoip_key']),0);
+			}
+			$timestamplog=wassupDb::update_wassupmeta($wassup_key,'_api_timestamp',time(),0);
 		}elseif(!empty($error_msg)){ //debug
 			if($wdebug_mode){
 				return $error_msg;
