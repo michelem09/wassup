@@ -438,7 +438,6 @@ function wassup_add_css() {
 				echo '<link href="'.WASSUPURL.'/css/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />'."\n";
 			}
 		}
-		//bugfix in v1.9.4.4: removed Wassup's thickbox css due to conflict in Wordpress admin panel
 		// Override some Wordpress css and Wassup default css settings on Wassup pages
 ?>
 <style type="text/css">
@@ -1558,6 +1557,7 @@ function wassup_page_contents($args=array()){
 		$markedtot=0;
 		$searchtot=0;
 		$ipsearch="";
+		$wmain=array();
 		//don't apply "search" for marked ip (in whereis)
 		if(!empty($wsearch) && $wsearch==$wip){
 			$ipsearch=$wsearch;

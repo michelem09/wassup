@@ -52,7 +52,7 @@ function wassup_init($init_settings=false){
 
 	//define wassup globals & constants
 	if(!defined('WASSUPVERSION')){
-		define('WASSUPVERSION','1.9.4.4');
+		define('WASSUPVERSION','1.9.4.5');
 		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
 	}
 	//turn on debugging in Wassup (global)...Use cautiously! May display errors from other plugins, not just WassUp
@@ -68,7 +68,7 @@ function wassup_init($init_settings=false){
 			$wdebug_mode=false;
 			@wassup_disable_errors();
 		}else{
-			//Bugfix in v1.9.4.4: set error_reporting in "init" only when WP_DEBUG is not set
+			//allow error_reporting when WP_DEBUG is not set @since v1.9.4.4
 			if(!defined("WP_DEBUG") || WP_DEBUG===false){
 				@wassup_enable_errors();
 			}
@@ -95,7 +95,6 @@ function wassup_init($init_settings=false){
 			}
 		}
 	}
-	//load required modules
 	//check Wordpress and PHP compatibility and load compatibility modules before using 'plugins_url' function
 	$php_vers=phpversion();
 	$is_compatible=true;
@@ -103,6 +102,7 @@ function wassup_init($init_settings=false){
 		include_once(WASSUPDIR.'/lib/compatibility.php');
 		$is_compatible=wassup_check_compatibility();
 	}
+	//load required modules
 	if($is_compatible){
 		if(!class_exists('wassupOptions')) require_once(WASSUPDIR.'/lib/wassup.class.php');
 		define('WASSUPURL',plugins_url(basename(WASSUPDIR)));
@@ -160,7 +160,7 @@ function wassup_init($init_settings=false){
  * @return void
  */
 function wassup_install($network_wide=false) {
-	global $wpdb,$wp_version,$wassup_options,$wdebug_mode; //Bugfix in v1.9.4.4: add wdebug_mode to globals
+	global $wpdb,$wp_version,$wassup_options,$wdebug_mode;
 
 	$wassup_settings=get_option('wassup_settings'); //save old settings
 	$wassup_network_settings=array();
@@ -220,7 +220,7 @@ function wassup_install($network_wide=false) {
 	$wassup_meta_table=$wassup_table."_meta";
 	$wassup_options->wassup_table=$wassup_table;
 
-	//turn off 'wassup_active' setting and cancel all scheduled Wassup wp-cron jobs for upgrades only
+	//Important! Turn off 'wassup_active' setting during upgrade
 	$active_status=1;
 	if(!empty($wassup_settings)){
 		//save current 'wassup_active' setting prior to upgrade for later restore
@@ -638,7 +638,7 @@ function wassup_add_scripts(){
 		wp_register_script('wassup',WASSUPURL.'/js/wassup.js',array(),$vers);
 		if($wassuppage == "wassup-spia" || $wassuppage=="wassup-spy"){
 			wp_enqueue_script('spia', WASSUPURL.'/js/spia.js', array('jquery','wassup'), $vers);
-		}elseif($wassuppage == "wassup-options"){
+		}elseif($wassuppage == "wassup-options" || $wassuppage == "wassup-donate"){
 			//use Wordpress' jquery-ui.js only when current
 			if(version_compare($wp_version,'4.5','>=') || !function_exists('wassup_compat_add_scripts')){
 				wp_enqueue_script('jquery-ui-dialog');
@@ -651,8 +651,8 @@ function wassup_add_scripts(){
 			wp_dequeue_style('jquery-ui-core.css');
 			wp_dequeue_style('jquery-ui.css');
 		}
-		//bugfix in v1.9.4.4 - removed Wassup's copy of Thickbox due to conflict with Wordpress admin
-		add_thickbox();	 //Wordpress 2.5+ built-in function to add thickbox
+		//use Wordpress' copy of Thickbox @since v1.9.4.4
+		add_thickbox();	 //Wordpress 2.5+ function 
 		//enqueue jquery-migrate.js (and 'jquery.js')
 		wp_enqueue_script('jquery-migrate');
 		wp_enqueue_script('wassup');
@@ -802,7 +802,7 @@ function wassup_enable_errors(){
 		error_reporting(E_ALL);
 	}
 	if(!empty($wdebug_mode)){ 
-		//Bugfix in v1.9.4.4: don't set display_errors unless WP_DEBUG is not set
+		//don't set display_errors unless WP_DEBUG is not set @since v1.9.4.4
 		if(!defined('WP_DEBUG') || !defined("WP_DEBUG_DISPLAY")){
 			ini_set('display_errors','On');
 		}
@@ -831,7 +831,7 @@ function wassupPrepend() {
 	if(isset($_REQUEST['wc-ajax']) && preg_match('#/woocommerce\.php#',$active_plugins)>0){
 		return;
 	}
-	//Bugfix in v1.9.4.4: suppress php7 deprecated notices
+	//suppress php7 deprecated notices @since v1.9.4.4
 	if(!$wdebug_mode){
 		$errmode_reset=error_reporting();
 		$errdisplay_reset=ini_get('display_errors');
@@ -1037,7 +1037,7 @@ function wassupAppend($req_code=0) {
 			wassup_enable_errors();
 		}
 	}else{
-		//Bugfix in v1.9.4.4: suppress PHP7 deprecated notices
+		//suppress PHP7 deprecated notices @since v1.9.4.4
 		$errmode_reset=error_reporting();
 		$errdisplay_reset=ini_get('display_errors');
 		@wassup_disable_errors();
@@ -1227,6 +1227,7 @@ function wassupAppend($req_code=0) {
 		if((int)$wassup_timer - time() < 1){
 			$session_timeout=true;
 		}
+		$pcs=array();
 		//don't share wassup_id across multisite subsites
 		if(preg_match('/^([0-9]+)b_/',$wassup_id,$pcs)>0){
 			if($pcs[1]!=$subsite_id) $session_timeout=true;
@@ -1911,7 +1912,7 @@ function wassupAppend($req_code=0) {
 						$searchcountry=$match[3];
 					}
 					if(!empty($searchcountry) && $searchcountry!="us"){
-						//v1.9.3.1 bugfix: avoid duplicate country code in searchengine name
+						//avoid duplicate country code in searchengine name @since v1.9.3
 						if(stristr($searchengine," $searchcountry")===false) $searchengine .=" ".strtoupper($searchcountry);
 						if($language == "us" || empty($language) || $language=="en"){
 							//make tld consistent with language
@@ -2222,7 +2223,6 @@ function wassupAppend($req_code=0) {
 			wassupDb::update_wassupmeta($wassup_key,'_debug_output',$expire,$debug_output);
 		}
 	}elseif(isset($errmode_reset)){ 
-		//Bugfix in v1.9.4.4: reset error mode only if set 
 		//restore normal error mode
 		error_reporting($errmode_reset);
 		@ini_set('display_errors',$errdisplay_reset);
@@ -2271,7 +2271,7 @@ function wassup_insert_rec($wTable,$wassup_rec,$delayed=false){
 }//end wassup_insert_rec
 /**
  * Assign an id for current visitor session from a combination of date/hour/min/ip/loggeduser/useragent/hostname.
- * This is not unique so that multiple visits from the same ip/userAgent within a 30 minute-period, can be tracked, even when session/cookies is disabled.
+ * This is not unique so that multiple visits from the same ip/userAgent within a 30 minute-period, can be tracked, even when session/cookies are disabled.
  * @since v1.9
  * @param args (array)
  * @return string
@@ -2843,6 +2843,7 @@ function wGetSE($referrer = null){
 	} //end foreach
 	//search engine or key is not in list, so check for search phrase instead
 	if (empty($search_phrase) && !empty($referrer)) {
+		$pcs=array();
 		//Check for general search phrases
 		if(preg_match('#^https?://([^/]+).*[&?](q|search|searchfor|as_q|as_epq|query|keywords?|term|text|encquery)=([^&]+)#i',$referrer,$pcs) > 0){
 			if (empty($searchengine)) $searchengine=trim(strtolower($pcs[1]));
@@ -4002,7 +4003,7 @@ function wassup_widget_init(){
 		'wassup_onlineWidget',
 		'wassup_topstatsWidget',
 	);
-	//Bugfix in v1.9.4.4: turn off PHP7 deprecated warnings
+	//turn off PHP7 deprecated warnings @since v1.9.4.4
 	if(!$wdebug_mode){
 		$errmode_reset=error_reporting();
 		$errdisplay_reset=ini_get('display_errors');

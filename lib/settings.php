@@ -146,7 +146,7 @@ function wassup_optionsView($tab=0) {
 		<ul class="ui-tabs-nav">
 		<li id="opt-tab1" class="optionstab<?php if($tab=="1")echo ' ui-tabs-active';?>"><a href="#wassup_opt_frag-1"><span><?php _e("General Setup","wassup");?></span></a></li>
 		<li id="opt-tab2" class="optionstab<?php if($tab=="2")echo ' ui-tabs-active';?>"><a href="#wassup_opt_frag-2"><span><?php _e("Filters & Exclusions","wassup")?></span></a></li>
-		<li id="opt-tab3" class="optionstab <?php if($tab=="3")echo ' ui-tabs-active';?>"><a href="#wassup_opt_frag-3"><span><?php _e("Manage Files & Data","wassup");?></span></a></li><?php
+		<li id="opt-tab3" class="optionstab <?php if($tab=="3")echo ' ui-tabs-active';?>"><a href="#wassup_opt_frag-3"><span><?php _e("Manage Data","wassup");?></span></a></li><?php
 	if($has_uninstall_tab){
 		echo "\n";?>
 		<li id="opt-tab4" class="optionstab <?php if($tab=="4")echo ' ui-tabs-active';?>"><a href="#wassup_opt_frag-4"><span><?php _e("Uninstall","wassup");?></span></a></li><?php
