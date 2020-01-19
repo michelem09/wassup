@@ -33,20 +33,67 @@ function wassup_faq(){
 ?>
 	<div id="wassup_faq-1" class="optionspanel">
 		<ol>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I add WassUp's chart to my admin dashboard?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Check the box for \"Enable widget/small chart in admin dashboard\" under %s tab.","wassup"),'<span class="code">WassUp >> '.__("Options","wassup").' >><nobr>[<a href="'.$options_link.'">'.__("General Setup","wassup").'</a>]</nobr></span>');?></span></li>
+		<li id="compatible-1"><strong>Q:</strong> <span class="faq-question"><?php echo __("Is WassUp compatible with the latest release of WordPress?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Yes! This version of WassUp is compatible with the current v5.x line of WordPress.","wassup"),'v'.WASSUPVERSION).' ';
+		 echo sprintf(__("WassUp is fully compatible with WordPress %s and PHP %s.","wassup"),'<nobr>v4.0 - 5.3.2</nobr>','<nobr>v5.2 - 7.4</nobr>').' ';
+		 echo sprintf(__("WassUp also runs on legacy WordPress %s when downloaded from %s.","wassup"),'<nobr>v2.2.3 - 3.8</nobr>','<a href="https://github.com/michelem09/wassup/releases/">GitHub.com Repository</a>').' ';
+		 echo __("However, some language translations may be incomplete or unavailable in legacy WordPress setups.","wassup").'<br/>';
+		 echo '<span class="linespace">'.__("Important Note: Legacy WordPress sites may have unaddressed security vulnerabilities.","wassup").' ';
+		 echo __("Whenever possible, always upgrade your WordPress site to the latest version.","wassup").'</span>';?></span></li>
+		<li id="chart-1"><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I add WassUp's chart to my admin dashboard?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Check the box for \"Enable widget/small chart in admin dashboard\" under %s tab.","wassup"),' <span class="code">WassUp >> '.__("Options","wassup").' >><nobr>[<a href="'.$options_link.'">'.__("General Setup","wassup").'</a>]</nobr></span>');?></span></li>
 		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I display WassUp widgets on my site?","wassup");?></span><br/>
 		<strong>A:</strong> <span class="faq-answer"><?php echo __("From Wordpress widgets panel, drag the \"WassUp Online\" widget or the \"Wassup Top Stats\" widget from the list of available widgets on the left into your theme's \"Sidebar\" or \"Footer\" area on the right or use the Customizer to add Wassup widgets interactively.","wassup");?></span></li>
 		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("My Wordpress theme is not widget ready. Is it possible to display WassUp widgets on my site?","wassup");?></span><br/>
 		<strong>A:</strong> <span class="faq-answer"><?php echo __("Yes. Insert the template tag \"wassup_sidebar()\" into your theme's \"sidebar.php\" file to display Wassup widgets as a single combined widget on your site.","wassup");?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I view the real-time visitor geolocation map in WassUp?","wassup");?></span><br/>
+		<li id="map-1"><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I view the real-time visitor geolocation map in WassUp?","wassup");?></span><br/>
 		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Check the box for \"Display a GEO IP Map in spy visitors view\" in %s and save, then navigate to %s panel to see the map.","wassup"),'<span class="code">WassUp >> '.__("Options","wassup").' >><nobr>[<a href="'.$options_link.'">'.__("General Setup","wassup").'</a>]</nobr></span>','<span class="code">WassUp >><nobr>'.__("SPY Visitors","wassup").'</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("The map has vanished and I get a message like: \"Oops, something went wrong\" or \"Google has disabled use of the Maps API for this application\". How do I fix this?","wassup");?></span><br/>
+		<li id="map-2"><strong>Q:</strong> <span class="faq-question"><?php echo __("The map has vanished and I get a message like: \"Oops, something went wrong\" or \"Google has disabled use of the Maps API for this application\". How do I fix this?","wassup");?></span><br/>
 		<strong>A:</strong> <span class="faq-answer"><?php
-		echo sprintf(__("Try upgrading to the latest version of Wassup, or go to Wassup-Options and click the Reset-to-Default button if you have already upgraded, or sign up for your own %s and enter it under \"Spy Visitors settings\" in %s tab.","wassup"),
+		echo __("Try upgrading to the latest version of Wassup or go to Wassup-Options and click the \"reset-to-default\" button if you already upgraded.","wassup")." ";
+		echo sprintf(__("You can also sign up for your own %s and enter it under \"Spy Visitors settings\" in %s tab.","wassup"),
 		'<a href='.$GMapsAPI_signup.'>Google!Maps API key</a>','<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>[<a href="'.$options_link.'">'.__("General Setup","wassup").'</a>]</nobr></span>');?></span></li>
-		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I exclude a visitor from being recorded?","wassup");?></span><br/>
-		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Navigate to %s tab and enter a visitor's username, IP address, or hostname into the appropriate text area for that \"Recording Exclusion\" type.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>[<a href="'.$options_link.'&tab=2">'.__("Filters & Exclusions","wassup").'</a>]</nobr></span>');?></span></li>
+		<li id="map-3"><strong>Q:</strong> <span class="faq-question"><?php echo __("Why has the visitor location pins stopped showing on the map?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php echo __("Wassup's uses a free web service for geolocating IPs on the map and the total requests may have exceeded the daily quota, or perhaps the API key has changed, or the service may be offline.","wassup").'&nbsp; <br/>';
+		echo '<span class="linespace">'.__("To fix, try click the \"reset-to-default\" button in Wassup-Options or upgrade Wassup.","wassup");?></span><br/>
+		<li id="cookie-1"><strong>Q:</strong> <span class="faq-question"><?php echo __("Why does WassUp use cookies?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php echo __("WassUp uses two session cookies to assist in visitor tracking.","wassup").' ';
+		echo __("One cookie contains a tracking id to uniquely identify the visitor as they browse different pages on your website, plus the visitor's ip address and WordPress username, if logged in.","wassup").' ';
+		echo __("The second cookie contains some specs about the visitor's browser/device.","wassup").' ';
+		echo __("These cookies are stored on the visitor device only for duration of their visit: when the visitor closes the browser window/tab, the cookies are automatically deleted.","wassup");
+		echo ' ';?></span><br/>
+		<li id="gdpr-1"><strong>Q:</strong> <span class="faq-question"><?php echo __("Is WassUp EU GDPR compliant?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php echo __("No.","wassup").' ';
+		echo __("As a stand-alone application, WassUp fails EU GDPR strict standards for two reasons","wassup").':<ol>';
+		echo '<li> '.__("WassUp plugin collects and stores visitors' IP addresses, WordPress usernames (for user roles and permissions) and comment emails (to identify \"commenters\") in its tables", "wassup").'</li>';
+		echo '<li> '.__("WassUp plugin may share visitors' IP addresses and commenters' emails with 3rd-party web services for geolocation and spam identification.","wassup").'</li></ol> ';
+		echo '<span class="linespace">&nbsp;'.sprintf(__("IMPORTANT: Read %s to learn how to make your site EU GDPR compliant with WassUp.","wassup"),'<a href="#gdpr-2"> '.__("below","wassup").'</a>');
+		?></span></li>
+		<li id="gdpr-2"><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I make my Wordpress site EU GDPR compliant with WassUp plugin?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php
+		echo __("You need to create a \"privacy policy\" page that states that your site does visitor IP tracking for web analytics and that visitors' IP addresses may be shared with a geolocation service, and that commenters' IP address, email and comment text may be shared with a spam checking service.","wassup").' ';
+		echo sprintf(__("Refer to the Wordpress support article \"%s\" for more information or install a %s.","wassup"),'<a href="https://wordpress.org/support/article/wordpress-privacy/">'."Wordpress Privacy".'</a>','<a href="https://wordpress.org/plugins/search/gdpr/">'.__("GDPR compliance plugin","wassup").'</a>').'<br/>';
+		echo '<span class="linespace">&nbsp;'.__("IMPORTANT: Read below to learn how to honor EU GDPR requests in WassUp.","wassup").'</span>';
+		?></span></li>
+		<li id="gdpr-erase"><strong>Q:</strong> <span class="faq-question"><?php 
+		echo __("The EU GDPR law require that I erase all identifiable records of a visitor when they request it. How do I honor a visitor's request to erase their data in WassUp?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php 
+		echo sprintf(__("You must erase WassUp's visitor's records manually. Follow the faq instructions for %s to do this.","wassup"),'&#034;<a href="#delete-1">'.__("delete a specific visitor's records","wassup").'</a>&#034;');?>
+		</span></li>
+		<li id="gdpr-optout"><strong>Q:</strong> <span class="faq-question"><?php 
+		echo __("The EU GDPR law require that I allow a visitor to opt out of tracking. How do I honor this type of request in WassUp?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php 
+		echo sprintf(__("Follow the faq instructions for %s.","wassup"),'&#034;<a href="#exclude-1">'.__("exclude a visitor from being recorded","wassup").'</a>&#034;');?>
+		</span></li>
+		<li id="delete-1"><strong>Q:</strong><span class="faq-question"><?php echo __("How do I delete a specific visitor's records from WassUp's history?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php echo __("In WassUp's \"Visitor Details\" panel, select \"all time\" range and search for the visitor by username, email, or IP address. Select a record by clicking the 2nd icon on the right of the record (yellow triangle). This \"Marks\" it and all other records with the same IP address and highlights them.","wassup").' ';
+		echo __("Select one of the highlighted records and click the \"X\" icon that is furthest right of the record. This deletes all highlighted records.","wassup").' '.__("You may have to repeat this process several times as there could be multiple IP addresses associated with that visitor.","wassup");?>
+		</span></li>
+		<li id="exclude-1"><strong>Q:</strong> <span class="faq-question"><?php 
+		echo __("How do I exclude a visitor from being recorded?","wassup");?></span><br/>
+		<strong>A:</strong> <span class="faq-answer"><?php 
+		echo sprintf(__("Navigate to %s tab and enter a visitor's username, IP address, or hostname into the appropriate text area for that \"Recording Exclusion\" type.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>[<a href="'.$options_link.'&tab=2">'.__("Filters & Exclusions","wassup").'</a>]</nobr></span>');?>
+	</span></li>
 		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("How do I stop (temporarily) WassUp from recording new visits on my site?","wassup");?></span><br/>
 		<strong>A:</strong> <span class="faq-answer"><?php echo sprintf(__("Uncheck the box for \"Enable statistics recording\" under %s tab.","wassup"),'<span class="code">WassUp >>'.__("Options","wassup").' >><nobr>[<a href="'.$options_link.'">'.__("General Setup","wassup").'</a>]</nobr></span>');?></span></li>
 		<li><strong>Q:</strong> <span class="faq-question"><?php echo __("In Wordpress multisite, how do I stop (temporarily) WassUp from recording new visits on all sites in the network?","wassup");?></span><br/>

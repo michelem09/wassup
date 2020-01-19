@@ -3,14 +3,14 @@
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
 Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
-Version: 1.9.4.4
+Version: 1.9.4.5
 Author: Michele Marcucci, Helene Duncker
 Author URI: http://www.michelem.org/
 Text Domain: wassup
 Domain Path: /language
 License: GPL2
 
-Copyright (c) 2007-2018 Michele Marcucci
+Copyright (c) 2007-2020 Michele Marcucci
 Released under the GNU General Public License GPLv2 or later 
 http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -1446,9 +1446,7 @@ function wassupAppend($req_code=0) {
 			$spamresult=$recent_hit[0]->spam;
 			//don't use hack-attempt label from recent hit when user is logged-in
 			if((int)$spamresult==3 && !empty($logged_user)){
-				//if(strpos($recent_hit[0]->urlrequested,'wp-login.php')>0 || (!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],'wp-login.php')>0))){
 					$spamresult=0;
-				//}
 			}
 			//retroactively update screen_res
 			//...queue the update because of "delayed insert"

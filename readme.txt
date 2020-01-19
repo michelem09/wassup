@@ -1,10 +1,11 @@
 === WassUp Real Time Analytics ===
-Contributors: michelem, helened
+Contributors: michelem, helened 
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web
 Requires at least: 4.0
-Tested up to: 4.9.4
-Stable tag: 1.9.4.4 
+Tested up to: 5.3.2
+Requires PHP: 5.2
+Stable tag: 1.9.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +100,10 @@ For people with database size limitations, WassUp has a few options to manage th
 * WassUp is NOT a security plugin. It does not block unwanted visitors nor protect your site from malware attempts. You need a separate security plugin for that
 
 == Frequently Asked Questions ==
+
+= Is WassUp compatible with the latest release of WordPress? =
+Yes! WassUp is compatible with the current v5.x line of WordPress. WassUp is fully compatible with WordPress v4.0 - 5.3.2 and PHP v5.2 - 7.4. WassUp is also runs on legacy WordPress v2.2.3 - 3.8 when downloaded from [Github repository](https://github.com/michelem09/wassup/releases/). However, some language translations may be incomplete or unavailable in legacy WordPress setups.
+Important Note: Legacy WordPress sites may have unaddressed security vulnerabilities. Whenever possible, always upgrade your WordPress site to the latest version.
 
 = How do I add WassUp's chart to my admin dashboard? =
 Check the box for "Enable widget/small chart in admin dashboard" under WassUp >>Options >>[General Setup] tab.
@@ -206,10 +211,23 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache.
 
 == Upgrade Notice ==
-= 1.9.4.4 =
-* Important bugfix update. DO NOT UPGRADE when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
+= 1.9.4.5 =
+* Urgent bugfix and security update....Yes, WassUp is still alive! Remember DO NOT UPGRADE when your site busy! Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions
 
 == Changelog ==
+= v1.9.4.5 =
+= Urgent bugfix and security upgrade =
+* fixed an activation error due to a "SQL syntax error" that occurred in some MariaDb setups 
+* fixed missing pins on map issue by switching ip geolocation service to "ipstack.com" free webservice
+* fixed mislabel of Googlebot as "spam/malware" when the url request is "/.well-known/assetlinks.json"
+* fixed typo in "wassupAppend" function
+* fixed insecure favicon images in WassUp's admin panel by switching 'src' scheme to 'https'
+* removed wcURL class from main.php module due to a TLS validation security vulnerability in cURL (per Wordpress plugin team request)
+* removed scheduled lookup of api key from upgrade.php module.
+* new FAQ answers about EU GDPR, IP geolocation, and more
+* new "wassup.pot" file for WassUp translations
+* minor code changes
+
 = v1.9.4.4 =
 * fixed a bug that affected Wassup's tabbed submenu navigation. Thanks to @simonothen for finding this bug
 * fixed a lightbox conflict caused by Wassup's thickbox.js
@@ -374,4 +392,4 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 = Credits =
 * [Jquery](http://www.jquery.com) for the amazing Ajax framework
 * [FAMFAMFAM](http://www.famfamfam.com/) for the flags icons
-* Thanks to [@AlexandreFiori](http://twitter.com/alexandrefiori) for access to his GeoIP API at [freegeoip.net](http://freegeoip.net)
+* [IPstack.com](http://ipstack.com/) REST api for ip geolocatio
