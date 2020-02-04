@@ -1483,7 +1483,7 @@ function wassupAppend($req_code=0) {
 			}
 		}
 	//#13 Exclude admin/admin-ajax requests with same session cookie as recent hit but does not show as a logged user request (ex: /wp-admin/post.php hit from edit link in website page?)
-	if((!is_admin() && stristr($urlRequested,"/wp-admin/")===false) || $urlRequested !='/wp-admin/admin-ajax.php' || empty($recent_hit) || ((empty($recent_hit[0]->username) || $recent_hit[0]->username != $cookieUser) && stristr($recent_hit[0]->urlrequested,"/wp-admin/")===false)){
+	if((!is_admin() && stristr($urlRequested,"/wp-admin/")===false) || $urlRequested != $wppath.'/wp-admin/admin-ajax.php' || empty($recent_hit) || ((empty($recent_hit[0]->username) || $recent_hit[0]->username != $cookieUser) && stristr($recent_hit[0]->urlrequested,"/wp-admin/")===false)){
 		//check for xss attempts on referrer
 		if($spam==0 && $hackercheck && empty($logged_user)){
 			//...skip if referrer is own blog
@@ -1497,11 +1497,15 @@ function wassupAppend($req_code=0) {
 		}
 	//#14 Exclude 404 hits unless 1st visit or malware attempt
 	if($req_code == 200 || empty($recent_hit) || ($hackercheck && ($spam!=0 || stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){
-		//omit 'admin-ajax.php', 'ads.txt','assetslinks.json',index.php','license.php','robots.txt','security.txt','sitemap.xml', and 'wp-login.php', from malware checks
-		$good_urls_regex='#^(/index\.php|/license\.php|/ads\.txt|/robots\.txt|/security\.txt|/sitemap\.xml|/\.well\-known/(?:assetlinks\.json|security\.txt)|'.$wppath.'/wp-admin/admin\-ajax\.php|'.$wppath.'/wp\-login\.php)$#i';
-		if($hackercheck && $spam==0 && $urlRequested != '/' && preg_match($good_urls_regex,$urlRequested)==0){
+		//Malware url check exceptions:
+		//..omit 'admin-ajax.php', 'ads.txt','assetslinks.json',index.php','license.php','robots.txt','security.txt','sitemap.xml', and 'wp-login.php', from malware checks
+		$good_urls_regex='#^(/|/index\.php|/license\.php|/ads\.txt|/robots\.txt|/security\.txt|/sitemap\.xml|/\.well\-known/(?:assetlinks\.json|security\.txt)|'.$wppath.'/wp\-admin/admin\-ajax\.php|'.$wppath.'/wp\-login\.php)$#i';
+		if ($hackercheck && preg_match($good_urls_regex,$urlRequested)>0){
+			$hackercheck=false;
+		}
+		//Identify malware on url
+		if($hackercheck && $spam==0 && $urlRequested != '/'){
 			$pcs=array();
-		//identify malware
 		//xss attempt
 		if(wassupURI::is_xss($urlRequested)){
 			$spam=3;
@@ -1551,7 +1555,6 @@ function wassupAppend($req_code=0) {
 					}
 				}
 				//check for admin/execution attempts on url
-				$pcs=array();
 				if($spam==0 && preg_match('#[^a-z\-_](admin|adminer(?:[\.\-][0-9a-z\-_]+)|administrator|base64|bin|code|config|cookie|delete|dev/|dll|document|drop|etc|eval|exec|exit|function|href|ini|insert|install|login|mysql\.(?:[a-z]{3})|passw|portal/|root|script|select|setting|setup|table|tmp/|update|upgrade|upload|wp/|wp\-|where|window)([^0-9a-z\.\-_]|$)#',$urlRequested)>0){
 					if($req_code==404){
 						$spam=3;
@@ -3963,9 +3966,14 @@ function wIsAttack($http_target="") {
 	}
 	if(!empty($targets)){
 		foreach ($targets AS $target) {
-			if(preg_match('#["<>`^]|[^/][~]|\.\*|\*\.#',str_replace(array('&lt;','&#60;','%3C','&rt;','&#62;','%3E','&quot;','%5E'),array("<","<","<",">",">",">","\"",'^'),$target))>0 || (preg_match('/[\\\']/',str_replace('%5C','\\',$target))>0 && preg_match('/((?:q|search|s|p)\=[^\\\'&=]+)([\\\']*\'[^\'&]*)&/',str_replace('%5C','\\',$target))==0)){
+			//skip home page requests
+			if($target=="/" || $target=="/index.php" || $target=="/home.php" || $target=="/index.htm" || $target=="/home.htm" || $target=="/index.html" || $target=="/home.html"){
+				continue;
+			}
+			//do malware tests
+			if(preg_match('#["<>`^]|[^/]~|\.\*|\*\.#',str_replace(array('&lt;','&#60;','%3C','&rt;','&#62;','%3E','&quot;','%5E'),array("<","<","<",">",">",">","\"",'^'),$target))>0 || (preg_match('/[\\\\\']/',str_replace('%5C','\\',$target))>0 && preg_match('/((?:[pqs]|key|query|search|text|word)\=[^\\\\\'&=]+)([\\\\\']*\'[^\'&]*)&/i',str_replace('%5C','\\',$target))==0)){
 				$is_attack=true;break;
-			}elseif(preg_match('#(\.+[\\/]){3,}|[<>&\\\|:\?$!]{2,}|[+\s]{5,}|(%[0-9A-F]{2,3}){5,}#',str_replace(array('%20','%21','%24','%26','%2E','%2F','%3C','%3D','%3F','%5C'),array(' ','!','$','&','+','.','/','<','>','?','\\'),$target))>0){
+			}elseif(preg_match('#(?:\.+[\\\\/]){3,}|[<>&\\\\\|:\?!]{2,}|[+\s]{5,}#',str_replace(array('%20','%21','%24','%26','%2E','%2F','%3C','%3D','%3F','%5C'),array(' ','!','$','&','+','.','/','<','>','?','\\'),$target))>0){
 				$is_attack=true;break;
 			}elseif(preg_match('/(?:^|[^a-z_\-])(select|update|delete|alter|drop|union|create)[ %&].*(?:from)?.*wp_\w+/i',str_replace(array('\\','&#92;','"','%22','&#34;','&quot;','&#39;','\'','`','&#96;'),'',$target))>0){
 				$is_attack=true;break;
@@ -3975,7 +3983,7 @@ function wIsAttack($http_target="") {
 				$is_attack=true;break;
 			}elseif(preg_match('/\.(bat|bin|cfm|cmd|exe|ini|msi||[cr]?sh)([^a-z0-9]+|$)/i',$target)>0 || (preg_match('/\.dll(^a-z0-9_\-]+|$)/',$target)>0 && strpos($target,'.att.net/')===false) || preg_match('/[^0-9a-z_]setup\.[a-z]{2,4}([^0-9a-z]+|$)/',$target)>0){
 				$is_attack=true;break;
-			}elseif(preg_match('#[\\/](dev|drivers?|etc|program\sfiles|root|system|system32|windows)[/\\%&]#i',str_replace('%20',' ',$target))>0 || preg_match('#(c|file)\:[\\/]+.*install#i',$target)>0){
+			}elseif(preg_match('#[\\\\/](dev|drivers?|etc|program\sfiles|root|system(?:32)?|windows)[/\\\\%&]#i',str_replace('%20',' ',$target))>0 || preg_match('#(c|file)\:[\\\\/]+.*install#i',$target)>0){
 				$is_attack=true;break;
 			}elseif(preg_match('/[^a-z0-9$%][$`%]?([a-km-rt-z_][a-z0-9_\-]+)[`%]?\s?\=\s?\-[190x]+/i',str_replace(array('&36;','%24','%20','&#96;','%60','%3D','&#61;','%2D','&#45;'),array('$','$',' ','`','`','=','=','-','-'),$target))>0){
 				$is_attack=true;break;
