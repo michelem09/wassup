@@ -1611,8 +1611,9 @@ class wassupDb{
 	/** simple escape for db save to prevent xss propagation. @since v1.9.1 */
 	static function xescape($str){
 		//change '" 'to &quot; and '<' to &lt; for db save
+		//escaped "()`\" chars @since v1.9.4.5
 		if(!empty($str) && !is_numeric($str)){
-			$xescaped=str_replace(array('"','<','\\x3c','%3c'),array('&quot;','&lt;','&092;x3c','&037;3c'),$str);
+			$xescaped=str_replace(array('(',')','`','\\,',',','\'','"','<','\\x3c','%3c','\\'),array('&#40;','&#41;','&#96;','&#92;&#44;','&#44;','&#39;','&quot;','&lt;','&#92;x3c','&#37;3c','&#92;'),$str);
 		}else{
 			$xescaped=$str;
 		}
