@@ -620,7 +620,7 @@ function wassup_spiaView ($from_date="",$rows=0,$spytype="",$spy_datasource="") 
 		$lon = "";
 		$flag = "";
 		$markerHtml="";
-		if($ip !=$geoip_rec['ip'] && preg_match('#^(127\.0\.0\.1|192\.168\.|10\.10\.|\:\:1)#',$ip)==0){
+		if(empty($geoip_rec['ip']) || ($ip !=$geoip_rec['ip'] && preg_match('#^(127\.0\.0\.1|192\.168\.|10\.10\.|\:\:1)#',$ip)==0)){
 			//geolocate a new visitor IP
 			$geoip_rec=wGeolocateIP($ip);
 			echo "\n\t<!-- heartbeat -->";
@@ -761,13 +761,18 @@ function wGetLocationname($geoip_rec=array()) {
  * @return array (ip, location, latitude, longitude, country)
  */
 function wGeolocateIP($ip) {
-	global $wpdb, $wdebug_mode;
-	$geourl = "http://freegeoip.net/json/$ip";
-	//$geourl = "http://www.telize.com/geoip/$ip"; //API not public as of 11/15/15
+	global $wpdb, $wassup_options, $wdebug_mode;
+
+	//$geourl = "http://www.telize.com/geoip/$ip"; //API not public as of 2015-11-15
+	//$geourl = "http://freegeoip.net/json/$ip"; //discontinued as of 2018-07-01
+	$geourl = "http://api.ipstack.com/".$ip;
+	$apikey=$wassup_options->get_apikey("geoip");
+	if(!empty($apikey)) $geourl .= '?access_key='.esc_attr($apikey);
 	$geoip = array('ip'=>$ip,'latitude'=>"",'longitude'=>"",'city'=>"",'country_code'=>"");
 	if(!empty($ip) && $ip!= "127.0.0.1" && $ip!= "::1" && substr($ip,0,8)!= "192.168."){
 		$geodata=false;
 		$cached=false;
+		$error_msg="";
 		//1st  check for cached copy of geoip in wassup_meta
 		$geodata = wassupDb::get_wassupmeta($ip,'geoip');
 		if(!empty($geodata) && is_array($geodata)){
@@ -2091,12 +2096,6 @@ function wFetchAPIData($api_url) {
 		}
 		$api_method='file_get_contents';	//debug
 	}
-	if ($wdebug_mode) {
-		echo "\n<!-- <br>API Fetch using $api_method data: "; //debug
-		print_r($apidata);
-		echo "-->\n";
-	}
-	//if(!empty($stimeout)) @set_time_limit($stimeout); //no need to reset this
 	return $apidata;
 } //end wFetchAPIData
 ?>

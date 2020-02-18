@@ -1,12 +1,13 @@
-# WassUp Real Time Analytics for WordPress  
-Contributors: michelem, helened  
+# WassUp Real Time Analytics for WordPress 
+Contributors: michelem, helened 
 Donate link:  [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=michele%40befree%2eit&item_name=WassUp&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8)   
-Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web  
-Requires at least: WordPress 2.2  
-Tested up to: 4.9.4 
-Stable tag: 1.9.4.4 
-License: GPLv2 or later  
-License URI: http://www.gnu.org/licenses/gpl-2.0.html  
+Tags: analytics, counter, online, seo, statistics, stats, tracker, traffic, trends, user, visitor, web
+Requires at least: WordPress 2.2 
+Tested up to: 5.3.2
+Requires PHP: 5.2
+Stable tag: 1.9.4.5
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 #### Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more.
 -----
@@ -95,6 +96,7 @@ For people with database size limitations, WassUp has a few options to manage th
 * &sup1;WassUp is NOT a security plugin. It does not block unwanted visitors nor protect your site from malware attempts. You need a separate security plugin for that
 
 ## Screenshots
+
 1. Wassup - Visitor Details view.
 2. Wassup - SPY Visitors view.
 
@@ -115,7 +117,7 @@ B. If you prefer to install the plugin manually or you are running an older vers
      1. Navigate to Plugins panel >> `Add New` >> `Upload Plugin`
      2. Click `Browse`, then find and select the plugin zip file that you downloaded
      3. Click `Install Now`
-     4. Activate WassUp plugin and you are done!  
+     4. Activate WassUp plugin and you are done!
 
    * Otherwise, unpack the plugin's zip or gz file with your preferred unzip/untar program or use the command line: `tar xzvf wassup.tar.gz` (linux), then follow these steps to complete your install:
      1. Upload the entire "wassup" folder into your `/wp-content/plugins` directory on your Wordpress host using their Cpanel File manager or an ftp client software
@@ -154,13 +156,25 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * WassUp is incompatible with the following static page caching plugins: WP Super Cache, WP Cache, WP Fastest Cache, and WP Hyper Cache.
 
 ## Upgrade Notice
-### 1.9.4.4
-* Important bugfix update.
+### 1.9.4.5
+* Urgent bugfix and security update....Yes, WassUp is still alive!
 * DO NOT UPGRADE when your site busy!
 * Read [installation instructions](http://wordpress.org/plugins/wassup/installation/) for safe upgrade instructions.
 
 ## Changelog
-### v1.9.4.4: Important bugfix update
+### v1.9.4.5: Urgent bugfix and security update
+* fixed an activation error due to a "SQL syntax error" that occurred in some MariaDb setups 
+* fixed missing pins on map issue by switching ip geolocation service to "ipstack.com" free webservice
+* fixed mislabel of Googlebot as "spam/malware" when the url request is "/.well-known/assetlinks.json"
+* fixed typo in "wassupAppend" function
+* fixed insecure favicon images in WassUp's admin panel by switching 'src' scheme to 'https'
+* removed wcURL class from main.php module due to a TLS validation security vulnerability in cURL (per Wordpress plugin team request)
+* removed scheduled lookup of api key from upgrade.php module.
+* new FAQ answers about EU GDPR, IP geolocation, and more
+* new "wassup.pot" file for WassUp translations
+* minor code changes
+
+### v1.9.4.4:
 * fixed a bug that affected Wassup's tabbed submenu navigation. Thanks to @simonothen for finding this bug
 * fixed a lightbox conflict caused by Wassup's thickbox.js
 * fixed a bug that caused notices to display to visitors when in debug mode
@@ -168,7 +182,7 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * minor code changes
 
 ### v1.9.4.3 
-* merged PHP7 compatibility update (from v1.9.4.1) into master
+* merged PHP7 compatibility updates (from v1.9.4.1) into master
 * minor text changes
 
 ### v1.9.4.2 
@@ -194,20 +208,20 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * removed Google!maps API key from Wassup source due to Google's TOS limitations
 * miscellaneous minor bugfixes
 
-### v1.9.3.1: Important bugfix upgrade
+### v1.9.3.1
 * fixed various preg_match regexes to improve matching
 * fixed a parenthesis error in tracking/exclusion code for 404 hits
 * fixed bug that caused duplicate country code in searchengine name
 * minor code changes.
 
-### v1.9.3: Important bugfix upgrade
+### v1.9.3
 * fixed an 'unknown modifier' preg_match error in 'wassup.php' module.
 * fixed an IP validation loophole that could cause invalid/malformed forwarding IPs in client's http_header to be stored as client IP.
 * fixed code to stop recording of front-end ajax requests ('/wp-admin/admin-ajax.php' url) as "possible spam/malware" hits.
-* updated code to restore 'shutdown' hook as the primary hook for 'wassupAppend' function.  
+* updated code to restore 'shutdown' hook as the primary hook for 'wassupAppend' function.
 * updated translation script to re-attempt language load with "language x2" as filename whenever the initial load (with "locale") fails.
-* updated translation template and language files to v1.9.2  
-* miscellaneous minor changes.  
+* updated translation template and language files to v1.9.2
+* miscellaneous minor changes.
 
 ### v1.9.2: Urgent bugfix upgrade
 * fixed fatal error on `wassup_options::is_recording_active` that occurred in some configurations
@@ -228,7 +242,7 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 * new module, 'wassupadmin.php' for WassUp admin panels and dashboard widget
 * new module, 'compatibility.php' to check for Wordpress and PHP compatibility and to load compatibility modules from `/lib/compat-lib/` subfolder when available
 * removed backward compatibility modules ('/lib/compat-lib/') and features from Wordpress repository.
-  Wassup's backward-compatibility feature remains in the full copy of Wassup available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)  
+  Wassup's backward-compatibility feature remains in the full copy of Wassup available at [http://github.com/michelem09/wassup/](http://github.com/michelem09/wassup/)
 * deleted obsolete files ('badhosts.txt','badhosts-intl.txt') and javascripts
 * updated Google!Maps API link to use a common API key for Wassup-Spy (required by Google since 2016-06-22).
 * updated WassUp 'wp-cron' scheduled tasks to terminate (and restart) at reset-to-default, recording stop/start, and at plugin deactivate/reactivate events.
@@ -316,4 +330,4 @@ When you activate this plugin (as described in "Installation"), it works "as is"
 ### Credits
 * [Jquery](http://www.jquery.com) for the amazing Ajax framework
 * [FAMFAMFAM](http://www.famfamfam.com/) for the flags icons
-* Thanks to [@AlexandreFiori](http://twitter.com/alexandrefiori) for access to his GeoIP API at [freegeoip.net](http://freegeoip.net)
+* [IPstack.com](http://ipstack.com/) REST api for ip geolocatio

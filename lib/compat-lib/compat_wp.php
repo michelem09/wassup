@@ -96,16 +96,6 @@ if(!function_exists('has_action')){	//added in Wordpress 2.5
 		return has_filter($tag,$function_to_check);
 	}
 }
-if(!function_exists('add_thickbox')){	//added in Wordpress 2.5
-	function add_thickbox(){
-		$compatlib=dirname(preg_replace('/\\\\/','/',__FILE__));
-		//register Wassup's thickbox.js
-		if(file_exists($compatlib.'/js/thickbox/thickbox.js')){
-			wp_enqueue_script('thickbox',$compatlib.'/js/thickbox/thickbox.js',array('jquery'),'3.1');
-		}
-		//thickbox style handled in 'compat_functions.php' module
-	}
-}
 if(!function_exists('wp_enqueue_style')){	//added in Wordpress 2.6
 	function wp_enqueue_style($name,$file="",$dep=array(),$vers=0){
 		//do nothing...handled in 'compat_functions.php' module
@@ -153,6 +143,18 @@ if(!function_exists('site_url')){	//added in Wordpress 2.6
 			$url .=ltrim($path, '/');
 		}
 		return $url;
+	}
+}
+if(!function_exists('add_thickbox')){	//added in Wordpress 2.5
+	function add_thickbox(){
+		$compatlib=dirname(preg_replace('/\\\\/','/',__FILE__));
+		//register Wassup's thickbox.js
+		if(file_exists($compatlib.'/js/thickbox/thickbox.js')){
+			$compatpath=strstr($compatlib,'/'.basename(WASSUPDIR).'/');
+			$compaturl=plugins_url($compatpath);
+			wp_enqueue_script('thickbox',$compaturl.'/js/thickbox/thickbox.js',array('jquery-migrate'),'3.1');
+		}
+		//thickbox style handled in 'compat_functions.php' module
 	}
 }
 } //end if Wordpress < 2.8

@@ -438,7 +438,6 @@ function wassup_add_css() {
 				echo '<link href="'.WASSUPURL.'/css/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />'."\n";
 			}
 		}
-		//bugfix in v1.9.4.4: removed Wassup's thickbox css due to conflict in Wordpress admin panel
 		// Override some Wordpress css and Wassup default css settings on Wassup pages
 ?>
 <style type="text/css">
@@ -858,9 +857,12 @@ function WassUp() {
 			$admin_message = __("Wassup options reset successfully","wassup")."." ;
 			$wassup_user_settings=$wassup_options->resetUserSettings();
 			if($wassup_options->is_recording_active()) wassup_cron_startup(); //restart wp-cron
-			//reset-to-default updates Wassup's map apikey @since v1.9.4
-			if(empty($wassup_options->wassup_googlemaps_key)){
-				$key=$wassup_options->lookup_apikey();
+			//reset-to-default updates Wassup's api keys @since v1.9.4
+			$do_api_reset=$wassup_options->lookup_apikey();
+			if ($wdebug_mode && !empty($do_api_reset)) {
+				if (is_string($do_api_reset)) {
+					$admin_message=esc_html($do_api_reset);
+				}
 			}
 		}
 	}
@@ -1555,6 +1557,7 @@ function wassup_page_contents($args=array()){
 		$markedtot=0;
 		$searchtot=0;
 		$ipsearch="";
+		$wmain=array();
 		//don't apply "search" for marked ip (in whereis)
 		if(!empty($wsearch) && $wsearch==$wip){
 			$ipsearch=$wsearch;

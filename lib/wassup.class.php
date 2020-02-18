@@ -137,7 +137,7 @@ class wassupOptions {
 			'umark' 	=>"",
 			'uip'   	=>"",
 			'urecid'	=>0,
-			'utimestamp'	=>0,
+			'utimestamp'	=>current_time('timestamp'),
 			'uwassupid'	=>"",
 			'uversion'	=>WASSUPVERSION,
 			);
@@ -955,32 +955,39 @@ class wassupOptions {
 		$wassuphash=wp_hash($hashkey);
 		return $wassuphash;
 	}
-	/** Retrieve or query a Google!Map API key   @since v1.9.4 */
-	public function get_apikey(){
+	/** Retrieve or query a Google!Map API key or GeoIP API key @since v1.9.4 */
+	public function get_apikey($api="googlemaps"){
 		$apikey="";
-		//try user's own api key
-		if(!empty($this->wassup_googlemaps_key)){
-			$apikey=$this->wassup_googlemaps_key;
-		}else{
-			//check for a builtin api key, if exist
+		//site domain used for db cache query
+		$wassup_key=wassupURI::get_urldomain();
+		//always lookup api keys after an upgrade @since v1.9.4.5
+		$api_timestamp=wassupDb::get_wassupmeta($wassup_key,'_api_timestamp');
+		if (empty($api_timestamp) || $this->wassup_upgraded > ($api_timestamp+900)){
+			$result=$this->lookup_apikey();
+		}
+		//get the apikey
+		if($api == "googlemaps" || empty($api)){
 			$meta_key="_googlemaps_key";
-			if(is_multisite()) $sitehome=network_home_url();
-			else $sitehome=get_option('home');
-			$homedomain=wassupURI::get_urldomain($sitehome);
-			$apikey=wassupDb::get_wassupmeta($homedomain,$meta_key);
+			//first try user's own api key
+			if(!empty($this->wassup_googlemaps_key)){
+				$apikey=$this->wassup_googlemaps_key;
+			}else{
+				$apikey=wassupDb::get_wassupmeta($wassup_key,$meta_key);
+			}
+		//separate Geo IP API key @since v1.9.4.5
+		}elseif($api=="geoip"){
+			$meta_key="_geoip_apikey";
+			$apikey=wassupDb::get_wassupmeta($wassup_key,$meta_key);
 		}
 		return $apikey;
 	}
 	/** Do a remote lookup of Google!Map API key  @since v1.9.4 */
-	static function lookup_apikey(){
+	public function lookup_apikey(){
 		global $wdebug_mode;
 		$error_msg="";
 		$apikey=false;
-		//no lookup key if key is already in settings
-		$wassup_settings=get_option('wassup_settings');
-		if(!empty($wassup_settings['wassup_googlemaps_key'])){
-			return;
-		}
+		//always lookup api key even when user has own googlemap! key @since v1.9.4.5
+		//retrieve 'ip' lookup parameter
 		$ip=0;
 		//for computers behind proxy servers:
 		if(isset($_SERVER['SERVER_ADDR'])){
@@ -1023,11 +1030,17 @@ class wassupOptions {
 		}
 		//save apikey
 		if(!empty($apikey)){
+			//save google!maps key
 			$meta_key="_googlemaps_key";
-			if(is_multisite()) $sitehome=network_home_url();
-			else $sitehome=get_option('home');
-			$homedomain=wassupURI::get_urldomain($sitehome);
-			$updated=wassupDb::update_wassupmeta($homedomain,$meta_key,$apikey,0);
+			//site domain used for db cache save
+			$wassup_key=wassupURI::get_urldomain();
+			$updated=wassupDb::update_wassupmeta($wassup_key,$meta_key,$this->cleanFormText($apikey),0);
+			//save geoip api key @since v1.9.4.5
+			if (!empty($apidata['wassup_geoip_key'])){
+				$meta_key="_geoip_apikey";
+				$updated=wassupDb::update_wassupmeta($wassup_key,$meta_key,$this->cleanFormText($apidata['wassup_geoip_key']),0);
+			}
+			$timestamplog=wassupDb::update_wassupmeta($wassup_key,'_api_timestamp',time(),0);
 		}elseif(!empty($error_msg)){ //debug
 			if($wdebug_mode){
 				return $error_msg;
@@ -1598,8 +1611,9 @@ class wassupDb{
 	/** simple escape for db save to prevent xss propagation. @since v1.9.1 */
 	static function xescape($str){
 		//change '" 'to &quot; and '<' to &lt; for db save
+		//escaped "()`\" chars @since v1.9.4.5
 		if(!empty($str) && !is_numeric($str)){
-			$xescaped=str_replace(array('"','<','\\x3c','%3c'),array('&quot;','&lt;','&092;x3c','&037;3c'),$str);
+			$xescaped=str_replace(array('(',')','`','\\,',',','\'','"','<','\\x3c','%3c','\\'),array('&#40;','&#41;','&#96;','&#92;&#44;','&#44;','&#39;','&quot;','&lt;','&#92;x3c','&#37;3c','&#92;'),$str);
 		}else{
 			$xescaped=$str;
 		}
@@ -1775,13 +1789,13 @@ class wassupDb{
 		if($wassup_active){
 			$affected_recs=0;
 			$dbtask_errors=array();
+			$table_prefix=$wassup_settings['wassup_table'];
 			//unserialize dbtasks array if needed
 			if(!empty($dbtasks) && !is_array($dbtasks)){
 				$arr=maybe_unserialize($dbtasks);
 				if(is_array($arr)) $dbtasks=$arr;
 			}
-			if(!empty($dbtasks) && is_array($dbtasks)){
-				$table_prefix=$wassup_settings['wassup_table'];
+			if(!empty($dbtasks) && is_array($dbtasks) && !empty($table_prefix)){
 				//some db operations can be slow on large tables, so extend script execution time up to 30 minutes
 				$disabled_funcs=ini_get('disable_functions');
 				if((empty($disabled_funcs) || strpos($disabled_funcs,'set_time_limit')===false) && !ini_get('safe_mode')) @set_time_limit(1800);
@@ -1790,9 +1804,9 @@ class wassupDb{
 				if(!empty($mtimeout) && !is_wp_error($mtimeout) && is_numeric($mtimeout) && $mtimeout< 900){
 					$result=$wpdb->query("SET wait_timeout=900");
 				}
+			$error_l10=__("ERROR","wassup");
 			foreach($dbtasks as $db_sql){
 				$results=false;
-				$error_l10=__("ERROR","wassup");
 				$error_msg="";
 				//limit allowed sql to certain tasks and to Wassup tables only
 				if(strpos($db_sql,"DELETE FROM `$table_prefix")!==false){
@@ -1846,6 +1860,7 @@ class wassupDb{
 					$error_msg .="..empty argument";
 					if(!empty($args)) $error_msg .=" ".esc_attr($args);
 				}
+				$dbtask_errors[]=$error_msg; //bugfix to now show error @since v1.9.4.5
 			} //end if dbtasks
 		} //end if wassup_active
 		//email error output from cron as these are not logged
@@ -2269,7 +2284,7 @@ class wassupDb{
 
 if(!class_exists('wassupURI')){
 /**
- * Static class containing methods to format and clean urls/links for safe output.
+ * Static class to retrieve, format, and/or clean urls and links for safe display and use
  * @since v1.9
  * @author helened <http://helenesit.com>
  */
@@ -2371,10 +2386,10 @@ class wassupURI {
 		else $tooltip="";
 		if($chars >0) $cleaned_uri=stringShortener("$urlrequested",round($chars*.9,0));
 		else $cleaned_uri=self::cleanURL("$urlrequested");
-		//no link for spam, 404, wp-admin, wp-login or any possible unidentified spam @since v1.9.1
+		//no link for spam, 404, wp-admin, wp-login, wassup-pages, or any possible unidentified spam @since v1.9.1
 		if(!empty($spam) || self::is_xss($urlrequested)){
 			$urllink='<span class="malware"'.$tooltip.'>'.$cleaned_uri.'</span>';
-		}elseif(preg_match('/\/wp\-(?:admin|content|includes)\/|\/wp\-login\.php|^\[[0-9]{3}\]/',$urlrequested)>0){
+		}elseif(preg_match('/\/wp\-(?:admin|content|includes)\/|\/wp\-login\.php|^\[[0-9]{3}\]|\/wassup[^a-z]/i',$urlrequested)>0){
 			$urllink='<span'.$tooltip.'>'.$cleaned_uri.'</span>';
 		}else{
 			$urllink='<a href="'.self::add_siteurl($request).'" target="_BLANK">'.$cleaned_uri.'</a>';
@@ -2404,7 +2419,7 @@ class wassupURI {
 			$tooltip="";
 			$ref=strtolower($referer);
 			if(strlen($ref)>60) $tooltip=' title="'.self::cleanURL($ref).'" ';
-			if($chars >0) $cleaned_uri=stringShortener("$referer",round($chars*.9,0));	//v1.9.4 bugfix
+			if($chars >0) $cleaned_uri=stringShortener("$referer",round($chars*.9,0));
 			else $cleaned_uri=self::cleanURL("$referer");
 			//referrer from site or site-admin
 			if(stristr($referer,$wpurl)==$referer || stristr($referer,$siteurl)==$referer){
@@ -2534,7 +2549,7 @@ class wassupURI {
 	 * @return string
 	 */
 	static function get_menu_arg(){
-		$menuarg="";	//bugfix in v1.9.4.4 - thanks to @simonothen for finding this bug
+		$menuarg="";
 		//return only wassup page
 		if(isset($_GET['page']) && stristr($_GET['page'],'wassup')!==FALSE){
 			if(isset($_GET['ml'])){
@@ -2607,7 +2622,7 @@ class wassupURI {
 
 if(!class_exists('wassupIP')){
 /**
- * class containing methods to detect and display ip addresses and doains on the internet.
+ * class containing methods to detect and display ip addresses and domains on the internet.
  * @since v1.9.4
  * @author helened <http://helenesit.com>
  */

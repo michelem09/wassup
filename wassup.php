@@ -3,14 +3,14 @@
 Plugin Name: WassUp Real Time Analytics
 Plugin URI: http://www.wpwp.org
 Description: Analyze your website traffic with accurate, real-time stats, live views, visitor counts, top stats, IP geolocation, customizable tracking, and more. For Wordpress 2.2+
-Version: 1.9.4.4
+Version: 1.9.4.5
 Author: Michele Marcucci, Helene Duncker
 Author URI: http://www.michelem.org/
 Text Domain: wassup
 Domain Path: /language
 License: GPL2
 
-Copyright (c) 2007-2018 Michele Marcucci
+Copyright (c) 2007-2020 Michele Marcucci
 Released under the GNU General Public License GPLv2 or later 
 http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,7 +52,7 @@ function wassup_init($init_settings=false){
 
 	//define wassup globals & constants
 	if(!defined('WASSUPVERSION')){
-		define('WASSUPVERSION','1.9.4.4');
+		define('WASSUPVERSION','1.9.4.5');
 		define('WASSUPDIR',dirname(preg_replace('/\\\\/','/',__FILE__))); 
 	}
 	//turn on debugging in Wassup (global)...Use cautiously! May display errors from other plugins, not just WassUp
@@ -68,7 +68,7 @@ function wassup_init($init_settings=false){
 			$wdebug_mode=false;
 			@wassup_disable_errors();
 		}else{
-			//Bugfix in v1.9.4.4: set error_reporting in "init" only when WP_DEBUG is not set
+			//allow error_reporting when WP_DEBUG is not set @since v1.9.4.4
 			if(!defined("WP_DEBUG") || WP_DEBUG===false){
 				@wassup_enable_errors();
 			}
@@ -95,7 +95,6 @@ function wassup_init($init_settings=false){
 			}
 		}
 	}
-	//load required modules
 	//check Wordpress and PHP compatibility and load compatibility modules before using 'plugins_url' function
 	$php_vers=phpversion();
 	$is_compatible=true;
@@ -103,6 +102,7 @@ function wassup_init($init_settings=false){
 		include_once(WASSUPDIR.'/lib/compatibility.php');
 		$is_compatible=wassup_check_compatibility();
 	}
+	//load required modules
 	if($is_compatible){
 		if(!class_exists('wassupOptions')) require_once(WASSUPDIR.'/lib/wassup.class.php');
 		define('WASSUPURL',plugins_url(basename(WASSUPDIR)));
@@ -160,7 +160,7 @@ function wassup_init($init_settings=false){
  * @return void
  */
 function wassup_install($network_wide=false) {
-	global $wpdb,$wp_version,$wassup_options,$wdebug_mode; //Bugfix in v1.9.4.4: add wdebug_mode to globals
+	global $wpdb,$wp_version,$wassup_options,$wdebug_mode;
 
 	$wassup_settings=get_option('wassup_settings'); //save old settings
 	$wassup_network_settings=array();
@@ -220,7 +220,7 @@ function wassup_install($network_wide=false) {
 	$wassup_meta_table=$wassup_table."_meta";
 	$wassup_options->wassup_table=$wassup_table;
 
-	//turn off 'wassup_active' setting and cancel all scheduled Wassup wp-cron jobs for upgrades only
+	//Important! Turn off 'wassup_active' setting during upgrade
 	$active_status=1;
 	if(!empty($wassup_settings)){
 		//save current 'wassup_active' setting prior to upgrade for later restore
@@ -638,7 +638,7 @@ function wassup_add_scripts(){
 		wp_register_script('wassup',WASSUPURL.'/js/wassup.js',array(),$vers);
 		if($wassuppage == "wassup-spia" || $wassuppage=="wassup-spy"){
 			wp_enqueue_script('spia', WASSUPURL.'/js/spia.js', array('jquery','wassup'), $vers);
-		}elseif($wassuppage == "wassup-options"){
+		}elseif($wassuppage == "wassup-options" || $wassuppage == "wassup-donate"){
 			//use Wordpress' jquery-ui.js only when current
 			if(version_compare($wp_version,'4.5','>=') || !function_exists('wassup_compat_add_scripts')){
 				wp_enqueue_script('jquery-ui-dialog');
@@ -651,8 +651,8 @@ function wassup_add_scripts(){
 			wp_dequeue_style('jquery-ui-core.css');
 			wp_dequeue_style('jquery-ui.css');
 		}
-		//bugfix in v1.9.4.4 - removed Wassup's copy of Thickbox due to conflict with Wordpress admin
-		add_thickbox();	 //Wordpress 2.5+ built-in function to add thickbox
+		//use Wordpress' copy of Thickbox @since v1.9.4.4
+		add_thickbox();	 //Wordpress 2.5+ function 
 		//enqueue jquery-migrate.js (and 'jquery.js')
 		wp_enqueue_script('jquery-migrate');
 		wp_enqueue_script('wassup');
@@ -802,7 +802,7 @@ function wassup_enable_errors(){
 		error_reporting(E_ALL);
 	}
 	if(!empty($wdebug_mode)){ 
-		//Bugfix in v1.9.4.4: don't set display_errors unless WP_DEBUG is not set
+		//don't set display_errors unless WP_DEBUG is not set @since v1.9.4.4
 		if(!defined('WP_DEBUG') || !defined("WP_DEBUG_DISPLAY")){
 			ini_set('display_errors','On');
 		}
@@ -831,7 +831,7 @@ function wassupPrepend() {
 	if(isset($_REQUEST['wc-ajax']) && preg_match('#/woocommerce\.php#',$active_plugins)>0){
 		return;
 	}
-	//Bugfix in v1.9.4.4: suppress php7 deprecated notices
+	//suppress php7 deprecated notices @since v1.9.4.4
 	if(!$wdebug_mode){
 		$errmode_reset=error_reporting();
 		$errdisplay_reset=ini_get('display_errors');
@@ -1004,6 +1004,12 @@ function wassupAppend($req_code=0) {
 	if(!class_exists('UADetector')) include_once(WASSUPDIR.'/lib/uadetector.class.php');
 	$wpurl=wassupURI::get_wphome();
 	$blogurl=wassupURI::get_sitehome();
+	//path to wordpress install, when different from home
+	$wppath="";
+	if($wpurl !== $blogurl){
+		$url=parse_url($wpurl);
+		if(!empty($url['path'])) $wppath=rtrim($url['path'],'/');
+	}
 	$network_settings=array();
 	if(is_multisite()){
 		$network_settings=get_site_option('wassup_network_settings');
@@ -1031,7 +1037,7 @@ function wassupAppend($req_code=0) {
 			wassup_enable_errors();
 		}
 	}else{
-		//Bugfix in v1.9.4.4: suppress PHP7 deprecated notices
+		//suppress PHP7 deprecated notices @since v1.9.4.4
 		$errmode_reset=error_reporting();
 		$errdisplay_reset=ini_get('display_errors');
 		@wassup_disable_errors();
@@ -1221,6 +1227,7 @@ function wassupAppend($req_code=0) {
 		if((int)$wassup_timer - time() < 1){
 			$session_timeout=true;
 		}
+		$pcs=array();
 		//don't share wassup_id across multisite subsites
 		if(preg_match('/^([0-9]+)b_/',$wassup_id,$pcs)>0){
 			if($pcs[1]!=$subsite_id) $session_timeout=true;
@@ -1439,9 +1446,7 @@ function wassupAppend($req_code=0) {
 			$spamresult=$recent_hit[0]->spam;
 			//don't use hack-attempt label from recent hit when user is logged-in
 			if((int)$spamresult==3 && !empty($logged_user)){
-				//if(strpos($recent_hit[0]->urlrequested,'wp-login.php')>0 || (!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],'wp-login.php')>0))){
 					$spamresult=0;
-				//}
 			}
 			//retroactively update screen_res
 			//...queue the update because of "delayed insert"
@@ -1478,7 +1483,7 @@ function wassupAppend($req_code=0) {
 			}
 		}
 	//#13 Exclude admin/admin-ajax requests with same session cookie as recent hit but does not show as a logged user request (ex: /wp-admin/post.php hit from edit link in website page?)
-	if((!is_admin() && stristr($urlRequested,"/wp-admin/")===false) || $urlRequested !='/wp-admin/admin-ajax.php' || empty($recent_hit) || ((empty($recent_hit[0]->username) || $recent_hit[0]->username != $cookieUser) && stristr($recent_hit[0]->urlrequested,"/wp-admin/")===false)){
+	if((!is_admin() && stristr($urlRequested,"/wp-admin/")===false) || $urlRequested != $wppath.'/wp-admin/admin-ajax.php' || empty($recent_hit) || ((empty($recent_hit[0]->username) || $recent_hit[0]->username != $cookieUser) && stristr($recent_hit[0]->urlrequested,"/wp-admin/")===false)){
 		//check for xss attempts on referrer
 		if($spam==0 && $hackercheck && empty($logged_user)){
 			//...skip if referrer is own blog
@@ -1491,11 +1496,16 @@ function wassupAppend($req_code=0) {
 			}
 		}
 	//#14 Exclude 404 hits unless 1st visit or malware attempt
-	if($req_code == 200 || empty($recent_hit) || ($hackercheck && ($spam!=0 || stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){ //v1.9.3.1 bugfix: parenthesis correction
-		//omit 'admin-ajax.php' and 'wp-login.php' from malware checks @since v1.9.3
-		if($hackercheck && $spam==0 && $urlRequested !='/wp-login.php' && $urlRequested !='/wp-admin/admin-ajax.php'){
+	if($req_code == 200 || empty($recent_hit) || ($hackercheck && ($spam!=0 || stristr($urlRequested,"/wp-")!==FALSE || preg_match('#\.(php\d?|aspx?|bat|cgi|dll|exe|ini|js|jsp|msi|sh)([^0-9a-z.\-_]|$)|([\\\.]{2}|\/\.|root[^a-z0-9\-_]|[^a-z0-9\-_]passw|\=admin[^a-z0-9\-_]|\=\-\d+|(bin|etc)\/)|[\*\,\'"\:\(\)$`]|[^0-9a-z](src|href|style)[ +]?=|&\#?([0-9]{2,4}|lt|gt|quot);|(?:<|%3c|&lt;?|&\#0*60;?|&\#x0*3c;?)[jpsv]|(?:user|author|admin|id)\=\-?\d+|(administrator|base64|bin|code|config|cookie|delete|document|drop|drupal|eval|exec|exit|function|iframe|insert|install|java|joomla|load|null|repair|script|select|setting|setup|shell|system|table|union|upgrade|update|upload|where|window|wordpress)#i',$urlRequested)>0))){
+		//Malware url check exceptions:
+		//..omit 'admin-ajax.php', 'ads.txt','assetslinks.json',index.php','license.php','robots.txt','security.txt','sitemap.xml', and 'wp-login.php', from malware checks
+		$good_urls_regex='#^(/|/index\.php|/license\.php|/ads\.txt|/robots\.txt|/security\.txt|/sitemap\.xml|/\.well\-known/(?:assetlinks\.json|security\.txt)|'.$wppath.'/wp\-admin/admin\-ajax\.php|'.$wppath.'/wp\-login\.php)$#i';
+		if ($hackercheck && preg_match($good_urls_regex,$urlRequested)>0){
+			$hackercheck=false;
+		}
+		//Identify malware on url
+		if($hackercheck && $spam==0 && $urlRequested != '/'){
 			$pcs=array();
-		//identify malware
 		//xss attempt
 		if(wassupURI::is_xss($urlRequested)){
 			$spam=3;
@@ -1512,7 +1522,8 @@ function wassupAppend($req_code=0) {
 			}
 		}
 		//visitors requesting non-existent server-side scripts are up to no good
-		if($spam==0 && preg_match('#(?:(^\/\.[0-9a-z]{3,})|(\.(?:cgi|aspx?|jsp?))|([\*\,\'"\:\(\)$`].*)|(.+\=\-1)|(\/[a-z0-9\-_]+\.php[456]?))(?:[^0-9a-z]|$)#i',$urlRequested,$pcs)>0){
+		$pcs=array();
+		if($spam==0 && preg_match('#(?:(^\/\.[0-9a-z]{3,})|(\.(?:cgi|aspx?|jsp?))|([\*\,\'"\:\(\)$`].*)|(.+\=\-1)|(\/[a-z0-9\-_]+\.php[457]?))(?:[^0-9a-z]|$)#i',$urlRequested,$pcs)>0){
 			if(!empty($pcs[3]) && preg_match('/([0-9\.\-=;]+)/',$urlRequested)>0){
 				$spam=3;
 			}elseif(empty($logged_user) && empty($cookieUser)){
@@ -1543,7 +1554,8 @@ function wassupAppend($req_code=0) {
 						}
 					}
 				}
-				if($spam==0 && preg_match('/[^a-z\-_](admin|administrator|base64|bin|code|config|cookie|delete|dll|document|drop|etc|eval|exec|exit|function|href|ini|insert|install|login|passw|root|script|select|setting|setup|table|update|upgrade|upload|wp\-|where|window)([^0-9a-z\.\-_]|$)/',$urlRequested)>0){
+				//check for admin/execution attempts on url
+				if($spam==0 && preg_match('#[^a-z\-_](admin|adminer(?:[\.\-][0-9a-z\-_]+)|administrator|base64|bin|code|config|cookie|delete|dev/|dll|document|drop|etc|eval|exec|exit|function|href|ini|insert|install|login|mysql\.(?:[a-z]{3})|passw|portal/|root|script|select|setting|setup|table|tmp/|update|upgrade|upload|wp/|wp\-|where|window)([^0-9a-z\.\-_]|$)#',$urlRequested)>0){
 					if($req_code==404){
 						$spam=3;
 					}elseif(!empty($pcs[2])){
@@ -1558,7 +1570,7 @@ function wassupAppend($req_code=0) {
 		//regular visitors trying to access admin area are up to no good
 		if(empty($spam) && empty($logged_user) && empty($cookieUser)){
 			$pcs=array();
-			if(preg_match('#[^0-9a-z_]wp\-admin\/.+\.php\d?([^a-z0-9_]|$)#i',$urlRequested)>0){
+			if(preg_match('#[^0-9a-z_](wp\-)?admin(/\.?[0-9a-z_\-%]+)*\.[a-z]{3,4}\d?([^a-z0-9_]|$)#i',$urlRequested)>0){
 				$spam=3;
 			}elseif(preg_match('#\/wp\-(config|load|settings)\.php#',$urlRequested)>0){
 			//regular visitor trying to access setup files is up to no good
@@ -1671,7 +1683,7 @@ function wassupAppend($req_code=0) {
 						list($spider,$spidertype,$feed)=wGetSpider($userAgent,$hostname,$browser);
 					}
 				}
-				//it's a browser
+				//it's a spider
 				if(!empty($spider)){
 				if($spidertype == "B" && $urlRequested != "/robots.txt"){
 					if(empty($browser)) $browser=$spider;
@@ -1679,13 +1691,15 @@ function wassupAppend($req_code=0) {
 					$feed="";
 				}elseif($spidertype == "H" || $spidertype == "S"){
 					if($spam == "0") $spam=3;
+				}else{
+					$browser="";
 				}
 				}
 			}
 			//if 1st request is "robots.txt" this is a bot
 			//if empty user-agent, this is a bot
 			if(empty($spider)){
-				if(strstr($urlRequested,"robots.txt")!==FALSE && empty($recent_hit)) $spider=$unknown_spider;
+				if(strstr($urlRequested,"/robots.txt")!==FALSE && empty($recent_hit)) $spider=$unknown_spider;
 				elseif(empty($browser) && empty($userAgent)) $spider=$unknown_spider;
 			}
 			//Finally, check for disguised spiders via excessive pageviews activity (threshold: 8+ views in < 16 secs)
@@ -1829,6 +1843,7 @@ function wassupAppend($req_code=0) {
 			//test for Google secure search and use generic "_notprovided_" for missing keyword @since v1.9
 			//TODO: Yahoo now has secure searching since 4/2014
 			$pcs=array();
+			$pcs2=array();
 			if (preg_match('#^https\://(www\.google(?:\.com?)?\.([a-z]{2,3}))/(url\?(?:.+[^q]+q=([^&]*)(?:&|$)))?#',$ref,$pcs)>0){
 				$searchdomain=$pcs[1];
 				$searchengine="Google";
@@ -1898,7 +1913,7 @@ function wassupAppend($req_code=0) {
 						$searchcountry=$match[3];
 					}
 					if(!empty($searchcountry) && $searchcountry!="us"){
-						//v1.9.3.1 bugfix: avoid duplicate country code in searchengine name
+						//avoid duplicate country code in searchengine name @since v1.9.3
 						if(stristr($searchengine," $searchcountry")===false) $searchengine .=" ".strtoupper($searchcountry);
 						if($language == "us" || empty($language) || $language=="en"){
 							//make tld consistent with language
@@ -2209,7 +2224,6 @@ function wassupAppend($req_code=0) {
 			wassupDb::update_wassupmeta($wassup_key,'_debug_output',$expire,$debug_output);
 		}
 	}elseif(isset($errmode_reset)){ 
-		//Bugfix in v1.9.4.4: reset error mode only if set 
 		//restore normal error mode
 		error_reporting($errmode_reset);
 		@ini_set('display_errors',$errdisplay_reset);
@@ -2258,7 +2272,7 @@ function wassup_insert_rec($wTable,$wassup_rec,$delayed=false){
 }//end wassup_insert_rec
 /**
  * Assign an id for current visitor session from a combination of date/hour/min/ip/loggeduser/useragent/hostname.
- * This is not unique so that multiple visits from the same ip/userAgent within a 30 minute-period, can be tracked, even when session/cookies is disabled.
+ * This is not unique so that multiple visits from the same ip/userAgent within a 30 minute-period, can be tracked, even when session/cookies are disabled.
  * @since v1.9
  * @param args (array)
  * @return string
@@ -2830,6 +2844,7 @@ function wGetSE($referrer = null){
 	} //end foreach
 	//search engine or key is not in list, so check for search phrase instead
 	if (empty($search_phrase) && !empty($referrer)) {
+		$pcs=array();
 		//Check for general search phrases
 		if(preg_match('#^https?://([^/]+).*[&?](q|search|searchfor|as_q|as_epq|query|keywords?|term|text|encquery)=([^&]+)#i',$referrer,$pcs) > 0){
 			if (empty($searchengine)) $searchengine=trim(strtolower($pcs[1]));
@@ -3951,9 +3966,14 @@ function wIsAttack($http_target="") {
 	}
 	if(!empty($targets)){
 		foreach ($targets AS $target) {
-			if(preg_match('#["<>`^]|[^/][~]|\.\*|\*\.#',str_replace(array('&lt;','&#60;','%3C','&rt;','&#62;','%3E','&quot;','%5E'),array("<","<","<",">",">",">","\"",'^'),$target))>0 || (preg_match('/[\\\']/',str_replace('%5C','\\',$target))>0 && preg_match('/((?:q|search|s|p)\=[^\\\'&=]+)([\\\']*\'[^\'&]*)&/',str_replace('%5C','\\',$target))==0)){
+			//skip home page requests
+			if($target=="/" || $target=="/index.php" || $target=="/home.php" || $target=="/index.htm" || $target=="/home.htm" || $target=="/index.html" || $target=="/home.html"){
+				continue;
+			}
+			//do malware tests
+			if(preg_match('#["<>`^]|[^/]~|\.\*|\*\.#',str_replace(array('&lt;','&#60;','%3C','&rt;','&#62;','%3E','&quot;','%5E'),array("<","<","<",">",">",">","\"",'^'),$target))>0 || (preg_match('/[\\\\\']/',str_replace('%5C','\\',$target))>0 && preg_match('/((?:[pqs]|key|query|search|text|word)\=[^\\\\\'&=]+)([\\\\\']*\'[^\'&]*)&/i',str_replace('%5C','\\',$target))==0)){
 				$is_attack=true;break;
-			}elseif(preg_match('#(\.+[\\/]){3,}|[<>&\\\|:\?$!]{2,}|[+\s]{5,}|(%[0-9A-F]{2,3}){5,}#',str_replace(array('%20','%21','%24','%26','%2E','%2F','%3C','%3D','%3F','%5C'),array(' ','!','$','&','+','.','/','<','>','?','\\'),$target))>0){
+			}elseif(preg_match('#(?:\.+[\\\\/]){3,}|[<>&\\\\\|:\?!]{2,}|[+\s]{5,}#',str_replace(array('%20','%21','%24','%26','%2E','%2F','%3C','%3D','%3F','%5C'),array(' ','!','$','&','+','.','/','<','>','?','\\'),$target))>0){
 				$is_attack=true;break;
 			}elseif(preg_match('/(?:^|[^a-z_\-])(select|update|delete|alter|drop|union|create)[ %&].*(?:from)?.*wp_\w+/i',str_replace(array('\\','&#92;','"','%22','&#34;','&quot;','&#39;','\'','`','&#96;'),'',$target))>0){
 				$is_attack=true;break;
@@ -3963,7 +3983,7 @@ function wIsAttack($http_target="") {
 				$is_attack=true;break;
 			}elseif(preg_match('/\.(bat|bin|cfm|cmd|exe|ini|msi||[cr]?sh)([^a-z0-9]+|$)/i',$target)>0 || (preg_match('/\.dll(^a-z0-9_\-]+|$)/',$target)>0 && strpos($target,'.att.net/')===false) || preg_match('/[^0-9a-z_]setup\.[a-z]{2,4}([^0-9a-z]+|$)/',$target)>0){
 				$is_attack=true;break;
-			}elseif(preg_match('#[\\/](dev|drivers?|etc|program\sfiles|root|system|system32|windows)[/\\%&]#i',str_replace('%20',' ',$target))>0 || preg_match('#(c|file)\:[\\/]+.*install#i',$target)>0){
+			}elseif(preg_match('#[\\\\/](dev|drivers?|etc|program\sfiles|root|system(?:32)?|windows)[/\\\\%&]#i',str_replace('%20',' ',$target))>0 || preg_match('#(c|file)\:[\\\\/]+.*install#i',$target)>0){
 				$is_attack=true;break;
 			}elseif(preg_match('/[^a-z0-9$%][$`%]?([a-km-rt-z_][a-z0-9_\-]+)[`%]?\s?\=\s?\-[190x]+/i',str_replace(array('&36;','%24','%20','&#96;','%60','%3D','&#61;','%2D','&#45;'),array('$','$',' ','`','`','=','=','-','-'),$target))>0){
 				$is_attack=true;break;
@@ -3989,7 +4009,7 @@ function wassup_widget_init(){
 		'wassup_onlineWidget',
 		'wassup_topstatsWidget',
 	);
-	//Bugfix in v1.9.4.4: turn off PHP7 deprecated warnings
+	//turn off PHP7 deprecated warnings @since v1.9.4.4
 	if(!$wdebug_mode){
 		$errmode_reset=error_reporting();
 		$errdisplay_reset=ini_get('display_errors');
