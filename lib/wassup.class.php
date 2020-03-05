@@ -646,9 +646,12 @@ class wassupOptions {
 	/** strip bad characters from a text or textarea input for URLs. @since v1.9 */
 	public function cleanFormURL($input){
 		$cleanurl="";
+		if(empty($input)) return $cleanurl;
 		$loc=esc_url_raw($input);
+		if(empty($loc)) $loc=esc_attr($input); //in case of esc_url_raw chomp
 		//only alphanumeric chars allowed with some exceptions
-		$cleanurl=preg_replace('/([^0-9a-z\-_\.,\:\*#\/&\?=;% ]+)/i','',strip_tags(html_entity_decode(preg_replace('/(&#0?37;|&amp;#0?37;|&#0?38;#0?37;|%)(?:[01][0-9A-F]|7F)/i','',$loc))));
+		//replaced [0-9a-z_] with \w for unicode chars @since v1.9.5
+		$cleanurl=preg_replace('/([^\w\-\.\:\*\/\?&,#=;%\s]+)/u','',strip_tags(html_entity_decode(preg_replace('/(&#0?37;|&amp;#0?37;|&#0?38;#0?37;|%)(?:[01][0-9A-F]|7F)/i','',$loc))));
 		return $cleanurl;
 	}
 	/** Save settings form changes stored in $_POST global.  @since v1.9 */
@@ -1591,7 +1594,10 @@ class wassupDb{
 			$varstr=stripslashes($var);
 			//sanitize urls separately
 			if(strpos($varstr,'://')!==false || strpos($varstr,'/')===0){
-				$varstr=esc_url_raw($varstr);
+				$xstr=esc_url_raw($varstr);
+				//fix for 'esc_url_raw chomp
+				if(empty($xstr)) $varstr=esc_sql($varstr);
+				else $varstr=$xstr;
 			}else{
 				$varstr=esc_sql($varstr);
 			}
