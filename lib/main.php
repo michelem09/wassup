@@ -1645,7 +1645,7 @@ class WassupItems {
 				$mtimeout=$wpdb->get_var("SELECT @@session.wait_timeout AS mtimeout FROM dual");
 				if(is_numeric($mtimeout) && $mtimeout<160) $result=$wpdb->query("SET wait_timeout=160");
 				//use a temporary table for large datasets 
-				$tmptable='_wassup_'.$current_user->user_login.rand();
+				$tmptable='_wassup_'.time().rand(1000,9999);
 				//create temp table of records
 				$qry1 = sprintf("CREATE TEMPORARY TABLE IF NOT EXISTS %s AS (SELECT `wassup_id`, max(`timestamp`) as max_timestamp, min(`timestamp`) as min_timestamp, count(`wassup_id`) as page_hits, GROUP_CONCAT(DISTINCT `username` ORDER BY `username` SEPARATOR '| ') AS login_name, max(`spam`) AS malware_type, max(`screen_res`) as resolution FROM %s WHERE %s GROUP BY `wassup_id` ORDER BY max_timestamp DESC %s); ",
 					$tmptable,
