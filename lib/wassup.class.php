@@ -1582,7 +1582,7 @@ class wassupDb{
 	/**
 	 * clean data for insertion into mySQL.
 	 *  - to prevent SQL injection - renamed from wSanitizeData
-	 *  - an alternative to "wpdb::prepare" for older WP versions.
+	 *  - an alternative to "wpdb::prepare"
 	 * @since WassUp 1.7 (as wSanitizeData)
 	 * @param string $var, boolean $quotes
 	 * @return string
@@ -1596,10 +1596,13 @@ class wassupDb{
 			if(strpos($varstr,'://')!==false || strpos($varstr,'/')===0){
 				$xstr=esc_url_raw($varstr);
 				//fix for 'esc_url_raw chomp
-				if(empty($xstr)) $varstr=esc_sql($varstr);
+				if(empty($xstr)) $varstr=self::xescape($varstr);
 				else $varstr=$xstr;
-			}else{
+			}elseif(strpos($varstr,'%')===false){
+				//fix for 'esc_sql' '%' substitution
 				$varstr=esc_sql($varstr);
+			}else{
+				$varstr=self::xescape($varstr);
 			}
  			if($quotes) $var="'". $varstr ."'";
 			else $var=$varstr;
@@ -2235,7 +2238,7 @@ class wassupDb{
 						if(isset($ints[$key])){
 							$sql_data .=(''===$val)?"''":$val;
 						}else{
-							$sql_data .="'".esc_sql(str_replace($search,$replace,$val))."'";
+							$sql_data .="'".str_replace($search,$replace,$val)."'"; //removed 'esc_sql' because it substitutes '%' with a strange value
 						}
 						$i++;
 					} //end foreach
