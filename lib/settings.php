@@ -356,7 +356,7 @@ function wassup_optionsView($tab=0) {
 		<h3 class="indent-opt"><?php echo __("Exclude by IP","wassup");?></h3>
 		<p style="padding-top:0;padding-bottom:0;"><strong><?php echo __('Enter source IPs to omit from recording','wassup');?></strong>:
 		<br /><span style="padding-left:10px;display:block;clear:left;">
-		<textarea name="wassup_exclude" rows="2" style="width:60%;"><?php echo esc_url($wassup_options->wassup_exclude);?></textarea></span>
+		<textarea name="wassup_exclude" rows="2" style="width:60%;"><?php echo esc_attr($wassup_options->wassup_exclude);?></textarea></span>
 		<span class="opt-note"> <?php echo __("comma separated value (ex: 127.0.0.1, 10.0.0.1, etc...).","wassup")." ".__("A single wildcard (*) can be placed after the last '.' in the IP ('::' in IPv6) for range exclusions (ex: 10.10.100.*, 192.168.*).","wassup");?></span>
 		</p><br/>
 		<h3 class="indent-opt"><?php echo __("Exclude by Hostname","wassup");?></h3>
@@ -374,7 +374,7 @@ function wassup_optionsView($tab=0) {
 		<h3 class="indent-opt"><?php echo __("Exclude by URL request","wassup");?></h3>
 		<p style="padding-top:0;"><strong><?php echo __('Enter URLs of page/post/feed to omit from recording','wassup');?></strong>:
 		<br /><span style="padding-left:10px;display:block;clear:left;">
-		<textarea name="wassup_exclude_url" rows="2" style="width:60%;"><?php echo esc_url($wassup_options->wassup_exclude_url);?></textarea></span>
+		<textarea name="wassup_exclude_url" rows="2" style="width:60%;"><?php echo esc_attr($wassup_options->wassup_exclude_url);?></textarea></span>
 		<span class="opt-note"> <?php _e("comma separated value, don't enter entire url, only the last path or some word to exclude (ex: /category/wordpress, 2007, etc...)", "wassup");?></span>
 		</p><br />
 		<p class="submit"><input type="submit" name="submit-options2" id="submit-options2" class="submit-opt button button-left button-primary" value="<?php _e('Save Settings','wassup');?>" onclick="jQuery('#submit-options2').val('Saving...');" />&nbsp;<input type="reset" name="reset" class="reset-opt button button-secondary" value="<?php _e('Reset','wassup');?>" /> - <input type="submit" name="reset-to-default" class="default-opt button button-caution wassup-button" value="<?php _e("Reset to Default", "wassup");?>" /></p>
